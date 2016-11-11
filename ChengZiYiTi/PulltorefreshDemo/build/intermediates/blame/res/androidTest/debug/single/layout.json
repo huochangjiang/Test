@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "C:\\Users\\Administrator\\Desktop\\xxxx\\ChengZiYiTi\\PulltorefreshDemo\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\huo.xml",
+        "source": "C:\\Users\\Administrator\\Desktop\\xxxx\\ChengZiYiTi\\PulltorefreshDemo\\build\\intermediates\\bundles\\debug\\res\\layout\\huo.xml"
+    },
+    {
+        "merged": "C:\\Users\\Administrator\\Desktop\\xxxx\\ChengZiYiTi\\PulltorefreshDemo\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\activity_ptr_scrollview.xml",
+        "source": "C:\\Users\\Administrator\\Desktop\\xxxx\\ChengZiYiTi\\PulltorefreshDemo\\build\\intermediates\\bundles\\debug\\res\\layout\\activity_ptr_scrollview.xml"
+    },
+    {
+        "merged": "C:\\Users\\Administrator\\Desktop\\xxxx\\ChengZiYiTi\\PulltorefreshDemo\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\activity_main.xml",
+        "source": "C:\\Users\\Administrator\\Desktop\\xxxx\\ChengZiYiTi\\PulltorefreshDemo\\build\\intermediates\\bundles\\debug\\res\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\Administrator\\Desktop\\xxxx\\ChengZiYiTi\\PulltorefreshDemo\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\pull_to_refresh_header_horizontal.xml",
+        "source": "C:\\Users\\Administrator\\Desktop\\xxxx\\ChengZiYiTi\\PulltorefreshDemo\\build\\intermediates\\bundles\\debug\\res\\layout\\pull_to_refresh_header_horizontal.xml"
+    },
+    {
+        "merged": "C:\\Users\\Administrator\\Desktop\\xxxx\\ChengZiYiTi\\PulltorefreshDemo\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\pull_to_refresh_header_vertical.xml",
+        "source": "C:\\Users\\Administrator\\Desktop\\xxxx\\ChengZiYiTi\\PulltorefreshDemo\\build\\intermediates\\bundles\\debug\\res\\layout\\pull_to_refresh_header_vertical.xml"
+    }
+]

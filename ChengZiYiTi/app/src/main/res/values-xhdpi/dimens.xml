@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+ <dimen name="title_height">44dp</dimen>
+    <dimen name="movie_item_height">147dp</dimen>
+    <dimen name="tx_movie_item_height">167dp</dimen>
+
+       <dimen name="movie_item_weith">108dp</dimen>
+       <dimen name="movi_zhuanti_height">76dp</dimen>
+        <dimen name="movi_zhuanti_weight">136dp</dimen>
+        <dimen name="movie_search_width">250dp</dimen>
+        
+          <dimen name="yijian_width">280dp</dimen>
+    	<dimen name="music_bangdan_item">100dp</dimen>
+    	<dimen name="music_bang_juli">50dp</dimen>
+    	
+    	
+    	<dimen  name="apply_bangdan_weight">80dp</dimen>
+    	<dimen  name="apply_bangdan_height">70dp</dimen>
+    	<dimen name="apply_youxi_wight">65dp</dimen>
+    	
+     <dimen name="user_beijing">250dp</dimen>
+    	
+    	<dimen name="game_right">60dp</dimen>
+    	    	<dimen name="game_top">45dp</dimen>
+    	
+    	<dimen name="fangxiangtop">25dp</dimen>
+    	    	<dimen name="yingliangtop">6dp</dimen>
+    	
+    	
+    	<dimen name="yaokongheight">306dp</dimen>
+    	<dimen name="chumobanheight">320dp</dimen>
+  
+    	<dimen name="guanggaowei">158dp</dimen>
+    	 <dimen name="tupian_height">80dp</dimen>
+                <dimen name="tupian_width">110dp</dimen>
+    	
+    	
+    	
+    	<dimen name="fangxiangtopone">20dp</dimen>
+    	
+    	  <dimen name="tv_size">17sp</dimen>
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    <!-- 左侧边栏比例 -->
+    <dimen name="slidingmenu_offset">120dp</dimen>
+
+    <!-- 同屏界面的重力按钮距离左边的间距 -->
+    <dimen name="yiping_btn_padding">20dp</dimen>
+    <dimen name="yiping_gravity_padding">50dp</dimen>
+
+    <!-- 关于界面的一些间距 -->
+    <dimen name="about_appicon_size">69dp</dimen>
+    <dimen name="about_pad_title">30dp</dimen>
+    <dimen name="qrcodesize">100dp</dimen>
+    <dimen name="compad">25dp</dimen>
+
+    <!-- 音乐界面的一些间距 -->
+    <dimen name="music_button_size">50dp</dimen>
+
+    <!-- 界面 -->
+    <dimen name="bottomdialog_h">50dp</dimen>
+    <dimen name="EditText_item_height">45dp</dimen>
+    <dimen name="EditText_pwd_height">45dp</dimen>
+    <dimen name="nodevice_padding">35dp</dimen>
+    <dimen name="imageview_top_height">40dp</dimen>
+    <dimen name="mar_bottom">35dp</dimen>
+    <dimen name="net_fragment">35dp</dimen>
+    <dimen name="search_top">80dp</dimen>
+    <dimen name="net_list_size">330dp</dimen>
+    <dimen name="mcount_width">260dp</dimen>
+    <dimen name="mcount_top">105dp</dimen>
+ <dimen name="name_size">190dp</dimen>
+  <dimen name="host_top">50dp</dimen>
+  <dimen name="pop_top">10dp</dimen>
+  <dimen name="pop_conn">30dp</dimen>
+   <dimen name="mar_bot">80dp</dimen>
+   
+   
+   
+    <dimen name="gm_indctor">80dp</dimen>
+</resources>
