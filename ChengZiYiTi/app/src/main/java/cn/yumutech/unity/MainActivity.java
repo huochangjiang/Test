@@ -41,7 +41,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         addFragement(MailListFragment.newInstance());
         addFragement(PersonFragment.newInstance());
         initTabs();
-        mTitle = (TextView) findViewById(R.id.tv_home);
         LinearLayout ll_story=(LinearLayout) findViewById(R.id.ll_story);
 
         LinearLayout ll_animation=(LinearLayout) findViewById(R.id.ll_animation);
@@ -70,27 +69,23 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 index=1;
                 showFragmentWithoutBackStackAndAnim(HomeFragment.newInstance(),last_fragment);
                 last_fragment=HomeFragment.newInstance();
-                mTitle.setText("首页");
                 changeColor(0);
                 break;
             case R.id.ll_story:
                 index=0;
                 showFragmentWithoutBackStackAndAnim(SuperviseFragment.newInstance(),last_fragment);
                 last_fragment=SuperviseFragment.newInstance();
-                mTitle.setText("督查督办");
                 changeColor(1);
                 break;
             case R.id.ll_applciton:
                 index=2;
                 showFragmentWithoutBackStackAndAnim(MailListFragment.newInstance(),last_fragment);
                 last_fragment=MailListFragment.newInstance();
-                mTitle.setText("通讯录");
                 changeColor(2);
                 break;
             case R.id.ll_shop:
                 showFragmentWithoutBackStackAndAnim(PersonFragment.newInstance(),last_fragment);
                 last_fragment=PersonFragment.newInstance();
-                mTitle.setText("我的");
                 changeColor(3);
                 break;
         }

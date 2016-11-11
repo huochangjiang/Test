@@ -58,7 +58,9 @@
         <activity android:name=".FriendsUrlActivity" />
         <activity android:name=".FriendDetasActivity" />
         <activity android:name=".LogoActivity" />
-        <activity android:name=".RegistActivity"></activity>
+        <activity android:name=".RegistActivity" />
+        <activity android:name=".HuDongJIaoLIuActivity" />
+        <activity android:name=".MailListActivity"></activity>
     </application>
 
 </manifest>
