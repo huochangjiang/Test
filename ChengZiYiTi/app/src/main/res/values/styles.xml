@@ -1,0 +1,28 @@
+<resources>
+
+    <style name="AppTheme" parent="MyThemeBlue"></style>
+
+
+    <style name="ClubToolbar" parent="Widget.AppCompat.Toolbar">
+        <item name="contentInsetStart">0dp</item><!-- 设置该属性解决空白部分-->
+        <item name="contentInsetEnd">0dp</item>
+
+    </style>
+    <!-- 蓝色为主色调 -->
+    <style name="MyThemeBlue" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="toolbarStyle">@style/ClubToolbar</item>
+        <!--选中状态icon的颜色和字体颜色-->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <!--正常状态下字体颜色和icon颜色-->
+
+    </style>
+    <style name="UserEditText_FontSize">
+        <item name="android:background">@color/white</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:singleLine">true</item>
+    </style>
+</resources>

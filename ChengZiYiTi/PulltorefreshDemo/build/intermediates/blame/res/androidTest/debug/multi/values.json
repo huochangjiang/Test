@@ -1,0 +1,410 @@
+[
+    {
+        "outputFile": "C:\\Users\\Administrator\\Desktop\\xxxx\\ChengZiYiTi\\PulltorefreshDemo\\build\\intermediates\\res\\merged\\androidTest\\debug\\values\\values.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 3,
+                    "startColumn": 4,
+                    "startOffset": 1511,
+                    "endColumn": 57,
+                    "endOffset": 1564
+                },
+                "from": {
+                    "file": "C:\\Users\\Administrator\\Desktop\\xxxx\\ChengZiYiTi\\PulltorefreshDemo\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 3,
+                        "startColumn": 4,
+                        "startOffset": 1511,
+                        "endColumn": 57,
+                        "endOffset": 1564
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 4,
+                    "startColumn": 4,
+                    "startOffset": 1569,
+                    "endColumn": 55,
+                    "endOffset": 1620
+                },
+                "from": {
+                    "file": "C:\\Users\\Administrator\\Desktop\\xxxx\\ChengZiYiTi\\PulltorefreshDemo\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 1569,
+                        "endColumn": 55,
+                        "endOffset": 1620
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 5,
+                    "startColumn": 4,
+                    "startOffset": 1625,
+                    "endColumn": 63,
+                    "endOffset": 1684
+                },
+                "from": {
+                    "file": "C:\\Users\\Administrator\\Desktop\\xxxx\\ChengZiYiTi\\PulltorefreshDemo\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 5,
+                        "startColumn": 4,
+                        "startOffset": 1625,
+                        "endColumn": 63,
+                        "endOffset": 1684
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 6,
+                    "startColumn": 4,
+                    "startOffset": 1689,
+                    "endColumn": 63,
+                    "endOffset": 1748
+                },
+                "from": {
+                    "file": "C:\\Users\\Administrator\\Desktop\\xxxx\\ChengZiYiTi\\PulltorefreshDemo\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 6,
+                        "startColumn": 4,
+                        "startOffset": 1689,
+                        "endColumn": 63,
+                        "endOffset": 1748
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 7,
+                    "startColumn": 4,
+                    "startOffset": 1753,
+                    "endColumn": 54,
+                    "endOffset": 1803
+                },
+                "from": {
+                    "file": "C:\\Users\\Administrator\\Desktop\\xxxx\\ChengZiYiTi\\PulltorefreshDemo\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 7,
+                        "startColumn": 4,
+                        "startOffset": 1753,
+                        "endColumn": 54,
+                        "endOffset": 1803
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 8,
+                    "startColumn": 4,
+                    "startOffset": 1808,
+                    "endColumn": 56,
+                    "endOffset": 1860
+                },
+                "from": {
+                    "file": "C:\\Users\\Administrator\\Desktop\\xxxx\\ChengZiYiTi\\PulltorefreshDemo\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 8,
+                        "startColumn": 4,
+                        "startOffset": 1808,
+                        "endColumn": 56,
+                        "endOffset": 1860
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 9,
+                    "startColumn": 4,
+                    "startOffset": 1865,
+                    "endColumn": 54,
+                    "endOffset": 1915
+                },
+                "from": {
+                    "file": "C:\\Users\\Administrator\\Desktop\\xxxx\\ChengZiYiTi\\PulltorefreshDemo\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 9,
+                        "startColumn": 4,
+                        "startOffset": 1865,
+                        "endColumn": 54,
+                        "endOffset": 1915
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 10,
+                    "startColumn": 4,
+                    "startOffset": 1920,
+                    "endColumn": 37,
+                    "endOffset": 1953
+                },
+                "from": {
+                    "file": "C:\\Users\\Administrator\\Desktop\\xxxx\\ChengZiYiTi\\PulltorefreshDemo\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 10,
+                        "startColumn": 4,
+                        "startOffset": 1920,
+                        "endColumn": 37,
+                        "endOffset": 1953
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 11,
+                    "startColumn": 4,
+                    "startOffset": 1958,
+                    "endColumn": 39,
+                    "endOffset": 1993
+                },
+                "from": {
+                    "file": "C:\\Users\\Administrator\\Desktop\\xxxx\\ChengZiYiTi\\PulltorefreshDemo\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 11,
+                        "startColumn": 4,
+                        "startOffset": 1958,
+                        "endColumn": 39,
+                        "endOffset": 1993
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 12,
+                    "startColumn": 4,
+                    "startOffset": 1998,
+                    "endColumn": 36,
+                    "endOffset": 2030
+                },
+                "from": {
+                    "file": "C:\\Users\\Administrator\\Desktop\\xxxx\\ChengZiYiTi\\PulltorefreshDemo\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 12,
+                        "startColumn": 4,
+                        "startOffset": 1998,
+                        "endColumn": 36,
+                        "endOffset": 2030
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 13,
+                    "startColumn": 4,
+                    "startOffset": 2035,
+                    "endColumn": 52,
+                    "endOffset": 2083
+                },
+                "from": {
+                    "file": "C:\\Users\\Administrator\\Desktop\\xxxx\\ChengZiYiTi\\PulltorefreshDemo\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 13,
+                        "startColumn": 4,
+                        "startOffset": 2035,
+                        "endColumn": 52,
+                        "endOffset": 2083
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 14,
+                    "startColumn": 4,
+                    "startOffset": 2088,
+                    "endColumn": 54,
+                    "endOffset": 2138
+                },
+                "from": {
+                    "file": "C:\\Users\\Administrator\\Desktop\\xxxx\\ChengZiYiTi\\PulltorefreshDemo\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 14,
+                        "startColumn": 4,
+                        "startOffset": 2088,
+                        "endColumn": 54,
+                        "endOffset": 2138
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 15,
+                    "startColumn": 4,
+                    "startOffset": 2143,
+                    "endColumn": 52,
+                    "endOffset": 2191
+                },
+                "from": {
+                    "file": "C:\\Users\\Administrator\\Desktop\\xxxx\\ChengZiYiTi\\PulltorefreshDemo\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 15,
+                        "startColumn": 4,
+                        "startOffset": 2143,
+                        "endColumn": 52,
+                        "endOffset": 2191
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 16,
+                    "startColumn": 4,
+                    "startOffset": 2196,
+                    "endColumn": 101,
+                    "endOffset": 2293
+                },
+                "from": {
+                    "file": "C:\\Users\\Administrator\\Desktop\\xxxx\\ChengZiYiTi\\PulltorefreshDemo\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 16,
+                        "startColumn": 4,
+                        "startOffset": 2196,
+                        "endColumn": 101,
+                        "endOffset": 2293
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 17,
+                    "startColumn": 4,
+                    "startOffset": 2298,
+                    "endColumn": 113,
+                    "endOffset": 2407
+                },
+                "from": {
+                    "file": "C:\\Users\\Administrator\\Desktop\\xxxx\\ChengZiYiTi\\PulltorefreshDemo\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 17,
+                        "startColumn": 4,
+                        "startOffset": 2298,
+                        "endColumn": 113,
+                        "endOffset": 2407
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 18,
+                    "startColumn": 4,
+                    "startOffset": 2412,
+                    "endColumn": 107,
+                    "endOffset": 2515
+                },
+                "from": {
+                    "file": "C:\\Users\\Administrator\\Desktop\\xxxx\\ChengZiYiTi\\PulltorefreshDemo\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 18,
+                        "startColumn": 4,
+                        "startOffset": 2412,
+                        "endColumn": 107,
+                        "endOffset": 2515
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 19,
+                    "startColumn": 4,
+                    "startOffset": 2520,
+                    "endColumn": 71,
+                    "endOffset": 2587
+                },
+                "from": {
+                    "file": "C:\\Users\\Administrator\\Desktop\\xxxx\\ChengZiYiTi\\PulltorefreshDemo\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 19,
+                        "startColumn": 4,
+                        "startOffset": 2520,
+                        "endColumn": 71,
+                        "endOffset": 2587
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 20,
+                    "startColumn": 4,
+                    "startOffset": 2592,
+                    "endColumn": 69,
+                    "endOffset": 2657
+                },
+                "from": {
+                    "file": "C:\\Users\\Administrator\\Desktop\\xxxx\\ChengZiYiTi\\PulltorefreshDemo\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 20,
+                        "startColumn": 4,
+                        "startOffset": 2592,
+                        "endColumn": 69,
+                        "endOffset": 2657
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 21,
+                    "startColumn": 4,
+                    "startOffset": 2662,
+                    "endColumn": 77,
+                    "endOffset": 2735
+                },
+                "from": {
+                    "file": "C:\\Users\\Administrator\\Desktop\\xxxx\\ChengZiYiTi\\PulltorefreshDemo\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 21,
+                        "startColumn": 4,
+                        "startOffset": 2662,
+                        "endColumn": 77,
+                        "endOffset": 2735
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 22,
+                    "startColumn": 4,
+                    "startOffset": 2740,
+                    "endLine": 28,
+                    "endColumn": 12,
+                    "endOffset": 3026
+                },
+                "from": {
+                    "file": "C:\\Users\\Administrator\\Desktop\\xxxx\\ChengZiYiTi\\PulltorefreshDemo\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 22,
+                        "startColumn": 4,
+                        "startOffset": 2740,
+                        "endLine": 28,
+                        "endColumn": 12,
+                        "endOffset": 3026
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 29,
+                    "startColumn": 4,
+                    "startOffset": 3031,
+                    "endLine": 31,
+                    "endColumn": 12,
+                    "endOffset": 3186
+                },
+                "from": {
+                    "file": "C:\\Users\\Administrator\\Desktop\\xxxx\\ChengZiYiTi\\PulltorefreshDemo\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 29,
+                        "startColumn": 4,
+                        "startOffset": 3031,
+                        "endLine": 31,
+                        "endColumn": 12,
+                        "endOffset": 3186
+                    }
+                }
+            }
+        ]
+    }
+]
