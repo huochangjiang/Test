@@ -1,13 +1,12 @@
 package cn.yumutech.bean;
 
 /**
- * Created by huo on 2016/11/11.
+ * Created by Allen on 2016/11/12.
  */
-public class MessageBean {
-
+public class UserLoginBeen {
     /**
-     * account : 
-     * session : 
+     * account :
+     * session :
      */
 
     public UserBean user;
@@ -16,7 +15,7 @@ public class MessageBean {
      */
 
     public DataBean data;
-    public MessageBean(UserBean user, DataBean data) {
+    public UserLoginBeen(UserBean user, DataBean data) {
         this.user = user;
         this.data = data;
     }
@@ -63,9 +62,11 @@ public class MessageBean {
 
     public static class DataBean {
         public String mobile;
+        public String validcode;
 
-        public DataBean(String mobile){
+        public DataBean(String mobile,String validcode){
             this.mobile=mobile;
+            this.validcode=validcode;
         }
         public String getMobile() {
             return mobile;
@@ -73,6 +74,13 @@ public class MessageBean {
 
         public void setMobile(String mobile) {
             this.mobile = mobile;
+        }
+        public String getValidcode() {
+            return validcode;
+        }
+
+        public void setValidcode(String validcode) {
+            this.validcode = validcode;
         }
     }
 }
