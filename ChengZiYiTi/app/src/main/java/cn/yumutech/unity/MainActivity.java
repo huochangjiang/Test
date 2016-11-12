@@ -1,5 +1,6 @@
 package cn.yumutech.unity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -22,6 +23,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     List<ImageView> ivs=new ArrayList<>();
     List<TextView> tvs=new ArrayList<>();
     public Fragment last_fragment;
+    private ImageView login;
     private int index=0;
 
     public int [] mBackgrounds=new int[]{
@@ -47,6 +49,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         LinearLayout ll_animation=(LinearLayout) findViewById(R.id.ll_animation);
         LinearLayout ll_applction=(LinearLayout) findViewById(R.id.ll_applciton);
         LinearLayout ll_shop=(LinearLayout) findViewById(R.id.ll_shop);
+        login= (ImageView) findViewById(R.id.login);
+        login.setOnClickListener(this);
         ll_animation.setOnClickListener(this);
         ll_story.setOnClickListener(this);
         ll_applction.setOnClickListener(this);
@@ -87,6 +91,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 showFragmentWithoutBackStackAndAnim(PersonFragment.newInstance(),last_fragment);
                 last_fragment=PersonFragment.newInstance();
                 changeColor(3);
+                break;
+            case R.id.login:
+                Intent intent=new Intent();
+                intent.setClass(MainActivity.this,LogoActivity.class);
+                startActivity(intent);
                 break;
         }
     }

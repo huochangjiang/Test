@@ -7,6 +7,34 @@
     tools:context="cn.yumutech.unity.MainActivity">
 
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/id_toolbar"
+        app:contentInsetStart="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="首页1"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:id="@+id/tv_home"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:id="@+id/login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/tiaojiao"
+                android:layout_alignParentRight="true"/>
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
+
     <FrameLayout
         android:id="@+id/layout"
         android:background="@color/white"

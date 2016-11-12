@@ -40,9 +40,9 @@ public class RegistActivity extends BaseActivity implements View.OnClickListener
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.zhuce:
-
-                break;
+//            case R.id.zhuce:
+//
+//                break;
         }
     }
 }
