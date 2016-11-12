@@ -1,5 +1,7 @@
 package cn.yumutech.netUtil.inter;
 
+import cn.yumutech.bean.HuDongItem;
+import cn.yumutech.bean.HuDongJIaoLiu;
 import cn.yumutech.bean.LeaderActivitsDetails;
 import cn.yumutech.bean.LeaderActivitys;
 import cn.yumutech.bean.MessageBean;
@@ -63,6 +65,11 @@ Observable<WorkDetails> getWorkDetais(@Query("req") String policy);
     //验证码
     @POST("UserValidCode")
     Observable<YanZhenMessageBean> getMessageVail(@Query("req") String messge);
-
+    //获取互动交流接口
+    @POST("ExchangeList")
+    Observable<HuDongJIaoLiu> getHuDongJiaoLiu(@Query(("req")) String jiaoliu);
+    //获取他山之时详情数据
+    @POST("ExchangeItem")
+    Observable<HuDongItem> getHuDongItem(@Query("req") String item);
 
 }

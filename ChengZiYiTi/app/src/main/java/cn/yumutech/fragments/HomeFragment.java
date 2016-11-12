@@ -72,6 +72,8 @@ public class HomeFragment extends BaseFragment {
         baibaos.add(new BaiBao("工作状态", R.drawable.touxiao));
         baibaos.add(new BaiBao("项目工作", R.drawable.touxiao));
         baibaos.add(new BaiBao("友情链接", R.drawable.touxiao));
+        baibaos.add(new BaiBao("督察督办", R.drawable.touxiao));
+        baibaos.add(new BaiBao("互动交流", R.drawable.touxiao));
 
         BaiBaoAdatper baiBaoAdatper=new BaiBaoAdatper(getActivity(), (ArrayList<BaiBao>) baibaos);
         myGridView.setAdapter(baiBaoAdatper);
