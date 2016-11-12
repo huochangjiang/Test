@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import cn.yumutech.fragments.CommuMessageFragment;
  */
 public class CommunicationActivity extends BaseActivity{
     private ViewPager viewpager;
+    private ImageView back;
     private List<Fragment> fragmentlist=new ArrayList<Fragment>();
     private TextView tv_message,tv_contact,tv_group;
     @Override
@@ -32,6 +34,7 @@ public class CommunicationActivity extends BaseActivity{
         tv_message= (TextView) findViewById(R.id.tv_message);
         tv_contact= (TextView) findViewById(R.id.tv_contact);
         tv_group= (TextView) findViewById(R.id.tv_group);
+        back= (ImageView) findViewById(R.id.back);
         CollectOnclickListener listener = new CollectOnclickListener();
         tv_message.setOnClickListener(listener);
         tv_contact.setOnClickListener(listener);
@@ -54,7 +57,12 @@ public class CommunicationActivity extends BaseActivity{
 
     @Override
     protected void initListeners() {
-
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
     private class CollectOnclickListener implements View.OnClickListener{
 
