@@ -86,19 +86,7 @@ public class Api {
 
     private static ApiServer mangoApi = null;
 
-    public static ApiServer getMangoApi() {
-        synchronized (monitor) {
-            if (mangoApi == null) {
-                mangoApi = new Retrofit.Builder()
-                        .baseUrl("http://api.xgimi.com/apis/")
-                        .client(client)
-                        .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build().create(ApiServer.class);
-            }
-            return mangoApi;
-        }
-    }
+
     public static ApiServer getMangoApi1() {
         synchronized (monitor) {
             if (mangoApi == null) {
