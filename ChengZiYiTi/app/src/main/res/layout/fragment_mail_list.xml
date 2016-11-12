@@ -21,7 +21,7 @@
             <TextView
                 android:layout_marginLeft="20dp"
                 android:layout_width="wrap_content"
-                android:text="个人"
+                android:text="会话"
                 android:textSize="16sp"
                 android:textColor="@color/white"
                 android:id="@+id/tv_home"
@@ -29,7 +29,7 @@
             <TextView
                 android:layout_marginLeft="20dp"
                 android:layout_width="wrap_content"
-                android:text="单位"
+                android:text="联系人"
                 android:textSize="16sp"
                 android:textColor="@color/white"
                 android:id="@+id/danwei"
@@ -38,7 +38,7 @@
             <TextView
                 android:layout_marginLeft="20dp"
                 android:layout_width="wrap_content"
-                android:text="名片"
+                android:text="群组"
                 android:textSize="16sp"
                 android:textColor="@color/white"
                 android:id="@+id/mingpian"
@@ -62,7 +62,9 @@
     <FrameLayout
         android:id="@+id/content_frame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        />
+
    <TextView
        android:layout_width="150dp"
        android:text="aaaa"

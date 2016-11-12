@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -25,6 +27,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     public Fragment last_fragment;
     private ImageView login;
     private int index=0;
+    private RelativeLayout head;
+    private Toolbar id_toolbar;
 
     public int [] mBackgrounds=new int[]{
             R.drawable.two,R.drawable.two,R.drawable.two,R.drawable.two
@@ -49,6 +53,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         LinearLayout ll_applction=(LinearLayout) findViewById(R.id.ll_applciton);
         LinearLayout ll_shop=(LinearLayout) findViewById(R.id.ll_shop);
         login= (ImageView) findViewById(R.id.login);
+        head= (RelativeLayout) findViewById(R.id.head);
+        id_toolbar= (Toolbar) findViewById(R.id.id_toolbar);
         login.setOnClickListener(this);
         ll_animation.setOnClickListener(this);
         ll_story.setOnClickListener(this);
@@ -70,24 +76,28 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.ll_animation:
+                id_toolbar.setVisibility(View.VISIBLE);
                 index=1;
                 showFragmentWithoutBackStackAndAnim(HomeFragment.newInstance(),last_fragment);
                 last_fragment=HomeFragment.newInstance();
                 changeColor(0);
                 break;
             case R.id.ll_story:
+                id_toolbar.setVisibility(View.VISIBLE);
                 index=0;
                 showFragmentWithoutBackStackAndAnim(SuperviseFragment.newInstance(),last_fragment);
                 last_fragment=SuperviseFragment.newInstance();
                 changeColor(1);
                 break;
             case R.id.ll_applciton:
+                id_toolbar.setVisibility(View.GONE);
                 index=2;
                 showFragmentWithoutBackStackAndAnim(MailListFragment.newInstance(),last_fragment);
                 last_fragment=MailListFragment.newInstance();
                 changeColor(2);
                 break;
             case R.id.ll_shop:
+                id_toolbar.setVisibility(View.VISIBLE);
                 showFragmentWithoutBackStackAndAnim(PersonFragment.newInstance(),last_fragment);
                 last_fragment=PersonFragment.newInstance();
                 changeColor(3);

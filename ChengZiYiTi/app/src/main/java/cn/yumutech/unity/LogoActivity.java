@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -209,6 +210,8 @@ public class LogoActivity extends BaseActivity implements View.OnClickListener{
         @Override
         public void onNext(UserLogin userLogin) {
             if(userLogin!=null&&userLogin.status.code!=null){
+                String a=new Gson().toJson(userLogin);
+                Log.e("info",a);
                 getToken();
                 if(userLogin.status.code.equals("0")){
                     //正常登录

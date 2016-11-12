@@ -21,6 +21,7 @@ import cn.yumutech.bean.LeaderActivitys;
 import cn.yumutech.bean.RequestCanShu;
 import cn.yumutech.netUtil.Api;
 import cn.yumutech.unity.BaseFragment;
+import cn.yumutech.unity.CommunicationActivity;
 import cn.yumutech.unity.FriendsUrlActivity;
 import cn.yumutech.unity.LeaderActivitysActivity;
 import cn.yumutech.unity.PolicyFileActivity;
@@ -117,6 +118,9 @@ public class HomeFragment extends BaseFragment {
                     startActivity(intent);
                 }else if(i==4){
                     Intent intent=new Intent(getActivity(), FriendsUrlActivity.class);
+                    startActivity(intent);
+                }else if(i==6){
+                    Intent intent=new Intent(getActivity(), CommunicationActivity.class);
                     startActivity(intent);
                 }
             }
