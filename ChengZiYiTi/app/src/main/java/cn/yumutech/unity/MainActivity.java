@@ -42,6 +42,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         addFragement(PersonFragment.newInstance());
         initTabs();
         LinearLayout ll_story=(LinearLayout) findViewById(R.id.ll_story);
+        showFragmentWithoutBackStackAndAnim(HomeFragment.newInstance(),last_fragment);
 
         LinearLayout ll_animation=(LinearLayout) findViewById(R.id.ll_animation);
         LinearLayout ll_applction=(LinearLayout) findViewById(R.id.ll_applciton);
@@ -50,7 +51,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         ll_story.setOnClickListener(this);
         ll_applction.setOnClickListener(this);
         ll_shop.setOnClickListener(this);
-        ll_animation.performClick();
+//        ll_animation.performClick();
     }
 
     @Override
@@ -73,14 +74,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 break;
             case R.id.ll_story:
                 index=0;
-                showFragmentWithoutBackStackAndAnim(SuperviseFragment.newInstance(),last_fragment);
-                last_fragment=SuperviseFragment.newInstance();
+                showFragmentWithoutBackStackAndAnim(MailListFragment.newInstance(),last_fragment);
+                last_fragment=MailListFragment.newInstance();
                 changeColor(1);
                 break;
             case R.id.ll_applciton:
-                index=2;
-                showFragmentWithoutBackStackAndAnim(MailListFragment.newInstance(),last_fragment);
-                last_fragment=MailListFragment.newInstance();
+                showFragmentWithoutBackStackAndAnim(SuperviseFragment.newInstance(),last_fragment);
+                last_fragment=SuperviseFragment.newInstance();
                 changeColor(2);
                 break;
             case R.id.ll_shop:

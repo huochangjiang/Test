@@ -13,9 +13,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/id_toolbar"
-        android:layout_marginBottom="52dp">
+       >
     </FrameLayout>
     <LinearLayout
+        android:visibility="gone"
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_alignParentBottom="true"
@@ -57,7 +58,7 @@
                 android:id="@+id/tv_one"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="督查督办"/>
+                android:text="通讯录"/>
         </LinearLayout>
 
         <LinearLayout
@@ -78,7 +79,7 @@
                 android:textColor="@color/small_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="通讯录"/>
+                android:text="消息"/>
         </LinearLayout>
         <LinearLayout
             android:id="@+id/ll_shop"
