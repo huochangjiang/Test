@@ -22,6 +22,7 @@
                 android:src="@drawable/gimi_back"
                 android:layout_height="match_parent" />
             <LinearLayout
+                android:id="@+id/feilei"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true">
@@ -30,7 +31,7 @@
                     android:layout_centerInParent="true"
                     android:text="消息"
                     android:textSize="18sp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:id="@+id/tv_message"
                     android:layout_height="wrap_content" />
                 <TextView
@@ -52,8 +53,17 @@
                     android:id="@+id/tv_group"
                     android:layout_height="wrap_content" />
             </LinearLayout>
+            <ImageView
+                android:layout_alignParentBottom="true"
+                android:id="@+id/hengxian"
+                android:layout_width="60dp"
+                android:layout_height="3dp"
+                android:layout_marginLeft="120dp"
+                android:background="@color/white"/>
         </RelativeLayout>
+
     </android.support.v7.widget.Toolbar>
+
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"

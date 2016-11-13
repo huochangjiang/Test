@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/touxiang"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/touxiao"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"/>
+    <TextView
+        android:id="@+id/details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="一长串一长串一长串一长串一长串一长串一长
+        串一长串一长串一长串一长串一长串一长串一长串
+        一长串一长串一一长串一长串一长串一长串一长串一
+        长串一长串一长串一长串一长串一长串"
+        android:layout_toRightOf="@+id/touxiang"
+        android:layout_alignTop="@+id/touxiang"
+        android:layout_marginRight="10dp"/>
+    <TextView
+        android:id="@+id/time"
+        android:layout_below="@+id/details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1995-2-5 12:3:4"
+        android:layout_alignLeft="@+id/touxiang"
+        android:layout_marginTop="20dp" />
+    <RelativeLayout
+        android:id="@+id/pinglun"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_alignTop="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/commentsnum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="万多条评论"
+            android:textColor="@color/colorPrimary"
+            />
+        <ImageView
+            android:layout_toRightOf="@+id/commentsnum"
+            android:layout_marginLeft="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/next"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
+    <View
+        android:layout_below="@+id/pinglun"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/fengexianone"/>
+</RelativeLayout>

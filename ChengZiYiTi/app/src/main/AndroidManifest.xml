@@ -49,6 +49,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".CommunicationActivity"/>
+        <activity android:name=".TaShanZhiShiActivity"/>
+        <activity android:name=".TaShanDetailActivity"/>
+        <activity android:name=".TaShanCommentsActivity"/>
+
         <activity android:name=".LeaderActivitysActivity" />
         <activity android:name=".LeadersDetaislActivity" />
         <activity android:name=".PolicyFileActivity" />
