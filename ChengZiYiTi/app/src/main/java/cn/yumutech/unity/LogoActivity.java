@@ -45,7 +45,7 @@ public class LogoActivity extends BaseActivity implements View.OnClickListener{
     private ImageView back;
     private int time=60;
     private TextView token;
-
+    private UserLogin mLogin;
 
     @Override
     protected int getLayoutId() {
@@ -212,7 +212,8 @@ public class LogoActivity extends BaseActivity implements View.OnClickListener{
             if(userLogin!=null&&userLogin.status.code!=null){
                 String a=new Gson().toJson(userLogin);
                 Log.e("info",a);
-                getToken();
+                mLogin=userLogin;
+                getToken(mLogin);
                 if(userLogin.status.code.equals("0")){
                     //正常登录
                     Toast.makeText(LogoActivity.this,userLogin.status.message,Toast.LENGTH_SHORT).show();
@@ -227,8 +228,8 @@ public class LogoActivity extends BaseActivity implements View.OnClickListener{
     }
    };
     //获取token
-    public void getToken(){
-        UserTokenBeen userTokenBeen=new UserTokenBeen(new UserTokenBeen.data("unity","1234567890"));
+    public void getToken(UserLogin userLogin){
+        UserTokenBeen userTokenBeen=new UserTokenBeen(new UserTokenBeen.data(userLogin.data.nickname,userLogin.data.mobile));
         getUserToken(new Gson().toJson(userTokenBeen));
     }
 

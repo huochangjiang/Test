@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="10dp">
+   >
 
     <ImageView
         android:id="@+id/touxiang"
@@ -17,6 +17,7 @@
         android:layout_height="wrap_content"
         android:text="用户"
         android:textSize="18sp"
+        android:layout_marginLeft="10dp"
         android:textColor="@color/black"
         android:layout_toRightOf="@+id/touxiang"
         android:layout_alignTop="@+id/touxiang"/>
@@ -35,6 +36,7 @@
         android:layout_marginRight="10dp"/>
     <TextView
         android:id="@+id/time"
+        android:layout_marginBottom="10dp"
         android:layout_below="@+id/details"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -67,7 +69,7 @@
         android:id="@+id/xian"
         android:layout_alignLeft="@+id/touxiang"
         android:layout_below="@+id/pinglun"
-        android:layout_marginTop="10dp"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:background="@color/fengexianone"/>

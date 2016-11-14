@@ -1,6 +1,8 @@
 package cn.yumutech.netUtil.inter;
 
+import cn.yumutech.bean.AddPingLun;
 import cn.yumutech.bean.ExchangeCommenList;
+import cn.yumutech.bean.GetTaShanPingLunLieBIao;
 import cn.yumutech.bean.HuDongItem;
 import cn.yumutech.bean.HuDongJIaoLiu;
 import cn.yumutech.bean.LeaderActivitsDetails;
@@ -83,8 +85,17 @@ Observable<WorkDetails> getWorkDetais(@Query("req") String policy);
     //退出群
     @POST("GroupQuit")
     Observable<TuiChuQun> getTuiChuQun(@Query("req") String item);
+
     //查看群成员
 //    @POST("GroupQueryUser")
+
+//获取他山之时评论列表数据
+    @POST("ExchangeCommentList")
+    Observable<GetTaShanPingLunLieBIao> getPingLunLieBiao(@Query("req") String item);
+    //添加他山之石评论
+    @POST("ExchangeCommentAdd")
+    Observable<AddPingLun> getAddPingLun(@Query("req") String item);
+
 
 
 
