@@ -4,6 +4,7 @@ import cn.yumutech.bean.AddPingLun;
 import cn.yumutech.bean.ChaXunQunMenmber;
 import cn.yumutech.bean.CreateQunZu;
 import cn.yumutech.bean.ExchangeCommenList;
+import cn.yumutech.bean.FaBuRenWu;
 import cn.yumutech.bean.GetTaShanPingLunLieBIao;
 import cn.yumutech.bean.HuDongItem;
 import cn.yumutech.bean.HuDongJIaoLiu;
@@ -20,6 +21,8 @@ import cn.yumutech.bean.UserLogin;
 import cn.yumutech.bean.UserToken;
 import cn.yumutech.bean.WorkDetails;
 import cn.yumutech.bean.WorkListManger;
+import cn.yumutech.bean.XianShiMyFaBuRenWU;
+import cn.yumutech.bean.XianShiRenWuXiangQing;
 import cn.yumutech.bean.YanZhenMessageBean;
 import cn.yumutech.bean.YouQIngLianJie;
 import cn.yumutech.bean.ZhengCeFile;
@@ -107,4 +110,13 @@ Observable<WorkDetails> getWorkDetais(@Query("req") String policy);
 //查询群成员
     @POST("GroupQueryUser")
     Observable<ChaXunQunMenmber> getChaXunMember(@Query("req") String item);
+    //发布任务
+    @POST("PublishTask")
+    Observable<FaBuRenWu> getFaBuRenWu();
+    //显示我发布的任务
+    @POST("ShowMyPublishedTask")
+    Observable<XianShiMyFaBuRenWU> getXianShiFaBu(@Query("req") String item);
+    //显示任务详情
+    @POST("ShowTaskDetail")
+    Observable<XianShiRenWuXiangQing> getRenWuDetail(@Query("req") String item);
 }
