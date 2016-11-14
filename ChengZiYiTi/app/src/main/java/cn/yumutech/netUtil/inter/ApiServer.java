@@ -84,7 +84,7 @@ Observable<WorkDetails> getWorkDetais(@Query("req") String policy);
     @POST("GroupQuit")
     Observable<TuiChuQun> getTuiChuQun(@Query("req") String item);
     //查看群成员
-    @POST("GroupQueryUser")
+//    @POST("GroupQueryUser")
 
 
 

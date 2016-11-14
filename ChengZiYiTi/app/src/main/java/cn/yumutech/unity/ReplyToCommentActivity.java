@@ -3,12 +3,12 @@ package cn.yumutech.unity;
 import android.os.Bundle;
 
 /**
- * Created by Administrator on 2016/11/14.
+ * Created by Allen on 2016/11/14.
  */
-public class AfterLoginActivity extends BaseActivity{
+public class ReplyToCommentActivity extends BaseActivity{
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_after_login;
+        return 0;
     }
 
     @Override

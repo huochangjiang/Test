@@ -1,10 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/jiangese"  >
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/id_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <ImageView
+                android:scaleType="centerInside"
+                android:layout_width="40dp"
+                android:id="@+id/back"
+                android:src="@drawable/gimi_back"
+                android:layout_height="match_parent" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="首页"
+                android:textSize="18sp"
+                android:textColor="@color/white"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/back"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_centerInParent="true"
+                android:textSize="18sp"
+                android:text="个人信息"
+                android:textColor="@color/white"
+                android:id="@+id/tv_home"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
     <RelativeLayout
         android:id="@+id/rl"
+        android:layout_below="@+id/id_toolbar"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:background="@drawable/tou_bei">
@@ -28,6 +64,7 @@
         android:text="大头儿子"/>
     </RelativeLayout>
     <LinearLayout
+        android:layout_below="@+id/rl"
         android:orientation="vertical"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
@@ -45,4 +82,18 @@
             layout="@layout/user_item_function"
             android:background="#ffffff" />
     </LinearLayout>
-</LinearLayout>
+    <Button
+        android:id="@+id/denglu"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:layout_width="match_parent"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/xian"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/juselogo"
+        android:text="退出登录"
+        android:textColor="#ffffff"
+        android:textSize="17sp" />
+</RelativeLayout>
