@@ -1,10 +1,10 @@
 package cn.yumutech.netUtil.inter;
 
+import cn.yumutech.bean.ExchangeCommenList;
 import cn.yumutech.bean.HuDongItem;
 import cn.yumutech.bean.HuDongJIaoLiu;
 import cn.yumutech.bean.LeaderActivitsDetails;
 import cn.yumutech.bean.LeaderActivitys;
-import cn.yumutech.bean.MessageBean;
 import cn.yumutech.bean.MovieRecommend;
 import cn.yumutech.bean.PrijectDetaisl;
 import cn.yumutech.bean.ProjectManger;
@@ -30,6 +30,10 @@ public interface ApiServer {
     //登录接口
     @POST("UserToken")
     Observable<UserToken> getUserToken(@Query("req") String messge);
+    //他山之石评论列表
+    @POST("ExchangeCommentList")
+    Observable<ExchangeCommenList> getExchangeCommenList(@Query("req") String list);
+
     //影视推荐
     @GET("rest/VideoSourceService/getVideoIndex?u_=1&v_=1&t_=1&p_=2348")
     Observable<MovieRecommend> getMovieRecmmend();

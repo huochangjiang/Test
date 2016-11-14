@@ -11,6 +11,15 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"/>
     <TextView
+        android:id="@+id/user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="用户"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:layout_toRightOf="@+id/touxiang"
+        android:layout_alignTop="@+id/touxiang"/>
+    <TextView
         android:id="@+id/details"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,7 +28,9 @@
         一长串一长串一一长串一长串一长串一长串一长串一
         长串一长串一长串一长串一长串一长串"
         android:layout_toRightOf="@+id/touxiang"
-        android:layout_alignTop="@+id/touxiang"
+        android:layout_below="@+id/user"
+        android:layout_marginTop="10dp"
+        android:layout_alignLeft="@+id/user"
         android:layout_marginRight="10dp"/>
     <TextView
         android:id="@+id/time"
@@ -27,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="1995-2-5 12:3:4"
-        android:layout_alignLeft="@+id/touxiang"
+        android:layout_alignLeft="@+id/details"
         android:layout_marginTop="20dp" />
     <RelativeLayout
         android:id="@+id/pinglun"
@@ -52,6 +63,8 @@
             android:layout_centerVertical="true"/>
     </RelativeLayout>
     <View
+        android:id="@+id/xian"
+        android:layout_alignLeft="@+id/touxiang"
         android:layout_below="@+id/pinglun"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"

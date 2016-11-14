@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/jiangese"  >
+    <RelativeLayout
+        android:id="@+id/rl"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@drawable/tou_bei">
+    <cn.yumutech.weight.Yuanxing
+        android:id="@+id/touxiang"
+        android:layout_width="90dp"
+       android:layout_centerInParent="true"
+        android:layout_marginLeft="10dp"
+        android:layout_height="90dp"
+        android:src="@drawable/touxiao" />
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+       android:layout_below="@+id/touxiang"
+       android:layout_centerHorizontal="true"
+        android:textSize="16sp"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/black"
+        android:text="大头儿子"/>
+    </RelativeLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <include
+            android:id="@+id/one"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            layout="@layout/user_item_function"
+            android:background="#ffffff" />
+        <include
+            android:id="@+id/two"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            layout="@layout/user_item_function"
+            android:background="#ffffff" />
+    </LinearLayout>
+</LinearLayout>
