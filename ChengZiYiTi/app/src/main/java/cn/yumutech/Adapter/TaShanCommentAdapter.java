@@ -1,6 +1,7 @@
 package cn.yumutech.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import cn.yumutech.bean.ExchangeCommenList;
 import cn.yumutech.unity.R;
+import cn.yumutech.unity.ReplyToCommentActivity;
 
 /**
  * Created by Administrator on 2016/11/14.
@@ -59,13 +61,21 @@ public class TaShanCommentAdapter extends BaseAdapter{
         }
 
         vh.details.setText(data.data.get(i).content);
-        vh.time.setText(data.data.get(i).publish_date);
-        vh.user.setText(data.data.get(i).publish_user_name);
+        vh.time.setText(data.data.get(i).publish_user_name);
+        vh.user.setText(data.data.get(i).publish_date);
       //  vh.commentsnum.setText(data.data.get(i).comment_count);
        // ImageLoader.getInstance().displayImage(data.data.get(i).logo_path,vh.image);
         if(i==data.data.size()-1){
             vh.xian.setVisibility(View.GONE);
         }
+        vh.commentsnum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent();
+                intent.setClass(context, ReplyToCommentActivity.class);
+                context.startActivity(intent);
+            }
+        });
         return myView;
     }
     public class ViewHolder{

@@ -8,7 +8,7 @@ import android.os.Bundle;
 public class AfterLoginActivity extends BaseActivity{
     @Override
     protected int getLayoutId() {
-        return 0;
+        return R.layout.activity_after_login;
     }
 
     @Override

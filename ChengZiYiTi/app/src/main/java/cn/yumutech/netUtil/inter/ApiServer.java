@@ -92,6 +92,10 @@ Observable<WorkDetails> getWorkDetais(@Query("req") String policy);
     //退出群
     @POST("GroupQuit")
     Observable<TuiChuQun> getTuiChuQun(@Query("req") String item);
+
+    //查看群成员
+//    @POST("GroupQueryUser")
+
 //获取他山之时评论列表数据
     @POST("ExchangeCommentList")
     Observable<GetTaShanPingLunLieBIao> getPingLunLieBiao(@Query("req") String item);
