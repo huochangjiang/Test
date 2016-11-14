@@ -4,10 +4,11 @@ import cn.yumutech.bean.HuDongItem;
 import cn.yumutech.bean.HuDongJIaoLiu;
 import cn.yumutech.bean.LeaderActivitsDetails;
 import cn.yumutech.bean.LeaderActivitys;
-import cn.yumutech.bean.MessageBean;
 import cn.yumutech.bean.MovieRecommend;
 import cn.yumutech.bean.PrijectDetaisl;
 import cn.yumutech.bean.ProjectManger;
+import cn.yumutech.bean.ShuaXinQunZhu;
+import cn.yumutech.bean.TuiChuQun;
 import cn.yumutech.bean.UserLogin;
 import cn.yumutech.bean.UserToken;
 import cn.yumutech.bean.WorkDetails;
@@ -71,5 +72,15 @@ Observable<WorkDetails> getWorkDetais(@Query("req") String policy);
     //获取他山之时详情数据
     @POST("ExchangeItem")
     Observable<HuDongItem> getHuDongItem(@Query("req") String item);
+    //刷新群主信息
+    @POST("GroupRefresh")
+    Observable<ShuaXinQunZhu> getShuaXinQunZhu(@Query("req") String item);
+    //退出群
+    @POST("GroupQuit")
+    Observable<TuiChuQun> getTuiChuQun(@Query("req") String item);
+    //查看群成员
+    @POST("GroupQueryUser")
+
+
 
 }
