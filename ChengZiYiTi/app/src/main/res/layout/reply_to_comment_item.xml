@@ -5,10 +5,10 @@
 
     <cn.yumutech.weight.Yuanxing
         android:id="@+id/touxiang"
-        android:layout_width="30dp"
+        android:layout_width="50dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
-        android:layout_height="30dp"
+        android:layout_height="50dp"
         android:src="@drawable/touxiao" />
     <TextView
         android:id="@+id/admin"

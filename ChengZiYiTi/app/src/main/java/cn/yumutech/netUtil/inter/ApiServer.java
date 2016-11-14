@@ -1,10 +1,14 @@
 package cn.yumutech.netUtil.inter;
 
 import cn.yumutech.bean.AddPingLun;
+import cn.yumutech.bean.ChaXunQunMenmber;
+import cn.yumutech.bean.CreateQunZu;
 import cn.yumutech.bean.ExchangeCommenList;
 import cn.yumutech.bean.GetTaShanPingLunLieBIao;
 import cn.yumutech.bean.HuDongItem;
 import cn.yumutech.bean.HuDongJIaoLiu;
+import cn.yumutech.bean.JieSanQun;
+import cn.yumutech.bean.JoinQun;
 import cn.yumutech.bean.LeaderActivitsDetails;
 import cn.yumutech.bean.LeaderActivitys;
 import cn.yumutech.bean.MovieRecommend;
@@ -99,4 +103,18 @@ Observable<WorkDetails> getWorkDetais(@Query("req") String policy);
 
 
 
+
+
+//添加创建群组
+    @POST("GroupCreate")
+    Observable<CreateQunZu> getCreateQunZhu(@Query("req") String item);
+    //解散群
+    @POST("GroupDismiss")
+    Observable<JieSanQun> getJieSanQun(@Query("req") String item);
+    //加入群主
+    @POST("GroupJoin")
+    Observable<JoinQun> getJoinQun(@Query("req") String item);
+//查询群成员
+    @POST("GroupQueryUser")
+    Observable<ChaXunQunMenmber> getChaXunMember(@Query("req") String item);
 }
