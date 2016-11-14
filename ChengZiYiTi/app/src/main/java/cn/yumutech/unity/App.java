@@ -12,6 +12,8 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
 import java.io.File;
 
+import io.rong.imkit.RongIM;
+
 /**
  * Created by 霍长江 on 2016/11/6.
  */
@@ -26,7 +28,11 @@ public class App extends Application{
     public void onCreate() {
         super.onCreate();
         INSTANCE=this;
+        RongIM.init(this);
         initImageLoader();
+    }
+    private void initConnect(){
+
     }
     private void initImageLoader() {
         // DisplayImageOptions options = new DisplayImageOptions.Builder()
