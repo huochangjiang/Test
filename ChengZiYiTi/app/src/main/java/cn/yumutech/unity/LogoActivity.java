@@ -1,6 +1,5 @@
 package cn.yumutech.unity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -27,6 +26,8 @@ import cn.yumutech.bean.UserToken;
 import cn.yumutech.bean.UserTokenBeen;
 import cn.yumutech.bean.YanZhenMessageBean;
 import cn.yumutech.netUtil.Api;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -209,10 +210,11 @@ public class LogoActivity extends BaseActivity implements View.OnClickListener{
 
         @Override
         public void onNext(UserLogin userLogin) {
-            if(userLogin!=null&&userLogin.status.code!=null){
+            if(userLogin!=null&&userLogin.status.code.equals("0")){
                 String a=new Gson().toJson(userLogin);
                 Log.e("info",a);
                 mLogin=userLogin;
+                connectRongYun(mLogin.data.token);
                 getToken(mLogin);
                 if(userLogin.status.code.equals("0")){
                     String logoData=new Gson().toJson(userLogin);
@@ -341,6 +343,28 @@ public class LogoActivity extends BaseActivity implements View.OnClickListener{
 
         return m.matches();
 
+
+    }
+
+
+    //连接荣云服务器
+    private void connectRongYun(String token){
+        RongIM.connect(token, new RongIMClient.ConnectCallback() {
+            @Override
+            public void onTokenIncorrect() {
+                Log.e("info","-过期--");
+            }
+
+            @Override
+            public void onSuccess(String s) {
+            Log.e("info",s+"---");
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+
+            }
+        });
 
     }
 

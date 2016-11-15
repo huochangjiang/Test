@@ -3,6 +3,7 @@ package cn.yumutech.netUtil.inter;
 import cn.yumutech.bean.AddPingLun;
 import cn.yumutech.bean.ChaXunQunMenmber;
 import cn.yumutech.bean.CreateQunZu;
+import cn.yumutech.bean.DepartList;
 import cn.yumutech.bean.ExchangeCommenList;
 import cn.yumutech.bean.FaBuRenWu;
 import cn.yumutech.bean.GetTaShanPingLunLieBIao;
@@ -128,4 +129,11 @@ Observable<WorkDetails> getWorkDetais(@Query("req") String policy);
     //显示任务详情
     @POST("ShowTaskDetail")
     Observable<XianShiRenWuXiangQing> getRenWuDetail(@Query("req") String item);
+    //获取部门列表数据
+    @POST("DeptList")
+    Observable<DepartList> getBumenList(@Query("req") String item);
+    //获取用户列表
+    @POST("UserList")
+    Observable
+
 }
