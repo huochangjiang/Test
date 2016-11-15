@@ -4,9 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 
-import io.rong.imkit.model.UIConversation;
-import io.rong.imkit.widget.adapter.ConversationListAdapter;
-import io.rong.imlib.model.Conversation;
+
 
 /**
  * Created by weiqinxiao on 15/11/5.
