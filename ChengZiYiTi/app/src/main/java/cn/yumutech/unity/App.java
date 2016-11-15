@@ -1,7 +1,9 @@
 package cn.yumutech.unity;
 
-import android.app.Application;
+import android.app.ActivityManager;
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.support.multidex.MultiDexApplication;
 
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
@@ -13,11 +15,13 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import java.io.File;
 
 import io.rong.imkit.RongIM;
+import io.rong.imlib.ipc.RongExceptionHandler;
+import io.rong.push.RongPushClient;
 
 /**
  * Created by 霍长江 on 2016/11/6.
  */
-public class App extends Application{
+public class App extends MultiDexApplication {
     private static App INSTANCE;
     public static String CachePath = "image_loaders_local";
     public static App getContext() {
@@ -28,7 +32,28 @@ public class App extends Application{
     public void onCreate() {
         super.onCreate();
         INSTANCE=this;
-        RongIM.init(this);
+
+        if (getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext()))) {
+
+            //LeakCanary.install(this);//内存泄露检测
+            RongPushClient.registerHWPush(this);
+            RongPushClient.registerMiPush(this, "2882303761517473625", "5451747338625");
+
+
+            /**
+             * 注意：
+             *
+             * IMKit SDK调用第一步 初始化
+             *
+             * context上下文
+             *
+             * 只有两个进程需要初始化，主进程和 push 进程
+             */
+            //RongIM.setServerInfo("nav.cn.ronghub.com", "img.cn.ronghub.com");
+
+            Thread.setDefaultUncaughtExceptionHandler(new RongExceptionHandler(this));
+        }
+            RongIM.init(this);
         initImageLoader();
     }
     private void initConnect(){
@@ -59,5 +84,15 @@ public class App extends Application{
                 .memoryCacheExtraOptions(480, 800)
                 .diskCache(new UnlimitedDiscCache(dir)).build();
         ImageLoader.getInstance().init(loaderConfiguration);
+    }
+    public static String getCurProcessName(Context context) {
+        int pid = android.os.Process.myPid();
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningAppProcessInfo appProcess : activityManager.getRunningAppProcesses()) {
+            if (appProcess.pid == pid) {
+                return appProcess.processName;
+            }
+        }
+        return null;
     }
 }
