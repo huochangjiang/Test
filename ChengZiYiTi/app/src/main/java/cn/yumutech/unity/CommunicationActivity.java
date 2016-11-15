@@ -2,6 +2,7 @@ package cn.yumutech.unity;
 
 import android.animation.ObjectAnimator;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -12,12 +13,15 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.yumutech.Adapter.ConversationListAdapterEx;
 import cn.yumutech.Adapter.FragmentAdapter;
 import cn.yumutech.fragments.CommuContactFragment;
 import cn.yumutech.fragments.CommuGroupFragment;
-import cn.yumutech.fragments.CommuMessageFragment;
 import cn.yumutech.weight.NetAbout;
 import cn.yumutech.weight.NoViewPager;
+import io.rong.imkit.RongContext;
+import io.rong.imkit.fragment.ConversationListFragment;
+import io.rong.imlib.model.Conversation;
 
 /**
  * Created by Allen on 2016/11/13.
@@ -29,6 +33,10 @@ public class CommunicationActivity extends BaseActivity{
     private TextView tv_message,tv_contact,tv_group;
     private ImageView xian;
     private List<TextView> tvs = new ArrayList<>();
+    private ConversationListFragment mConversationListFragment = null;
+    private Conversation.ConversationType[] mConversationsTypes = null;
+    private boolean isDebug;
+
     private int currIndex;
     @Override
     protected int getLayoutId() {
@@ -50,10 +58,12 @@ public class CommunicationActivity extends BaseActivity{
         tv_message.setOnClickListener(listener);
         tv_contact.setOnClickListener(listener);
         tv_group.setOnClickListener(listener);
-        CommuMessageFragment cmfragment=new CommuMessageFragment();
+        isDebug = getSharedPreferences("config", MODE_PRIVATE).getBoolean("isDebug", false);
+
+        Fragment conversationList = initConversationList();
         CommuContactFragment ccfragment=new CommuContactFragment();
         CommuGroupFragment cgragment=new CommuGroupFragment();
-        fragmentlist.add(cmfragment);
+        fragmentlist.add(conversationList);
         fragmentlist.add(ccfragment);
         fragmentlist.add(cgragment);
         FragmentAdapter adapter=new FragmentAdapter(getSupportFragmentManager(),fragmentlist);
@@ -61,7 +71,52 @@ public class CommunicationActivity extends BaseActivity{
         viewpager.setOffscreenPageLimit(3);
         viewpager.addOnPageChangeListener(new MyOnPageChangeListener());
     }
+    private Fragment initConversationList() {
+        if (mConversationListFragment == null) {
+            ConversationListFragment listFragment = new ConversationListFragment();
+            listFragment.setAdapter(new ConversationListAdapterEx(RongContext.getInstance()));
+            Uri uri;
+            if (isDebug) {
+                uri = Uri.parse("rong://" + getApplicationInfo().packageName).buildUpon()
+                        .appendPath("conversationlist")
+                        .appendQueryParameter(Conversation.ConversationType.PRIVATE.getName(), "true") //设置私聊会话是否聚合显示
+                        .appendQueryParameter(Conversation.ConversationType.GROUP.getName(), "true")//群组
+                        .appendQueryParameter(Conversation.ConversationType.PUBLIC_SERVICE.getName(), "false")//公共服务号
+                        .appendQueryParameter(Conversation.ConversationType.APP_PUBLIC_SERVICE.getName(), "false")//订阅号
+                        .appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "true")//系统
+                        .appendQueryParameter(Conversation.ConversationType.DISCUSSION.getName(), "true")
+                        .build();
+                mConversationsTypes = new Conversation.ConversationType[] {Conversation.ConversationType.PRIVATE,
+                        Conversation.ConversationType.GROUP,
+                        Conversation.ConversationType.PUBLIC_SERVICE,
+                        Conversation.ConversationType.APP_PUBLIC_SERVICE,
+                        Conversation.ConversationType.SYSTEM,
+                        Conversation.ConversationType.DISCUSSION
+                };
 
+            } else {
+                uri = Uri.parse("rong://" + getApplicationInfo().packageName).buildUpon()
+                        .appendPath("conversationlist")
+                        .appendQueryParameter(Conversation.ConversationType.PRIVATE.getName(), "false") //设置私聊会话是否聚合显示
+                        .appendQueryParameter(Conversation.ConversationType.GROUP.getName(), "false")//群组
+                        .appendQueryParameter(Conversation.ConversationType.PUBLIC_SERVICE.getName(), "false")//公共服务号
+                        .appendQueryParameter(Conversation.ConversationType.APP_PUBLIC_SERVICE.getName(), "false")//订阅号
+                        .appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "true")//系统
+                        .build();
+                mConversationsTypes = new Conversation.ConversationType[] {Conversation.ConversationType.PRIVATE,
+                        Conversation.ConversationType.GROUP,
+                        Conversation.ConversationType.PUBLIC_SERVICE,
+                        Conversation.ConversationType.APP_PUBLIC_SERVICE,
+                        Conversation.ConversationType.SYSTEM
+                };
+            }
+            listFragment.setUri(uri);
+            mConversationListFragment = listFragment;
+            return listFragment;
+        } else {
+            return mConversationListFragment;
+        }
+    }
     @Override
     protected void initData() {
 
