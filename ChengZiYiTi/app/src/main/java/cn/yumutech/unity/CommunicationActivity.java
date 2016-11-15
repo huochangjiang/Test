@@ -17,12 +17,13 @@ import cn.yumutech.fragments.CommuContactFragment;
 import cn.yumutech.fragments.CommuGroupFragment;
 import cn.yumutech.fragments.CommuMessageFragment;
 import cn.yumutech.weight.NetAbout;
+import cn.yumutech.weight.NoViewPager;
 
 /**
  * Created by Allen on 2016/11/13.
  */
 public class CommunicationActivity extends BaseActivity{
-    private ViewPager viewpager;
+    private NoViewPager viewpager;
     private ImageView back;
     private List<Fragment> fragmentlist=new ArrayList<Fragment>();
     private TextView tv_message,tv_contact,tv_group;
@@ -36,7 +37,7 @@ public class CommunicationActivity extends BaseActivity{
 
     @Override
     protected void initViews(Bundle savedInstanceState) {
-        viewpager= (ViewPager) findViewById(R.id.viewpager);
+        viewpager= (NoViewPager) findViewById(R.id.viewpager);
         tv_message= (TextView) findViewById(R.id.tv_message);
         tv_contact= (TextView) findViewById(R.id.tv_contact);
         tv_group= (TextView) findViewById(R.id.tv_group);

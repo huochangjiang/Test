@@ -1,8 +1,15 @@
 package cn.yumutech.netUtil.inter;
 
+import cn.yumutech.bean.AddPingLun;
+import cn.yumutech.bean.ChaXunQunMenmber;
+import cn.yumutech.bean.CreateQunZu;
 import cn.yumutech.bean.ExchangeCommenList;
+import cn.yumutech.bean.FaBuRenWu;
+import cn.yumutech.bean.GetTaShanPingLunLieBIao;
 import cn.yumutech.bean.HuDongItem;
 import cn.yumutech.bean.HuDongJIaoLiu;
+import cn.yumutech.bean.JieSanQun;
+import cn.yumutech.bean.JoinQun;
 import cn.yumutech.bean.LeaderActivitsDetails;
 import cn.yumutech.bean.LeaderActivitys;
 import cn.yumutech.bean.MovieRecommend;
@@ -14,6 +21,8 @@ import cn.yumutech.bean.UserLogin;
 import cn.yumutech.bean.UserToken;
 import cn.yumutech.bean.WorkDetails;
 import cn.yumutech.bean.WorkListManger;
+import cn.yumutech.bean.XianShiMyFaBuRenWU;
+import cn.yumutech.bean.XianShiRenWuXiangQing;
 import cn.yumutech.bean.YanZhenMessageBean;
 import cn.yumutech.bean.YouQIngLianJie;
 import cn.yumutech.bean.ZhengCeFile;
@@ -83,9 +92,40 @@ Observable<WorkDetails> getWorkDetais(@Query("req") String policy);
     //退出群
     @POST("GroupQuit")
     Observable<TuiChuQun> getTuiChuQun(@Query("req") String item);
+
     //查看群成员
 //    @POST("GroupQueryUser")
 
 
 
+    //查看群成员
+//    @POST("GroupQueryUser")
+
+//获取他山之时评论列表数据
+    @POST("ExchangeCommentList")
+    Observable<GetTaShanPingLunLieBIao> getPingLunLieBiao(@Query("req") String item);
+    //添加他山之石评论
+    @POST("ExchangeCommentAdd")
+    Observable<AddPingLun> getAddPingLun(@Query("req") String item);
+//添加创建群组
+    @POST("GroupCreate")
+    Observable<CreateQunZu> getCreateQunZhu(@Query("req") String item);
+    //解散群
+    @POST("GroupDismiss")
+    Observable<JieSanQun> getJieSanQun(@Query("req") String item);
+    //加入群主
+    @POST("GroupJoin")
+    Observable<JoinQun> getJoinQun(@Query("req") String item);
+//查询群成员
+    @POST("GroupQueryUser")
+    Observable<ChaXunQunMenmber> getChaXunMember(@Query("req") String item);
+    //发布任务
+    @POST("PublishTask")
+    Observable<FaBuRenWu> getFaBuRenWu();
+    //显示我发布的任务
+    @POST("ShowMyPublishedTask")
+    Observable<XianShiMyFaBuRenWU> getXianShiFaBu(@Query("req") String item);
+    //显示任务详情
+    @POST("ShowTaskDetail")
+    Observable<XianShiRenWuXiangQing> getRenWuDetail(@Query("req") String item);
 }

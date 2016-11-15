@@ -20,7 +20,6 @@ import java.util.TimerTask;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import cn.yumutech.bean.LeaderActivitys;
 import cn.yumutech.bean.MessageBean;
 import cn.yumutech.bean.UserLogin;
 import cn.yumutech.bean.UserLoginBeen;
@@ -45,7 +44,8 @@ public class LogoActivity extends BaseActivity implements View.OnClickListener{
     private ImageView back;
     private int time=60;
     private TextView token;
-
+    private UserLogin mLogin;
+    private App app;
 
     @Override
     protected int getLayoutId() {
@@ -54,7 +54,7 @@ public class LogoActivity extends BaseActivity implements View.OnClickListener{
 
     @Override
     protected void initViews(Bundle savedInstanceState) {
-
+        app = (App) LogoActivity.this.getApplicationContext();
         phone = (EditText) findViewById(R.id.phone);
         password = (EditText) findViewById(R.id.password);
         denglu = (Button) findViewById(R.id.denglu);
@@ -212,10 +212,18 @@ public class LogoActivity extends BaseActivity implements View.OnClickListener{
             if(userLogin!=null&&userLogin.status.code!=null){
                 String a=new Gson().toJson(userLogin);
                 Log.e("info",a);
-                getToken();
+                mLogin=userLogin;
+                getToken(mLogin);
                 if(userLogin.status.code.equals("0")){
+                    String logoData=new Gson().toJson(userLogin);
+                    app.saveLogo("logo",logoData);
                     //正常登录
                     Toast.makeText(LogoActivity.this,userLogin.status.message,Toast.LENGTH_SHORT).show();
+                    Intent intent=new Intent();
+                    intent.setClass(LogoActivity.this,AfterLoginActivity.class);
+                    intent.putExtra("name",userLogin.data.nickname);
+                    intent.putExtra("logo",userLogin.data.logo_path);
+                    startActivity(intent);
                 }else if(userLogin.status.code.equals("-6")){
                     //手机号不存在
                     Toast.makeText(LogoActivity.this,userLogin.status.message,Toast.LENGTH_SHORT).show();
@@ -227,8 +235,8 @@ public class LogoActivity extends BaseActivity implements View.OnClickListener{
     }
    };
     //获取token
-    public void getToken(){
-        UserTokenBeen userTokenBeen=new UserTokenBeen(new UserTokenBeen.data("unity","1234567890"));
+    public void getToken(UserLogin userLogin){
+        UserTokenBeen userTokenBeen=new UserTokenBeen(new UserTokenBeen.data(userLogin.data.nickname,userLogin.data.mobile));
         getUserToken(new Gson().toJson(userTokenBeen));
     }
 

@@ -5,7 +5,7 @@ package cn.yumutech.bean;
  */
 public class UserLogin {
     public status status;
-    public String data;
+    public data data;
     public static class status{
         public String message;
         public String code;

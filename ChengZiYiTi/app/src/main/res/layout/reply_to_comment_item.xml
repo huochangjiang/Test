@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <cn.yumutech.weight.Yuanxing
+        android:id="@+id/touxiang"
+        android:layout_width="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_height="50dp"
+        android:src="@drawable/touxiao" />
+    <TextView
+        android:id="@+id/admin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="admin"
+        android:layout_toRightOf="@+id/touxiang"
+       android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/black"/>
+    <TextView
+        android:id="@+id/reply"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="回复"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_toRightOf="@+id/admin"
+        android:layout_alignTop="@+id/admin"
+        android:textSize="16sp"/>
+    <TextView
+        android:id="@+id/unity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="unity"
+        android:textColor="@color/black"
+        android:layout_toRightOf="@+id/reply"
+        android:layout_alignTop="@+id/reply"/>
+    <TextView
+        android:id="@+id/details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/reply"
+        android:layout_marginTop="10dp"
+        android:layout_alignLeft="@+id/admin"
+        android:layout_marginRight="20dp"
+        android:text="一长串一长串一长串一长串一长串一长串一长
+        串一长串一长串一长串一长串一长串一长串一长串一长串一长串"/>
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="199-2-36 3:4:6"
+        android:layout_below="@+id/details"
+        android:layout_marginTop="10dp"
+        android:layout_alignLeft="@+id/details"/>
+    <TextView
+        android:id="@+id/onclik_reply"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="回复"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_alignTop="@+id/time"
+        android:textColor="@color/colorPrimaryDark"/>
+    <View
+        android:id="@+id/xian"
+        android:layout_below="@+id/time"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/fengexianone"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"/>
+</RelativeLayout>

@@ -3,6 +3,7 @@ package cn.yumutech.unity;
 import android.app.Application;
 import android.graphics.Bitmap;
 
+import com.google.gson.Gson;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -12,10 +13,15 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
 import java.io.File;
 
+import cn.yumutech.bean.UserLogin;
+import cn.yumutech.weight.ACache;
+import cn.yumutech.weight.StringUtils1;
+
 /**
  * Created by 霍长江 on 2016/11/6.
  */
 public class App extends Application{
+    public ACache aCache;
     private static App INSTANCE;
     public static String CachePath = "image_loaders_local";
     public static App getContext() {
@@ -26,7 +32,12 @@ public class App extends Application{
     public void onCreate() {
         super.onCreate();
         INSTANCE=this;
+      //  RongIM.init(this);
+        aCache = ACache.get(this, "zhushou");
         initImageLoader();
+    }
+    private void initConnect(){
+
     }
     private void initImageLoader() {
         // DisplayImageOptions options = new DisplayImageOptions.Builder()
@@ -53,5 +64,31 @@ public class App extends Application{
                 .memoryCacheExtraOptions(480, 800)
                 .diskCache(new UnlimitedDiscCache(dir)).build();
         ImageLoader.getInstance().init(loaderConfiguration);
+    }
+    /**
+     * 保存登陆信息
+     */
+
+    // 缓存首页数据
+    public void saveLogo(String key,String value){
+        aCache.put(key, value);
+    }
+    //返回用户信息
+    public UserLogin getLogo(String key){
+        String readJson =aCache.getAsString(key);
+        if(StringUtils1.isEmpty(readJson))
+        {
+            return null;
+        }else {
+            Gson gson = new Gson();
+            UserLogin user = gson.fromJson(readJson, UserLogin.class);
+            return user;
+        }
+    }
+    /**
+     * 清除登陆信息
+     */
+    public void cleanLogoInformation(){
+        aCache.remove("logo");
     }
 }

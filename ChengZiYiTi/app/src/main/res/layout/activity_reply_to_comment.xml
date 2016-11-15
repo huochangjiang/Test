@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
+    android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <android.support.v7.widget.Toolbar
         android:id="@+id/id_toolbar"
@@ -23,7 +21,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="详情"
+                android:text="评论"
                 android:textSize="18sp"
                 android:textColor="@color/white"
                 android:layout_centerVertical="true"
@@ -32,28 +30,25 @@
                 android:layout_width="wrap_content"
                 android:layout_centerInParent="true"
                 android:textSize="18sp"
-                android:text="评论"
+                android:text="回复"
                 android:textColor="@color/white"
                 android:id="@+id/tv_home"
                 android:layout_height="wrap_content" />
 
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
-
     <ListView
+        android:id="@+id/reply"
         android:layout_below="@+id/id_toolbar"
-        android:id="@+id/comments_list"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        >
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
     </ListView>
-    <!--<include-->
-        <!--android:layout_below="@+id/id_toolbar"-->
-        <!--layout="@layout/tashan_comments_item"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent" />-->
-
+    <include
+        android:layout_below="@+id/id_toolbar"
+        layout="@layout/reply_to_comment_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
     <Button
         android:id="@+id/button"
         android:layout_width="70dp"
@@ -66,40 +61,4 @@
         android:text="评论"
         android:textSize="18dp"
         android:textColor="@color/white" />
-    <RelativeLayout
-        android:id="@+id/shurukuang"
-        android:visibility="gone"
-        android:background="@color/colorPrimaryDark"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        >
-        <cn.yumutech.weight.MyEditText
-            android:imeOptions="actionSearch"
-            android:inputType="text"
-            android:paddingLeft="5dp"
-            android:layout_centerVertical="true"
-            android:id="@+id/edit"
-            android:layout_width="300dp"
-            android:layout_height="30dp"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            android:focusable="true"
-            android:background="@drawable/edittext_frame"
-            android:layout_toLeftOf="@+id/send"
-            android:layout_marginRight="10dp"
-            android:hint="请输入内容"/>
-        <TextView
-            android:id="@+id/send"
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:layout_marginRight="10dp"
-            android:gravity="center"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:text="发送"
-            android:textSize="20dp"
-            android:textColor="#ffffff"/>
-    </RelativeLayout>
-
 </RelativeLayout>
