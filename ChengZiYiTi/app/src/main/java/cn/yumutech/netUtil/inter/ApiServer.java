@@ -107,7 +107,7 @@ Observable<WorkDetails> getWorkDetais(@Query("req") String policy);
     //添加他山之石评论
     @POST("ExchangeCommentAdd")
     Observable<AddPingLun> getAddPingLun(@Query("req") String item);
-//添加创建群组
+    //添加创建群组
     @POST("GroupCreate")
     Observable<CreateQunZu> getCreateQunZhu(@Query("req") String item);
     //解散群

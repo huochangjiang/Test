@@ -78,6 +78,7 @@
             android:imeOptions="actionSearch"
             android:inputType="text"
             android:paddingLeft="5dp"
+            android:layout_marginLeft="10dp"
             android:layout_centerVertical="true"
             android:id="@+id/edit"
             android:layout_width="300dp"

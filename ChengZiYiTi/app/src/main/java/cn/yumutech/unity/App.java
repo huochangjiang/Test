@@ -1,7 +1,9 @@
 package cn.yumutech.unity;
 
-import android.app.Application;
+import android.app.ActivityManager;
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.support.multidex.MultiDexApplication;
 
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
@@ -16,24 +18,49 @@ import java.io.File;
 import cn.yumutech.bean.UserLogin;
 import cn.yumutech.weight.ACache;
 import cn.yumutech.weight.StringUtils1;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.ipc.RongExceptionHandler;
+import io.rong.push.RongPushClient;
+
 
 /**
  * Created by 霍长江 on 2016/11/6.
  */
-public class App extends Application{
+public class App extends MultiDexApplication{
     public ACache aCache;
     private static App INSTANCE;
     public static String CachePath = "image_loaders_local";
     public static App getContext() {
         return INSTANCE;
     }
-
     @Override
     public void onCreate() {
         super.onCreate();
         INSTANCE=this;
-      //  RongIM.init(this);
+        RongIM.init(this);
         aCache = ACache.get(this, "zhushou");
+
+        if (getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext()))) {
+
+            //LeakCanary.install(this);//内存泄露检测
+            RongPushClient.registerHWPush(this);
+            RongPushClient.registerMiPush(this, "2882303761517473625", "5451747338625");
+
+
+            /**
+             * 注意：
+             *
+             * IMKit SDK调用第一步 初始化
+             *
+             * context上下文
+             *
+             * 只有两个进程需要初始化，主进程和 push 进程
+             */
+            //RongIM.setServerInfo("nav.cn.ronghub.com", "img.cn.ronghub.com");
+
+            Thread.setDefaultUncaughtExceptionHandler(new RongExceptionHandler(this));
+        }
+            RongIM.init(this);
         initImageLoader();
     }
     private void initConnect(){
@@ -88,7 +115,18 @@ public class App extends Application{
     /**
      * 清除登陆信息
      */
-    public void cleanLogoInformation(){
+    public void cleanLogoInformation() {
         aCache.remove("logo");
     }
+    public static String getCurProcessName(Context context) {
+        int pid = android.os.Process.myPid();
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningAppProcessInfo appProcess : activityManager.getRunningAppProcesses()) {
+            if (appProcess.pid == pid) {
+                return appProcess.processName;
+            }
+        }
+        return null;
+    }
 }
+
