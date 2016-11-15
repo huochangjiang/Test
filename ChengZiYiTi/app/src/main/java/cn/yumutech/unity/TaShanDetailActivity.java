@@ -9,16 +9,13 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 
 import cn.yumutech.bean.ExchangeItemBeen;
-import cn.yumutech.bean.ExchangeListBeen;
 import cn.yumutech.bean.HuDongItem;
-import cn.yumutech.bean.HuDongJIaoLiu;
 import cn.yumutech.netUtil.Api;
 import rx.Observer;
 import rx.Subscription;
@@ -35,6 +32,7 @@ public class TaShanDetailActivity extends BaseActivity{
     private String myId;
     Subscription subscription;
     private ImageView back;
+    private HuDongItem detail;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_tashan_detail;
@@ -91,6 +89,9 @@ public class TaShanDetailActivity extends BaseActivity{
             public void onClick(View view) {
                 Intent intent=new Intent();
                 intent.setClass(TaShanDetailActivity.this,TaShanCommentsActivity.class);
+                if(detail.data.id!=null){
+                    intent.putExtra("id",detail.data.id);
+                }
                 startActivity(intent);
             }
         });
@@ -129,6 +130,7 @@ public class TaShanDetailActivity extends BaseActivity{
         @Override
         public void onNext(HuDongItem huDongItem) {
             if(huDongItem!=null&&huDongItem.status.code.equals("0")){
+                detail=huDongItem;
                 webView.loadDataWithBaseURL(null, huDongItem.data.content, "text/html", "utf-8", null);
                 webView.getSettings().setJavaScriptEnabled(true);
                 webView.setWebChromeClient(new WebChromeClient());

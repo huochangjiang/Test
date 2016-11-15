@@ -97,13 +97,18 @@ Observable<WorkDetails> getWorkDetais(@Query("req") String policy);
     //查看群成员
 //    @POST("GroupQueryUser")
 
+
+
+    //查看群成员
+//    @POST("GroupQueryUser")
+
 //获取他山之时评论列表数据
     @POST("ExchangeCommentList")
     Observable<GetTaShanPingLunLieBIao> getPingLunLieBiao(@Query("req") String item);
     //添加他山之石评论
     @POST("ExchangeCommentAdd")
     Observable<AddPingLun> getAddPingLun(@Query("req") String item);
-//添加创建群组
+    //添加创建群组
     @POST("GroupCreate")
     Observable<CreateQunZu> getCreateQunZhu(@Query("req") String item);
     //解散群

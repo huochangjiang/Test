@@ -29,6 +29,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     private int index=0;
     private RelativeLayout head;
     private Toolbar id_toolbar;
+    private App app;
 
     public int [] mBackgrounds=new int[]{
             R.drawable.two,R.drawable.two,R.drawable.two,R.drawable.two
@@ -42,6 +43,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     @Override
     protected void initViews(Bundle savedInstanceState) {
+        app= (App) MainActivity.this.getApplicationContext();
         addFragement(HomeFragment.newInstance());
         addFragement(SuperviseFragment.newInstance());
         addFragement(MailListFragment.newInstance());
@@ -106,9 +108,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 changeColor(3);
                 break;
             case R.id.login:
-                Intent intent=new Intent();
-                intent.setClass(MainActivity.this,LogoActivity.class);
-                startActivity(intent);
+                if(app.getLogo("logo")!=null){
+                    Intent intent=new Intent();
+                    intent.setClass(MainActivity.this,AfterLoginActivity.class);
+                    intent.putExtra("name",app.getLogo("logo").data.nickname);
+                    intent.putExtra("logo",app.getLogo("logo").data.logo_path);
+                    startActivity(intent);
+                }else {
+                    Intent intent=new Intent();
+                    intent.setClass(MainActivity.this,LogoActivity.class);
+                    startActivity(intent);
+                }
+
                 break;
         }
     }

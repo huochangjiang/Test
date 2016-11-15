@@ -7,8 +7,9 @@ import android.widget.ImageView;
 /**
  * Created by Allen on 2016/11/14.
  */
-public class ReplyToCommentActivity extends BaseActivity{
+public class ReplyToCommentActivity extends BaseActivity {
     private ImageView back;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_reply_to_comment;

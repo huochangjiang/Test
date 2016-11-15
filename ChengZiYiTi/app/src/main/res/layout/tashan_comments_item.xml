@@ -54,7 +54,7 @@
             android:id="@+id/commentsnum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="万多条回复"
+            android:text="回复"
             android:textColor="@color/colorPrimary"
             />
         <ImageView

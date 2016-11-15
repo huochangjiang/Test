@@ -83,7 +83,7 @@
             android:background="#ffffff" />
     </LinearLayout>
     <Button
-        android:id="@+id/denglu"
+        android:id="@+id/unlogo"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="20dp"
         android:layout_width="match_parent"

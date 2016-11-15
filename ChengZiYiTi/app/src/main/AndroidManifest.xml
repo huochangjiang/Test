@@ -94,8 +94,10 @@
         <activity android:name=".CommunicationActivity"/>
         <activity android:name=".TaShanZhiShiActivity"/>
         <activity android:name=".TaShanDetailActivity"/>
-        <activity android:name=".TaShanCommentsActivity"/>
+        <activity android:name=".TaShanCommentsActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
         <activity android:name=".ReplyToCommentActivity"/>
+        <activity android:name=".AfterLoginActivity" />
 
         <activity android:name=".LeaderActivitysActivity" />
         <activity android:name=".LeadersDetaislActivity" />

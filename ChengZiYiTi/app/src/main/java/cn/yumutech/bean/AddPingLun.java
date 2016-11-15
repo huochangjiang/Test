@@ -22,7 +22,7 @@ public class AddPingLun {
      * receiver_user_id : 2
      */
 
-    public DataBean data;
+    public String data;
 
     public StatusBean getStatus() {
         return status;
@@ -32,13 +32,13 @@ public class AddPingLun {
         this.status = status;
     }
 
-    public DataBean getData() {
-        return data;
-    }
-
-    public void setData(DataBean data) {
-        this.data = data;
-    }
+//    public DataBean getData() {
+//        return data;
+//    }
+//
+//    public void setData(DataBean data) {
+//        this.data = data;
+//    }
 
     public static class StatusBean {
         public String message;

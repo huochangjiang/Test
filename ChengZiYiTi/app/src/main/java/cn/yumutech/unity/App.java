@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.multidex.MultiDexApplication;
 
+import com.google.gson.Gson;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -14,24 +15,30 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
 import java.io.File;
 
+import cn.yumutech.bean.UserLogin;
+import cn.yumutech.weight.ACache;
+import cn.yumutech.weight.StringUtils1;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.ipc.RongExceptionHandler;
 import io.rong.push.RongPushClient;
 
+
 /**
  * Created by 霍长江 on 2016/11/6.
  */
-public class App extends MultiDexApplication {
+public class App extends MultiDexApplication{
+    public ACache aCache;
     private static App INSTANCE;
     public static String CachePath = "image_loaders_local";
     public static App getContext() {
         return INSTANCE;
     }
-
     @Override
     public void onCreate() {
         super.onCreate();
         INSTANCE=this;
+        RongIM.init(this);
+        aCache = ACache.get(this, "zhushou");
 
         if (getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext()))) {
 
@@ -85,6 +92,32 @@ public class App extends MultiDexApplication {
                 .diskCache(new UnlimitedDiscCache(dir)).build();
         ImageLoader.getInstance().init(loaderConfiguration);
     }
+    /**
+     * 保存登陆信息
+     */
+
+    // 缓存首页数据
+    public void saveLogo(String key,String value){
+        aCache.put(key, value);
+    }
+    //返回用户信息
+    public UserLogin getLogo(String key){
+        String readJson =aCache.getAsString(key);
+        if(StringUtils1.isEmpty(readJson))
+        {
+            return null;
+        }else {
+            Gson gson = new Gson();
+            UserLogin user = gson.fromJson(readJson, UserLogin.class);
+            return user;
+        }
+    }
+    /**
+     * 清除登陆信息
+     */
+    public void cleanLogoInformation() {
+        aCache.remove("logo");
+    }
     public static String getCurProcessName(Context context) {
         int pid = android.os.Process.myPid();
         ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
@@ -96,3 +129,4 @@ public class App extends MultiDexApplication {
         return null;
     }
 }
+

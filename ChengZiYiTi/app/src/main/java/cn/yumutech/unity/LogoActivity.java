@@ -46,6 +46,7 @@ public class LogoActivity extends BaseActivity implements View.OnClickListener{
     private int time=60;
     private TextView token;
     private UserLogin mLogin;
+    private App app;
 
     @Override
     protected int getLayoutId() {
@@ -54,7 +55,7 @@ public class LogoActivity extends BaseActivity implements View.OnClickListener{
 
     @Override
     protected void initViews(Bundle savedInstanceState) {
-
+        app = (App) LogoActivity.this.getApplicationContext();
         phone = (EditText) findViewById(R.id.phone);
         password = (EditText) findViewById(R.id.password);
         denglu = (Button) findViewById(R.id.denglu);
@@ -216,8 +217,15 @@ public class LogoActivity extends BaseActivity implements View.OnClickListener{
                 connectRongYun(mLogin.data.token);
                 getToken(mLogin);
                 if(userLogin.status.code.equals("0")){
+                    String logoData=new Gson().toJson(userLogin);
+                    app.saveLogo("logo",logoData);
                     //正常登录
                     Toast.makeText(LogoActivity.this,userLogin.status.message,Toast.LENGTH_SHORT).show();
+                    Intent intent=new Intent();
+                    intent.setClass(LogoActivity.this,AfterLoginActivity.class);
+                    intent.putExtra("name",userLogin.data.nickname);
+                    intent.putExtra("logo",userLogin.data.logo_path);
+                    startActivity(intent);
                 }else if(userLogin.status.code.equals("-6")){
                     //手机号不存在
                     Toast.makeText(LogoActivity.this,userLogin.status.message,Toast.LENGTH_SHORT).show();
