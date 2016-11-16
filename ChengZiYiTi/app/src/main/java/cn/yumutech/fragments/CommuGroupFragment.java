@@ -11,6 +11,7 @@ import java.util.List;
 
 import cn.yumutech.Adapter.GroupListAdapter;
 import cn.yumutech.unity.BaseFragment;
+import cn.yumutech.unity.QunMenmberSelectorActivity;
 import cn.yumutech.unity.R;
 import cn.yumutech.unity.TaShanZhiShiActivity;
 import cn.yumutech.weight.MyListview;
@@ -25,6 +26,7 @@ public class CommuGroupFragment extends BaseFragment implements View.OnClickList
     private GroupListAdapter adapter;
     private RelativeLayout two;
     private List<String> data=new ArrayList<>();
+
     private String[] mData={"1群","2群","3群","4群","5群","6群",
             "7群","8群","9群","10群","11群","12群","13群",
             "14群","15群","16群","17群","18群","19群"};
@@ -53,6 +55,8 @@ public class CommuGroupFragment extends BaseFragment implements View.OnClickList
         listview.setAdapter(adapter);
         two= (RelativeLayout) contentView.findViewById(R.id.two);
         two.setOnClickListener(this);
+        RelativeLayout  one= (RelativeLayout) contentView.findViewById(R.id.one);
+        one.setOnClickListener(this);
     }
 
     @Override
@@ -72,6 +76,11 @@ public class CommuGroupFragment extends BaseFragment implements View.OnClickList
                 Intent intent=new Intent();
                 intent.setClass(getActivity(), TaShanZhiShiActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.one:
+                Intent intent1=new Intent();
+                intent1.setClass(getActivity(), QunMenmberSelectorActivity.class);
+                startActivity(intent1);
                 break;
         }
     }

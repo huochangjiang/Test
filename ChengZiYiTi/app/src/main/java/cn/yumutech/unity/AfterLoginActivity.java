@@ -11,6 +11,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import cn.yumutech.weight.DataCleanManager;
 import cn.yumutech.weight.FileUtils1;
+import io.rong.imkit.RongIM;
 
 /**
  * Created by Administrator on 2016/11/14.
@@ -80,7 +81,11 @@ public class AfterLoginActivity extends BaseActivity implements View.OnClickList
             @Override
             public void onClick(View v) {
                 app.cleanLogoInformation();
-                finish();
+                if(RongIM.getInstance()!=null){
+                    RongIM.getInstance().startPrivateChat(AfterLoginActivity.this, "4", "title");
+
+                }
+//                app.cleanLogoInformation();
             }
         });
     }

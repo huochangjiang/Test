@@ -1,6 +1,7 @@
 package cn.yumutech.unity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -216,17 +217,16 @@ public class LogoActivity extends BaseActivity implements View.OnClickListener{
                 Log.e("info",a);
                 mLogin=userLogin;
                 connectRongYun(mLogin.data.token);
-                getToken(mLogin);
+                SharedPreferences.Editor edit = DemoContext.getInstance().getSharedPreferences().edit();
+                edit.putString("DEMO_TOKEN", mLogin.data.token);
+                edit.apply();
+              //  getToken(mLogin);
                 if(userLogin.status.code.equals("0")){
                     String logoData=new Gson().toJson(userLogin);
                     app.saveLogo("logo",logoData);
                     //正常登录
                     Toast.makeText(LogoActivity.this,userLogin.status.message,Toast.LENGTH_SHORT).show();
-                    Intent intent=new Intent();
-                    intent.setClass(LogoActivity.this,AfterLoginActivity.class);
-                    intent.putExtra("name",userLogin.data.nickname);
-                    intent.putExtra("logo",userLogin.data.logo_path);
-                    startActivity(intent);
+
                 }else if(userLogin.status.code.equals("-6")){
                     //手机号不存在
                     Toast.makeText(LogoActivity.this,userLogin.status.message,Toast.LENGTH_SHORT).show();
@@ -358,7 +358,18 @@ public class LogoActivity extends BaseActivity implements View.OnClickListener{
 
             @Override
             public void onSuccess(String s) {
-            Log.e("info",s+"---");
+
+                Intent intent=new Intent();
+                    intent.setClass(LogoActivity.this,AfterLoginActivity.class);
+                    intent.putExtra("name",mLogin.data.nickname);
+                    intent.putExtra("logo",mLogin.data.logo_path);
+                    startActivity(intent);
+                finish();
+//            Log.e("info",s+"---");
+//                if(RongIM.getInstance()!=null){
+//                    RongIM.getInstance().startPrivateChat(LogoActivity.this, "4", "title");
+//
+//                }
             }
 
             @Override

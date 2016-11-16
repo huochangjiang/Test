@@ -1,25 +1,35 @@
 package cn.yumutech.fragments;
 
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.yumutech.Adapter.ExpanderAdapter;
 import cn.yumutech.bean.ChindClass;
+import cn.yumutech.bean.DepartList;
 import cn.yumutech.bean.GroupClass;
+import cn.yumutech.bean.RequestCanShu;
+import cn.yumutech.netUtil.Api;
 import cn.yumutech.unity.BaseFragment;
 import cn.yumutech.unity.R;
+import rx.Observer;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by Allen on 2016/11/13.
  */
 public class CommuContactFragment extends BaseFragment{
-
+    Subscription subscription;
     private static CommuContactFragment fragment;
     private View contactView;
     private ExpandableListView expandableListView;
@@ -30,7 +40,12 @@ public class CommuContactFragment extends BaseFragment{
 
 
     public CommuContactFragment() {
-        // Required empty public constructor
+
+    }
+    protected void unsubscribe( Subscription subscription) {
+        if (subscription != null && !subscription.isUnsubscribed()) {
+            subscription.unsubscribe();
+        }
     }
     public static CommuContactFragment newInstance() {
         if(fragment==null)
@@ -58,6 +73,12 @@ public class CommuContactFragment extends BaseFragment{
     }
     @Override
     protected void initDatas() {
+
+
+        RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean("unity","1234567890"),
+                new RequestCanShu.DataBean(null));
+        initDatas1(new Gson().toJson(canshus));
+
         groupsDatas.add(new GroupClass("资阳市干部","20"));
         groupsDatas.add(new GroupClass("资阳市干部","20"));
         ChindClass chanData= new ChindClass("cc",R.drawable.next);
@@ -80,4 +101,32 @@ public class CommuContactFragment extends BaseFragment{
         ExpanderAdapter mAdapter=new ExpanderAdapter(mActivity,groupsDatas,chindDatas);
         expandableListView.setAdapter(mAdapter);
     }
+    private void initDatas1( String canshu){
+        subscription = Api.getMangoApi1().getBumenList(canshu)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+
+    }
+    private void initDatas2(String canshu){
+
+    }
+
+    Observer<DepartList> observer = new Observer<DepartList>() {
+        @Override
+        public void onCompleted() {
+            unsubscribe(subscription);
+        }
+        @Override
+        public void onError(Throwable e) {
+            e.printStackTrace();
+
+        }
+        @Override
+        public void onNext(DepartList channels) {
+            if(channels.status.code.equals("0")){
+                Log.e("info",channels.data.dept_name+"aaa");
+            }
+        }
+    };
 }
