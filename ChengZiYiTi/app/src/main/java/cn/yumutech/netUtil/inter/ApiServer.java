@@ -132,7 +132,7 @@ Observable<WorkDetails> getWorkDetais(@Query("req") String policy);
     //获取部门列表数据
     @POST("DeptList")
     Observable<DepartList> getBumenList(@Query("req") String item);
-//    //获取用户列表
+    //获取用户列表
 //    @POST("UserList")
 //    Observable
 

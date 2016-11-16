@@ -63,7 +63,13 @@ public class RequestCanShu {
         public String offset;
         public String row_count;
         public String id;
+        public String userIds;
+        public String groupName;
 
+        public DataBean(String userIds, String groupName) {
+            this.userIds = userIds;
+            this.groupName = groupName;
+        }
 
         public DataBean(String id) {
             this.id = id;

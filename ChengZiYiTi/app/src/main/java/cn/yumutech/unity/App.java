@@ -37,30 +37,25 @@ public class App extends MultiDexApplication{
     public void onCreate() {
         super.onCreate();
         INSTANCE=this;
-        RongIM.init(this);
         aCache = ACache.get(this, "zhushou");
-
-        if (getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext()))) {
-
-            //LeakCanary.install(this);//内存泄露检测
-            RongPushClient.registerHWPush(this);
-            RongPushClient.registerMiPush(this, "2882303761517473625", "5451747338625");
-
+/**
+ *
+ * OnCreate 会被多个进程重入，这段保护代码，确保只有您需要使用 RongIM 的进程和 Push 进程执行了 init。
+ * io.rong.push 为融云 push 进程名称，不可修改。
+ */
+        if (getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext())) ||
+                "io.rong.push".equals(getCurProcessName(getApplicationContext()))) {
 
             /**
-             * 注意：
-             *
              * IMKit SDK调用第一步 初始化
-             *
-             * context上下文
-             *
-             * 只有两个进程需要初始化，主进程和 push 进程
              */
-            //RongIM.setServerInfo("nav.cn.ronghub.com", "img.cn.ronghub.com");
-
-            Thread.setDefaultUncaughtExceptionHandler(new RongExceptionHandler(this));
-        }
             RongIM.init(this);
+
+            if (getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext()))) {
+
+                DemoContext.init(this);
+            }
+        }
         initImageLoader();
     }
     private void initConnect(){
@@ -118,11 +113,26 @@ public class App extends MultiDexApplication{
     public void cleanLogoInformation() {
         aCache.remove("logo");
     }
+
+
+    /**
+     * 获得当前进程的名字
+     *
+     * @param context
+     * @return
+     */
     public static String getCurProcessName(Context context) {
+
         int pid = android.os.Process.myPid();
-        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        for (ActivityManager.RunningAppProcessInfo appProcess : activityManager.getRunningAppProcesses()) {
+
+        ActivityManager activityManager = (ActivityManager) context
+                .getSystemService(Context.ACTIVITY_SERVICE);
+
+        for (ActivityManager.RunningAppProcessInfo appProcess : activityManager
+                .getRunningAppProcesses()) {
+
             if (appProcess.pid == pid) {
+
                 return appProcess.processName;
             }
         }
