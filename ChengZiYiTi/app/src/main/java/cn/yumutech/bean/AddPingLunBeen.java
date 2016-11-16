@@ -43,15 +43,16 @@ public class AddPingLunBeen {
         }
     }
     public static class dataBeen{
+        public String content;
         public String exchange_id;
         public String publish_user_id;
-        public String content;
         public String receiver_user_id;
-        public dataBeen(String exchange_id,String publish_user_id,String content,String receiver_user_id){
+        public dataBeen(String content,String exchange_id,String publish_user_id,String receiver_user_id){
+            this.content=content;
             this.exchange_id=exchange_id;
             this.publish_user_id=publish_user_id;
-            this.content=content;
             this.receiver_user_id=receiver_user_id;
+
         }
         public String getExchange_id(){
             return exchange_id;

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
@@ -14,6 +13,7 @@ import cn.yumutech.Adapter.GroupListAdapter;
 import cn.yumutech.unity.BaseFragment;
 import cn.yumutech.unity.R;
 import cn.yumutech.unity.TaShanZhiShiActivity;
+import cn.yumutech.weight.MyListview;
 
 /**
  * Created by Allen on 2016/11/13.
@@ -21,13 +21,13 @@ import cn.yumutech.unity.TaShanZhiShiActivity;
 public class CommuGroupFragment extends BaseFragment implements View.OnClickListener{
     private static CommuGroupFragment fragment;
     private View groupView;
-    private ListView listview;
+    private MyListview listview;
     private GroupListAdapter adapter;
     private RelativeLayout two;
     private List<String> data=new ArrayList<>();
-    private String[] mData={"东京不热1群","东京不热2群","东京不热3群","东京不热4群","东京不热5群","东京不热6群",
-            "东京不热7群","东京不热8群","东京不热9群","东京不热10群","东京不热11群","东京不热12群","东京不热13群",
-            "东京不热14群","东京不热15群","东京不热16群","东京不热17群","东京不热18群","东京不热19群"};
+    private String[] mData={"1群","2群","3群","4群","5群","6群",
+            "7群","8群","9群","10群","11群","12群","13群",
+            "14群","15群","16群","17群","18群","19群"};
     public CommuGroupFragment() {
         // Required empty public constructor
     }
@@ -48,7 +48,7 @@ public class CommuGroupFragment extends BaseFragment implements View.OnClickList
         for (int i=0;i<mData.length;i++){
             data.add(mData[i]);
         }
-        listview= (ListView) contentView.findViewById(R.id.listview);
+        listview= (MyListview) contentView.findViewById(R.id.listview);
         adapter=new GroupListAdapter(getActivity(),data);
         listview.setAdapter(adapter);
         two= (RelativeLayout) contentView.findViewById(R.id.two);

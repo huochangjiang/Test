@@ -37,22 +37,24 @@
 
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
+        android:layout_width="match_parent"
+        android:id="@+id/pull_to_refresh"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/id_toolbar">
+    </com.handmark.pulltorefresh.library.PullToRefreshListView>
     <ListView
         android:id="@+id/reply"
-        android:layout_below="@+id/id_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
     </ListView>
-    <include
-        android:layout_below="@+id/id_toolbar"
-        layout="@layout/reply_to_comment_item"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+
     <Button
         android:id="@+id/button"
         android:layout_width="70dp"
         android:layout_height="70dp"
+        android:visibility="gone"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginRight="20dp"

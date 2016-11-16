@@ -8,6 +8,7 @@ import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -33,6 +34,7 @@ public class TaShanDetailActivity extends BaseActivity{
     Subscription subscription;
     private ImageView back;
     private HuDongItem detail;
+    private Button button;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_tashan_detail;
@@ -47,6 +49,7 @@ public class TaShanDetailActivity extends BaseActivity{
         laiyuan= (TextView) findViewById(R.id.title).findViewById(R.id.tv_source);
         pinglun= (TextView) findViewById(R.id.title).findViewById(R.id.browse_num);
         comments= (RelativeLayout) findViewById(R.id.title).findViewById(R.id.comments);
+        button= (Button) findViewById(R.id.button);
         webView = (WebView) findViewById(R.id.webview);
         back= (ImageView) findViewById(R.id.back);
         webView.getSettings().setJavaScriptEnabled(true);
@@ -89,8 +92,21 @@ public class TaShanDetailActivity extends BaseActivity{
             public void onClick(View view) {
                 Intent intent=new Intent();
                 intent.setClass(TaShanDetailActivity.this,TaShanCommentsActivity.class);
-                if(detail.data.id!=null){
+                if(detail!=null&&detail.data!=null&&detail.data.id!=null){
                     intent.putExtra("id",detail.data.id);
+                    intent.putExtra("type","no");
+                }
+                startActivity(intent);
+            }
+        });
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent();
+                intent.setClass(TaShanDetailActivity.this,TaShanCommentsActivity.class);
+                if(detail!=null&&detail.data!=null&&detail.data.id!=null){
+                    intent.putExtra("id",detail.data.id);
+                    intent.putExtra("type","yes");
                 }
                 startActivity(intent);
             }

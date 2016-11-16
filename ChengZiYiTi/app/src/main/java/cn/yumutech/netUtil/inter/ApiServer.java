@@ -1,5 +1,6 @@
 package cn.yumutech.netUtil.inter;
 
+import cn.yumutech.bean.AddErrorPinglun;
 import cn.yumutech.bean.AddPingLun;
 import cn.yumutech.bean.ChaXunQunMenmber;
 import cn.yumutech.bean.CreateQunZu;
@@ -16,6 +17,9 @@ import cn.yumutech.bean.LeaderActivitys;
 import cn.yumutech.bean.MovieRecommend;
 import cn.yumutech.bean.PrijectDetaisl;
 import cn.yumutech.bean.ProjectManger;
+import cn.yumutech.bean.PublishTask;
+import cn.yumutech.bean.ShowMyPublishedTask;
+import cn.yumutech.bean.ShowTaskDetail;
 import cn.yumutech.bean.ShuaXinQunZhu;
 import cn.yumutech.bean.TuiChuQun;
 import cn.yumutech.bean.UserLogin;
@@ -45,6 +49,15 @@ public interface ApiServer {
     //他山之石评论列表
     @POST("ExchangeCommentList")
     Observable<ExchangeCommenList> getExchangeCommenList(@Query("req") String list);
+    //督察督办之发布任务
+    @POST("PublishTask")
+    Observable<PublishTask> getPublishTask(@Query("req") String list);
+    //督察督办之显示我发布任务
+    @POST("ShowMyPublishedTask")
+    Observable<ShowMyPublishedTask> getShowMyPublishedTask(@Query("req") String list);
+    //督察督办之显示任务详情
+    @POST("ShowTaskDetail")
+    Observable<ShowTaskDetail> getShowTaskDetail(@Query("req") String list);
 
     //影视推荐
     @GET("rest/VideoSourceService/getVideoIndex?u_=1&v_=1&t_=1&p_=2348")
@@ -107,7 +120,10 @@ Observable<WorkDetails> getWorkDetais(@Query("req") String policy);
     Observable<GetTaShanPingLunLieBIao> getPingLunLieBiao(@Query("req") String item);
     //添加他山之石评论
     @POST("ExchangeCommentAdd")
-    Observable<AddPingLun> getAddPingLun(@Query("req") String item);
+    Observable<AddErrorPinglun> getAddPingLun(@Query("req") String item);
+    //添加他山之石评论
+    @POST("ExchangeCommentAdd")
+    Observable<AddPingLun> getNormalAddPingLun(@Query("req") String item);
     //添加创建群组
     @POST("GroupCreate")
     Observable<CreateQunZu> getCreateQunZhu(@Query("req") String item);
@@ -133,7 +149,7 @@ Observable<WorkDetails> getWorkDetais(@Query("req") String policy);
     @POST("DeptList")
     Observable<DepartList> getBumenList(@Query("req") String item);
     //获取用户列表
-    @POST("UserList")
-    Observable
+//    @POST("UserList")
+//    Observable
 
 }
