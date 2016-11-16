@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import cn.yumutech.bean.UserXiangGuanQun;
 import cn.yumutech.unity.R;
 
 /**
@@ -16,9 +17,9 @@ import cn.yumutech.unity.R;
  */
 public class GroupListAdapter extends BaseAdapter{
     private Context context;
-    private List<String> data;
+    private List<UserXiangGuanQun.DataBean> data;
 
-    public GroupListAdapter(Context context, List<String> data){
+    public GroupListAdapter(Context context, List<UserXiangGuanQun.DataBean> data){
         this.context=context;
         this.data=data;
     }
@@ -26,9 +27,11 @@ public class GroupListAdapter extends BaseAdapter{
     public int getCount() {
         return data!=null&&data.size()>0?data.size():0;
     }
-
+            public void dataChange( List<UserXiangGuanQun.DataBean> data){
+                this.data=data;notifyDataSetChanged();
+            }
     @Override
-    public Object getItem(int i) {
+    public UserXiangGuanQun.DataBean getItem(int i) {
         return data.get(i);
     }
 
@@ -52,7 +55,7 @@ public class GroupListAdapter extends BaseAdapter{
         }else {
             vh= (ViewHolder) view.getTag();
         }
-        vh.tv_group.setText(data.get(i));
+        vh.tv_group.setText(data.get(i).groupName);
         if(i==data.size()-1){
             vh.iv_xian.setVisibility(View.GONE);
         }

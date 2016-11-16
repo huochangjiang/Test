@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.RelativeLayout;
 
 import com.google.gson.Gson;
@@ -20,6 +21,7 @@ import cn.yumutech.unity.QunMenmberSelectorActivity;
 import cn.yumutech.unity.R;
 import cn.yumutech.unity.TaShanZhiShiActivity;
 import cn.yumutech.weight.MyListview;
+import io.rong.imkit.RongIM;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -34,9 +36,8 @@ public class CommuGroupFragment extends BaseFragment implements View.OnClickList
     private MyListview listview;
     private GroupListAdapter adapter;
     private RelativeLayout two;
-    private List<String> data=new ArrayList<>();
+    private List<UserXiangGuanQun.DataBean> data=new ArrayList<>();
     Subscription subscription;
-
     protected void unsubscribe( Subscription subscription) {
         if (subscription != null && !subscription.isUnsubscribed()) {
             subscription.unsubscribe();
@@ -62,9 +63,7 @@ public class CommuGroupFragment extends BaseFragment implements View.OnClickList
 
     @Override
     protected void initViews(View contentView) {
-        for (int i=0;i<mData.length;i++){
-            data.add(mData[i]);
-        }
+
         listview= (MyListview) contentView.findViewById(R.id.listview);
         adapter=new GroupListAdapter(getActivity(),data);
         listview.setAdapter(adapter);
@@ -76,12 +75,18 @@ public class CommuGroupFragment extends BaseFragment implements View.OnClickList
 
     @Override
     protected void initListeners() {
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                RongIM.getInstance().startGroupChat(mActivity, adapter.getItem(i).groupId, adapter.getItem(i).groupName);
 
+            }
+        });
     }
 
     @Override
     protected void initDatas() {
-        RequestCanShu1 canshus=new RequestCanShu1(new RequestCanShu1.UserBean("3","1234567890"),
+        RequestCanShu1 canshus=new RequestCanShu1(new RequestCanShu1.UserBean("1","1234567890"),
                 new RequestCanShu1.DataBean("3"));
         initDatas1(new Gson().toJson(canshus));
     }
@@ -120,6 +125,7 @@ public class CommuGroupFragment extends BaseFragment implements View.OnClickList
         @Override
         public void onNext(UserXiangGuanQun channels) {
             if(channels.status.code.equals("0")){
+                adapter.dataChange(channels.data);
             }
 
         }

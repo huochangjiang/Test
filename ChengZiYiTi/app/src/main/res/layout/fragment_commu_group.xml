@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
+
     android:layout_height="match_parent">
     <ScrollView
+        android:background="@color/white"
         android:id="@+id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -73,15 +75,23 @@
         android:id="@+id/rl_two"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/fengexianone">
+        >
+        <View
+            android:id="@+id/vi"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/fengexianone"
+            ></View>
     <TextView
+        android:layout_below="@+id/vi"
+        android:id="@+id/textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="10dp"
         android:text="我加入的群"
         android:textSize="20sp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"/>
+        />
+
     </RelativeLayout>
     <cn.yumutech.weight.MyListview
         android:id="@+id/listview"

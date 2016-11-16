@@ -225,7 +225,6 @@ public class LogoActivity extends BaseActivity implements View.OnClickListener{
                     String logoData=new Gson().toJson(userLogin);
                     app.saveLogo("logo",logoData);
                     //正常登录
-                    Toast.makeText(LogoActivity.this,userLogin.status.message,Toast.LENGTH_SHORT).show();
 
                 }else if(userLogin.status.code.equals("-6")){
                     //手机号不存在

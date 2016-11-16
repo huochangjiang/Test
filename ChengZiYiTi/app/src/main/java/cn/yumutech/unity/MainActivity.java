@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +19,10 @@ import cn.yumutech.fragments.HomeFragment;
 import cn.yumutech.fragments.MailListFragment;
 import cn.yumutech.fragments.PersonFragment;
 import cn.yumutech.fragments.SuperviseFragment;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 
-public class MainActivity extends BaseActivity implements View.OnClickListener{
+public class MainActivity extends BaseActivity implements View.OnClickListener,RongIMClient.ConnectionStatusListener{
 
 
     List<ImageView> ivs=new ArrayList<>();
@@ -35,6 +38,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             R.drawable.two,R.drawable.two,R.drawable.two,R.drawable.two
     };
     private TextView mTitle;
+    private String token;
 
     @Override
     protected int getLayoutId() {
@@ -51,6 +55,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         initTabs();
         LinearLayout ll_story=(LinearLayout) findViewById(R.id.ll_story);
         showFragmentWithoutBackStackAndAnim(HomeFragment.newInstance(),last_fragment);
+        if (DemoContext.getInstance() != null) {
+            token = DemoContext.getInstance().getSharedPreferences().getString("DEMO_TOKEN", "default");
+        }
+        if(token.equals("default")){
+            Intent intent=new Intent(this,LogoActivity.class);
+            startActivity(intent);
+        }else{
+            connectRongYun(token);
+        }
+        RongIM.setConnectionStatusListener(this);
 
         LinearLayout ll_animation=(LinearLayout) findViewById(R.id.ll_animation);
         LinearLayout ll_applction=(LinearLayout) findViewById(R.id.ll_applciton);
@@ -153,5 +167,45 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 ivs.get(i).setBackgroundResource(mBackgrounds[i]);
             }
         }
+    }
+
+    @Override
+    public void onChanged(ConnectionStatus connectionStatus) {
+        switch (connectionStatus){
+
+            case CONNECTED://连接成功。
+
+                break;
+            case DISCONNECTED://断开连接。
+                Intent intent=new Intent(MainActivity.this,LogoActivity.class);
+                startActivity(intent);
+                break;
+            case CONNECTING://连接中。
+
+                break;
+            case NETWORK_UNAVAILABLE://网络不可用。
+                Toast.makeText(MainActivity.this, "王出搓", Toast.LENGTH_SHORT).show();
+                break;
+            case KICKED_OFFLINE_BY_OTHER_CLIENT://用户账户在其他设备登录，本机会被踢掉线
+                Toast.makeText(MainActivity.this, "用户账户在其他设备登录", Toast.LENGTH_SHORT).show();
+                break;
+        }
+    }
+    //连接荣云服务器
+    private void connectRongYun(String token){
+        RongIM.connect(token, new RongIMClient.ConnectCallback() {
+            @Override
+            public void onTokenIncorrect() {
+                Intent intent=new Intent(MainActivity.this,LogoActivity.class);
+                startActivity(intent);
+            }
+            @Override
+            public void onSuccess(String s) {
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+            }
+        });
     }
 }

@@ -106,7 +106,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".QunMenmberSelectorActivity" />
-        <activity android:name=".CreateQunZhuActivity"></activity>
+        <activity android:name=".CreateQunZhuActivity" />
+        <activity android:name=".BianJiActivity"></activity>
     </application>
 
 </manifest>

@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -34,6 +35,7 @@ public class ConversationActivity extends FragmentActivity{
      * 会话类型
      */
     private Conversation.ConversationType mConversationType;
+    private ImageView mTitle3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,12 +121,21 @@ public class ConversationActivity extends FragmentActivity{
     private void setActionBar() {
 
         mTitle = (TextView) findViewById(R.id.txt1);
-        mBack = (RelativeLayout) findViewById(R.id.back);
+        mTitle3 = (ImageView) findViewById(R.id.img3);
+        ImageView  iv1 = (ImageView) findViewById(R.id.img1);
 
-        mBack.setOnClickListener(new View.OnClickListener() {
+
+        iv1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+        mTitle3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(ConversationActivity.this,BianJiActivity.class);
+                startActivity(intent);
             }
         });
     }

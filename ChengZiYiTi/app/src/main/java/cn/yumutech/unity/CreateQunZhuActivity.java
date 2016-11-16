@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 import cn.yumutech.bean.CreateQunZu;
 import cn.yumutech.bean.RequestCanShu;
 import cn.yumutech.netUtil.Api;
+import io.rong.imkit.RongIM;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -80,7 +81,8 @@ public class CreateQunZhuActivity extends BaseActivity {
         @Override
         public void onNext(CreateQunZu channels) {
             if(channels.status.code.equals("0")){
-
+                RongIM.getInstance().startGroupChat(CreateQunZhuActivity.this, channels.data.groupId, "标题");
+                finish();
             }
 
         }
