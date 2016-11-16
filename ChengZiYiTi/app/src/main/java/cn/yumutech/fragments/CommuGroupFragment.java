@@ -6,15 +6,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.yumutech.Adapter.GroupListAdapter;
+import cn.yumutech.bean.RequestCanShu1;
+import cn.yumutech.bean.UserXiangGuanQun;
+import cn.yumutech.netUtil.Api;
 import cn.yumutech.unity.BaseFragment;
 import cn.yumutech.unity.QunMenmberSelectorActivity;
 import cn.yumutech.unity.R;
 import cn.yumutech.unity.TaShanZhiShiActivity;
 import cn.yumutech.weight.MyListview;
+import rx.Observer;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by Allen on 2016/11/13.
@@ -26,7 +35,13 @@ public class CommuGroupFragment extends BaseFragment implements View.OnClickList
     private GroupListAdapter adapter;
     private RelativeLayout two;
     private List<String> data=new ArrayList<>();
+    Subscription subscription;
 
+    protected void unsubscribe( Subscription subscription) {
+        if (subscription != null && !subscription.isUnsubscribed()) {
+            subscription.unsubscribe();
+        }
+    }
     private String[] mData={"1群","2群","3群","4群","5群","6群",
             "7群","8群","9群","10群","11群","12群","13群",
             "14群","15群","16群","17群","18群","19群"};
@@ -66,9 +81,17 @@ public class CommuGroupFragment extends BaseFragment implements View.OnClickList
 
     @Override
     protected void initDatas() {
+        RequestCanShu1 canshus=new RequestCanShu1(new RequestCanShu1.UserBean("3","1234567890"),
+                new RequestCanShu1.DataBean("3"));
+        initDatas1(new Gson().toJson(canshus));
+    }
+    private void initDatas1( String canshu){
+        subscription = Api.getMangoApi1().getUserXiangGuanQun(canshu)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
 
     }
-
     @Override
     public void onClick(View view) {
         switch (view.getId()){
@@ -84,4 +107,23 @@ public class CommuGroupFragment extends BaseFragment implements View.OnClickList
                 break;
         }
     }
+    Observer<UserXiangGuanQun> observer = new Observer<UserXiangGuanQun>() {
+        @Override
+        public void onCompleted() {
+            unsubscribe(subscription);
+        }
+        @Override
+        public void onError(Throwable e) {
+            e.printStackTrace();
+
+        }
+        @Override
+        public void onNext(UserXiangGuanQun channels) {
+            if(channels.status.code.equals("0")){
+            }
+
+        }
+    };
+
+
 }

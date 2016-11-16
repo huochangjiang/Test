@@ -24,6 +24,7 @@ import cn.yumutech.bean.ShuaXinQunZhu;
 import cn.yumutech.bean.TuiChuQun;
 import cn.yumutech.bean.UserLogin;
 import cn.yumutech.bean.UserToken;
+import cn.yumutech.bean.UserXiangGuanQun;
 import cn.yumutech.bean.WorkDetails;
 import cn.yumutech.bean.WorkListManger;
 import cn.yumutech.bean.XianShiMyFaBuRenWU;
@@ -149,7 +150,8 @@ Observable<WorkDetails> getWorkDetais(@Query("req") String policy);
     @POST("DeptList")
     Observable<DepartList> getBumenList(@Query("req") String item);
     //获取用户列表
-//    @POST("UserList")
-//    Observable
+//查询用户相关的群
+    @POST("QueryGroupList")
+    Observable<UserXiangGuanQun> getUserXiangGuanQun(@Query("req") String item);
 
 }
