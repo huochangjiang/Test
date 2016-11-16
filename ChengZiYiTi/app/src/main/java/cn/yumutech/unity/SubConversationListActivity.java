@@ -15,15 +15,17 @@ import io.rong.imkit.fragment.SubConversationListFragment;
  */
 public class SubConversationListActivity extends FragmentActivity {
 
+    public static final SubConversationListFragment FRAGMENT = new SubConversationListFragment();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_rong);
-        SubConversationListFragment fragment = new SubConversationListFragment();
-        fragment.setAdapter(new SubConversationListAdapterEx(RongContext.getInstance()));
+        SubConversationListFragment FRAGMENT =  FRAGMENT;
+        FRAGMENT.setAdapter(new SubConversationListAdapterEx(RongContext.getInstance()));
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.rong_content, fragment);
+        transaction.add(R.id.rong_content, FRAGMENT);
         transaction.commit();
 
         Intent intent = getIntent();
