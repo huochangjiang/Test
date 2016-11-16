@@ -3,6 +3,8 @@ package cn.yumutech.unity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.multidex.MultiDexApplication;
 
 import com.google.gson.Gson;
@@ -19,8 +21,6 @@ import cn.yumutech.bean.UserLogin;
 import cn.yumutech.weight.ACache;
 import cn.yumutech.weight.StringUtils1;
 import io.rong.imkit.RongIM;
-import io.rong.imlib.ipc.RongExceptionHandler;
-import io.rong.push.RongPushClient;
 
 
 /**
@@ -90,8 +90,7 @@ public class App extends MultiDexApplication{
     /**
      * 保存登陆信息
      */
-
-    // 缓存首页数据
+    // 保存登录信息
     public void saveLogo(String key,String value){
         aCache.put(key, value);
     }
@@ -106,6 +105,14 @@ public class App extends MultiDexApplication{
             UserLogin user = gson.fromJson(readJson, UserLogin.class);
             return user;
         }
+    }
+    // 缓存首页数据
+    public void savaHomeJson(String key,String value){
+        aCache.put(key, value);
+    }
+    public String readHomeJson(String key){
+        String readJson =aCache.getAsString(key);
+        return readJson;
     }
     /**
      * 清除登陆信息
@@ -137,6 +144,17 @@ public class App extends MultiDexApplication{
             }
         }
         return null;
+    }
+    /**
+     * 检测网络是否可用
+     *
+     * @return
+     */
+    public static boolean isNetworkConnected(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo ni = cm.getActiveNetworkInfo();
+        return ni != null && ni.isConnectedOrConnecting();
     }
 }
 

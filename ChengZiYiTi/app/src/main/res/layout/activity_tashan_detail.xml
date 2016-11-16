@@ -38,6 +38,7 @@
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
     <ScrollView
+        android:id="@+id/scrollView"
         android:scrollbars="none"
         android:descendantFocusability="blocksDescendants"
         android:layout_below="@+id/id_toolbar"
@@ -62,6 +63,14 @@
         android:layout_height="wrap_content"></WebView>
             </LinearLayout>
     </ScrollView>
+    <include
+        android:layout_below="@+id/id_toolbar"
+        android:layout_centerVertical="true"
+        android:visibility="gone"
+        android:id="@+id/netconnect"
+        android:layout_height="match_parent"
+        layout="@layout/net_connect"
+        android:layout_width="match_parent"/>
     <Button
         android:id="@+id/button"
         android:layout_width="70dp"
