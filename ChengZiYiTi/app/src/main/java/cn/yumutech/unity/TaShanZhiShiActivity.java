@@ -6,19 +6,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 
-import java.util.List;
-
 import cn.yumutech.Adapter.TaShanZhiShiAdapter;
-import cn.yumutech.bean.ExchangeItemBeen;
 import cn.yumutech.bean.ExchangeListBeen;
-import cn.yumutech.bean.HuDongItem;
 import cn.yumutech.bean.HuDongJIaoLiu;
-import cn.yumutech.bean.YanZhenMessageBean;
 import cn.yumutech.netUtil.Api;
+import cn.yumutech.weight.StringUtils1;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -33,7 +28,8 @@ public class TaShanZhiShiActivity extends BaseActivity {
     Subscription subscription;
     private TaShanZhiShiAdapter adapter;
     private HuDongJIaoLiu mData;
-
+    private App app;
+    private View net_connect;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_tashanzhishi;
@@ -42,10 +38,14 @@ public class TaShanZhiShiActivity extends BaseActivity {
 
     @Override
     protected void initViews(Bundle savedInstanceState) {
+        app= (App) TaShanZhiShiActivity.this.getApplicationContext();
         back = (ImageView) findViewById(R.id.back);
         listview = (ListView) findViewById(R.id.listview);
         adapter=new TaShanZhiShiAdapter(TaShanZhiShiActivity.this,mData);
         listview.setAdapter(adapter);
+        net_connect = findViewById(R.id.netconnect);
+        initLocal();
+
     }
 
     @Override
@@ -66,8 +66,19 @@ public class TaShanZhiShiActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent=new Intent();
                 intent.setClass(TaShanZhiShiActivity.this,TaShanDetailActivity.class);
-                intent.putExtra("id",mData.data.get(i).id);
+                if(mData!=null&&mData.data!=null&&mData.data.get(i).id!=null){
+                    intent.putExtra("id",mData.data.get(i).id);
+                }
                 startActivity(intent);
+            }
+        });
+        net_connect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(app.isNetworkConnected(TaShanZhiShiActivity.this)){
+                    net_connect.setVisibility(View.GONE);
+                    initData();
+                }
             }
         });
     }
@@ -104,7 +115,8 @@ public class TaShanZhiShiActivity extends BaseActivity {
         public void onNext(HuDongJIaoLiu huDongItem) {
             if(huDongItem!=null&&huDongItem.status.code.equals("0")){
                 mData=huDongItem;
-                adapter.dataChange(huDongItem);
+                app.savaHomeJson("tslist",new Gson().toJson(huDongItem));
+               loadHome(mData);
             }
         }
     };
@@ -112,6 +124,31 @@ public class TaShanZhiShiActivity extends BaseActivity {
     protected void unsubscribe(Subscription subscription) {
         if (subscription != null && !subscription.isUnsubscribed()) {
             subscription.unsubscribe();
+        }
+    }
+
+    /**
+     * 加载列表数据
+     */
+    private void loadHome(HuDongJIaoLiu data){
+        adapter.dataChange(data);
+        net_connect.setVisibility(View.GONE);
+        listview.setVisibility(View.VISIBLE);
+    }
+    private void initLocal() {
+        String readHomeJson = app.readHomeJson("tslist");// 首页内容
+        if (!StringUtils1.isEmpty(readHomeJson)) {
+            HuDongJIaoLiu data = new Gson().fromJson(readHomeJson, HuDongJIaoLiu.class);
+            loadHome(data);
+
+        }else{
+            if(!app.isNetworkConnected(this)){
+                net_connect.setVisibility(View.VISIBLE);
+                listview.setVisibility(View.GONE);
+            }
+        }
+        if (app.isNetworkConnected(TaShanZhiShiActivity.this)) {
+            initData();
         }
     }
 }

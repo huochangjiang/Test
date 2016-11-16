@@ -22,10 +22,10 @@ public class SubConversationListActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_rong);
-        SubConversationListFragment FRAGMENT =  FRAGMENT;
-        FRAGMENT.setAdapter(new SubConversationListAdapterEx(RongContext.getInstance()));
+        SubConversationListFragment fragment =  new SubConversationListFragment();
+        fragment.setAdapter(new SubConversationListAdapterEx(RongContext.getInstance()));
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.rong_content, FRAGMENT);
+        transaction.add(R.id.rong_content, fragment);
         transaction.commit();
 
         Intent intent = getIntent();

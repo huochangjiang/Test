@@ -11,6 +11,7 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -18,6 +19,7 @@ import com.google.gson.Gson;
 import cn.yumutech.bean.ExchangeItemBeen;
 import cn.yumutech.bean.HuDongItem;
 import cn.yumutech.netUtil.Api;
+import cn.yumutech.weight.StringUtils1;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -30,11 +32,14 @@ public class TaShanDetailActivity extends BaseActivity{
     private TextView fenlei,time,laiyuan,pinglun,title;
     private RelativeLayout comments;
     private WebView webView;
-    private String myId;
+    private String myId="";
+    private ScrollView scrollView;
     Subscription subscription;
     private ImageView back;
     private HuDongItem detail;
     private Button button;
+    private App app;
+    private View net_connect;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_tashan_detail;
@@ -42,6 +47,7 @@ public class TaShanDetailActivity extends BaseActivity{
 
     @Override
     protected void initViews(Bundle savedInstanceState) {
+        app= (App) TaShanDetailActivity.this.getApplicationContext();
         getExtra();
         title= (TextView) findViewById(R.id.title).findViewById(R.id.xinwentitle);
         fenlei= (TextView) findViewById(R.id.title).findViewById(R.id.myclass);
@@ -52,6 +58,8 @@ public class TaShanDetailActivity extends BaseActivity{
         button= (Button) findViewById(R.id.button);
         webView = (WebView) findViewById(R.id.webview);
         back= (ImageView) findViewById(R.id.back);
+        scrollView= (ScrollView) findViewById(R.id.scrollView);
+        net_connect = findViewById(R.id.netconnect);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setSupportZoom(true);
         webView.getSettings().setBuiltInZoomControls(false);
@@ -72,6 +80,7 @@ public class TaShanDetailActivity extends BaseActivity{
                 return (event.getAction() == MotionEvent.ACTION_MOVE);
             }
         });
+        initLocal();
     }
 
     @Override
@@ -111,6 +120,15 @@ public class TaShanDetailActivity extends BaseActivity{
                 startActivity(intent);
             }
         });
+        net_connect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(app.isNetworkConnected(TaShanDetailActivity.this)){
+                    net_connect.setVisibility(View.GONE);
+                    initData();
+                }
+            }
+        });
     }
     private void getExtra(){
         if(getIntent()!=null){
@@ -147,14 +165,8 @@ public class TaShanDetailActivity extends BaseActivity{
         public void onNext(HuDongItem huDongItem) {
             if(huDongItem!=null&&huDongItem.status.code.equals("0")){
                 detail=huDongItem;
-                webView.loadDataWithBaseURL(null, huDongItem.data.content, "text/html", "utf-8", null);
-                webView.getSettings().setJavaScriptEnabled(true);
-                webView.setWebChromeClient(new WebChromeClient());
-                title.setText(huDongItem.data.title);
-                fenlei.setText(huDongItem.data.classify);
-                laiyuan.setText(huDongItem.data.original);
-                time.setText(huDongItem.data.publish_date);
-                pinglun.setText(huDongItem.data.comment_count);
+                app.savaHomeJson(myId,new Gson().toJson(huDongItem));
+                loadHome(huDongItem);
             }
         }
     };
@@ -164,4 +176,36 @@ public class TaShanDetailActivity extends BaseActivity{
             subscription.unsubscribe();
         }
     }
+    private void initLocal() {
+
+        String readHomeJson = app.readHomeJson(myId);// 首页内容
+        if (!StringUtils1.isEmpty(readHomeJson)) {
+            HuDongItem data = new Gson().fromJson(readHomeJson, HuDongItem.class);
+            loadHome(data);
+        }else{
+            if(!app.isNetworkConnected(this)){
+                net_connect.setVisibility(View.VISIBLE);
+                scrollView.setVisibility(View.GONE);
+                button.setVisibility(View.GONE);
+            }
+        }
+        if (app.isNetworkConnected(TaShanDetailActivity.this)) {
+            initData();
+        }
+    }
+    //加载详情数据
+    private void loadHome(HuDongItem huDongItem){
+        webView.loadDataWithBaseURL(null, huDongItem.data.content, "text/html", "utf-8", null);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.setWebChromeClient(new WebChromeClient());
+        title.setText(huDongItem.data.title);
+        fenlei.setText(huDongItem.data.classify);
+        laiyuan.setText(huDongItem.data.original);
+        time.setText(huDongItem.data.publish_date);
+        pinglun.setText(huDongItem.data.comment_count);
+        net_connect.setVisibility(View.GONE);
+        scrollView.setVisibility(View.VISIBLE);
+        button.setVisibility(View.VISIBLE);
+    }
 }
+

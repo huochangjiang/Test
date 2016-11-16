@@ -78,7 +78,7 @@ public class TaShanCommentsActivity extends BaseActivity  implements PullToRefre
         adapter=new TaShanCommentAdapter(TaShanCommentsActivity.this,mData);
         comments_list.setAdapter(adapter);
         button.setFocusable(true);
-        if(type.equals("yes")){
+        if(type!=null&&type.equals("yes")){
 //            button.requestFocus();
 //            edit.setFocusable(true);
 //            edit.setText("");
