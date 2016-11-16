@@ -21,5 +21,8 @@ public class ExchangeCommenList {
         public String publish_date;
         public String receiver_user_id;
         public String receiver_user_name;
+        public String publish_user_logo_path;
+        public String receiver_user_logo_path;
+
     }
 }

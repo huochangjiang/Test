@@ -39,15 +39,23 @@
 
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
-
+<RelativeLayout
+    android:id="@+id/rl"
+    android:layout_below="@+id/id_toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
+        android:layout_width="match_parent"
+        android:id="@+id/pull_to_refresh"
+        android:layout_height="wrap_content">
+    </com.handmark.pulltorefresh.library.PullToRefreshListView>
     <ListView
-        android:layout_below="@+id/id_toolbar"
+
         android:id="@+id/comments_list"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        >
-
+        android:layout_height="wrap_content">
     </ListView>
+
     <!--<include-->
         <!--android:layout_below="@+id/id_toolbar"-->
         <!--layout="@layout/tashan_comments_item"-->
@@ -86,6 +94,7 @@
             android:textColor="@color/black"
             android:textSize="14sp"
             android:focusable="true"
+            android:focusableInTouchMode="true"
             android:background="@drawable/edittext_frame"
             android:layout_toLeftOf="@+id/send"
             android:layout_marginRight="10dp"
@@ -102,5 +111,5 @@
             android:textSize="20dp"
             android:textColor="#ffffff"/>
     </RelativeLayout>
-
+</RelativeLayout>
 </RelativeLayout>

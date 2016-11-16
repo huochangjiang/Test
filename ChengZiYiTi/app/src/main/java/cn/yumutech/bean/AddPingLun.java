@@ -22,7 +22,7 @@ public class AddPingLun {
      * receiver_user_id : 2
      */
 
-    public String data;
+    public DataBean data;
 
     public StatusBean getStatus() {
         return status;
@@ -70,7 +70,8 @@ public class AddPingLun {
         public String exchange_id;
         public String publish_user_name;
         public String receiver_user_id;
-
+        public String receiver_user_logo_path;
+        public String publish_user_logo_path;
         public String getContent() {
             return content;
         }
@@ -133,6 +134,18 @@ public class AddPingLun {
 
         public void setReceiver_user_id(String receiver_user_id) {
             this.receiver_user_id = receiver_user_id;
+        }
+        public String getReceiver_user_logo_path(){
+            return receiver_user_logo_path;
+        }
+        public void setReceiver_user_logo_path(String receiver_user_logo_path){
+            this.receiver_user_logo_path=receiver_user_logo_path;
+        }
+        public String getPublish_user_logo_path(){
+            return publish_user_logo_path;
+        }
+        public void setPublish_user_logo_path(String publish_user_logo_path){
+            this.publish_user_logo_path=publish_user_logo_path;
         }
     }
 }

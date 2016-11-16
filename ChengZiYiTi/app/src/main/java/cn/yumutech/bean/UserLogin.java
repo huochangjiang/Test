@@ -19,7 +19,5 @@ public class UserLogin {
         public String logo_path;
         public String gender;
         public String mobile;
-
     }
-
 }

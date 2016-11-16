@@ -8,32 +8,35 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.List;
+
 import cn.yumutech.bean.ExchangeCommenList;
 import cn.yumutech.unity.R;
 import cn.yumutech.unity.ReplyToCommentActivity;
+import io.rong.imageloader.core.ImageLoader;
 
 /**
  * Created by Administrator on 2016/11/14.
  */
 public class TaShanCommentAdapter extends BaseAdapter{
     private Context context;
-    private ExchangeCommenList data;
+    private List<ExchangeCommenList.data> data;
 
-    public TaShanCommentAdapter(Context context, ExchangeCommenList data){
+    public TaShanCommentAdapter(Context context, List<ExchangeCommenList.data> data){
         this.context=context;
         this.data=data;
     }
     @Override
     public int getCount() {
-        return data!=null&&data.data!=null&&data.data.size()>0?data.data.size():0;
+        return data!=null&&data!=null&&data.size()>0?data.size():0;
     }
 
-    public void dataChange(ExchangeCommenList data){
+    public void dataChange(List<ExchangeCommenList.data> data){
         this.data=data;
         notifyDataSetChanged();
     }
     @Override
-    public ExchangeCommenList getItem(int i) {
+    public List<ExchangeCommenList.data> getItem(int i) {
         return data;
     }
 
@@ -43,7 +46,7 @@ public class TaShanCommentAdapter extends BaseAdapter{
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(final int i, View view, ViewGroup viewGroup) {
         View myView =view;
         ViewHolder vh;
         if(myView==null){
@@ -53,19 +56,19 @@ public class TaShanCommentAdapter extends BaseAdapter{
             vh.time= (TextView) myView.findViewById(R.id.user);
             vh.user= (TextView) myView.findViewById(R.id.time);
             vh.commentsnum= (TextView) myView.findViewById(R.id.commentsnum);
-            vh.touxiang= (ImageView) myView.findViewById(R.id.image);
+            vh.touxiang= (ImageView) myView.findViewById(R.id.touxiang);
             vh.xian=myView.findViewById(R.id.xian);
             myView.setTag(vh);
         }else {
-            vh= (ViewHolder) view.getTag();
+            vh= (ViewHolder) myView.getTag();
         }
 
-        vh.details.setText(data.data.get(i).content);
-        vh.time.setText(data.data.get(i).publish_user_name);
-        vh.user.setText(data.data.get(i).publish_date);
+        vh.details.setText(data.get(i).content);
+        vh.time.setText(data.get(i).publish_user_name);
+        vh.user.setText(data.get(i).publish_date);
       //  vh.commentsnum.setText(data.data.get(i).comment_count);
-       // ImageLoader.getInstance().displayImage(data.data.get(i).logo_path,vh.image);
-        if(i==data.data.size()-1){
+        ImageLoader.getInstance().displayImage(data.get(i).publish_user_logo_path,vh.touxiang);
+        if(i==data.size()-1){
             vh.xian.setVisibility(View.GONE);
         }
         vh.commentsnum.setOnClickListener(new View.OnClickListener() {
@@ -73,6 +76,7 @@ public class TaShanCommentAdapter extends BaseAdapter{
             public void onClick(View view) {
                 Intent intent=new Intent();
                 intent.setClass(context, ReplyToCommentActivity.class);
+                intent.putExtra("commentId",data.get(i).comment_id);
                 context.startActivity(intent);
             }
         });
