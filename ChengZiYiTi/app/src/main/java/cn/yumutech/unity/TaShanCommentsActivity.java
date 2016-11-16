@@ -79,12 +79,15 @@ public class TaShanCommentsActivity extends BaseActivity  implements PullToRefre
         comments_list.setAdapter(adapter);
         button.setFocusable(true);
         if(type.equals("yes")){
-            button.setVisibility(View.GONE);
-            shurukuang.setVisibility(View.VISIBLE);
-            //弹出软键盘
-            InputMethodManager inputManager =
-                    (InputMethodManager)button.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-            inputManager.toggleSoftInput(0,InputMethodManager.SHOW_FORCED);
+//            button.requestFocus();
+//            edit.setFocusable(true);
+//            edit.setText("");
+//            button.setVisibility(View.GONE);
+//            shurukuang.setVisibility(View.VISIBLE);
+//            //弹出软键盘
+//            InputMethodManager inputManager =
+//                    (InputMethodManager)edit.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+//            inputManager.toggleSoftInput(0,InputMethodManager.SHOW_FORCED);
         }
     }
 
@@ -256,6 +259,8 @@ public class TaShanCommentsActivity extends BaseActivity  implements PullToRefre
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 //2.调用hideSoftInputFromWindow方法隐藏软键盘
                     imm.hideSoftInputFromWindow(send.getWindowToken(), 0); //强制隐藏键盘
+                    break;
+                case 2:
                     break;
             }
         }

@@ -104,7 +104,7 @@ public class LogoActivity extends BaseActivity implements View.OnClickListener{
                     Toast.makeText(LogoActivity.this,channels.status.message,Toast.LENGTH_SHORT).show();
                 }else if(channels.status.code.equals("-6")){
                     //现在仅为测试，此处加了timer，正常的该加载成功后
-                    statrTimer();
+//                    statrTimer();
                     Toast.makeText(LogoActivity.this,channels.status.message,Toast.LENGTH_SHORT).show();
                 }
             }
