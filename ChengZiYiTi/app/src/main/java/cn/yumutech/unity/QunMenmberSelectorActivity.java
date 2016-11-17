@@ -14,14 +14,14 @@ import java.util.List;
 import java.util.Map;
 
 import cn.yumutech.Adapter.MyMenmberAdapter;
-import cn.yumutech.bean.UserBean;
+import cn.yumutech.bean.UserAboutPerson;
 
 public class QunMenmberSelectorActivity extends BaseActivity {
 
 
     private TextView tv_quer;
     private ListView listView;
-    private List<UserBean> mDatas = new ArrayList<>();
+    private List<UserAboutPerson.DataBean> mDatas = new ArrayList<>();
     private MyMenmberAdapter mAdapter;
 
     @Override
@@ -33,30 +33,10 @@ public class QunMenmberSelectorActivity extends BaseActivity {
     protected void initViews(Bundle savedInstanceState) {
         tv_quer = (TextView) findViewById(R.id.tv_qure);
         listView = (ListView) findViewById(R.id.listview);
-        mDatas.add(new UserBean("cc", "3"));
-        mDatas.add(new UserBean("cc1", "4"));
-        mDatas.add(new UserBean("cc1", "5"));
-        mDatas.add(new UserBean("cc1", "6"));
-        mDatas.add(new UserBean("cc1", "7"));
-        mDatas.add(new UserBean("cc1", "8"));
-        mDatas.add(new UserBean("cc1", "9"));
-        mDatas.add(new UserBean("cc1", "10"));
-        mDatas.add(new UserBean("cc1", "11"));
-        mDatas.add(new UserBean("cc1", "12"));
-        mDatas.add(new UserBean("cc1", "13"));
-        mDatas.add(new UserBean("cc1", "14"));
-        mDatas.add(new UserBean("cc1", "15"));
-        mDatas.add(new UserBean("cc1", "16"));
-        mDatas.add(new UserBean("cc1", "17"));
-        mDatas.add(new UserBean("cc1", "18"));
-        mDatas.add(new UserBean("cc1", "19"));
-        mDatas.add(new UserBean("cc1", "20"));
-        mDatas.add(new UserBean("cc1", "21"));
-        mDatas.add(new UserBean("cc1", "22"));
-        mDatas.add(new UserBean("cc1", "23"));
-        mAdapter = new MyMenmberAdapter(mDatas, this);
+
+        mAdapter = new MyMenmberAdapter(App.getContext().mApbutPerson, this);
         listView.setAdapter(mAdapter);
-controlTitle(findViewById(R.id.back));
+      controlTitle(findViewById(R.id.back));
 
     }
 
@@ -66,7 +46,7 @@ controlTitle(findViewById(R.id.back));
     protected void initData() {
         mAdapter.setLisener(new MyMenmberAdapter.getIds() {
             @Override
-            public void getMenmberIds(Map<Integer, UserBean> beans) {
+            public void getMenmberIds(Map<Integer, UserAboutPerson.DataBean> beans) {
                 mIds = getMemberIds(beans);
                 Log.e("info",mIds+"--------");
             }
@@ -92,14 +72,14 @@ controlTitle(findViewById(R.id.back));
 
     List<String> iids = new ArrayList<>();
 
-    private String getMemberIds(Map<Integer, UserBean> beans) {
+    private String getMemberIds(Map<Integer, UserAboutPerson.DataBean> beans) {
         StringBuffer sb = new StringBuffer();
         iids.clear();
         Iterator iter = beans.entrySet().iterator();
         while (iter.hasNext()) {
             Map.Entry entry = (Map.Entry) iter.next();
             int key = (int) entry.getKey();
-            UserBean val = (UserBean) entry.getValue();
+            UserAboutPerson.DataBean val = (UserAboutPerson.DataBean) entry.getValue();
             iids.add(val.id);
         }
         for (int i = 0; i < iids.size(); i++) {

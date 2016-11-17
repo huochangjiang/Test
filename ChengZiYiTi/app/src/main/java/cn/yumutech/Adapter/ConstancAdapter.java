@@ -11,7 +11,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
 
-import cn.yumutech.bean.DepartList;
+import cn.yumutech.bean.UserAboutPerson;
 import cn.yumutech.unity.R;
 
 /**
@@ -19,12 +19,12 @@ import cn.yumutech.unity.R;
  */
 public class ConstancAdapter extends BaseAdapter{
     private Context mContext;
-    private List<DepartList.DataBean> mDatas;
-    public ConstancAdapter(Context context,List<DepartList.DataBean> data){
+    private List<UserAboutPerson.DataBean> mDatas;
+    public ConstancAdapter(Context context,List<UserAboutPerson.DataBean> data){
         this.mContext=context;
         this.mDatas=data;
     }
-    public void dataChange(List<DepartList.DataBean> data){
+    public void dataChange(List<UserAboutPerson.DataBean> data){
         this.mDatas=data;
         notifyDataSetChanged();
     }
@@ -34,7 +34,7 @@ public class ConstancAdapter extends BaseAdapter{
     }
 
     @Override
-    public DepartList.DataBean getItem(int position) {
+    public UserAboutPerson.DataBean getItem(int position) {
         return mDatas.get(position);
     }
 

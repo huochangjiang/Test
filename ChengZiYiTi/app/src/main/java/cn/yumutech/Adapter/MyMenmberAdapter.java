@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.yumutech.bean.UserAboutPerson;
 import cn.yumutech.bean.UserBean;
 import cn.yumutech.unity.R;
 
@@ -19,11 +20,11 @@ import cn.yumutech.unity.R;
  */
 public class MyMenmberAdapter extends BaseAdapter{
 
-    private List<UserBean> mDatas;
+    private List<UserAboutPerson.DataBean> mDatas;
     private Context mContext;
     private int type;
-    private Map<Integer,UserBean> maps=new HashMap<>();
-    public MyMenmberAdapter(List<UserBean> data,Context context){
+    private Map<Integer,UserAboutPerson.DataBean> maps=new HashMap<>();
+    public MyMenmberAdapter(List<UserAboutPerson.DataBean> data,Context context){
         this.mDatas=data;
         this.mContext=context;
     }
@@ -37,7 +38,7 @@ public class MyMenmberAdapter extends BaseAdapter{
         this.ids=id;
     }
     @Override
-    public UserBean getItem(int position) {
+    public UserAboutPerson.DataBean getItem(int position) {
         return mDatas.get(position);
     }
     @Override
@@ -57,7 +58,7 @@ public class MyMenmberAdapter extends BaseAdapter{
         }else{
             vh= (ViewHolder) convertView.getTag();
         }
-        vh.tv.setText(mDatas.get(position).name);
+        vh.tv.setText(mDatas.get(position).nickname);
         if(mDatas.get(index).type == UserBean.TYPE_CHECKED){
             vh.cb.setChecked(true);
         }else{
@@ -94,7 +95,7 @@ public class MyMenmberAdapter extends BaseAdapter{
         public TextView tv;
     }
     public interface getIds{
-        void getMenmberIds(Map<Integer,UserBean> beans);
+        void getMenmberIds(Map<Integer,UserAboutPerson.DataBean> beans);
     }
 
 }

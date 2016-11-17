@@ -17,10 +17,13 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import cn.yumutech.bean.UserAboutPerson;
 import cn.yumutech.bean.UserLogin;
 import cn.yumutech.weight.ACache;
 import cn.yumutech.weight.StringUtils1;
@@ -180,5 +183,8 @@ public class App extends MultiDexApplication{
             destoryMap.get(key).finish();
         }
     }
+
+    public List<UserAboutPerson.DataBean> mApbutPerson=new ArrayList<>();
+
 }
 

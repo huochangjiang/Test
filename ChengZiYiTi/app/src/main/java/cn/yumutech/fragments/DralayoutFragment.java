@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.yumutech.Adapter.ConstancAdapter;
-import cn.yumutech.bean.DepartList;
 import cn.yumutech.bean.RequestParams;
+import cn.yumutech.bean.UserAboutPerson;
 import cn.yumutech.netUtil.Api;
 import cn.yumutech.unity.App;
 import cn.yumutech.unity.BaseFragment;
@@ -29,7 +29,7 @@ public class DralayoutFragment extends BaseFragment {
 
 
     private View rootView;
-    private List<DepartList.DataBean> mDatas=new ArrayList<>();
+    private List<UserAboutPerson.DataBean> mDatas=new ArrayList<>();
     private ListView listView;
     private ConstancAdapter mAdapter;
 
@@ -83,13 +83,13 @@ public class DralayoutFragment extends BaseFragment {
         initDatas1(new Gson().toJson(canshus));
     }
     private void initDatas1( String canshu){
-        subscription = Api.getMangoApi1().getBumenList(canshu)
+        subscription = Api.getMangoApi1().getUserAboutPerson(canshu)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
 
     }
-    Observer<DepartList> observer = new Observer<DepartList>() {
+    Observer<UserAboutPerson> observer = new Observer<UserAboutPerson>() {
         @Override
         public void onCompleted() {
             unsubscribe(subscription);
@@ -100,9 +100,10 @@ public class DralayoutFragment extends BaseFragment {
 
         }
         @Override
-        public void onNext(DepartList channels) {
+        public void onNext(UserAboutPerson channels) {
             if(channels.status.code.equals("0")){
                 mAdapter.dataChange(channels.data);
+                App.getContext().mApbutPerson=channels.data;
             }
 
         }
