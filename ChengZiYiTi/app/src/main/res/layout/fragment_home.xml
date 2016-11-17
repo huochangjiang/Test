@@ -1,11 +1,15 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/scrollview"
+
     tools:context="cn.yumutech.fragments.HomeFragment">
 
     <!-- TODO: Update blank fragment layout -->
+    <ScrollView
+        android:id="@+id/scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="vertical"
@@ -71,4 +75,13 @@
              >
         </cn.yumutech.weight.MyGridView>
     </LinearLayout>
-</ScrollView>
+    </ScrollView>
+        <include
+            android:layout_centerVertical="true"
+            android:visibility="gone"
+            android:id="@+id/netconnect"
+            android:layout_height="match_parent"
+            layout="@layout/net_connect"
+            android:layout_width="match_parent"/>
+
+</RelativeLayout>

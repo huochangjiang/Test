@@ -37,30 +37,31 @@
 
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
-    <com.handmark.pulltorefresh.library.PullToRefreshListView
+
+    <com.handmark.pulltorefresh.library.PullToRefreshScrollView
         android:layout_width="match_parent"
         android:id="@+id/pull_to_refresh"
         android:layout_height="wrap_content"
         android:layout_below="@+id/id_toolbar">
-    </com.handmark.pulltorefresh.library.PullToRefreshListView>
-    <ListView
+    <cn.yumutech.weight.MyListview
         android:id="@+id/reply"
+        android:layout_below="@+id/id_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    </ListView>
-
+    </cn.yumutech.weight.MyListview>
+    </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
     <Button
         android:id="@+id/button"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:visibility="gone"
+
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/fab"
-        android:text="评论"
+        android:text="回复"
         android:textSize="18dp"
         android:textColor="@color/white" />
 </RelativeLayout>

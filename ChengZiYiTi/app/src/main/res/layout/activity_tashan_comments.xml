@@ -39,23 +39,23 @@
 
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
+
 <RelativeLayout
     android:id="@+id/rl"
     android:layout_below="@+id/id_toolbar"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.handmark.pulltorefresh.library.PullToRefreshListView
+
+    <com.handmark.pulltorefresh.library.PullToRefreshScrollView
         android:layout_width="match_parent"
         android:id="@+id/pull_to_refresh"
-        android:layout_height="wrap_content">
-    </com.handmark.pulltorefresh.library.PullToRefreshListView>
-    <ListView
-
+        android:layout_height="match_parent">
+    <cn.yumutech.weight.MyListview
         android:id="@+id/comments_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-    </ListView>
-
+    </cn.yumutech.weight.MyListview>
+    </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
     <!--<include-->
         <!--android:layout_below="@+id/id_toolbar"-->
         <!--layout="@layout/tashan_comments_item"-->
@@ -112,4 +112,5 @@
             android:textColor="#ffffff"/>
     </RelativeLayout>
 </RelativeLayout>
+
 </RelativeLayout>

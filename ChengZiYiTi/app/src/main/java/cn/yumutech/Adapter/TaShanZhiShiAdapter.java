@@ -19,23 +19,23 @@ import cn.yumutech.unity.R;
  */
 public class TaShanZhiShiAdapter extends BaseAdapter{
     private Context context;
-    private HuDongJIaoLiu data;
+    private List<HuDongJIaoLiu.DataBean> data;
 
-    public TaShanZhiShiAdapter(Context context, HuDongJIaoLiu data){
+    public TaShanZhiShiAdapter(Context context, List<HuDongJIaoLiu.DataBean> data){
         this.context=context;
         this.data=data;
     }
     @Override
     public int getCount() {
-        return data!=null&&data.data!=null&&data.data.size()>0?data.data.size():0;
+        return data!=null&&data!=null&&data.size()>0?data.size():0;
     }
 
-    public void dataChange(HuDongJIaoLiu data){
+    public void dataChange(List<HuDongJIaoLiu.DataBean> data){
         this.data=data;
         notifyDataSetChanged();
     }
     @Override
-    public HuDongJIaoLiu getItem(int i) {
+    public List<HuDongJIaoLiu.DataBean> getItem(int i) {
         return data;
     }
 
@@ -64,15 +64,15 @@ public class TaShanZhiShiAdapter extends BaseAdapter{
         }else {
             vh= (ViewHolder) view.getTag();
         }
-        vh.title.setText(data.data.get(i).title);
-        vh.details.setText(data.data.get(i).summary);
-        vh.myclass.setText(data.data.get(i).classify);
-        vh.time.setText(data.data.get(i).publish_date);
-        vh.tv_source.setText(data.data.get(i).original);
-        vh.browse_num.setText(data.data.get(i).browser_count);
-        vh.comments_num.setText(data.data.get(i).comment_count);
-        ImageLoader.getInstance().displayImage(data.data.get(i).logo_path,vh.image);
-        if(i==data.data.size()-1){
+        vh.title.setText(data.get(i).title);
+        vh.details.setText(data.get(i).summary);
+        vh.myclass.setText(data.get(i).classify);
+        vh.time.setText(data.get(i).publish_date);
+        vh.tv_source.setText(data.get(i).original);
+        vh.browse_num.setText(data.get(i).browser_count);
+        vh.comments_num.setText(data.get(i).comment_count);
+        ImageLoader.getInstance().displayImage(data.get(i).logo_path,vh.image);
+        if(i==data.size()-1){
             vh.xian.setVisibility(View.GONE);
         }
         return myView;

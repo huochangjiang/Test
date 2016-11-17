@@ -3,11 +3,11 @@ package cn.yumutech.unity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ListView;
+import android.widget.ScrollView;
 
 import com.google.gson.Gson;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 
 import java.util.List;
 
@@ -15,6 +15,7 @@ import cn.yumutech.Adapter.ReplyToCommentAdapter;
 import cn.yumutech.bean.ExchangeCommenList;
 import cn.yumutech.bean.ExchangeCommenListBeen;
 import cn.yumutech.netUtil.Api;
+import cn.yumutech.weight.MyListview;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -23,14 +24,14 @@ import rx.schedulers.Schedulers;
 /**
  * Created by Allen on 2016/11/14.
  */
-public class ReplyToCommentActivity extends BaseActivity implements PullToRefreshBase.OnRefreshListener2<ListView>{
+public class ReplyToCommentActivity extends BaseActivity implements PullToRefreshBase.OnRefreshListener2<ScrollView>{
     private ImageView back;
     private ReplyToCommentAdapter adapter;
-    private ListView listView;
+    private MyListview listView;
     private List<ExchangeCommenList.data> mData;
     private int page=0;
     Subscription subscription;
-    private PullToRefreshListView pullToRefresh;
+    private PullToRefreshScrollView pullToRefresh;
     private String commentId;
     @Override
     protected int getLayoutId() {
@@ -41,10 +42,10 @@ public class ReplyToCommentActivity extends BaseActivity implements PullToRefres
     protected void initViews(Bundle savedInstanceState) {
         initExtra();
         back= (ImageView) findViewById(R.id.back);
-        listView= (ListView) findViewById(R.id.reply);
+        listView= (MyListview) findViewById(R.id.reply);
         adapter=new ReplyToCommentAdapter(ReplyToCommentActivity.this,mData);
         listView.setAdapter(adapter);
-        pullToRefresh = (PullToRefreshListView) findViewById(R.id.pull_to_refresh);
+        pullToRefresh = (PullToRefreshScrollView) findViewById(R.id.pull_to_refresh);
         pullToRefresh.setOnRefreshListener(this);
     }
 
@@ -112,7 +113,7 @@ public class ReplyToCommentActivity extends BaseActivity implements PullToRefres
     private boolean isShangla=false;
     //下拉刷新
     @Override
-    public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+    public void onPullDownToRefresh(PullToRefreshBase<ScrollView> refreshView) {
         isShangla=false;
         mData.clear();
         exchangeCommenList=new ExchangeCommenListBeen(new ExchangeCommenListBeen.UserBean("1","1234567890"),
@@ -121,7 +122,7 @@ public class ReplyToCommentActivity extends BaseActivity implements PullToRefres
     }
     //上拉加载更多
     @Override
-    public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+    public void onPullUpToRefresh(PullToRefreshBase<ScrollView> refreshView) {
         page++;
         isShangla=true;
         exchangeCommenList=new ExchangeCommenListBeen(new ExchangeCommenListBeen.UserBean("1","1234567890"),

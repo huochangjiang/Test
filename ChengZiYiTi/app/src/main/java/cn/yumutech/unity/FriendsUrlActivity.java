@@ -8,10 +8,13 @@ import android.widget.ListView;
 
 import com.google.gson.Gson;
 
+import java.util.List;
+
 import cn.yumutech.Adapter.YouQIngAdapter;
 import cn.yumutech.bean.RequestCanShu;
 import cn.yumutech.bean.YouQIngLianJie;
 import cn.yumutech.netUtil.Api;
+import cn.yumutech.weight.StringUtils1;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -19,10 +22,11 @@ import rx.schedulers.Schedulers;
 
 public class FriendsUrlActivity extends BaseActivity {
     Subscription subscription;
-    YouQIngLianJie data;
+    private List<YouQIngLianJie.DataBean> data;
     private YouQIngAdapter mAdapter;
     private ListView listView;
-
+    private App app;
+    private View net_connect;
     protected void unsubscribe( Subscription subscription) {
         if (subscription != null && !subscription.isUnsubscribed()) {
             subscription.unsubscribe();
@@ -35,13 +39,37 @@ public class FriendsUrlActivity extends BaseActivity {
 
     @Override
     protected void initViews(Bundle savedInstanceState) {
+        app=App.getContext();
         listView = (ListView) findViewById(R.id.listview);
         mAdapter = new YouQIngAdapter(this,data);
-listView.setAdapter(mAdapter);
+        listView.setAdapter(mAdapter);
         controlTitle(findViewById(R.id.back));
-
+        net_connect = findViewById(R.id.netconnect);
+        initLocal();
     }
-
+    //加载缓存
+    private void initLocal() {
+        String readHomeJson = app.readHomeJson("YouQIngLianJie");// 首页内容
+        if (!StringUtils1.isEmpty(readHomeJson)) {
+            YouQIngLianJie data = new Gson().fromJson(readHomeJson, YouQIngLianJie.class);
+            loadHome(data.data);
+        }else{
+            if(!app.isNetworkConnected(this)){
+                listView.setVisibility(View.GONE);
+                net_connect.setVisibility(View.VISIBLE);
+            }
+        }
+        if (app.isNetworkConnected(FriendsUrlActivity.this)) {
+            initData();
+        }
+    }
+    /**
+     * 加载列表数据
+     */
+    private void loadHome(List<YouQIngLianJie.DataBean> channels){
+        data=channels;
+        mAdapter.dataChange(channels);
+    }
     @Override
     protected void initData() {
         RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean("unity","1234567890"),
@@ -66,6 +94,15 @@ listView.setAdapter(mAdapter);
                 startActivity(intent);
             }
         });
+        net_connect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(app.isNetworkConnected(FriendsUrlActivity.this)){
+                    net_connect.setVisibility(View.GONE);
+                    initData();
+                }
+            }
+        });
 
     }
     Observer<YouQIngLianJie> observer = new Observer<YouQIngLianJie>() {
@@ -81,10 +118,9 @@ listView.setAdapter(mAdapter);
         @Override
         public void onNext(YouQIngLianJie channels) {
             if(channels.status.code.equals("0")){
-                data=channels;
-                mAdapter.dataChange(channels);
+                app.savaHomeJson("YouQIngLianJie",new Gson().toJson(channels));
+                loadHome(channels.data);
             }
-
         }
     };
 }

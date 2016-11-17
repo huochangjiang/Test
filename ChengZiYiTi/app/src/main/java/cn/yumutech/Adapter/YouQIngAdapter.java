@@ -7,6 +7,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.List;
+
 import cn.yumutech.bean.YouQIngLianJie;
 import cn.yumutech.unity.R;
 
@@ -15,23 +17,23 @@ import cn.yumutech.unity.R;
  */
 public class YouQIngAdapter extends BaseAdapter{
     private Context mContext;
-    private YouQIngLianJie mDatas;
-    public YouQIngAdapter(Context context,YouQIngLianJie data){
+     private List<YouQIngLianJie.DataBean> mDatas;
+    public YouQIngAdapter(Context context,List<YouQIngLianJie.DataBean> data){
         this.mContext=context;
         this.mDatas=data;
     }
-    public void dataChange(YouQIngLianJie da){
+    public void dataChange(List<YouQIngLianJie.DataBean> da){
         this.mDatas=da;
         notifyDataSetChanged();
     }
     @Override
     public int getCount() {
-        return mDatas!=null&&mDatas.data!=null?mDatas.data.size():0;
+        return mDatas!=null&&mDatas!=null?mDatas.size():0;
     }
 
     @Override
     public YouQIngLianJie.DataBean getItem(int i) {
-        return mDatas.data.get(i);
+        return mDatas.get(i);
     }
 
     @Override
@@ -51,7 +53,7 @@ public class YouQIngAdapter extends BaseAdapter{
         }else{
             vh= (ViewHolder) view.getTag();
         }
-        vh.tv.setText(mDatas.data.get(i).title);
+        vh.tv.setText(mDatas.get(i).title);
         return view;
     }
 

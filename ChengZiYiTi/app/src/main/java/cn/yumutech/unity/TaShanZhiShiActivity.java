@@ -6,8 +6,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ScrollView;
 
 import com.google.gson.Gson;
+import com.handmark.pulltorefresh.library.ILoadingLayout;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
+
+import java.util.List;
 
 import cn.yumutech.Adapter.TaShanZhiShiAdapter;
 import cn.yumutech.bean.ExchangeListBeen;
@@ -22,14 +28,15 @@ import rx.schedulers.Schedulers;
 /**
  * Created by Allen on 2016/11/13.
  */
-public class TaShanZhiShiActivity extends BaseActivity {
+public class TaShanZhiShiActivity extends BaseActivity implements PullToRefreshBase.OnRefreshListener2<ScrollView>{
     private ImageView back;
     private ListView listview;
     Subscription subscription;
     private TaShanZhiShiAdapter adapter;
-    private HuDongJIaoLiu mData;
+    private List<HuDongJIaoLiu.DataBean> mData;
     private App app;
     private View net_connect;
+    private PullToRefreshScrollView pullToRefresh;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_tashanzhishi;
@@ -45,6 +52,22 @@ public class TaShanZhiShiActivity extends BaseActivity {
         listview.setAdapter(adapter);
         net_connect = findViewById(R.id.netconnect);
         initLocal();
+        pullToRefresh = (PullToRefreshScrollView) findViewById(R.id.pull_to_refresh);
+        pullToRefresh.setMode(PullToRefreshBase.Mode.BOTH);
+        pullToRefresh.setOnRefreshListener(this);
+        //下拉刷新设置
+        ILoadingLayout startLabels = pullToRefresh
+                .getLoadingLayoutProxy(true, false);
+        startLabels.setPullLabel("下拉刷新...");// 刚下拉时，显示的提示
+        startLabels.setRefreshingLabel("正在载入...");// 刷新时
+        startLabels.setReleaseLabel("放开刷新...");// 下来达到一定距离时，显示的提示
+
+        //上拉加载更多设置
+        ILoadingLayout endLabels = pullToRefresh.getLoadingLayoutProxy(
+                false, true);
+        endLabels.setPullLabel("上拉加载...");// 刚下拉时，显示的提示
+        endLabels.setRefreshingLabel("正在载入...");// 刷新时
+        endLabels.setReleaseLabel("放开刷新...");// 下来达到一定距离时，显示的提示
 
     }
 
@@ -66,8 +89,8 @@ public class TaShanZhiShiActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent=new Intent();
                 intent.setClass(TaShanZhiShiActivity.this,TaShanDetailActivity.class);
-                if(mData!=null&&mData.data!=null&&mData.data.get(i).id!=null){
-                    intent.putExtra("id",mData.data.get(i).id);
+                if(mData!=null&&mData!=null&&mData.get(i).id!=null){
+                    intent.putExtra("id",mData.get(i).id);
                 }
                 startActivity(intent);
             }
@@ -103,21 +126,28 @@ public class TaShanZhiShiActivity extends BaseActivity {
         @Override
         public void onCompleted() {
             unsubscribe(subscription);
+            pullToRefresh.onRefreshComplete();
         }
 
         @Override
         public void onError(Throwable e) {
             e.printStackTrace();
+            pullToRefresh.onRefreshComplete();
 
         }
 
         @Override
         public void onNext(HuDongJIaoLiu huDongItem) {
             if(huDongItem!=null&&huDongItem.status.code.equals("0")){
-                mData=huDongItem;
+                if(isShangla){
+                    mData.addAll(huDongItem.data);
+                }else {
+                    mData=huDongItem.data;
+                }
                 app.savaHomeJson("tslist",new Gson().toJson(huDongItem));
                loadHome(mData);
             }
+            pullToRefresh.onRefreshComplete();
         }
     };
 
@@ -130,7 +160,7 @@ public class TaShanZhiShiActivity extends BaseActivity {
     /**
      * 加载列表数据
      */
-    private void loadHome(HuDongJIaoLiu data){
+    private void loadHome(List<HuDongJIaoLiu.DataBean> data){
         adapter.dataChange(data);
         net_connect.setVisibility(View.GONE);
         listview.setVisibility(View.VISIBLE);
@@ -139,7 +169,7 @@ public class TaShanZhiShiActivity extends BaseActivity {
         String readHomeJson = app.readHomeJson("tslist");// 首页内容
         if (!StringUtils1.isEmpty(readHomeJson)) {
             HuDongJIaoLiu data = new Gson().fromJson(readHomeJson, HuDongJIaoLiu.class);
-            loadHome(data);
+            loadHome(data.data);
 
         }else{
             if(!app.isNetworkConnected(this)){
@@ -150,5 +180,24 @@ public class TaShanZhiShiActivity extends BaseActivity {
         if (app.isNetworkConnected(TaShanZhiShiActivity.this)) {
             initData();
         }
+    }
+    private int page=0;
+    private boolean isShangla=false;
+    @Override
+    public void onPullDownToRefresh(PullToRefreshBase<ScrollView> refreshView) {
+        isShangla=false;
+
+        ExchangeListBeen exchangeItemBeen = new ExchangeListBeen(new ExchangeListBeen.UserBean("unity", "1234567890"),
+                new ExchangeListBeen.DataBean("国内","0","5"));
+        getData1(new Gson().toJson(exchangeItemBeen));
+    }
+
+    @Override
+    public void onPullUpToRefresh(PullToRefreshBase<ScrollView> refreshView) {
+        page=mData.size();
+        isShangla=true;
+        ExchangeListBeen exchangeItemBeen = new ExchangeListBeen(new ExchangeListBeen.UserBean("unity", "1234567890"),
+                new ExchangeListBeen.DataBean("国内",page+"","5"));
+        getData1(new Gson().toJson(exchangeItemBeen));
     }
 }
