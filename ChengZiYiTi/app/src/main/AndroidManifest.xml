@@ -39,6 +39,7 @@
         <activity android:name=".TaShanDetailActivity" />
         <activity
             android:name=".TaShanCommentsActivity"
+
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".ReplyToCommentActivity" />
         <activity android:name=".AfterLoginActivity" />

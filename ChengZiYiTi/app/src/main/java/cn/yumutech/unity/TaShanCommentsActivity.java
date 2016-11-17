@@ -15,14 +15,15 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 
 import java.util.List;
 
@@ -32,6 +33,7 @@ import cn.yumutech.bean.AddPingLunBeen;
 import cn.yumutech.bean.ExchangeCommenList;
 import cn.yumutech.bean.ExchangeCommenListBeen;
 import cn.yumutech.netUtil.Api;
+import cn.yumutech.weight.MyListview;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -40,10 +42,10 @@ import rx.schedulers.Schedulers;
 /**
  * Created by Allen on 2016/11/13.
  */
-public class TaShanCommentsActivity extends BaseActivity  implements PullToRefreshBase.OnRefreshListener2<ListView>{
+public class TaShanCommentsActivity extends BaseActivity  implements PullToRefreshBase.OnRefreshListener2<ScrollView>{
     private ImageView back;
     private Button button;
-    private ListView comments_list;
+    private MyListview comments_list;
     Subscription subscription;
     Subscription subscription1;
     private TaShanCommentAdapter adapter;
@@ -55,7 +57,7 @@ public class TaShanCommentsActivity extends BaseActivity  implements PullToRefre
     private String mId,userId;
     private RelativeLayout rl;
     private int page=0;
-    private PullToRefreshListView pullToRefresh;
+    private PullToRefreshScrollView pullToRefresh;
     private String type;
     @Override
     protected int getLayoutId() {
@@ -69,15 +71,29 @@ public class TaShanCommentsActivity extends BaseActivity  implements PullToRefre
         back= (ImageView) findViewById(R.id.back);
         button= (Button) findViewById(R.id.button);
         shurukuang= (RelativeLayout) findViewById(R.id.shurukuang);
-        comments_list= (ListView) findViewById(R.id.comments_list);
+        comments_list= (MyListview) findViewById(R.id.comments_list);
         edit= (EditText) findViewById(R.id.edit);
         send= (TextView) findViewById(R.id.send);
          rl = (RelativeLayout) findViewById(R.id.rl);
-        pullToRefresh = (PullToRefreshListView) findViewById(R.id.pull_to_refresh);
+        pullToRefresh = (PullToRefreshScrollView) findViewById(R.id.pull_to_refresh);
+        pullToRefresh.setMode(PullToRefreshBase.Mode.BOTH);
         pullToRefresh.setOnRefreshListener(this);
         adapter=new TaShanCommentAdapter(TaShanCommentsActivity.this,mData);
         comments_list.setAdapter(adapter);
         button.setFocusable(true);
+        //下拉刷新设置
+        ILoadingLayout startLabels = pullToRefresh
+                .getLoadingLayoutProxy(true, false);
+        startLabels.setPullLabel("下拉刷新...");// 刚下拉时，显示的提示
+        startLabels.setRefreshingLabel("正在载入...");// 刷新时
+        startLabels.setReleaseLabel("放开刷新...");// 下来达到一定距离时，显示的提示
+
+        //上拉加载更多设置
+        ILoadingLayout endLabels = pullToRefresh.getLoadingLayoutProxy(
+                false, true);
+        endLabels.setPullLabel("上拉加载...");// 刚下拉时，显示的提示
+        endLabels.setRefreshingLabel("正在载入...");// 刷新时
+        endLabels.setReleaseLabel("放开刷新...");// 下来达到一定距离时，显示的提示
         if(type!=null&&type.equals("yes")){
 //            button.requestFocus();
 //            edit.setFocusable(true);
@@ -296,7 +312,7 @@ public class TaShanCommentsActivity extends BaseActivity  implements PullToRefre
     private boolean isShangla=false;
     //下拉刷新
     @Override
-    public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+    public void onPullDownToRefresh(PullToRefreshBase<ScrollView> refreshView) {
         isShangla=false;
 
         exchangeCommenList=new ExchangeCommenListBeen(new ExchangeCommenListBeen.UserBean("1","1234567890"),
@@ -305,8 +321,8 @@ public class TaShanCommentsActivity extends BaseActivity  implements PullToRefre
     }
     //上拉加载更多
     @Override
-    public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-        page++;
+    public void onPullUpToRefresh(PullToRefreshBase<ScrollView> refreshView) {
+        page=mData.size();
         isShangla=true;
         exchangeCommenList=new ExchangeCommenListBeen(new ExchangeCommenListBeen.UserBean("1","1234567890"),
                 new ExchangeCommenListBeen.DataBean(mId,page+"","10"));

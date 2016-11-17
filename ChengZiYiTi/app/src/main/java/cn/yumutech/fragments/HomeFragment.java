@@ -20,6 +20,7 @@ import cn.yumutech.bean.BaiBao;
 import cn.yumutech.bean.LeaderActivitys;
 import cn.yumutech.bean.RequestCanShu;
 import cn.yumutech.netUtil.Api;
+import cn.yumutech.unity.App;
 import cn.yumutech.unity.BaseFragment;
 import cn.yumutech.unity.CommunicationActivity;
 import cn.yumutech.unity.FriendsUrlActivity;
@@ -30,6 +31,7 @@ import cn.yumutech.unity.R;
 import cn.yumutech.unity.WorkDongTaiActivity;
 import cn.yumutech.weight.ImagePagerAdapterApply;
 import cn.yumutech.weight.MyGridView;
+import cn.yumutech.weight.StringUtils1;
 import cn.yumutech.weight.ViewFlow;
 import rx.Observer;
 import rx.Subscription;
@@ -43,6 +45,8 @@ public class HomeFragment extends BaseFragment {
     private LinearLayout ll_dian;
     private ScrollView scrollView;
     private MyGridView myGridView;
+    private App app;
+    private View net_connect;
     List<BaiBao> baibaos=new ArrayList<BaiBao>();
     LeaderActivitys leaderActivitys;
 
@@ -64,6 +68,7 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void initViews(View contentView) {
+        app=App.getContext();
         mViewFlow = (ViewFlow) contentView.findViewById(R.id.viewpager);
         ll_dian = (LinearLayout) contentView.findViewById(R.id.ll_dian);
         scrollView = (ScrollView) contentView.findViewById(R.id.scrollview);
@@ -98,6 +103,31 @@ public class HomeFragment extends BaseFragment {
                 }
             }
         });
+        net_connect = contentView.findViewById(R.id.netconnect);
+        initLocal();
+    }
+    //加载缓存
+    private void initLocal() {
+        String readHomeJson = app.readHomeJson("LeaderActivitys");// 首页内容
+        if (!StringUtils1.isEmpty(readHomeJson)) {
+            LeaderActivitys data = new Gson().fromJson(readHomeJson, LeaderActivitys.class);
+            loadHome(data);
+        }else{
+            if(!app.isNetworkConnected(getActivity())){
+                scrollView.setVisibility(View.GONE);
+                net_connect.setVisibility(View.VISIBLE);
+            }
+        }
+        if (app.isNetworkConnected(getActivity())) {
+            initDatas();
+        }
+    }
+    /**
+     * 加载列表数据
+     */
+    private void loadHome(LeaderActivitys channels){
+        leaderActivitys=channels;
+        initBanner(channels);
     }
     @Override
     protected void initListeners() {
@@ -122,6 +152,15 @@ public class HomeFragment extends BaseFragment {
                 }else if(i==6){
                     Intent intent=new Intent(getActivity(), CommunicationActivity.class);
                     startActivity(intent);
+                }
+            }
+        });
+        net_connect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(app.isNetworkConnected(getActivity())){
+                    net_connect.setVisibility(View.GONE);
+                    initDatas();
                 }
             }
         });
@@ -186,8 +225,8 @@ Subscription subscription;
         @Override
         public void onNext(LeaderActivitys channels) {
             if(channels.status.code.equals("0")){
-                leaderActivitys=channels;
-                initBanner(channels);
+                app.savaHomeJson("LeaderActivitys",new Gson().toJson(channels));
+                loadHome(channels);
             }
 
         }

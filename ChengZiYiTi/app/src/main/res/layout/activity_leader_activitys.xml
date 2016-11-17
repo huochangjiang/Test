@@ -35,6 +35,14 @@
 
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
+    <include
+        android:layout_below="@+id/id_toolbar"
+        android:layout_centerVertical="true"
+        android:visibility="gone"
+        android:id="@+id/netconnect"
+        android:layout_height="match_parent"
+        layout="@layout/net_connect"
+        android:layout_width="match_parent"/>
     <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:id="@+id/pull_to_refresh"
