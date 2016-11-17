@@ -3,17 +3,14 @@ package cn.yumutech.Adapter;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
 
 import cn.yumutech.bean.ExchangeCommenList;
 import cn.yumutech.unity.R;
-import cn.yumutech.weight.MyEditText;
 import io.rong.imageloader.core.ImageLoader;
 
 /**
@@ -57,9 +54,9 @@ public class ReplyToCommentAdapter extends BaseAdapter{
             vh.time= (TextView) myView.findViewById(R.id.time);
             vh.onclik_reply= (TextView) myView.findViewById(R.id.onclik_reply);
             vh.touxiang= (ImageView) myView.findViewById(R.id.touxiang);
-            vh.shurukuang= (RelativeLayout) myView.findViewById(R.id.shurukuang);
-            vh.edit= (MyEditText) myView.findViewById(R.id.edit);
-            vh.send= (TextView) myView.findViewById(R.id.send);
+//            vh.shurukuang= (RelativeLayout) myView.findViewById(R.id.shurukuang);
+//            vh.edit= (MyEditText) myView.findViewById(R.id.edit);
+//            vh.send= (TextView) myView.findViewById(R.id.send);
             vh.xian=myView.findViewById(R.id.xian);
             myView.setTag(vh);
         }else {
@@ -72,17 +69,17 @@ public class ReplyToCommentAdapter extends BaseAdapter{
         vh.unity.setText(mData.get(position).receiver_user_name);
         //  vh.commentsnum.setText(data.data.get(i).comment_count);
         ImageLoader.getInstance().displayImage(mData.get(position).publish_user_logo_path,vh.touxiang);
-        if(position==mData.size()-1){
-            vh.xian.setVisibility(View.GONE);
-        }
+//        if(position==mData.size()-1){
+//            vh.xian.setVisibility(View.GONE);
+//        }
         vh.onclik_reply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                vh.shurukuang.setVisibility(View.VISIBLE);
-                //弹出软键盘
-                InputMethodManager inputManager =
-                        (InputMethodManager)vh.onclik_reply.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputManager.toggleSoftInput(0,InputMethodManager.SHOW_FORCED);
+//                vh.shurukuang.setVisibility(View.VISIBLE);
+//                //弹出软键盘
+//                InputMethodManager inputManager =
+//                        (InputMethodManager)vh.onclik_reply.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+//                inputManager.toggleSoftInput(0,InputMethodManager.SHOW_FORCED);
 
             }
         });
@@ -92,8 +89,8 @@ public class ReplyToCommentAdapter extends BaseAdapter{
         public TextView details,admin,time,unity,onclik_reply;
         public ImageView touxiang;
         public View xian;
-        private RelativeLayout shurukuang;
-        private MyEditText edit;
-        private TextView send;
+//        private RelativeLayout shurukuang;
+//        private MyEditText edit;
+//        private TextView send;
     }
 }

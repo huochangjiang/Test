@@ -65,6 +65,7 @@ public class CommuGroupFragment extends BaseFragment implements View.OnClickList
     protected void initViews(View contentView) {
 
         listview= (MyListview) contentView.findViewById(R.id.listview);
+        listview.setFocusable(false);
         adapter=new GroupListAdapter(getActivity(),data);
         listview.setAdapter(adapter);
         two= (RelativeLayout) contentView.findViewById(R.id.two);
