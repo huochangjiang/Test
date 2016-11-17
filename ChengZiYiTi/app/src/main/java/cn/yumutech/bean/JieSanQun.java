@@ -16,24 +16,12 @@ public class JieSanQun {
      * data : 
      */
 
-    public String data;
-
     public StatusBean getStatus() {
         return status;
     }
-
     public void setStatus(StatusBean status) {
         this.status = status;
     }
-
-    public String getData() {
-        return data;
-    }
-
-    public void setData(String data) {
-        this.data = data;
-    }
-
     public static class StatusBean {
         public String message;
         public String code;

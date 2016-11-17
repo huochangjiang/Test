@@ -1,5 +1,6 @@
 package cn.yumutech.unity;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -16,6 +17,9 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 import cn.yumutech.bean.UserLogin;
 import cn.yumutech.weight.ACache;
@@ -155,6 +159,26 @@ public class App extends MultiDexApplication{
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo ni = cm.getActiveNetworkInfo();
         return ni != null && ni.isConnectedOrConnecting();
+    }
+
+
+    /**
+     * 添加到销毁队列
+     *
+     * @param activity 要销毁的activity
+     */
+      Map<String,Activity> destoryMap = new HashMap<>();
+    public  void addDestoryActivity(Activity activity, String activityName) {
+        destoryMap.put(activityName,activity);
+    }
+    /**
+     *销毁指定Activity
+     */
+    public  void destoryActivity(String activityName) {
+        Set<String> keySet=destoryMap.keySet();
+        for (String key:keySet){
+            destoryMap.get(key).finish();
+        }
     }
 }
 

@@ -1,10 +1,10 @@
 package cn.yumutech.bean;
 
 /**
- * Created by 霍长江 on 2016/11/16.
+ * Created by 霍长江 on 2016/11/17.
  */
-public class RequestCanShu1 {
-    public RequestCanShu1(UserBean user, DataBean data) {
+public class RequestParams {
+    public RequestParams(UserBean user, DataBean data) {
         this.user = user;
         this.data = data;
     }
@@ -41,18 +41,11 @@ public class RequestCanShu1 {
     }
 
     public static class DataBean {
-
-        public String userId;
-        public String groupId;
-
-        public DataBean(String userId, String groupId) {
-            this.userId = userId;
-            this.groupId = groupId;
-        }
-
+        public String dept_id;
         public DataBean(String id) {
-            this.userId = id;
+            this.dept_id = id;
         }
+
 
 
     }

@@ -50,8 +50,8 @@ public class CreateQunZhuActivity extends BaseActivity {
         sure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean("3","134669"),
-                        new RequestCanShu.DataBean(ids,editText.getText().toString().trim()));
+                RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.id,"1234567890"),
+                        new RequestCanShu.DataBean(ids+","+App.getContext().getLogo("logo").data.id,editText.getText().toString().trim()));
                 initDatas1(new Gson().toJson(canshus));
             }
         });

@@ -1,9 +1,12 @@
 package cn.yumutech.bean;
 
+import java.util.List;
+
 /**
  * Created by 霍长江 on 2016/11/15.
  */
 public class DepartList {
+
 
     /**
      * message : 成功获取数据
@@ -12,12 +15,19 @@ public class DepartList {
 
     public StatusBean status;
     /**
-     * dept_id : 2
-     * dept_name : 安保部
-     * dept_parent_id : 1
+     * id : 3
+     * birthday : 2016-11-07 00:00:00
+     * dept_id : 8
+     * token : BA30MmLDRs2dkX6H0DJaIVGbghjKETbpRsSl+S9JAABjX3dwulUDiBHqnd4qY/k2JVDJasMpjUI=
+     * address : cd
+     * nickname : 霍长江
+     * logo_path : http://182.254.167.232:20080/unity/userfiles/images/portrait.jpg
+     * gender : 1
+     * dept_name : 综合部
+     * mobile : 18215595271
      */
 
-    public DataBean data;
+    public List<DataBean> data;
 
     public StatusBean getStatus() {
         return status;
@@ -27,11 +37,11 @@ public class DepartList {
         this.status = status;
     }
 
-    public DataBean getData() {
+    public List<DataBean> getData() {
         return data;
     }
 
-    public void setData(DataBean data) {
+    public void setData(List<DataBean> data) {
         this.data = data;
     }
 
@@ -57,9 +67,32 @@ public class DepartList {
     }
 
     public static class DataBean {
+        public String id;
+        public String birthday;
         public String dept_id;
+        public String token;
+        public String address;
+        public String nickname;
+        public String logo_path;
+        public String gender;
         public String dept_name;
-        public String dept_parent_id;
+        public String mobile;
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getBirthday() {
+            return birthday;
+        }
+
+        public void setBirthday(String birthday) {
+            this.birthday = birthday;
+        }
 
         public String getDept_id() {
             return dept_id;
@@ -67,6 +100,46 @@ public class DepartList {
 
         public void setDept_id(String dept_id) {
             this.dept_id = dept_id;
+        }
+
+        public String getToken() {
+            return token;
+        }
+
+        public void setToken(String token) {
+            this.token = token;
+        }
+
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
+        }
+
+        public String getNickname() {
+            return nickname;
+        }
+
+        public void setNickname(String nickname) {
+            this.nickname = nickname;
+        }
+
+        public String getLogo_path() {
+            return logo_path;
+        }
+
+        public void setLogo_path(String logo_path) {
+            this.logo_path = logo_path;
+        }
+
+        public String getGender() {
+            return gender;
+        }
+
+        public void setGender(String gender) {
+            this.gender = gender;
         }
 
         public String getDept_name() {
@@ -77,12 +150,12 @@ public class DepartList {
             this.dept_name = dept_name;
         }
 
-        public String getDept_parent_id() {
-            return dept_parent_id;
+        public String getMobile() {
+            return mobile;
         }
 
-        public void setDept_parent_id(String dept_parent_id) {
-            this.dept_parent_id = dept_parent_id;
+        public void setMobile(String mobile) {
+            this.mobile = mobile;
         }
     }
 }

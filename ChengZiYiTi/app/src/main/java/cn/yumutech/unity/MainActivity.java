@@ -47,7 +47,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,R
 
     @Override
     protected void initViews(Bundle savedInstanceState) {
-        app= (App) MainActivity.this.getApplicationContext();
+        app= App.getContext();
         addFragement(HomeFragment.newInstance());
         addFragement(SuperviseFragment.newInstance());
         addFragement(MailListFragment.newInstance());

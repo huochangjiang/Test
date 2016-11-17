@@ -134,8 +134,8 @@ Observable<WorkDetails> getWorkDetais(@Query("req") String policy);
     //加入群主
     @POST("GroupJoin")
     Observable<JoinQun> getJoinQun(@Query("req") String item);
-//查询群成员
-    @POST("GroupQueryUser")
+    //查询群成员
+    @POST("QueryUserList")
     Observable<ChaXunQunMenmber> getChaXunMember(@Query("req") String item);
     //发布任务
     @POST("PublishTask")
@@ -143,6 +143,7 @@ Observable<WorkDetails> getWorkDetais(@Query("req") String policy);
     //显示我发布的任务
     @POST("ShowMyPublishedTask")
     Observable<XianShiMyFaBuRenWU> getXianShiFaBu(@Query("req") String item);
+
     //显示任务详情
     @POST("ShowTaskDetail")
     Observable<XianShiRenWuXiangQing> getRenWuDetail(@Query("req") String item);
@@ -150,7 +151,7 @@ Observable<WorkDetails> getWorkDetais(@Query("req") String policy);
     @POST("DeptList")
     Observable<DepartList> getBumenList(@Query("req") String item);
     //获取用户列表
-//查询用户相关的群
+    //查询用户相关的群
     @POST("QueryGroupList")
     Observable<UserXiangGuanQun> getUserXiangGuanQun(@Query("req") String item);
 

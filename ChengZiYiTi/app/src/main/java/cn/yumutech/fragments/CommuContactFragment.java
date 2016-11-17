@@ -1,7 +1,6 @@
 package cn.yumutech.fragments;
 
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +29,7 @@ import rx.schedulers.Schedulers;
  */
 public class CommuContactFragment extends BaseFragment{
     Subscription subscription;
+    Subscription subscription1;
     private static CommuContactFragment fragment;
     private View contactView;
     private ExpandableListView expandableListView;
@@ -125,7 +125,7 @@ public class CommuContactFragment extends BaseFragment{
         @Override
         public void onNext(DepartList channels) {
             if(channels.status.code.equals("0")){
-                Log.e("info",channels.data.dept_name+"aaa");
+
             }
         }
     };

@@ -135,6 +135,8 @@ public class ConversationActivity extends FragmentActivity{
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(ConversationActivity.this,BianJiActivity.class);
+                App.getContext().addDestoryActivity(ConversationActivity.this,"conversation");
+                intent.putExtra("mTargetId",mTargetId);
                 startActivity(intent);
             }
         });
