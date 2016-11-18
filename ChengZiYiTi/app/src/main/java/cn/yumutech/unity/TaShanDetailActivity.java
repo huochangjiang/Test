@@ -19,6 +19,7 @@ import com.google.gson.Gson;
 import cn.yumutech.bean.ExchangeItemBeen;
 import cn.yumutech.bean.HuDongItem;
 import cn.yumutech.netUtil.Api;
+import cn.yumutech.weight.CenterTextView;
 import cn.yumutech.weight.StringUtils1;
 import rx.Observer;
 import rx.Subscription;
@@ -29,7 +30,8 @@ import rx.schedulers.Schedulers;
  * Created by Allen on 2016/11/13.
  */
 public class TaShanDetailActivity extends BaseActivity{
-    private TextView fenlei,time,laiyuan,pinglun,title;
+    private TextView fenlei,time,laiyuan,pinglun;
+    private CenterTextView title;
     private RelativeLayout comments;
     private WebView webView;
     private String myId="";
@@ -49,7 +51,7 @@ public class TaShanDetailActivity extends BaseActivity{
     protected void initViews(Bundle savedInstanceState) {
         app= (App) TaShanDetailActivity.this.getApplicationContext();
         getExtra();
-        title= (TextView) findViewById(R.id.title).findViewById(R.id.xinwentitle);
+        title= (CenterTextView) findViewById(R.id.title).findViewById(R.id.xinwentitle);
         fenlei= (TextView) findViewById(R.id.title).findViewById(R.id.myclass);
         time= (TextView) findViewById(R.id.title).findViewById(R.id.time);
         laiyuan= (TextView) findViewById(R.id.title).findViewById(R.id.tv_source);

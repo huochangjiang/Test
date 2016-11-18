@@ -58,6 +58,7 @@
                 android:id="@+id/hengxian"
                 android:layout_width="60dp"
                 android:layout_height="3dp"
+                android:visibility="gone"
                 android:layout_marginLeft="120dp"
                 android:background="@color/white"/>
         </RelativeLayout>
