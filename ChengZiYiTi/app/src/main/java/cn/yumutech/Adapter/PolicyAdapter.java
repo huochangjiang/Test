@@ -25,6 +25,7 @@ public class PolicyAdapter extends RecyclerView.Adapter {
     OnitemClick onitemClick;
     private static final int ITEM_VIEW=1;
     private static final int FOOT_VIEW=2;
+    private boolean isHave;
     public void setLisener(OnitemClick click){
         this.onitemClick=click;
     }
@@ -34,7 +35,8 @@ public class PolicyAdapter extends RecyclerView.Adapter {
         this.mDatas=data;
         mLayoutInflater=LayoutInflater.from(context);
     }
-    public void dataChange(List<ZhengCeFile.DataBean> data){
+    public void dataChange(List<ZhengCeFile.DataBean> data,boolean isHave){
+        this.isHave=isHave;
         this.mDatas=data;
         notifyDataSetChanged();
     }
@@ -151,7 +153,7 @@ public class PolicyAdapter extends RecyclerView.Adapter {
     }
     @Override
     public int getItemViewType(int position) {
-        if (position + 1 == getItemCount()&&getItemCount()>5 ) {
+        if (position + 1 == getItemCount()&&getItemCount()>5&&isHave) {
             return FOOT_VIEW;
         } else {
             return ITEM_VIEW;

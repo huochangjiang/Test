@@ -8,6 +8,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -36,7 +37,8 @@ public class LeadersDetaislActivity extends BaseActivity {
     private TextView guihua;
     private TextView money;
     private RelativeLayout relativeLayout;
-
+    private View myprog;
+    private ScrollView scrollview;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_leaders_detaisl;
@@ -45,6 +47,10 @@ public class LeadersDetaislActivity extends BaseActivity {
     @Override
     protected void initViews(Bundle savedInstanceState) {
         webView = (WebView) findViewById(R.id.webview);
+        scrollview= (ScrollView) findViewById(R.id.scrollview);
+        myprog=findViewById(R.id.myprog);
+        myprog.setVisibility(View.VISIBLE);
+        scrollview.setVisibility(View.GONE);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setSupportZoom(true);
         webView.getSettings().setBuiltInZoomControls(false);
@@ -131,10 +137,11 @@ public class LeadersDetaislActivity extends BaseActivity {
                 webView.loadDataWithBaseURL(null, channels.data.content, "text/html", "utf-8", null);
                 webView.getSettings().setJavaScriptEnabled(true);
                 webView.setWebChromeClient(new WebChromeClient());
-
                 title1.setText(channels.data.title);
                 laiyan.setText(channels.data.original);
                 tv_time.setText(channels.data.publish_date);
+                myprog.setVisibility(View.GONE);
+                scrollview.setVisibility(View.VISIBLE);
             }
 
         }
@@ -159,6 +166,8 @@ public class LeadersDetaislActivity extends BaseActivity {
                 title1.setText(channels.data.title);
                 laiyan.setText(channels.data.original);
                 tv_time.setText(channels.data.publish_date);
+                myprog.setVisibility(View.GONE);
+                scrollview.setVisibility(View.VISIBLE);
             }
         }
     };
@@ -188,6 +197,8 @@ public class LeadersDetaislActivity extends BaseActivity {
                 money.setText("项目金额" + channels.data.amount + "元");
             }
                 guihua.setText("类型:"+channels.data.type);
+                myprog.setVisibility(View.GONE);
+                scrollview.setVisibility(View.VISIBLE);
             }
 
         }

@@ -29,7 +29,7 @@ public class LeaderActivitysActivity extends BaseActivity implements SwipeRefres
     private List<LeaderActivitys.DataBean> leaderActivitys=new ArrayList<>();
     Subscription subscription;
     private int mPage=0;
-    private int mPageSize = 10;
+    private int mPageSize = 5;
     private LinearLayoutManager mLayoutManager;
     private int lastVisibleItem;
     private App app;
@@ -37,6 +37,8 @@ public class LeaderActivitysActivity extends BaseActivity implements SwipeRefres
     //是否正在加载更多的标志
     private boolean isMoreLoading = false;
     private boolean isRefresh=false;
+    private boolean isHave;
+    private View myprog;
     protected void unsubscribe( Subscription subscription) {
         if (subscription != null && !subscription.isUnsubscribed()) {
             subscription.unsubscribe();
@@ -50,6 +52,9 @@ public class LeaderActivitysActivity extends BaseActivity implements SwipeRefres
     protected void initViews(Bundle savedInstanceState) {
         app= (App) LeaderActivitysActivity.this.getApplicationContext();
         recyclerView = (RecyclerView) findViewById(R.id.recyleview);
+        myprog=  findViewById(R.id.myprog);
+        myprog.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.GONE);
         pullToRefresh = (SwipeRefreshLayout) findViewById(R.id.pull_to_refresh);
         mAdapter = new LeaderActivityAdapter(this,leaderActivitys);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
@@ -60,6 +65,7 @@ public class LeaderActivitysActivity extends BaseActivity implements SwipeRefres
         pullToRefresh.setOnRefreshListener(this);
         controlTitle(findViewById(R.id.back));
         net_connect = findViewById(R.id.netconnect);
+
         initLocal();
     }
     //加载缓存
@@ -71,6 +77,7 @@ public class LeaderActivitysActivity extends BaseActivity implements SwipeRefres
 
         }else{
             if(!app.isNetworkConnected(this)){
+                myprog.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.GONE);
                 net_connect.setVisibility(View.VISIBLE);
             }
@@ -82,7 +89,7 @@ public class LeaderActivitysActivity extends BaseActivity implements SwipeRefres
     @Override
     protected void initData() {
         RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean("unity","1234567890"),
-                new RequestCanShu.DataBean("省级",mPage+"","5"));
+                new RequestCanShu.DataBean("省级",mPage+"",mPageSize+""));
         initDatas1(new Gson().toJson(canshus));
     }
     private void initDatas1( String canshu){
@@ -114,7 +121,7 @@ public class LeaderActivitysActivity extends BaseActivity implements SwipeRefres
                         isRefresh=true;
                         mPage=leaderActivitys.size();
                         RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean("unity","1234567890"),
-                                new RequestCanShu.DataBean("省级",mPage+"","5"));
+                                new RequestCanShu.DataBean("省级",mPage+"",mPageSize+""));
                         initDatas1(new Gson().toJson(canshus));
                     }
                 }
@@ -130,6 +137,8 @@ public class LeaderActivitysActivity extends BaseActivity implements SwipeRefres
             public void onClick(View v) {
                 if(app.isNetworkConnected(LeaderActivitysActivity.this)){
                     net_connect.setVisibility(View.GONE);
+                    myprog.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
                     initData();
                 }
             }
@@ -152,9 +161,9 @@ public class LeaderActivitysActivity extends BaseActivity implements SwipeRefres
         @Override
         public void onNext(LeaderActivitys channels) {
             if(channels.status.code.equals("0")){
-                if(channels.data.size()>0){
+//                if(channels.data.size()>0){
                     loadHome(channels.data);
-                }
+//                }
                 if(mPage==0){
                     app.savaHomeJson("LeaderActivitys",new Gson().toJson(channels));
                 }
@@ -165,12 +174,19 @@ public class LeaderActivitysActivity extends BaseActivity implements SwipeRefres
      * 加载列表数据
      */
     private void loadHome(List<LeaderActivitys.DataBean> data){
+        if(data.size()==0){
+            isHave=false;
+        }
+        if(data.size()>0){
+            isHave=true;
+        }
         if(isRefresh){
             leaderActivitys.addAll(data);
         }else {
             leaderActivitys=data;
         }
-        mAdapter.dataChange(leaderActivitys);
+        myprog.setVisibility(View.GONE);
+        mAdapter.dataChange(leaderActivitys,isHave);
         recyclerView.setVisibility(View.VISIBLE);
         net_connect.setVisibility(View.GONE);
         pullToRefresh.setRefreshing(false);
@@ -181,7 +197,7 @@ public class LeaderActivitysActivity extends BaseActivity implements SwipeRefres
         mPage=0;
         isRefresh=false;
         RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean("unity","1234567890"),
-                new RequestCanShu.DataBean("省级",mPage+"","5"));
+                new RequestCanShu.DataBean("省级",mPage+"",mPageSize+""));
         initDatas1(new Gson().toJson(canshus));
     }
 }

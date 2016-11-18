@@ -1,9 +1,11 @@
 package cn.yumutech.unity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -24,6 +26,8 @@ public class PolyDetasActivity extends BaseActivity {
     private CenterTextView title1;
     private TextView laiyan;
     private TextView tv_time;
+    private View myprog;
+    private ScrollView scrollView;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_poly_detas;
@@ -32,6 +36,10 @@ public class PolyDetasActivity extends BaseActivity {
     @Override
     protected void initViews(Bundle savedInstanceState) {
         webView = (WebView) findViewById(R.id.webview);
+        myprog=findViewById(R.id.myprog);
+        scrollView= (ScrollView) findViewById(R.id.scrollview);
+        myprog.setVisibility(View.VISIBLE);
+        scrollView.setVisibility(View.GONE);
         webView.getSettings().setJavaScriptEnabled(true);
 // 设置可以支持缩放
         webView.getSettings().setSupportZoom(true);
@@ -87,10 +95,11 @@ public class PolyDetasActivity extends BaseActivity {
                 webView.loadDataWithBaseURL(null, channels.data.content, "text/html", "utf-8", null);
                 webView.getSettings().setJavaScriptEnabled(true);
                 webView.setWebChromeClient(new WebChromeClient());
-
                 title1.setText(channels.data.title);
                 laiyan.setText(channels.data.original);
                 tv_time.setText(channels.data.publish_date);
+                myprog.setVisibility(View.GONE);
+                scrollView.setVisibility(View.VISIBLE);
             }
         }
     };

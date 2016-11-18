@@ -26,8 +26,10 @@ public class LeaderActivityAdapter extends RecyclerView.Adapter {
     private static final int ITEM_VIEW=1;
     private static final int FOOT_VIEW=2;
     OnitemClick onitemClick;
-    public void dataChange(List<LeaderActivitys.DataBean> data){
+    private boolean isHava;
+    public void dataChange(List<LeaderActivitys.DataBean> data,boolean isHava){
         this.mDatas=data;
+        this.isHava=isHava;
         notifyDataSetChanged();
     }
     public LeaderActivityAdapter(Context context,List<LeaderActivitys.DataBean> data){
@@ -77,7 +79,7 @@ public class LeaderActivityAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemViewType(int position) {
-        if (position + 1 == getItemCount()&&getItemCount()>3) {
+        if (position + 1 == getItemCount()&&isHava&&getItemCount()>5) {
             return FOOT_VIEW;
         } else {
             return ITEM_VIEW;
