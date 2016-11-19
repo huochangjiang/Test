@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -78,9 +79,13 @@ public class DralayoutFragment extends BaseFragment {
 
     @Override
     protected void initDatas() {
-        RequestParams canshus = new RequestParams(new RequestParams.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
-                new RequestParams.DataBean(App.getContext().getLogo("logo").data.dept_id));
-        initDatas1(new Gson().toJson(canshus));
+        if(App.getContext().getLogo("logo")!=null&&App.getContext().getLogo("logo").data!=null&&App.getContext().getLogo("logo").data.dept_id!=null) {
+            RequestParams canshus = new RequestParams(new RequestParams.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
+                    new RequestParams.DataBean(App.getContext().getLogo("logo").data.dept_id));
+            initDatas1(new Gson().toJson(canshus));
+        }else {
+            Toast.makeText(getActivity(),"您还未登陆",Toast.LENGTH_SHORT).show();
+        }
     }
     private void initDatas1( String canshu){
         subscription = Api.getMangoApi1().getUserAboutPerson(canshu)
