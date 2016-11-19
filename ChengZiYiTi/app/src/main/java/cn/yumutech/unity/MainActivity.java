@@ -23,9 +23,10 @@ import cn.yumutech.fragments.PersonFragment;
 import cn.yumutech.fragments.SuperviseFragment;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Group;
 import io.rong.imlib.model.UserInfo;
 
-public class MainActivity extends BaseActivity implements View.OnClickListener,RongIMClient.ConnectionStatusListener, RongIM.UserInfoProvider{
+public class MainActivity extends BaseActivity implements View.OnClickListener,RongIMClient.ConnectionStatusListener, RongIM.UserInfoProvider,RongIM.GroupInfoProvider{
 
 
     List<ImageView> ivs=new ArrayList<>();
@@ -76,6 +77,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,R
         head= (RelativeLayout) findViewById(R.id.head);
         id_toolbar= (Toolbar) findViewById(R.id.id_toolbar);
        RongIM.setUserInfoProvider(this,true);
+       RongIM.setGroupInfoProvider(this,true);
+
         login.setOnClickListener(this);
         ll_animation.setOnClickListener(this);
         ll_story.setOnClickListener(this);
@@ -230,5 +233,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,R
 
 //            }
 //        return null;
+    }
+
+    @Override
+    public Group getGroupInfo(String s) {
+
+        return null;
     }
 }

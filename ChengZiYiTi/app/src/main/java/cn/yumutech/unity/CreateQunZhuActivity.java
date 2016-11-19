@@ -92,12 +92,5 @@ public class CreateQunZhuActivity extends BaseActivity {
         }
     };
 
-private void setGroupInfo(final Group group){
-    RongIM.setGroupInfoProvider(new RongIM.GroupInfoProvider() {
-        @Override
-        public Group getGroupInfo(String s) {
-            return group;
-        }
-    },true);
-}
+
 }
