@@ -1,6 +1,7 @@
 package cn.yumutech.unity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +13,7 @@ import cn.yumutech.bean.CreateQunZu;
 import cn.yumutech.bean.RequestCanShu;
 import cn.yumutech.netUtil.Api;
 import io.rong.imkit.RongIM;
+import io.rong.imlib.model.Group;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -81,10 +83,21 @@ public class CreateQunZhuActivity extends BaseActivity {
         @Override
         public void onNext(CreateQunZu channels) {
             if(channels.status.code.equals("0")){
+                Group group=new Group(channels.data.groupId,channels.data.groupName, Uri.parse(channels.data.create_user_logo_path));
+                RongIM.getInstance().refreshGroupInfoCache(group);
                 RongIM.getInstance().startGroupChat(CreateQunZhuActivity.this, channels.data.groupId, "标题");
                 finish();
             }
 
         }
     };
+
+private void setGroupInfo(final Group group){
+    RongIM.setGroupInfoProvider(new RongIM.GroupInfoProvider() {
+        @Override
+        public Group getGroupInfo(String s) {
+            return group;
+        }
+    },true);
+}
 }

@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import cn.yumutech.bean.ChaXunQunMenmber;
 import cn.yumutech.bean.UserAboutPerson;
 import cn.yumutech.bean.UserLogin;
 import cn.yumutech.weight.ACache;
@@ -185,6 +186,7 @@ public class App extends MultiDexApplication{
     }
 
     public List<UserAboutPerson.DataBean> mApbutPerson=new ArrayList<>();
+    public List<ChaXunQunMenmber.DataBean.UsersBean> qunMember=new ArrayList<>();
 
 }
 

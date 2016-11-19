@@ -108,6 +108,7 @@ public class CommuGroupFragment extends BaseFragment implements View.OnClickList
                 break;
             case R.id.one:
                 Intent intent1=new Intent();
+                intent1.putExtra("type","create");
                 intent1.setClass(getActivity(), QunMenmberSelectorActivity.class);
                 startActivity(intent1);
                 break;

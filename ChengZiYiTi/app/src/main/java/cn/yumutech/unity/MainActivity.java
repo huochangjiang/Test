@@ -2,9 +2,11 @@ package cn.yumutech.unity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,8 +23,9 @@ import cn.yumutech.fragments.PersonFragment;
 import cn.yumutech.fragments.SuperviseFragment;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.UserInfo;
 
-public class MainActivity extends BaseActivity implements View.OnClickListener,RongIMClient.ConnectionStatusListener{
+public class MainActivity extends BaseActivity implements View.OnClickListener,RongIMClient.ConnectionStatusListener, RongIM.UserInfoProvider{
 
 
     List<ImageView> ivs=new ArrayList<>();
@@ -72,6 +75,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,R
         login= (ImageView) findViewById(R.id.login);
         head= (RelativeLayout) findViewById(R.id.head);
         id_toolbar= (Toolbar) findViewById(R.id.id_toolbar);
+       RongIM.setUserInfoProvider(this,true);
         login.setOnClickListener(this);
         ll_animation.setOnClickListener(this);
         ll_story.setOnClickListener(this);
@@ -196,16 +200,35 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,R
         RongIM.connect(token, new RongIMClient.ConnectCallback() {
             @Override
             public void onTokenIncorrect() {
-                Intent intent=new Intent(MainActivity.this,LogoActivity.class);
-                startActivity(intent);
+                if(!(App.getContext().getLogo("logo").data==null)) {
+                    UserGetToken.getInstance(MainActivity.this).getToken(App.getContext().getLogo("logo").data.id);
+                }else{
+                    Intent intent=new Intent(MainActivity.this,LogoActivity.class);
+                    startActivity(intent);
+                }
             }
             @Override
             public void onSuccess(String s) {
+
             }
 
             @Override
             public void onError(RongIMClient.ErrorCode errorCode) {
+                Intent intent=new Intent(MainActivity.this,LogoActivity.class);
+                startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public UserInfo getUserInfo(String s) {
+        Log.e("info","ccccccccccccccccc");
+//            if(s.equals(App.getContext().getLogo("userinfo").data.id)){
+                UserInfo info=new UserInfo(App.getContext().getLogo("userinfo").data.id,App.getContext().getLogo("userinfo").data.nickname, Uri.parse(App.getContext().getLogo("userinfo").data.logo_path));
+
+                return info;
+
+//            }
+//        return null;
     }
 }

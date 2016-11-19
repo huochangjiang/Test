@@ -39,6 +39,7 @@ public class BianJiActivity extends BaseActivity {
     private QunMenmberAdapter mAdapter;
     private int mPosition;
     private TextView title;
+    private TextView tv;
 
     protected void unsubscribe( Subscription subscription) {
         if (subscription != null && !subscription.isUnsubscribed()) {
@@ -61,6 +62,7 @@ public class BianJiActivity extends BaseActivity {
         gridView = (MyGridView) findViewById(R.id.gridView);
         mAdapter = new QunMenmberAdapter(this,mDatas);
         gridView.setAdapter(mAdapter);
+        tv = (TextView) findViewById(R.id.mingcheng);
         ImageView back= (ImageView) findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,6 +100,9 @@ public class BianJiActivity extends BaseActivity {
 
                 if(beans==null){
                     Intent intent=new Intent(BianJiActivity.this,QunMenmberSelectorActivity.class);
+                    intent.putExtra("type","join");
+                    intent.putExtra("groupName",mChannels.data.groupName);
+                    intent.putExtra("groupId",mChannels.data.groupId);
                     startActivity(intent);
                 }else{
                     if(mChannels.data.create_user_id.equals(App.getContext().getLogo("logo").data.id)) {
@@ -153,7 +158,9 @@ public class BianJiActivity extends BaseActivity {
                 if(channels.data.create_user_id.equals(App.getContext().getLogo("logo").data.id)){
                     mButton.setText("解散群组");
                 }
+                tv.setText(channels.data.groupName);
                 mChannels=channels;
+                App.getContext().qunMember=channels.data.users;
                 mDatas=channels.data.users;
                 mAdapter.dataChange(channels.data.users);
             }

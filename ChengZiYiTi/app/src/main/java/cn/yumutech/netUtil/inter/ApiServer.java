@@ -23,6 +23,7 @@ import cn.yumutech.bean.ShowTaskDetail;
 import cn.yumutech.bean.ShuaXinQunZhu;
 import cn.yumutech.bean.TuiChuQun;
 import cn.yumutech.bean.UserAboutPerson;
+import cn.yumutech.bean.UserInfoDetail;
 import cn.yumutech.bean.UserLogin;
 import cn.yumutech.bean.UserToken;
 import cn.yumutech.bean.UserXiangGuanQun;
@@ -158,5 +159,7 @@ Observable<WorkDetails> getWorkDetais(@Query("req") String policy);
     //获取用户相关列表
     @POST("UserList")
     Observable<UserAboutPerson> getUserAboutPerson(@Query("req") String item);
-
+    //获取用户详情
+    @POST("UserItem")
+    Observable<UserInfoDetail> getUserDetais(@Query("req") String item);
 }

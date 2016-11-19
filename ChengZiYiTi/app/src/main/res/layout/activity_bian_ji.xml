@@ -36,10 +36,13 @@
     </android.support.v7.widget.Toolbar>
     
    <ScrollView
+       android:background="@color/fengexianone"
        android:layout_below="@+id/id_toolbar"
        android:layout_width="match_parent"
        android:layout_height="match_parent">
        <LinearLayout
+           android:paddingLeft="10dp"
+           android:paddingRight="10dp"
            android:orientation="vertical"
            android:layout_width="match_parent"
            android:background="@color/white"
@@ -53,6 +56,27 @@
                android:layout_height="wrap_content"
                 >
            </cn.yumutech.weight.MyGridView>
+           <RelativeLayout
+               android:layout_marginTop="10dp"
+               android:layout_width="match_parent"
+               android:layout_height="50dp">
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:text="群名称"
+                   android:layout_centerVertical="true"
+                   android:textColor="@color/small_title"
+                   android:textSize="@dimen/title_size"
+                   android:layout_height="wrap_content" />
+               <TextView
+                   android:layout_centerVertical="true"
+                        android:id="@+id/mingcheng"
+                   android:layout_width="wrap_content"
+                   android:text="群名称"
+                   android:layout_alignParentRight="true"
+                   android:textColor="@color/huise"
+                   android:textSize="@dimen/title_size_smaller"
+                   android:layout_height="wrap_content" />
+           </RelativeLayout>
            <Button
                android:id="@+id/jiesan"
                android:layout_width="match_parent"
