@@ -27,6 +27,7 @@ public class FriendsUrlActivity extends BaseActivity {
     private ListView listView;
     private App app;
     private View net_connect;
+    private View myprog;
     protected void unsubscribe( Subscription subscription) {
         if (subscription != null && !subscription.isUnsubscribed()) {
             subscription.unsubscribe();
@@ -45,6 +46,9 @@ public class FriendsUrlActivity extends BaseActivity {
         listView.setAdapter(mAdapter);
         controlTitle(findViewById(R.id.back));
         net_connect = findViewById(R.id.netconnect);
+        myprog=findViewById(R.id.myprog);
+        myprog.setVisibility(View.VISIBLE);
+        listView.setVisibility(View.GONE);
         initLocal();
     }
     //加载缓存
@@ -56,6 +60,7 @@ public class FriendsUrlActivity extends BaseActivity {
         }else{
             if(!app.isNetworkConnected(this)){
                 listView.setVisibility(View.GONE);
+                myprog.setVisibility(View.GONE);
                 net_connect.setVisibility(View.VISIBLE);
             }
         }
@@ -67,6 +72,8 @@ public class FriendsUrlActivity extends BaseActivity {
      * 加载列表数据
      */
     private void loadHome(List<YouQIngLianJie.DataBean> channels){
+        myprog.setVisibility(View.GONE);
+        listView.setVisibility(View.VISIBLE);
         data=channels;
         mAdapter.dataChange(channels);
     }
@@ -99,6 +106,8 @@ public class FriendsUrlActivity extends BaseActivity {
             public void onClick(View v) {
                 if(app.isNetworkConnected(FriendsUrlActivity.this)){
                     net_connect.setVisibility(View.GONE);
+                    myprog.setVisibility(View.VISIBLE);
+                    listView.setVisibility(View.GONE);
                     initData();
                 }
             }

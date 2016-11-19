@@ -1,6 +1,8 @@
 package cn.yumutech.unity;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
@@ -10,18 +12,19 @@ public class FriendDetasActivity extends BaseActivity {
 
     private WebView webView;
     private TextView title;
-
+    private View myprog;
 
     @Override
     protected int getLayoutId() {
         return R.layout.activity_friend_detas;
     }
-
     @Override
     protected void initViews(Bundle savedInstanceState) {
         title = (TextView) findViewById(R.id.tv_home);
         webView = (WebView) findViewById(R.id.webview);
-
+        webView.setVisibility(View.GONE);
+        myprog=findViewById(R.id.myprog);
+        myprog.setVisibility(View.VISIBLE);
         controlTitle(findViewById(R.id.back));
     }
 
@@ -46,6 +49,26 @@ String intTYpe=getIntent().getStringExtra("title");
 
     @Override
     protected void initListeners() {
+        webView.setWebViewClient(new WebViewClient(){
 
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                //加载完成
+                webView.setVisibility(View.VISIBLE);
+                myprog.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                //加载开始
+            }
+
+            @Override
+            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                super.onReceivedError(view, errorCode, description, failingUrl);
+                //加载失败
+            }
+
+        });
     }
 }

@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/EBEBEB">
     <android.support.v7.widget.Toolbar
         android:id="@+id/id_toolbar"
         android:layout_width="match_parent"
@@ -114,7 +117,9 @@
         <com.handmark.pulltorefresh.library.PullToRefreshScrollView
             android:layout_width="match_parent"
             android:id="@+id/pull_to_refresh"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            app:ptrShowIndicator="false">
             <cn.yumutech.weight.MyListview
                 android:id="@+id/comments_list"
                 android:layout_width="wrap_content"
@@ -131,6 +136,7 @@
             android:id="@+id/button"
             android:layout_width="70dp"
             android:layout_height="70dp"
+
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_marginRight="20dp"
@@ -141,8 +147,8 @@
             android:textColor="@color/white" />
         <RelativeLayout
             android:id="@+id/shurukuang"
+            android:background="@color/white"
             android:visibility="gone"
-            android:background="@color/colorPrimaryDark"
             android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -157,23 +163,24 @@
                 android:layout_width="300dp"
                 android:layout_height="30dp"
                 android:textColor="@color/black"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:background="@drawable/edittext_frame"
                 android:layout_toLeftOf="@+id/send"
                 android:layout_marginRight="10dp"
-                android:hint="请输入内容"/>
+                android:hint="请输入回复内容"/>
             <TextView
                 android:id="@+id/send"
                 android:layout_width="60dp"
-                android:layout_height="match_parent"
+                android:layout_height="30dp"
                 android:layout_marginRight="10dp"
                 android:gravity="center"
+                android:background="@drawable/logo"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:text="发送"
-                android:textSize="20dp"
+                android:text="确定"
+                android:textSize="18sp"
                 android:textColor="#ffffff"/>
         </RelativeLayout>
     </RelativeLayout>

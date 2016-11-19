@@ -37,4 +37,5 @@ dependencies {
     compile 'com.android.support:multidex:1.0.1'
     compile project(path: ':PulltorefreshDemo')
     compile files('libs/eventbus.jar')
+    compile project(':PushSDK')
 }

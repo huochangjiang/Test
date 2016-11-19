@@ -114,6 +114,7 @@ public class ReplyToCommentActivity extends BaseActivity implements PullToRefres
             @Override
             public void onClick(View v) {
                 button.requestFocus();
+                listView.setFocusable(false);
                 edit.setFocusable(true);
                 edit.setText("");
                 button.setVisibility(View.GONE);
