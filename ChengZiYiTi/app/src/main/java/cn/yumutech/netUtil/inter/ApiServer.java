@@ -8,6 +8,7 @@ import cn.yumutech.bean.DepartList;
 import cn.yumutech.bean.ExchangeCommenList;
 import cn.yumutech.bean.FaBuRenWu;
 import cn.yumutech.bean.GetTaShanPingLunLieBIao;
+import cn.yumutech.bean.GroupDetais;
 import cn.yumutech.bean.HuDongItem;
 import cn.yumutech.bean.HuDongJIaoLiu;
 import cn.yumutech.bean.JieSanQun;
@@ -162,4 +163,7 @@ Observable<WorkDetails> getWorkDetais(@Query("req") String policy);
     //获取用户详情
     @POST("UserItem")
     Observable<UserInfoDetail> getUserDetais(@Query("req") String item);
+    //获取组详情数据
+    @POST("LeaderActivityItem")
+    Observable<GroupDetais> getGroupDetais(@Query("req") String item);
 }
