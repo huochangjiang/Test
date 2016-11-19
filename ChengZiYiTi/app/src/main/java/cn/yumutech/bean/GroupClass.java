@@ -5,10 +5,10 @@ package cn.yumutech.bean;
  */
 public class GroupClass {
     public String name;
-    public String num;
+//    public String num;
 
-    public GroupClass(String name, String num) {
+    public GroupClass(String name) {
         this.name = name;
-        this.num = num;
+//        this.num = num;
     }
 }
