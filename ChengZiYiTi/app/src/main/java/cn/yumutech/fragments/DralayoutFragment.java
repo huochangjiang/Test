@@ -19,6 +19,8 @@ import cn.yumutech.netUtil.Api;
 import cn.yumutech.unity.App;
 import cn.yumutech.unity.BaseFragment;
 import cn.yumutech.unity.R;
+import cn.yumutech.weight.SaveData;
+import de.greenrobot.event.EventBus;
 import io.rong.imkit.RongIM;
 import rx.Observer;
 import rx.Subscription;
@@ -60,6 +62,7 @@ public class DralayoutFragment extends BaseFragment {
 
     @Override
     protected void initViews(View contentView) {
+        EventBus.getDefault().register(this);
         listView = (ListView) contentView.findViewById(R.id.listview);
         mAdapter = new ConstancAdapter(mActivity,mDatas);
         listView.setAdapter(mAdapter);
@@ -110,7 +113,22 @@ public class DralayoutFragment extends BaseFragment {
                 mAdapter.dataChange(channels.data);
                 App.getContext().mApbutPerson=channels.data;
             }
-
         }
     };
+    //评论回复按键响应事件
+    public void onEventMainThread(UserAboutPerson userAboutPerson){
+        if(App.getContext().getLogo("logo")!=null&&App.getContext().getLogo("logo").data!=null&&SaveData.getInstance().Dept_Id!=null) {
+            RequestParams canshus = new RequestParams(new RequestParams.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
+                    new RequestParams.DataBean(SaveData.getInstance().Dept_Id));
+            initDatas1(new Gson().toJson(canshus));
+        }else {
+            Toast.makeText(getActivity(),"您还未登陆",Toast.LENGTH_SHORT).show();
+        }
+
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 }

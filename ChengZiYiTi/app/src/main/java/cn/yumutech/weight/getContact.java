@@ -42,7 +42,7 @@ public class getContact {
         }
         return instance;
     }
-    private void getData() {
+    public void getData() {
         if (App.getContext().getLogo("logo") != null) {
             mDept_id = App.getContext().getLogo("logo").data.dept_id;
             user_id = App.getContext().getLogo("logo").data.id;
@@ -84,13 +84,8 @@ public class getContact {
             if(channels.status.code.equals("0")){
                 String data=new Gson().toJson(channels);
                 Log.e("DepartList",data);
-                for(int i=0;i<channels.data.size();i++){
-                    if(Integer.valueOf(channels.data.get(i).dept_id)>Integer.valueOf(mDept_id)||Integer.valueOf(channels.data.get(i).dept_id)==Integer.valueOf(mDept_id)){
-                        groupsDatas.add(new GroupClass(channels.data.get(i).dept_name));
-                        getMembersData(user_id,channels.data.get(i).dept_id);
-                    }
-                }
-
+                groupsDatas.clear();
+                App.getContext().savaHomeJson("Contact",data);
             }
         }
     };
@@ -115,16 +110,15 @@ public class getContact {
         @Override
         public void onNext(UserAboutPerson userAboutPerson) {
             if(userAboutPerson.status.code.equals("0")){
+                chindClasses.clear();
                 for(int i=0;i<userAboutPerson.data.size();i++){
 //                    chindClasses.add(userAboutPerson.data.get(i).nickname)
                     ChindClass chanData= new ChindClass(userAboutPerson.data.get(i).nickname, R.drawable.next);
                     chindClasses.add(chanData);
                 }
                 chindDatas.add(chindClasses);
-//                chindClasses.clear();
-//                mAdapter.dataChange(groupsDatas,chindDatas);
-//                mAdapter=new ExpanderAdapter(mActivity,groupsDatas,chindDatas);
-//                expandableListView.setAdapter(mAdapter);
+
+//                SaveData.getInstance().chindDatas=chindDatas;
             }
         }
     };

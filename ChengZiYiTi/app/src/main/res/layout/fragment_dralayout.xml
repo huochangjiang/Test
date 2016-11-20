@@ -1,11 +1,42 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="cn.yumutech.fragments.DralayoutFragment">
 
     <!-- TODO: Update blank fragment layout -->
+    <RelativeLayout
+        android:id="@+id/rl_search"
+        android:layout_width="match_parent"
+        android:background="@color/fengexianone"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:layout_height="60dp">
+        <cn.yumutech.weight.MyEditText
+            android:id="@+id/search"
+            android:layout_centerHorizontal="true"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:layout_weight="1"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:drawableLeft="@drawable/search"
+            android:layout_centerVertical="true"
+
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:textColor="#000000"
+            android:textSize="15sp"
+            android:textColorHint="#000000"
+            android:background="@drawable/edittext_frame"
+            android:layout_marginLeft="10dp"
+            android:drawablePadding="5dp"
+            android:focusableInTouchMode="true"
+            android:hint="搜索"
+            ></cn.yumutech.weight.MyEditText>
+    </RelativeLayout>
     <ListView
+        android:layout_below="@+id/rl_search"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:id="@+id/listview"
@@ -13,4 +44,4 @@
 
     </ListView>
 
-</FrameLayout>
+</RelativeLayout>

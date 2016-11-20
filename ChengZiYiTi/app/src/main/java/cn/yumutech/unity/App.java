@@ -27,6 +27,7 @@ import java.util.Map;
 import java.util.Set;
 
 import cn.yumutech.bean.ChaXunQunMenmber;
+import cn.yumutech.bean.DepartList;
 import cn.yumutech.bean.UserAboutPerson;
 import cn.yumutech.bean.UserLogin;
 import cn.yumutech.weight.ACache;
@@ -131,6 +132,25 @@ public class App extends MultiDexApplication{
             UserLogin user = gson.fromJson(readJson, UserLogin.class);
             return user;
         }
+    }
+    //返回用户部门信息
+    //返回用户信息
+    public DepartList getContactGroup(String key){
+        String readJson =aCache.getAsString(key);
+        if(StringUtils1.isEmpty(readJson))
+        {
+            return null;
+        }else {
+            Gson gson = new Gson();
+            DepartList user = gson.fromJson(readJson, DepartList.class);
+            return user;
+        }
+    }
+    /**
+     * 清除登陆信息
+     */
+    public void cleanContactGroup() {
+        aCache.remove("Contact");
     }
     // 缓存首页数据
     public void savaHomeJson(String key,String value){
