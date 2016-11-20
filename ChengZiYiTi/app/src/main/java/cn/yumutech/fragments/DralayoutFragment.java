@@ -9,19 +9,13 @@ import cn.yumutech.unity.R;
 
 
 public class DralayoutFragment extends BaseFragment {
-
-
     private View rootView;
-
-
     public DralayoutFragment() {
         // Required empty public constructor
     }
-
     // TODO: Rename and change types and number of parameters
     public static DralayoutFragment newInstance() {
         DralayoutFragment fragment = new DralayoutFragment();
-
         return fragment;
     }
 
