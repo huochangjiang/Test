@@ -43,8 +43,12 @@ public class RequestCanShu1 {
     public static class DataBean {
 
         public String userId;
+        public String groupId;
 
-
+        public DataBean(String userId, String groupId) {
+            this.userId = userId;
+            this.groupId = groupId;
+        }
 
         public DataBean(String id) {
             this.userId = id;

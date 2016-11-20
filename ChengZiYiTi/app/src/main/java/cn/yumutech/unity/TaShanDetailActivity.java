@@ -19,6 +19,7 @@ import com.google.gson.Gson;
 import cn.yumutech.bean.ExchangeItemBeen;
 import cn.yumutech.bean.HuDongItem;
 import cn.yumutech.netUtil.Api;
+import cn.yumutech.weight.CenterTextView;
 import cn.yumutech.weight.StringUtils1;
 import rx.Observer;
 import rx.Subscription;
@@ -29,10 +30,11 @@ import rx.schedulers.Schedulers;
  * Created by Allen on 2016/11/13.
  */
 public class TaShanDetailActivity extends BaseActivity{
-    private TextView fenlei,time,laiyuan,pinglun,title;
+    private TextView fenlei,time,laiyuan,pinglun;
+    private CenterTextView title;
     private RelativeLayout comments;
     private WebView webView;
-    private String myId="";
+    private String myId;
     private ScrollView scrollView;
     Subscription subscription;
     private ImageView back;
@@ -40,6 +42,8 @@ public class TaShanDetailActivity extends BaseActivity{
     private Button button;
     private App app;
     private View net_connect;
+    private String readHomeJson;
+    private View myprog;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_tashan_detail;
@@ -49,7 +53,7 @@ public class TaShanDetailActivity extends BaseActivity{
     protected void initViews(Bundle savedInstanceState) {
         app= (App) TaShanDetailActivity.this.getApplicationContext();
         getExtra();
-        title= (TextView) findViewById(R.id.title).findViewById(R.id.xinwentitle);
+        title= (CenterTextView) findViewById(R.id.title).findViewById(R.id.xinwentitle);
         fenlei= (TextView) findViewById(R.id.title).findViewById(R.id.myclass);
         time= (TextView) findViewById(R.id.title).findViewById(R.id.time);
         laiyuan= (TextView) findViewById(R.id.title).findViewById(R.id.tv_source);
@@ -59,6 +63,10 @@ public class TaShanDetailActivity extends BaseActivity{
         webView = (WebView) findViewById(R.id.webview);
         back= (ImageView) findViewById(R.id.back);
         scrollView= (ScrollView) findViewById(R.id.scrollView);
+        myprog=findViewById(R.id.myprog);
+        myprog.setVisibility(View.VISIBLE);
+        scrollView.setVisibility(View.GONE);
+        button.setVisibility(View.GONE);
         net_connect = findViewById(R.id.netconnect);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setSupportZoom(true);
@@ -177,8 +185,9 @@ public class TaShanDetailActivity extends BaseActivity{
         }
     }
     private void initLocal() {
-
-        String readHomeJson = app.readHomeJson(myId);// 首页内容
+        if(myId!=null){
+            readHomeJson = app.readHomeJson(myId);// 首页内容
+        }
         if (!StringUtils1.isEmpty(readHomeJson)) {
             HuDongItem data = new Gson().fromJson(readHomeJson, HuDongItem.class);
             loadHome(data);
@@ -202,8 +211,11 @@ public class TaShanDetailActivity extends BaseActivity{
         fenlei.setText(huDongItem.data.classify);
         laiyuan.setText(huDongItem.data.original);
         time.setText(huDongItem.data.publish_date);
-        pinglun.setText(huDongItem.data.comment_count);
+        pinglun.setText(huDongItem.data.comment_count+"条回复");
         net_connect.setVisibility(View.GONE);
+        scrollView.setVisibility(View.VISIBLE);
+        button.setVisibility(View.VISIBLE);
+        myprog.setVisibility(View.GONE);
         scrollView.setVisibility(View.VISIBLE);
         button.setVisibility(View.VISIBLE);
     }

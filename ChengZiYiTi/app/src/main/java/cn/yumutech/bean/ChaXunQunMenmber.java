@@ -1,68 +1,31 @@
 package cn.yumutech.bean;
 
+import java.util.List;
+
 /**
  * Created by huo on 2016/11/14.
  */
 public class ChaXunQunMenmber {
-
-    /**
-     * account : 1
-     * session : 1234567890
-     */
-
-    public UserBean user;
-    /**
-     * groupId : 12321312
-     */
-
+    public StatusBean status;
     public DataBean data;
-
-    public UserBean getUser() {
-        return user;
+    public static class StatusBean {
+        public String message;
+        public String code;
     }
-
-    public void setUser(UserBean user) {
-        this.user = user;
-    }
-
-    public DataBean getData() {
-        return data;
-    }
-
-    public void setData(DataBean data) {
-        this.data = data;
-    }
-
-    public static class UserBean {
-        public String account;
-        public String session;
-
-        public String getAccount() {
-            return account;
-        }
-
-        public void setAccount(String account) {
-            this.account = account;
-        }
-
-        public String getSession() {
-            return session;
-        }
-
-        public void setSession(String session) {
-            this.session = session;
-        }
-    }
-
     public static class DataBean {
         public String groupId;
-
-        public String getGroupId() {
-            return groupId;
-        }
-
-        public void setGroupId(String groupId) {
-            this.groupId = groupId;
+        public String groupName;
+        public String create_date;
+        public String create_user_logo_path;
+        public String create_user_id;
+        public String create_user_mobile;
+        public String create_user_name;
+        public List<UsersBean> users;
+        public static class UsersBean {
+            public String user_name;
+            public String user_mobile;
+            public String userId;
+            public String user_logo_path;
         }
     }
 }

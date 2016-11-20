@@ -2,6 +2,7 @@ package cn.yumutech.unity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -25,11 +26,11 @@ import cn.yumutech.bean.MessageBean;
 import cn.yumutech.bean.UserLogin;
 import cn.yumutech.bean.UserLoginBeen;
 import cn.yumutech.bean.UserToken;
-import cn.yumutech.bean.UserTokenBeen;
 import cn.yumutech.bean.YanZhenMessageBean;
 import cn.yumutech.netUtil.Api;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.UserInfo;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -199,6 +200,7 @@ public class LogoActivity extends BaseActivity implements View.OnClickListener{
                 .subscribe(observer1);
 
     }
+
     Observer<UserLogin> observer1=new Observer<UserLogin>() {
         @Override
         public void onCompleted() {
@@ -216,6 +218,10 @@ public class LogoActivity extends BaseActivity implements View.OnClickListener{
                 String a=new Gson().toJson(userLogin);
                 Log.e("info",a);
                 mLogin=userLogin;
+                UserInfo userInfo=new UserInfo(userLogin.data.id,userLogin.data.nickname,
+                        Uri.parse(userLogin.data.logo_path));
+                RongIM.getInstance().refreshUserInfoCache(userInfo);
+
                 connectRongYun(mLogin.data.token);
                 SharedPreferences.Editor edit = DemoContext.getInstance().getSharedPreferences().edit();
                 edit.putString("DEMO_TOKEN", mLogin.data.token);
@@ -236,11 +242,7 @@ public class LogoActivity extends BaseActivity implements View.OnClickListener{
         }
     }
    };
-    //获取token
-    public void getToken(UserLogin userLogin){
-        UserTokenBeen userTokenBeen=new UserTokenBeen(new UserTokenBeen.data(userLogin.data.nickname,userLogin.data.mobile));
-        getUserToken(new Gson().toJson(userTokenBeen));
-    }
+
 
     /**
      * 获取Token
@@ -357,13 +359,13 @@ public class LogoActivity extends BaseActivity implements View.OnClickListener{
 
             @Override
             public void onSuccess(String s) {
-
-                Intent intent=new Intent();
+                UserGetToken.getInstance(LogoActivity.this).asyneUserInfo(App.getContext().getLogo("logo").data.id);
+                   Intent intent=new Intent();
                     intent.setClass(LogoActivity.this,AfterLoginActivity.class);
                     intent.putExtra("name",mLogin.data.nickname);
                     intent.putExtra("logo",mLogin.data.logo_path);
                     startActivity(intent);
-                finish();
+                   finish();
 //            Log.e("info",s+"---");
 //                if(RongIM.getInstance()!=null){
 //                    RongIM.getInstance().startPrivateChat(LogoActivity.this, "4", "title");
@@ -378,5 +380,8 @@ public class LogoActivity extends BaseActivity implements View.OnClickListener{
         });
 
     }
+
+
+
 
 }

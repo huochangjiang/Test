@@ -22,6 +22,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_height="match_parent" />
             <TextView
+                android:id="@+id/tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="首页"
@@ -29,42 +30,63 @@
                 android:textColor="@color/white"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/back"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="修改"
-                android:textSize="16sp"
-                android:textColor="@color/white"
-                android:id="@+id/tv_home"
-                android:layout_height="wrap_content" />
+
 
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
     
-    <LinearLayout
-        android:layout_below="@+id/id_toolbar"
-        android:layout_width="wrap_content"
-        android:orientation="vertical"
-        android:layout_height="wrap_content">
-        <Button
-            android:layout_width="wrap_content"
-            android:text="查看群成員"
-            android:layout_height="wrap_content" />
-        <Button
-            android:layout_width="wrap_content"
-            android:text="添加"
-            android:layout_height="wrap_content" />
-        <Button
-            android:layout_width="wrap_content"
-            android:text="解散"
-            android:layout_height="wrap_content" />
-        <Button
-            android:layout_width="wrap_content"
-            android:text="一齣摸一個"
-            android:layout_height="wrap_content" />
-        <Button
-            android:layout_width="wrap_content"
-            android:text="退出群組"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+   <ScrollView
+       android:background="@color/fengexianone"
+       android:layout_below="@+id/id_toolbar"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+       <LinearLayout
+           android:paddingLeft="10dp"
+           android:paddingRight="10dp"
+           android:orientation="vertical"
+           android:layout_width="match_parent"
+           android:background="@color/white"
+           android:layout_height="match_parent">
+
+           <cn.yumutech.weight.MyGridView
+               android:layout_marginTop="10dp"
+               android:numColumns="4"
+               android:id="@+id/gridView"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+                >
+           </cn.yumutech.weight.MyGridView>
+           <RelativeLayout
+               android:layout_marginTop="10dp"
+               android:layout_width="match_parent"
+               android:layout_height="50dp">
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:text="群名称"
+                   android:layout_centerVertical="true"
+                   android:textColor="@color/small_title"
+                   android:textSize="@dimen/title_size"
+                   android:layout_height="wrap_content" />
+               <TextView
+                   android:layout_centerVertical="true"
+                        android:id="@+id/mingcheng"
+                   android:layout_width="wrap_content"
+                   android:text="群名称"
+                   android:layout_alignParentRight="true"
+                   android:textColor="@color/huise"
+                   android:textSize="@dimen/title_size_smaller"
+                   android:layout_height="wrap_content" />
+           </RelativeLayout>
+           <Button
+               android:id="@+id/jiesan"
+               android:layout_width="match_parent"
+               android:layout_height="50dp"
+               android:layout_below="@+id/xian"
+               android:layout_marginTop="30dp"
+               android:background="@drawable/logo"
+               android:text="退出群组"
+               android:textColor="#ffffff"
+               android:textSize="17sp" />
+       </LinearLayout>
+   </ScrollView>
 </RelativeLayout>

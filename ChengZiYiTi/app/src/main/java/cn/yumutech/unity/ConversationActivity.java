@@ -11,10 +11,13 @@ import android.widget.TextView;
 
 import java.util.Locale;
 
+import cn.yumutech.bean.UserInfoDetail;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationFragment;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
+import rx.Observer;
+import rx.Subscription;
 
 /**
  * Created by 霍长江 on 2016/11/15.
@@ -36,6 +39,7 @@ public class ConversationActivity extends FragmentActivity{
      */
     private Conversation.ConversationType mConversationType;
     private ImageView mTitle3;
+    private String title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +60,7 @@ public class ConversationActivity extends FragmentActivity{
 
         mTargetId = intent.getData().getQueryParameter("targetId");
         mTargetIds = intent.getData().getQueryParameter("targetIds");
+        title = intent.getData().getQueryParameter("title");
         //intent.getData().getLastPathSegment();//获得当前会话类型
         mConversationType = Conversation.ConversationType.valueOf(intent.getData().getLastPathSegment().toUpperCase(Locale.getDefault()));
 
@@ -135,6 +140,8 @@ public class ConversationActivity extends FragmentActivity{
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(ConversationActivity.this,BianJiActivity.class);
+                App.getContext().addDestoryActivity(ConversationActivity.this,"conversation");
+                intent.putExtra("mTargetId",mTargetId);
                 startActivity(intent);
             }
         });
@@ -147,7 +154,7 @@ public class ConversationActivity extends FragmentActivity{
      */
     private void setActionBarTitle(String targetid) {
 
-        mTitle.setText(targetid);
+        mTitle.setText(title);
     }
 
     /**
@@ -162,7 +169,7 @@ public class ConversationActivity extends FragmentActivity{
             RongIM.connect(token, new RongIMClient.ConnectCallback() {
                 @Override
                 public void onTokenIncorrect() {
-
+                    UserGetToken.getInstance(ConversationActivity.this).getToken(mTargetId);
                 }
 
                 @Override
@@ -178,4 +185,40 @@ public class ConversationActivity extends FragmentActivity{
             });
         }
     }
+
+
+    //获取用户详情数据
+    /**
+     * 获取Token
+     */
+    Subscription subscription;
+    protected void unsubscribe( Subscription subscription) {
+        if (subscription != null && !subscription.isUnsubscribed()) {
+            subscription.unsubscribe();
+        }
+    }
+
+    Observer<UserInfoDetail> observer2=new Observer<UserInfoDetail>() {
+        @Override
+        public void onCompleted() {
+            unsubscribe(subscription);
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            e.printStackTrace();
+        }
+
+        @Override
+        public void onNext(UserInfoDetail userToken) {
+            if(userToken!=null&&userToken.status.code!=null){
+                if(userToken.status.code.equals("0")){
+
+
+                }else if(userToken.status.code.equals("-9")){
+                }
+            }
+        }
+    };
+
 }

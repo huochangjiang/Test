@@ -5,13 +5,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
 
-import cn.yumutech.Adapter.ViewHolders.ApplyItemViewHolder;
 import cn.yumutech.bean.LeaderActivitys;
 import cn.yumutech.unity.R;
 
@@ -26,8 +26,10 @@ public class LeaderActivityAdapter extends RecyclerView.Adapter {
     private static final int ITEM_VIEW=1;
     private static final int FOOT_VIEW=2;
     OnitemClick onitemClick;
-    public void dataChange(List<LeaderActivitys.DataBean> data){
+    private boolean isHava;
+    public void dataChange(List<LeaderActivitys.DataBean> data,boolean isHava){
         this.mDatas=data;
+        this.isHava=isHava;
         notifyDataSetChanged();
     }
     public LeaderActivityAdapter(Context context,List<LeaderActivitys.DataBean> data){
@@ -46,7 +48,7 @@ public class LeaderActivityAdapter extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == ITEM_VIEW) {
             View view = mLayoutInflater.inflate(R.layout.leader_activity_adapter, parent, false);
-            return new ApplyItemViewHolder(view);
+            return new ItemViewHolder(view);
         }else if (viewType == FOOT_VIEW) {
             View view = mLayoutInflater.inflate(R.layout.instance_load_more_layout, parent, false);
             return new FootViewHolder(view);
@@ -56,14 +58,14 @@ public class LeaderActivityAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        if(holder instanceof ApplyItemViewHolder){
+        if(holder instanceof ItemViewHolder){
             if(mDatas!=null&&mDatas!=null&&mDatas.size()>0) {
-                ((ApplyItemViewHolder) holder).laiyuan.setText(mDatas.get(position).original);
-                ((ApplyItemViewHolder) holder).textView.setText(mDatas.get(position).title);
-                ((ApplyItemViewHolder) holder).summary.setText(mDatas.get(position).summary);
-                ((ApplyItemViewHolder) holder).time.setText(mDatas.get(position).publish_date);
-                ImageLoader.getInstance().displayImage(mDatas.get(position).logo_path, ((ApplyItemViewHolder) holder).iv);
-                ((ApplyItemViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
+                ((ItemViewHolder) holder).laiyuan.setText(mDatas.get(position).original);
+                ((ItemViewHolder) holder).textView.setText(mDatas.get(position).title);
+                ((ItemViewHolder) holder).summary.setText(mDatas.get(position).summary);
+                ((ItemViewHolder) holder).time.setText(mDatas.get(position).publish_date);
+                ImageLoader.getInstance().displayImage(mDatas.get(position).logo_path, ((ItemViewHolder) holder).iv);
+                ((ItemViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         if (onitemClick != null) {
@@ -77,7 +79,7 @@ public class LeaderActivityAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemViewType(int position) {
-        if (position + 1 == getItemCount()&&getItemCount()>5 ) {
+        if (position + 1 == getItemCount()&&isHava&&getItemCount()>5) {
             return FOOT_VIEW;
         } else {
             return ITEM_VIEW;
@@ -95,6 +97,23 @@ public class LeaderActivityAdapter extends RecyclerView.Adapter {
         public FootViewHolder(View view) {
             super(view);
             foot_view_item_tv=(TextView)view.findViewById(R.id.foot_view_item_tv);
+        }
+    }
+    public class ItemViewHolder extends RecyclerView.ViewHolder{
+
+        public  TextView textView;
+        public  TextView summary;
+        public  TextView laiyuan;
+        public  TextView time;
+        public ImageView iv;
+
+        public ItemViewHolder(View itemView) {
+            super(itemView);
+            textView = (TextView) itemView.findViewById(R.id.tv1);
+            summary = (TextView) itemView.findViewById(R.id.sumary);
+            laiyuan = (TextView) itemView.findViewById(R.id.laiyuan);
+            time = (TextView) itemView.findViewById(R.id.tv_time);
+            iv = (ImageView) itemView.findViewById(R.id.iv);
         }
     }
 }

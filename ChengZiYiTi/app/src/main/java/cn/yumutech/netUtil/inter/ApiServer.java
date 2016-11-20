@@ -8,6 +8,7 @@ import cn.yumutech.bean.DepartList;
 import cn.yumutech.bean.ExchangeCommenList;
 import cn.yumutech.bean.FaBuRenWu;
 import cn.yumutech.bean.GetTaShanPingLunLieBIao;
+import cn.yumutech.bean.GroupDetais;
 import cn.yumutech.bean.HuDongItem;
 import cn.yumutech.bean.HuDongJIaoLiu;
 import cn.yumutech.bean.JieSanQun;
@@ -22,6 +23,8 @@ import cn.yumutech.bean.ShowMyPublishedTask;
 import cn.yumutech.bean.ShowTaskDetail;
 import cn.yumutech.bean.ShuaXinQunZhu;
 import cn.yumutech.bean.TuiChuQun;
+import cn.yumutech.bean.UserAboutPerson;
+import cn.yumutech.bean.UserInfoDetail;
 import cn.yumutech.bean.UserLogin;
 import cn.yumutech.bean.UserToken;
 import cn.yumutech.bean.UserXiangGuanQun;
@@ -134,8 +137,8 @@ Observable<WorkDetails> getWorkDetais(@Query("req") String policy);
     //加入群主
     @POST("GroupJoin")
     Observable<JoinQun> getJoinQun(@Query("req") String item);
-//查询群成员
-    @POST("GroupQueryUser")
+    //查询群成员
+    @POST("QueryUserList")
     Observable<ChaXunQunMenmber> getChaXunMember(@Query("req") String item);
     //发布任务
     @POST("PublishTask")
@@ -143,6 +146,7 @@ Observable<WorkDetails> getWorkDetais(@Query("req") String policy);
     //显示我发布的任务
     @POST("ShowMyPublishedTask")
     Observable<XianShiMyFaBuRenWU> getXianShiFaBu(@Query("req") String item);
+
     //显示任务详情
     @POST("ShowTaskDetail")
     Observable<XianShiRenWuXiangQing> getRenWuDetail(@Query("req") String item);
@@ -150,8 +154,16 @@ Observable<WorkDetails> getWorkDetais(@Query("req") String policy);
     @POST("DeptList")
     Observable<DepartList> getBumenList(@Query("req") String item);
     //获取用户列表
-//查询用户相关的群
+    //查询用户相关的群
     @POST("QueryGroupList")
     Observable<UserXiangGuanQun> getUserXiangGuanQun(@Query("req") String item);
-
+    //获取用户相关列表
+    @POST("UserList")
+    Observable<UserAboutPerson> getUserAboutPerson(@Query("req") String item);
+    //获取用户详情
+    @POST("UserItem")
+    Observable<UserInfoDetail> getUserDetais(@Query("req") String item);
+    //获取组详情数据
+    @POST("LeaderActivityItem")
+    Observable<GroupDetais> getGroupDetais(@Query("req") String item);
 }

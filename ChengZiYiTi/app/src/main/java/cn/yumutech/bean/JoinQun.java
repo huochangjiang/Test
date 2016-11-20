@@ -15,9 +15,6 @@ public class JoinQun {
      * status : {"message":"成功加入群","code":"0"}
      * data : 
      */
-
-    public String data;
-
     public StatusBean getStatus() {
         return status;
     }
@@ -26,13 +23,6 @@ public class JoinQun {
         this.status = status;
     }
 
-    public String getData() {
-        return data;
-    }
-
-    public void setData(String data) {
-        this.data = data;
-    }
 
     public static class StatusBean {
         public String message;

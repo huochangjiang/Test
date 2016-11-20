@@ -1,11 +1,13 @@
 package cn.yumutech.unity;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.multidex.MultiDexApplication;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
@@ -14,9 +16,18 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.umeng.message.IUmengRegisterCallback;
+import com.umeng.message.PushAgent;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
+import cn.yumutech.bean.ChaXunQunMenmber;
+import cn.yumutech.bean.UserAboutPerson;
 import cn.yumutech.bean.UserLogin;
 import cn.yumutech.weight.ACache;
 import cn.yumutech.weight.StringUtils1;
@@ -57,6 +68,21 @@ public class App extends MultiDexApplication{
             }
         }
         initImageLoader();
+        PushAgent mPushAgent = PushAgent.getInstance(this);
+      //注册推送服务，每次调用register方法都会回调该接口
+        mPushAgent.register(new IUmengRegisterCallback() {
+
+            @Override
+            public void onSuccess(String deviceToken) {
+                //注册成功会返回device token
+                Log.e("deviceToken",deviceToken);
+            }
+
+            @Override
+            public void onFailure(String s, String s1) {
+
+            }
+        });
     }
     private void initConnect(){
 
@@ -156,5 +182,29 @@ public class App extends MultiDexApplication{
         NetworkInfo ni = cm.getActiveNetworkInfo();
         return ni != null && ni.isConnectedOrConnecting();
     }
+
+
+    /**
+     * 添加到销毁队列
+     *
+     * @param activity 要销毁的activity
+     */
+      Map<String,Activity> destoryMap = new HashMap<>();
+    public  void addDestoryActivity(Activity activity, String activityName) {
+        destoryMap.put(activityName,activity);
+    }
+    /**
+     *销毁指定Activity
+     */
+    public  void destoryActivity(String activityName) {
+        Set<String> keySet=destoryMap.keySet();
+        for (String key:keySet){
+            destoryMap.get(key).finish();
+        }
+    }
+
+    public List<UserAboutPerson.DataBean> mApbutPerson=new ArrayList<>();
+    public List<ChaXunQunMenmber.DataBean.UsersBean> qunMember=new ArrayList<>();
+
 }
 

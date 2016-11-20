@@ -36,6 +36,10 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
     private boolean isMoreLoading = false;
     private boolean isRefresh=false;
     private int mPage=0;
+    private int mPageSize=5;
+    //是否还有数据
+    private boolean isHave;
+    private View myprog;
     protected void unsubscribe( Subscription subscription) {
         if (subscription != null && !subscription.isUnsubscribed()) {
             subscription.unsubscribe();
@@ -60,6 +64,9 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
         pullToRefresh.setOnRefreshListener(this);
         controlTitle(findViewById(R.id.back));
         net_connect = findViewById(R.id.netconnect);
+        myprog=  findViewById(R.id.myprog);
+        myprog.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.GONE);
         initLocal();
     }
     //加载缓存
@@ -73,6 +80,7 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
             if(!app.isNetworkConnected(this)){
                 net_connect.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.GONE);
+                myprog.setVisibility(View.GONE);
             }
         }
         if (app.isNetworkConnected(WorkDongTaiActivity.this)) {
@@ -82,7 +90,7 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
     @Override
     protected void initData() {
         RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean("unity","1234567890"),
-                new RequestCanShu.DataBean("","0","5"));
+                new RequestCanShu.DataBean("","0",mPageSize+""));
         initDatas1(new Gson().toJson(canshus));
     }
 
@@ -116,7 +124,7 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
                         isRefresh=true;
                         mPage=leaderActivitys.size();
                         RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean("unity","1234567890"),
-                                new RequestCanShu.DataBean("省级",mPage+"","5"));
+                                new RequestCanShu.DataBean("省级",mPage+"",mPageSize+""));
                         initDatas1(new Gson().toJson(canshus));
                     }
                 }
@@ -132,6 +140,7 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
             public void onClick(View v) {
                 if(app.isNetworkConnected(WorkDongTaiActivity.this)){
                     net_connect.setVisibility(View.GONE);
+                    myprog.setVisibility(View.VISIBLE);
                     initData();
                 }
             }
@@ -157,7 +166,10 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
                 if(mPage==0){
                     app.savaHomeJson("WorkListManger",new Gson().toJson(channels));
                 }
-                loadHome(channels.data);
+
+                    loadHome(channels.data);
+
+
             }
 
 
@@ -167,13 +179,20 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
      * 加载列表数据
      */
     private void loadHome(List<WorkListManger.DataBean> data){
+        if(data.size()>0){
+            isHave=true;
+        }
+        if(data.size()==0){
+            isHave=false;
+        }
         if(isRefresh){
             leaderActivitys.addAll(data);
         }else {
             leaderActivitys=data;
         }
-        mAdapter.dataChange(leaderActivitys);
+        mAdapter.dataChange(leaderActivitys,isHave);
         isMoreLoading = false;
+        myprog.setVisibility(View.GONE);
         net_connect.setVisibility(View.GONE);
         recyclerView.setVisibility(View.VISIBLE);
         pullToRefresh.setRefreshing(false);
@@ -183,7 +202,7 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
         mPage=0;
         isRefresh=false;
         RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean("unity","1234567890"),
-                new RequestCanShu.DataBean("","0","5"));
+                new RequestCanShu.DataBean("","0",mPageSize+""));
         initDatas1(new Gson().toJson(canshus));
     }
 }

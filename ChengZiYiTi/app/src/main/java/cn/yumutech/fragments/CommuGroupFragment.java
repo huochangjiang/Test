@@ -16,6 +16,7 @@ import cn.yumutech.Adapter.GroupListAdapter;
 import cn.yumutech.bean.RequestCanShu1;
 import cn.yumutech.bean.UserXiangGuanQun;
 import cn.yumutech.netUtil.Api;
+import cn.yumutech.unity.App;
 import cn.yumutech.unity.BaseFragment;
 import cn.yumutech.unity.QunMenmberSelectorActivity;
 import cn.yumutech.unity.R;
@@ -65,12 +66,14 @@ public class CommuGroupFragment extends BaseFragment implements View.OnClickList
     protected void initViews(View contentView) {
 
         listview= (MyListview) contentView.findViewById(R.id.listview);
+        listview.setFocusable(false);
         adapter=new GroupListAdapter(getActivity(),data);
         listview.setAdapter(adapter);
         two= (RelativeLayout) contentView.findViewById(R.id.two);
         two.setOnClickListener(this);
         RelativeLayout  one= (RelativeLayout) contentView.findViewById(R.id.one);
         one.setOnClickListener(this);
+        listview.setFocusable(false);
     }
 
     @Override
@@ -86,9 +89,7 @@ public class CommuGroupFragment extends BaseFragment implements View.OnClickList
 
     @Override
     protected void initDatas() {
-        RequestCanShu1 canshus=new RequestCanShu1(new RequestCanShu1.UserBean("1","1234567890"),
-                new RequestCanShu1.DataBean("3"));
-        initDatas1(new Gson().toJson(canshus));
+
     }
     private void initDatas1( String canshu){
         subscription = Api.getMangoApi1().getUserXiangGuanQun(canshu)
@@ -107,11 +108,23 @@ public class CommuGroupFragment extends BaseFragment implements View.OnClickList
                 break;
             case R.id.one:
                 Intent intent1=new Intent();
+                intent1.putExtra("type","create");
                 intent1.setClass(getActivity(), QunMenmberSelectorActivity.class);
                 startActivity(intent1);
                 break;
         }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(App.getContext().getLogo("logo")!=null) {
+            RequestCanShu1 canshus = new RequestCanShu1(new RequestCanShu1.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
+                    new RequestCanShu1.DataBean(App.getContext().getLogo("logo").data.id));
+            initDatas1(new Gson().toJson(canshus));
+        }
+    }
+
     Observer<UserXiangGuanQun> observer = new Observer<UserXiangGuanQun>() {
         @Override
         public void onCompleted() {

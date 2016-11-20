@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.umeng.message.PushAgent;
+
 /**
  * Created by 霍长江 on 2016/11/6.
  */
@@ -16,6 +18,7 @@ public abstract  class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        PushAgent.getInstance(this).onAppStart();
         this.setContentView(this.getLayoutId());
         this.initViews(savedInstanceState);
         this.initData();

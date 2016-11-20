@@ -5,18 +5,13 @@ package cn.yumutech.bean;
  */
 public class TuiChuQun {
 
+
     /**
      * message : 成功退出群
      * code : 0
      */
 
     public StatusBean status;
-    /**
-     * status : {"message":"成功退出群","code":"0"}
-     * data :
-     */
-
-    public String data;
 
     public StatusBean getStatus() {
         return status;
@@ -24,14 +19,6 @@ public class TuiChuQun {
 
     public void setStatus(StatusBean status) {
         this.status = status;
-    }
-
-    public String getData() {
-        return data;
-    }
-
-    public void setData(String data) {
-        this.data = data;
     }
 
     public static class StatusBean {

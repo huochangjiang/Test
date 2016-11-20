@@ -30,13 +30,16 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
     Subscription subscription;
     private PolicyAdapter mAdapter;
     private int mPage=0;
-    private int mPageSize = 15;
+    private int mPageSize = 5;
     private View net_connect;
     private App app;
     private int lastVisibleItem;
     //是否正在加载更多的标志
     private boolean isMoreLoading = false;
     private boolean isRefresh=false;
+    private View myprog;
+    //是否还是有数据
+    private boolean isHave;
     protected void unsubscribe( Subscription subscription) {
         if (subscription != null && !subscription.isUnsubscribed()) {
             subscription.unsubscribe();
@@ -52,6 +55,7 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
         app= (App) PolicyFileActivity.this.getApplicationContext();
         recyclerView = (RecyclerView) findViewById(R.id.recyleview);
         pullToRefresh = (SwipeRefreshLayout) findViewById(R.id.pull_to_refresh);
+        myprog=findViewById(R.id.myprog);
         mAdapter = new PolicyAdapter(this,mdatas);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -61,6 +65,8 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
         pullToRefresh.setOnRefreshListener(this);
         controlTitle(findViewById(R.id.back));
         net_connect = findViewById(R.id.netconnect);
+        myprog.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.GONE);
         initLocal();
     }
     //加载缓存
@@ -74,6 +80,7 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
             if(!app.isNetworkConnected(this)){
                 net_connect.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.GONE);
+                myprog.setVisibility(View.GONE);
             }
         }
         if (app.isNetworkConnected(PolicyFileActivity.this)) {
@@ -84,19 +91,26 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
      * 加载列表数据
      */
     private void loadHome(List<ZhengCeFile.DataBean> data){
+        if(data.size()>0){
+            isHave=true;
+        }
+        if(data.size()==0){
+            isHave=false;
+        }
         if(isRefresh){
             mdatas.addAll(data);
         }else {
             mdatas=data;
         }
-        mAdapter.dataChange(mdatas);
+        mAdapter.dataChange(mdatas,isHave);
+        myprog.setVisibility(View.GONE);
         net_connect.setVisibility(View.GONE);
-        recyclerView.setVisibility(View.VISIBLE);
+       recyclerView.setVisibility(View.VISIBLE);
     }
     @Override
     protected void initData() {
         RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean("unity","1234567890"),
-                new RequestCanShu.DataBean("中央",mPage+"","10"));
+                new RequestCanShu.DataBean("中央",mPage+"",mPageSize+""));
         initDatas1(new Gson().toJson(canshus));
     }
     @Override
@@ -114,6 +128,7 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
             public void onClick(View v) {
                 if(app.isNetworkConnected(PolicyFileActivity.this)){
                     net_connect.setVisibility(View.GONE);
+                    myprog.setVisibility(View.VISIBLE);
                     initData();
                 }
             }
@@ -129,7 +144,7 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
                         isRefresh=true;
                         mPage=mdatas.size();
                         RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean("unity","1234567890"),
-                                new RequestCanShu.DataBean("中央",mPage+"","10"));
+                                new RequestCanShu.DataBean("中央",mPage+"",mPageSize+""));
                         initDatas1(new Gson().toJson(canshus));
                     }
                 }
@@ -180,7 +195,7 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
         mPage=0;
         isRefresh=false;
         RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean("unity","1234567890"),
-                new RequestCanShu.DataBean("中央",mPage+"","10"));
+                new RequestCanShu.DataBean("中央",mPage+"",mPageSize+""));
         initDatas1(new Gson().toJson(canshus));
     }
 

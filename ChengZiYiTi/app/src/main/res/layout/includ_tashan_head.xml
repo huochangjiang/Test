@@ -5,16 +5,18 @@
 
     <RelativeLayout
         android:id="@+id/rel_title"
-        android:layout_width="300dp"
+        android:layout_width="wrap_content"
         android:layout_marginTop="10dp"
-        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_height="wrap_content">
-    <TextView
+    <cn.yumutech.weight.CenterTextView
         android:id="@+id/xinwentitle"
         android:textColor="@color/black"
+        android:maxLines="2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
+
         android:text="美国总统选取"
         android:textSize="16sp"
 
@@ -25,7 +27,7 @@
         android:layout_below="@+id/rel_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="类型： "
+        android:text="类型："
         android:layout_marginLeft="10dp"/>
     <TextView
         android:id="@+id/myclass"

@@ -1,13 +1,12 @@
 package cn.yumutech.unity;
 
-import android.animation.ObjectAnimator;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -17,7 +16,6 @@ import cn.yumutech.Adapter.ConversationListAdapterEx;
 import cn.yumutech.Adapter.FragmentAdapter;
 import cn.yumutech.fragments.CommuContactFragment;
 import cn.yumutech.fragments.CommuGroupFragment;
-import cn.yumutech.weight.NetAbout;
 import cn.yumutech.weight.NoViewPager;
 import io.rong.imkit.RongContext;
 import io.rong.imkit.fragment.ConversationListFragment;
@@ -26,16 +24,17 @@ import io.rong.imlib.model.Conversation;
 /**
  * Created by Allen on 2016/11/13.
  */
-public class CommunicationActivity extends BaseActivity{
+public class CommunicationActivity extends BaseActivity implements View.OnClickListener{
     private NoViewPager viewpager;
     private ImageView back;
     private List<Fragment> fragmentlist=new ArrayList<Fragment>();
     private TextView tv_message,tv_contact,tv_group;
-    private ImageView xian;
+    private ImageView hengxian_message,hengxian_contact,hengxian_group;
     private List<TextView> tvs = new ArrayList<>();
     private ConversationListFragment mConversationListFragment = null;
     private Conversation.ConversationType[] mConversationsTypes = null;
     private boolean isDebug;
+    private RelativeLayout rl_message,rl_contact,rl_group;
 
     private int currIndex;
     @Override
@@ -50,14 +49,20 @@ public class CommunicationActivity extends BaseActivity{
         tv_contact= (TextView) findViewById(R.id.tv_contact);
         tv_group= (TextView) findViewById(R.id.tv_group);
         back= (ImageView) findViewById(R.id.back);
-        xian= (ImageView) findViewById(R.id.hengxian);
+        hengxian_message= (ImageView) findViewById(R.id.hengxian_message);
+        hengxian_contact= (ImageView) findViewById(R.id.hengxian_contact);
+        hengxian_group= (ImageView) findViewById(R.id.hengxian_group);
+
+        rl_message= (RelativeLayout) findViewById(R.id.rl_message);
+        rl_contact= (RelativeLayout) findViewById(R.id.rl_contact);
+        rl_group= (RelativeLayout) findViewById(R.id.rl_group);
         tvs.add(tv_message);
         tvs.add(tv_contact);
         tvs.add(tv_group);
-        CollectOnclickListener listener = new CollectOnclickListener();
-        tv_message.setOnClickListener(listener);
-        tv_contact.setOnClickListener(listener);
-        tv_group.setOnClickListener(listener);
+
+        rl_message.setOnClickListener(this);
+        rl_contact.setOnClickListener(this);
+        rl_group.setOnClickListener(this);
         isDebug = getSharedPreferences("config", MODE_PRIVATE).getBoolean("isDebug", false);
 
         Fragment conversationList = initConversationList();
@@ -69,7 +74,6 @@ public class CommunicationActivity extends BaseActivity{
         FragmentAdapter adapter=new FragmentAdapter(getSupportFragmentManager(),fragmentlist);
         viewpager.setAdapter(adapter);
         viewpager.setOffscreenPageLimit(3);
-        viewpager.addOnPageChangeListener(new MyOnPageChangeListener());
     }
     private Fragment initConversationList() {
         if (mConversationListFragment == null) {
@@ -131,44 +135,31 @@ public class CommunicationActivity extends BaseActivity{
             }
         });
     }
-    private class CollectOnclickListener implements View.OnClickListener{
 
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()){
-                case R.id.tv_message:
-                    viewpager.setCurrentItem(0);
-                    break;
-                case R.id.tv_contact:
-                    viewpager.setCurrentItem(1);
-                    break;
-                case R.id.tv_group:
-                    viewpager.setCurrentItem(2);
-                    break;
-            }
-        }
-    }
-    public class MyOnPageChangeListener implements ViewPager.OnPageChangeListener {
-        @Override
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            ObjectAnimator.ofFloat(xian, "x", NetAbout.getInstance().getScreenWidth(CommunicationActivity.this)/5*(position+positionOffset)+ NetAbout.getInstance().getScreenWidth(CommunicationActivity.this)/11+70).setDuration(0).start();
-        }
-
-        @Override
-        public void onPageSelected(int position) {
-//            Animation animation = new TranslateAnimation(currIndex*one,position*one,0,0);//平移动画
-            currIndex = position;
-
-//            animation.setFillAfter(true);//动画终止时停留在最后一帧，不然会回到没有执行前的状态
-//            animation.setDuration(400);//动画持续时间0.4秒
-//            xian.startAnimation(animation);//是用ImageView来显示动画的
-            chanColor(position);
-
-        }
-        @Override
-        public void onPageScrollStateChanged(int state) {
-
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.rl_message:
+                hengxian_message.setVisibility(View.VISIBLE);
+                hengxian_contact.setVisibility(View.GONE);
+                hengxian_group.setVisibility(View.GONE);
+                chanColor(0);
+                viewpager.setCurrentItem(0);
+                break;
+            case R.id.rl_contact:
+                chanColor(1);
+                hengxian_message.setVisibility(View.GONE);
+                hengxian_contact.setVisibility(View.VISIBLE);
+                hengxian_group.setVisibility(View.GONE);
+                viewpager.setCurrentItem(1);
+                break;
+            case R.id.rl_group:
+                chanColor(2);
+                hengxian_message.setVisibility(View.GONE);
+                hengxian_contact.setVisibility(View.GONE);
+                hengxian_group.setVisibility(View.VISIBLE);
+                viewpager.setCurrentItem(2);
+                break;
         }
     }
     private void chanColor(int postion) {

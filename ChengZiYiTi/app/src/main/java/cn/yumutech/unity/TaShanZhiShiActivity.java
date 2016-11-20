@@ -37,6 +37,7 @@ public class TaShanZhiShiActivity extends BaseActivity implements PullToRefreshB
     private App app;
     private View net_connect;
     private PullToRefreshScrollView pullToRefresh;
+    private View myprog;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_tashanzhishi;
@@ -51,7 +52,10 @@ public class TaShanZhiShiActivity extends BaseActivity implements PullToRefreshB
         adapter=new TaShanZhiShiAdapter(TaShanZhiShiActivity.this,mData);
         listview.setAdapter(adapter);
         net_connect = findViewById(R.id.netconnect);
-        initLocal();
+        myprog=  findViewById(R.id.myprog);
+        myprog.setVisibility(View.VISIBLE);
+        listview.setVisibility(View.GONE);
+
         pullToRefresh = (PullToRefreshScrollView) findViewById(R.id.pull_to_refresh);
         pullToRefresh.setMode(PullToRefreshBase.Mode.BOTH);
         pullToRefresh.setOnRefreshListener(this);
@@ -68,7 +72,7 @@ public class TaShanZhiShiActivity extends BaseActivity implements PullToRefreshB
         endLabels.setPullLabel("上拉加载...");// 刚下拉时，显示的提示
         endLabels.setRefreshingLabel("正在载入...");// 刷新时
         endLabels.setReleaseLabel("放开刷新...");// 下来达到一定距离时，显示的提示
-
+        initLocal();
     }
 
     @Override
@@ -100,6 +104,7 @@ public class TaShanZhiShiActivity extends BaseActivity implements PullToRefreshB
             public void onClick(View v) {
                 if(app.isNetworkConnected(TaShanZhiShiActivity.this)){
                     net_connect.setVisibility(View.GONE);
+                    myprog.setVisibility(View.VISIBLE);
                     initData();
                 }
             }
@@ -162,6 +167,7 @@ public class TaShanZhiShiActivity extends BaseActivity implements PullToRefreshB
      */
     private void loadHome(List<HuDongJIaoLiu.DataBean> data){
         adapter.dataChange(data);
+        myprog.setVisibility(View.GONE);
         net_connect.setVisibility(View.GONE);
         listview.setVisibility(View.VISIBLE);
     }
@@ -175,6 +181,7 @@ public class TaShanZhiShiActivity extends BaseActivity implements PullToRefreshB
             if(!app.isNetworkConnected(this)){
                 net_connect.setVisibility(View.VISIBLE);
                 listview.setVisibility(View.GONE);
+                myprog.setVisibility(View.GONE);
             }
         }
         if (app.isNetworkConnected(TaShanZhiShiActivity.this)) {

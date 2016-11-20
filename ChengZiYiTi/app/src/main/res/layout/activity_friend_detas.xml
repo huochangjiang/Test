@@ -31,10 +31,26 @@
 
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
- <WebView
-
+    <RelativeLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/id_toolbar">
+        <include
+            layout="@layout/progressbar"
+            android:id="@+id/myprog"
+            android:visibility="gone"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content" />
+    </RelativeLayout>
+    <RelativeLayout
         android:layout_below="@+id/id_toolbar"
         android:layout_width="match_parent"
+        android:layout_height="match_parent">
+     <WebView
+        android:layout_width="match_parent"
         android:id="@+id/webview"
-        android:layout_height="match_parent"></WebView>
+        android:layout_height="match_parent">
+     </WebView>
+    </RelativeLayout>
 </RelativeLayout>

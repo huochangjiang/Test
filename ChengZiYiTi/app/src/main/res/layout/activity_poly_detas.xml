@@ -32,8 +32,20 @@ android:background="@color/white"
 
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
+    <RelativeLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/id_toolbar">
+        <include
+            layout="@layout/progressbar"
+            android:id="@+id/myprog"
+            android:visibility="gone"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content" />
+        </RelativeLayout>
     <ScrollView
-
+        android:id="@+id/scrollview"
         android:descendantFocusability="blocksDescendants"
         android:layout_below="@+id/id_toolbar"
         android:layout_width="match_parent"

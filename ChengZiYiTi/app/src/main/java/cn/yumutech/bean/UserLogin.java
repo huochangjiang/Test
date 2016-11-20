@@ -19,5 +19,7 @@ public class UserLogin {
         public String logo_path;
         public String gender;
         public String mobile;
+        public String dept_id;
+        public String dept_name;
     }
 }

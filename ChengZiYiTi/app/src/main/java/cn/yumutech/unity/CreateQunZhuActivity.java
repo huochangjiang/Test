@@ -1,6 +1,7 @@
 package cn.yumutech.unity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +13,7 @@ import cn.yumutech.bean.CreateQunZu;
 import cn.yumutech.bean.RequestCanShu;
 import cn.yumutech.netUtil.Api;
 import io.rong.imkit.RongIM;
+import io.rong.imlib.model.Group;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -50,8 +52,8 @@ public class CreateQunZhuActivity extends BaseActivity {
         sure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean("3","134669"),
-                        new RequestCanShu.DataBean(ids,editText.getText().toString().trim()));
+                RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.id,"1234567890"),
+                        new RequestCanShu.DataBean(ids+","+App.getContext().getLogo("logo").data.id,editText.getText().toString().trim()));
                 initDatas1(new Gson().toJson(canshus));
             }
         });
@@ -81,10 +83,14 @@ public class CreateQunZhuActivity extends BaseActivity {
         @Override
         public void onNext(CreateQunZu channels) {
             if(channels.status.code.equals("0")){
+                Group group=new Group(channels.data.groupId,channels.data.groupName, Uri.parse(channels.data.create_user_logo_path));
+                RongIM.getInstance().refreshGroupInfoCache(group);
                 RongIM.getInstance().startGroupChat(CreateQunZhuActivity.this, channels.data.groupId, "标题");
                 finish();
             }
 
         }
     };
+
+
 }
