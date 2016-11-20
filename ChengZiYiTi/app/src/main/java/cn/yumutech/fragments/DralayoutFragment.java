@@ -29,8 +29,6 @@ import rx.schedulers.Schedulers;
 
 
 public class DralayoutFragment extends BaseFragment {
-
-
     private View rootView;
     private List<UserAboutPerson.DataBean> mDatas=new ArrayList<>();
     private ListView listView;
@@ -45,11 +43,9 @@ public class DralayoutFragment extends BaseFragment {
     public DralayoutFragment() {
         // Required empty public constructor
     }
-
     // TODO: Rename and change types and number of parameters
     public static DralayoutFragment newInstance() {
         DralayoutFragment fragment = new DralayoutFragment();
-
         return fragment;
     }
 
