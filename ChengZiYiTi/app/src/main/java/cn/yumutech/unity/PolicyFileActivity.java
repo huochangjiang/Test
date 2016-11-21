@@ -30,7 +30,7 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
     Subscription subscription;
     private PolicyAdapter mAdapter;
     private int mPage=0;
-    private int mPageSize = 5;
+    private int mPageSize = 10;
     private View net_connect;
     private App app;
     private int lastVisibleItem;
@@ -109,9 +109,14 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
     }
     @Override
     protected void initData() {
-        RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean("unity","1234567890"),
-                new RequestCanShu.DataBean("中央",mPage+"",mPageSize+""));
-        initDatas1(new Gson().toJson(canshus));
+        if(App.getContext().getLogo("logo")!=null){
+            RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.nickname,App.getContext().getLogo("logo").data.id),
+                    new RequestCanShu.DataBean("中央",mPage+"",mPageSize+""));
+            initDatas1(new Gson().toJson(canshus));
+        }else {
+           App.getContext().noLogin(PolicyFileActivity.this);
+        }
+
     }
     @Override
     protected void initListeners() {
@@ -143,9 +148,14 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
                         isMoreLoading = true;
                         isRefresh=true;
                         mPage=mdatas.size();
-                        RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean("unity","1234567890"),
-                                new RequestCanShu.DataBean("中央",mPage+"",mPageSize+""));
-                        initDatas1(new Gson().toJson(canshus));
+                        if(App.getContext().getLogo("logo")!=null){
+                            RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.nickname,App.getContext().getLogo("logo").data.id),
+                                    new RequestCanShu.DataBean("中央",mPage+"",mPageSize+""));
+                            initDatas1(new Gson().toJson(canshus));
+                        }else {
+                            App.getContext().noLogin(PolicyFileActivity.this);
+                        }
+
                     }
                 }
             }
@@ -194,9 +204,14 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
     public void onRefresh() {
         mPage=0;
         isRefresh=false;
-        RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean("unity","1234567890"),
-                new RequestCanShu.DataBean("中央",mPage+"",mPageSize+""));
-        initDatas1(new Gson().toJson(canshus));
+        if(App.getContext().getLogo("logo")!=null){
+            RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.nickname,App.getContext().getLogo("logo").data.id),
+                    new RequestCanShu.DataBean("中央",mPage+"",mPageSize+""));
+            initDatas1(new Gson().toJson(canshus));
+        }else {
+            App.getContext().noLogin(PolicyFileActivity.this);
+        }
+
     }
 
 }

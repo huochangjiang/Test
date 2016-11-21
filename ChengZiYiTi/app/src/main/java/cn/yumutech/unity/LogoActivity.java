@@ -28,6 +28,7 @@ import cn.yumutech.bean.UserLoginBeen;
 import cn.yumutech.bean.UserToken;
 import cn.yumutech.bean.YanZhenMessageBean;
 import cn.yumutech.netUtil.Api;
+import cn.yumutech.weight.getContact;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.UserInfo;
@@ -231,15 +232,15 @@ public class LogoActivity extends BaseActivity implements View.OnClickListener{
                     String logoData=new Gson().toJson(userLogin);
                     app.saveLogo("logo",logoData);
                     //正常登录
-
-                }else if(userLogin.status.code.equals("-6")){
-                    //手机号不存在
-                    Toast.makeText(LogoActivity.this,userLogin.status.message,Toast.LENGTH_SHORT).show();
-                }else if(userLogin.status.code.equals("-8")){
-                    //验证码过期了
-                    Toast.makeText(LogoActivity.this,userLogin.status.message,Toast.LENGTH_SHORT).show();
+                    getContact.getInstance().getData();
                 }
-        }
+        }else if(userLogin!=null&&userLogin.status.code.equals("-6")){
+                //手机号不存在
+                Toast.makeText(LogoActivity.this,userLogin.status.message,Toast.LENGTH_SHORT).show();
+            }else if(userLogin!=null&&userLogin.status.code.equals("-8")){
+                //验证码过期了
+                Toast.makeText(LogoActivity.this,userLogin.status.message,Toast.LENGTH_SHORT).show();
+            }
     }
    };
 

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.yumutech.bean.ChindClass;
-import cn.yumutech.bean.DepartList;
+import cn.yumutech.bean.DepartListNew;
 import cn.yumutech.bean.GroupClass;
 import cn.yumutech.bean.RequestCanShu;
 import cn.yumutech.bean.RequestParams;
@@ -30,6 +30,7 @@ public class getContact {
     public static getContact instance;
     public String mDept_id;
     public String user_id;
+    public String nickname;
     public List<GroupClass> groupsDatas=new ArrayList<>();
     public List<List<ChindClass>> chindDatas=new ArrayList<>();
     public List<ChindClass> chindClasses=new ArrayList<>();
@@ -42,13 +43,14 @@ public class getContact {
         }
         return instance;
     }
-    private void getData() {
+    public void getData() {
         if (App.getContext().getLogo("logo") != null) {
             mDept_id = App.getContext().getLogo("logo").data.dept_id;
             user_id = App.getContext().getLogo("logo").data.id;
+            nickname=App.getContext().getLogo("logo").data.nickname;
         }
-        if (user_id != null && !user_id.equals("")) {
-            RequestCanShu canshus = new RequestCanShu(new RequestCanShu.UserBean(user_id, "1234567890"),
+        if (user_id != null && !user_id.equals("")&&nickname!=null) {
+            RequestCanShu canshus = new RequestCanShu(new RequestCanShu.UserBean(nickname, user_id),
                     new RequestCanShu.DataBean(null));
             initDatas1(new Gson().toJson(canshus));
         }
@@ -69,7 +71,7 @@ public class getContact {
 //            Toast.makeText(getActivity(),"您还未登陆",Toast.LENGTH_SHORT).show();
         }
     }
-    Observer<DepartList> observer = new Observer<DepartList>() {
+    Observer<DepartListNew> observer = new Observer<DepartListNew>() {
         @Override
         public void onCompleted() {
             unsubscribe(subscription);
@@ -80,17 +82,12 @@ public class getContact {
 
         }
         @Override
-        public void onNext(DepartList channels) {
+        public void onNext(DepartListNew channels) {
             if(channels.status.code.equals("0")){
                 String data=new Gson().toJson(channels);
                 Log.e("DepartList",data);
-                for(int i=0;i<channels.data.size();i++){
-                    if(Integer.valueOf(channels.data.get(i).dept_id)>Integer.valueOf(mDept_id)||Integer.valueOf(channels.data.get(i).dept_id)==Integer.valueOf(mDept_id)){
-                        groupsDatas.add(new GroupClass(channels.data.get(i).dept_name));
-                        getMembersData(user_id,channels.data.get(i).dept_id);
-                    }
-                }
-
+                groupsDatas.clear();
+                App.getContext().savaHomeJson("Contact",data);
             }
         }
     };
@@ -115,16 +112,15 @@ public class getContact {
         @Override
         public void onNext(UserAboutPerson userAboutPerson) {
             if(userAboutPerson.status.code.equals("0")){
+                chindClasses.clear();
                 for(int i=0;i<userAboutPerson.data.size();i++){
 //                    chindClasses.add(userAboutPerson.data.get(i).nickname)
                     ChindClass chanData= new ChindClass(userAboutPerson.data.get(i).nickname, R.drawable.next);
                     chindClasses.add(chanData);
                 }
                 chindDatas.add(chindClasses);
-//                chindClasses.clear();
-//                mAdapter.dataChange(groupsDatas,chindDatas);
-//                mAdapter=new ExpanderAdapter(mActivity,groupsDatas,chindDatas);
-//                expandableListView.setAdapter(mAdapter);
+
+//                SaveData.getInstance().chindDatas=chindDatas;
             }
         }
     };

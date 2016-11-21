@@ -80,6 +80,12 @@ public class AfterLoginActivity extends BaseActivity implements View.OnClickList
             @Override
             public void onClick(View v) {
                 app.cleanLogoInformation();
+//                if(SaveData.getInstance().chindDatas!=null){
+//                    SaveData.getInstance().chindDatas.clear();
+//                }
+                if(App.getContext().getContactGroup("Contact")!=null){
+                    App.getContext().cleanContactGroup();
+                }
 
                 finish();
 //                if(RongIM.getInstance()!=null){

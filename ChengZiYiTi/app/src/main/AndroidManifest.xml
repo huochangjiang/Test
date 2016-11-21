@@ -55,6 +55,7 @@
         <activity android:name=".RegistActivity" />
         <activity android:name=".HuDongJIaoLIuActivity" />
         <activity android:name=".MailListActivity" />
+        <activity android:name=".InspectionTaskActivity"/>
         <!-- 会话页面 -->
         <activity
             android:name=".ConversationActivity"
