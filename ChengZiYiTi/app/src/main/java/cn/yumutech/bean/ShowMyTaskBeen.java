@@ -11,7 +11,10 @@ public class ShowMyTaskBeen {
 
     private UserBean user;
     private DataBean data;
-
+    public ShowMyTaskBeen( UserBean user,DataBean data){
+        this.user=user;
+        this.data=data;
+    }
     public UserBean getUser() {
         return user;
     }
@@ -36,7 +39,10 @@ public class ShowMyTaskBeen {
 
         private String account;
         private String session;
-
+        public UserBean(String account, String session){
+            this.account=account;
+            this.session=session;
+        }
         public String getAccount() {
             return account;
         }
@@ -62,7 +68,10 @@ public class ShowMyTaskBeen {
 
         private String offset;
         private String row_count;
-
+        public DataBean(String offset,String row_count){
+            this.offset=offset;
+            this.row_count=row_count;
+        }
         public String getOffset() {
             return offset;
         }

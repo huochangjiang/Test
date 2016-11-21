@@ -22,6 +22,7 @@ import cn.yumutech.bean.PrijectDetaisl;
 import cn.yumutech.bean.ProjectManger;
 import cn.yumutech.bean.PublishTask;
 import cn.yumutech.bean.ShowMyPublishedTask;
+import cn.yumutech.bean.ShowMyTask;
 import cn.yumutech.bean.ShowTaskDetail;
 import cn.yumutech.bean.ShuaXinQunZhu;
 import cn.yumutech.bean.TuiChuQun;
@@ -32,7 +33,6 @@ import cn.yumutech.bean.UserToken;
 import cn.yumutech.bean.UserXiangGuanQun;
 import cn.yumutech.bean.WorkDetails;
 import cn.yumutech.bean.WorkListManger;
-import cn.yumutech.bean.XianShiMyFaBuRenWU;
 import cn.yumutech.bean.XianShiRenWuXiangQing;
 import cn.yumutech.bean.YanZhenMessageBean;
 import cn.yumutech.bean.YouQIngLianJie;
@@ -66,10 +66,10 @@ public interface ApiServer {
     Observable<ShowTaskDetail> getShowTaskDetail(@Query("req") String list);
     //督察督办之显示我的任务
     @POST("ShowMyTask")
-    Observable<ShowTaskDetail> getShowMyTask(@Query("req") String list);
+    Observable<ShowMyTask> getShowMyTask(@Query("req") String list);
     //督察督办之显示我发布的任务
     @POST("ShowMyPublishedTask")
-    Observable<XianShiMyFaBuRenWU> getXianShiFaBu(@Query("req") String item);
+    Observable<ShowMyPublishedTask> getXianShiFaBu(@Query("req") String item);
     //督察督办之显示接受任务
     @POST("AcceptTask")
     Observable<AcceptTask> getAcceptTask(@Query("req") String item);

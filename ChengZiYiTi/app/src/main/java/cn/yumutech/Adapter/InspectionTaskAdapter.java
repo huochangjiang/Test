@@ -6,6 +6,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.util.List;
+
+import cn.yumutech.bean.ShowMyTask;
 import cn.yumutech.unity.R;
 
 /**
@@ -13,19 +16,27 @@ import cn.yumutech.unity.R;
  */
 public class InspectionTaskAdapter extends BaseAdapter{
     private Context context;
+    private List<ShowMyTask.DataBean> mData;
+    public InspectionTaskAdapter(Context context,List<ShowMyTask.DataBean> mData){
+        this.context=context;
+        this.mData=mData;
+    }
     @Override
     public int getCount() {
-        return 0;
+        return mData.size();
     }
-
+    public void dataChange(List<ShowMyTask.DataBean> mData){
+        this.mData=mData;
+        notifyDataSetChanged();
+    }
     @Override
-    public Object getItem(int position) {
-        return null;
+    public List<ShowMyTask.DataBean> getItem(int position) {
+        return mData;
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+       return 0;
     }
 
     @Override
@@ -43,6 +54,10 @@ public class InspectionTaskAdapter extends BaseAdapter{
         }else {
             vh= (ViewHolder) myView.getTag();
         }
+        vh.title.setText(mData.get(position).task_title);
+        vh.content.setText(mData.get(position).task_content);
+        vh.status.setText(mData.get(position).task_status_name);
+        vh.date.setText(mData.get(position).task_end_date);
         return myView;
     }
     public class ViewHolder{
