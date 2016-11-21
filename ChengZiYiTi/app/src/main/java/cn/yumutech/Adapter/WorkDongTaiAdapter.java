@@ -84,7 +84,7 @@ public class WorkDongTaiAdapter extends RecyclerView.Adapter {
     }
     @Override
     public int getItemViewType(int position) {
-        if (position + 1 == getItemCount()&&getItemCount()>5&&isHave) {
+        if (position + 1 == getItemCount()&&getItemCount()>8&&isHave) {
             return FOOT_VIEW;
         } else {
             return ITEM_VIEW;

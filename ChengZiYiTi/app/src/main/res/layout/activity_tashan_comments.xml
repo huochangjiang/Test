@@ -50,6 +50,7 @@
     <com.handmark.pulltorefresh.library.PullToRefreshScrollView
         android:layout_width="match_parent"
         android:id="@+id/pull_to_refresh"
+        android:scrollbars="none"
         android:layout_height="match_parent"
         android:overScrollMode="never"
 

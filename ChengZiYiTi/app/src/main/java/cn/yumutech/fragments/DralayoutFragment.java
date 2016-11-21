@@ -1,10 +1,16 @@
 package cn.yumutech.fragments;
 
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -19,6 +25,8 @@ import cn.yumutech.netUtil.Api;
 import cn.yumutech.unity.App;
 import cn.yumutech.unity.BaseFragment;
 import cn.yumutech.unity.R;
+import cn.yumutech.weight.SaveData;
+import de.greenrobot.event.EventBus;
 import io.rong.imkit.RongIM;
 import rx.Observer;
 import rx.Subscription;
@@ -27,12 +35,12 @@ import rx.schedulers.Schedulers;
 
 
 public class DralayoutFragment extends BaseFragment {
-
-
     private View rootView;
     private List<UserAboutPerson.DataBean> mDatas=new ArrayList<>();
     private ListView listView;
     private ConstancAdapter mAdapter;
+    private EditText search;
+    public List<UserAboutPerson.DataBean> searchData=new ArrayList<>();
 
     Subscription subscription;
     protected void unsubscribe( Subscription subscription) {
@@ -43,11 +51,9 @@ public class DralayoutFragment extends BaseFragment {
     public DralayoutFragment() {
         // Required empty public constructor
     }
-
     // TODO: Rename and change types and number of parameters
     public static DralayoutFragment newInstance() {
         DralayoutFragment fragment = new DralayoutFragment();
-
         return fragment;
     }
 
@@ -60,7 +66,9 @@ public class DralayoutFragment extends BaseFragment {
 
     @Override
     protected void initViews(View contentView) {
+        EventBus.getDefault().register(this);
         listView = (ListView) contentView.findViewById(R.id.listview);
+        search= (EditText) contentView.findViewById(R.id.search);
         mAdapter = new ConstancAdapter(mActivity,mDatas);
         listView.setAdapter(mAdapter);
     }
@@ -72,6 +80,38 @@ public class DralayoutFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(RongIM.getInstance()!=null){
                     RongIM.getInstance().startPrivateChat(getActivity(), mAdapter.getItem(position).id, mAdapter.getItem(position).nickname);
+                }
+            }
+        });
+        search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH||actionId==KeyEvent.KEYCODE_ENTER||actionId == EditorInfo.IME_ACTION_DONE) {
+                    searchData.clear();
+                    String str=search.getText().toString().trim();
+                    getmDataSub(str);
+                    listView.setFocusable(false);
+                }
+                return false;
+            }
+        });
+        search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(search.getText().toString().trim().length()==0){
+                    mAdapter.dataChange(mDatas);
+                    listView.setFocusable(false);
                 }
             }
         });
@@ -108,9 +148,40 @@ public class DralayoutFragment extends BaseFragment {
         public void onNext(UserAboutPerson channels) {
             if(channels.status.code.equals("0")){
                 mAdapter.dataChange(channels.data);
+                mDatas=channels.data;
                 App.getContext().mApbutPerson=channels.data;
             }
-
         }
     };
+    //评论回复按键响应事件
+    public void onEventMainThread(UserAboutPerson userAboutPerson){
+        if(App.getContext().getLogo("logo")!=null&&App.getContext().getLogo("logo").data!=null&&SaveData.getInstance().Dept_Id!=null) {
+            RequestParams canshus = new RequestParams(new RequestParams.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
+                    new RequestParams.DataBean(SaveData.getInstance().Dept_Id));
+            initDatas1(new Gson().toJson(canshus));
+        }else {
+            Toast.makeText(getActivity(),"您还未登陆",Toast.LENGTH_SHORT).show();
+        }
+
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    /**
+     * 联系人查查找
+     * @param data
+     */
+    private void getmDataSub(String data){
+        if(mDatas!=null) {
+            for (int i = 0; i < mDatas.size(); i++) {
+                if (mDatas.get(i).nickname.contains(data) || mDatas.get(i).mobile.contains(data)) {
+                    searchData.add(mDatas.get(i));
+                }
+            }
+            mAdapter.dataChange(searchData);
+        }
+    }
 }

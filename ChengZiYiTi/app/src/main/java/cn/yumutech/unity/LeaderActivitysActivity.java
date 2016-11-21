@@ -6,6 +6,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -29,7 +30,7 @@ public class LeaderActivitysActivity extends BaseActivity implements SwipeRefres
     private List<LeaderActivitys.DataBean> leaderActivitys=new ArrayList<>();
     Subscription subscription;
     private int mPage=0;
-    private int mPageSize = 5;
+    private int mPageSize = 10;
     private LinearLayoutManager mLayoutManager;
     private int lastVisibleItem;
     private App app;
@@ -88,9 +89,14 @@ public class LeaderActivitysActivity extends BaseActivity implements SwipeRefres
     }
     @Override
     protected void initData() {
-        RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean("unity","1234567890"),
-                new RequestCanShu.DataBean("省级",mPage+"",mPageSize+""));
-        initDatas1(new Gson().toJson(canshus));
+        if(App.getContext().getLogo("logo")!=null) {
+            RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.nickname,App.getContext().getLogo("logo").data.id),
+                    new RequestCanShu.DataBean("省级",mPage+"",mPageSize+""));
+            initDatas1(new Gson().toJson(canshus));
+        }else {
+            Toast.makeText(this,"您还未登陆",Toast.LENGTH_SHORT).show();
+        }
+
     }
     private void initDatas1( String canshu){
         subscription = Api.getMangoApi1().getLeaderActiviys(canshu)
@@ -120,7 +126,7 @@ public class LeaderActivitysActivity extends BaseActivity implements SwipeRefres
                         isMoreLoading = true;
                         isRefresh=true;
                         mPage=leaderActivitys.size();
-                        RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean("unity","1234567890"),
+                        RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.nickname,App.getContext().getLogo("logo").data.id),
                                 new RequestCanShu.DataBean("省级",mPage+"",mPageSize+""));
                         initDatas1(new Gson().toJson(canshus));
                     }

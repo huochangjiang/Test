@@ -8,6 +8,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.multidex.MultiDexApplication;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
@@ -27,6 +28,7 @@ import java.util.Map;
 import java.util.Set;
 
 import cn.yumutech.bean.ChaXunQunMenmber;
+import cn.yumutech.bean.DepartListNew;
 import cn.yumutech.bean.UserAboutPerson;
 import cn.yumutech.bean.UserLogin;
 import cn.yumutech.weight.ACache;
@@ -132,6 +134,25 @@ public class App extends MultiDexApplication{
             return user;
         }
     }
+    //返回用户部门信息
+    //返回用户信息
+    public DepartListNew getContactGroup(String key){
+        String readJson =aCache.getAsString(key);
+        if(StringUtils1.isEmpty(readJson))
+        {
+            return null;
+        }else {
+            Gson gson = new Gson();
+            DepartListNew user = gson.fromJson(readJson, DepartListNew.class);
+            return user;
+        }
+    }
+    /**
+     * 清除登陆信息
+     */
+    public void cleanContactGroup() {
+        aCache.remove("Contact");
+    }
     // 缓存首页数据
     public void savaHomeJson(String key,String value){
         aCache.put(key, value);
@@ -203,6 +224,12 @@ public class App extends MultiDexApplication{
         }
     }
 
+    /**
+     * 没登陆的时候做的事
+     */
+    public void noLogin(Context context){
+        Toast.makeText(context,"您还未登陆",Toast.LENGTH_SHORT).show();
+    }
     public List<UserAboutPerson.DataBean> mApbutPerson=new ArrayList<>();
     public List<ChaXunQunMenmber.DataBean.UsersBean> qunMember=new ArrayList<>();
 

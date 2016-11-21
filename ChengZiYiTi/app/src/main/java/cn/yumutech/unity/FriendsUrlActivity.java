@@ -79,9 +79,15 @@ public class FriendsUrlActivity extends BaseActivity {
     }
     @Override
     protected void initData() {
-        RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean("unity","1234567890"),
-               null);
-        initDatas1(new Gson().toJson(canshus));
+        if(App.getContext().getLogo("logo")!=null){
+            RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.nickname,
+                    App.getContext().getLogo("logo").data.id),
+                    null);
+            initDatas1(new Gson().toJson(canshus));
+        }else {
+            App.getContext().noLogin(FriendsUrlActivity.this);
+        }
+
     }
     private void initDatas1( String canshu){
         subscription = Api.getMangoApi1().getFrindeUrl(canshu)

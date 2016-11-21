@@ -24,6 +24,7 @@ import cn.yumutech.unity.App;
 import cn.yumutech.unity.BaseFragment;
 import cn.yumutech.unity.CommunicationActivity;
 import cn.yumutech.unity.FriendsUrlActivity;
+import cn.yumutech.unity.InspectionTaskActivity;
 import cn.yumutech.unity.LeaderActivitysActivity;
 import cn.yumutech.unity.PolicyFileActivity;
 import cn.yumutech.unity.ProjectMangerActivity;
@@ -149,6 +150,9 @@ public class HomeFragment extends BaseFragment {
                 }else if(i==4){
                     Intent intent=new Intent(getActivity(), FriendsUrlActivity.class);
                     startActivity(intent);
+                }else if(i==5){
+                    Intent intent=new Intent(getActivity(), InspectionTaskActivity.class);
+                    startActivity(intent);
                 }else if(i==6){
                     Intent intent=new Intent(getActivity(), CommunicationActivity.class);
                     startActivity(intent);
@@ -168,9 +172,15 @@ public class HomeFragment extends BaseFragment {
 Subscription subscription;
     @Override
     protected void initDatas() {
-        RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean("unity","1234567890"),
-                new RequestCanShu.DataBean("省级","0","10"));
-        initDatas1(new Gson().toJson(canshus));
+        if(App.getContext().getLogo("logo")!=null) {
+            RequestCanShu canshus = new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.nickname,
+                    App.getContext().getLogo("logo").data.id),
+                    new RequestCanShu.DataBean("省级", "0", "10"));
+            initDatas1(new Gson().toJson(canshus));
+        }else {
+            App.getContext().noLogin(getActivity());
+        }
+
     }
     private void initDatas1( String canshu){
         subscription = Api.getMangoApi1().getLeaderActiviys(canshu)
