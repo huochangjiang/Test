@@ -91,14 +91,14 @@ public class InspectionTaskActivity extends BaseActivity implements View.OnClick
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.mytask:
+                viewpager.setCurrentItem(0);
                 hengxian_mytask.setVisibility(View.VISIBLE);
                 hengxian_release.setVisibility(View.GONE);
-                viewpager.setCurrentItem(0);
                 break;
             case R.id.release_task:
+                viewpager.setCurrentItem(1);
                 hengxian_mytask.setVisibility(View.GONE);
                 hengxian_release.setVisibility(View.VISIBLE);
-                viewpager.setCurrentItem(1);
                 break;
         }
     }
