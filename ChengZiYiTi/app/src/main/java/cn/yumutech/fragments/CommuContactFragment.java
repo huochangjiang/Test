@@ -1,7 +1,10 @@
 package cn.yumutech.fragments;
 
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,9 +39,35 @@ public class CommuContactFragment extends BaseFragment{
     private DepartListNew channels;
     private GroupsDatasAdapter mAdapter;
 
+    Handler mHandler=new Handler()
+    {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case 0:
+                    childGroupsDatas.addAll(threechildList);
+                    threrGroups(childGroupsDatas);
+                    break;
+                case 1:
+                    groupsDatas.addAll(childGroupsDatasNode);
+                    mAdapter.dataChange(childGroupsDatasNode);
+                    for (int m=0;m<childGroupsDatasNode.size();m++){
+                        Log.e("info",childGroupsDatasNode.get(m).name);
+                    }
+                    break;
 
+
+            }
+
+
+        }
+    };
 
     private EditText search;
+    private List<GroupClass> groupClasses;
+    private boolean isOver1;
+
     public CommuContactFragment() {
 
     }
@@ -53,8 +82,8 @@ public class CommuContactFragment extends BaseFragment{
     protected View getContentView(LayoutInflater inflater, ViewGroup container) {
         if (App.getContext().getLogo("logo") != null) {
             //我的ID，现在测试用最高等级
-//            mDept_id = App.getContext().getLogo("logo").data.dept_id;
-            mDept_id = "0";
+            mDept_id = App.getContext().getLogo("logo").data.dept_id;
+            Log.e("info",mDept_id+"huo");
             user_id = App.getContext().getLogo("logo").data.id;
         }
         channels=App.getContext().getContactGroup("Contact");
@@ -76,12 +105,15 @@ public class CommuContactFragment extends BaseFragment{
           //  groupsDatas.addAll(groupsDatasNode);
         }
         if(mDept_id!=null){
-            childrenGroups(mDept_id,allGroupsDatas);
+            groupClasses = childrenGroups(mDept_id);
+            childGroupsDatasNode.addAll(groupClasses);
+            threrGroups(groupClasses);
         }
 
         contactView = inflater.inflate(R.layout.fragment_commu_contact, container, false);
         drawerlayout= (DrawerLayout) contactView.findViewById(R.id.drawerlayout).findViewById(R.id.drawer);
         search= (EditText) contactView.findViewById(R.id.search);
+        mHandler.sendEmptyMessageDelayed(1,1000);
         return contactView;
     }
     public List<GroupClass> allGroupsDatas=new ArrayList<>();
@@ -90,40 +122,76 @@ public class CommuContactFragment extends BaseFragment{
     public List<GroupClass> groupsDatasNode=new ArrayList<>();
     public List<GroupClass> childGroupsDatas=new ArrayList<>();
     private boolean isHaveChild;
-    private boolean isOver;
+    private boolean isOver=false;
     //查找出所有子部门的树形递归算法
-    public void childrenGroups(String myDept_id,List<GroupClass> mData){
-        if(myDept_id!=null&&mData.size()>0){
-            for(int i=0;i<mData.size();i++) {
-                //有子部门进入循环
-                if (myDept_id.equals(mData.get(i).dept_parent_id)) {
-                    childGroupsDatasNode.add(new GroupClass(mData.get(i).name, mData.get(i).dept_id, mData.get(i).dept_parent_id));
-//                    groupsDatasNode.add(new GroupClass(mData.get(i).name, mData.get(i).dept_id, mData.get(i).dept_parent_id));
-                }
-                //判断是否有孩子
-                if(childGroupsDatasNode.size()>0){
-                    isHaveChild=true;
-                }else {
-                    isHaveChild=false;
-                }
-                //判断是否已经遍历完
-                if(isHaveChild) {
-                    if (i == mData.size() - 1) {
-                        isOver = true;
-                        groupsDatasNode.clear();
-                        groupsDatasNode.addAll(childGroupsDatasNode);
-                        groupsDatas.addAll(childGroupsDatasNode);
-                        allGroupsDatas.removeAll(childGroupsDatasNode);
-                        childGroupsDatasNode.clear();
-                    }
-                }
-                if(isOver) {
-                    for (int j = 0; j < groupsDatasNode.size(); j++) {
-                        isOver=false;
-                        childrenGroups(groupsDatasNode.get(j).dept_id, allGroupsDatas);
-                    }
+
+
+    List<GroupClass> threechildList= new ArrayList<>();
+    public void threrGroups(List<GroupClass> data ){
+        threechildList.clear();
+        isOver=false;
+
+    for (int i=0;i<allGroupsDatas.size();i++){
+        for (int j=0;j<data.size();j++) {
+            if (data.get(j).dept_id.equals(allGroupsDatas.get(i).dept_parent_id)) {
+                threechildList.add(allGroupsDatas.get(i));
+                childGroupsDatasNode.add(allGroupsDatas.get(i));
+            }
+        }
+        if(i==allGroupsDatas.size()-1){
+            isOver=true;
+            childGroupsDatas.clear();
+        }
+        if(isOver&&threechildList!=null&&threechildList.size()>0) {
+            mHandler.sendEmptyMessage(0);
+        }
+
+}
+
+    }
+
+
+
+    public List<GroupClass> childrenGroups(String myDept_id){
+         List<GroupClass> childList=new ArrayList<>();
+
+        if(myDept_id!=null&&allGroupsDatas.size()>0){
+            for (int i=0;i<allGroupsDatas.size();i++){
+                if(myDept_id.equals(allGroupsDatas.get(i).dept_parent_id)){
+                    childList.add(allGroupsDatas.get(i));
                 }
             }
+
+//            for(int i=0;i<mData.size();i++) {
+//                //有子部门进入循环
+//                if (myDept_id.equals(mData.get(i).dept_parent_id)) {
+//                    childGroupsDatasNode.add(new GroupClass(mData.get(i).name, mData.get(i).dept_id, mData.get(i).dept_parent_id));
+////                    groupsDatasNode.add(new GroupClass(mData.get(i).name, mData.get(i).dept_id, mData.get(i).dept_parent_id));
+//                }
+//                //判断是否有孩子
+//                if(childGroupsDatasNode.size()>0){
+//                    isHaveChild=true;
+//                }else {
+//                    isHaveChild=false;
+//                }
+//                //判断是否已经遍历完
+//                if(isHaveChild) {
+//                    if (i == mData.size() - 1) {
+//                        isOver = true;
+//                        groupsDatasNode.clear();
+//                        groupsDatasNode.addAll(childGroupsDatasNode);
+//                        groupsDatas.addAll(childGroupsDatasNode);
+//                        allGroupsDatas.removeAll(childGroupsDatasNode);
+//                        childGroupsDatasNode.clear();
+//                    }
+//                }
+//                if(isOver) {
+//                    for (int j = 0; j < groupsDatasNode.size(); j++) {
+//                        isOver=false;
+//                        childrenGroups(groupsDatasNode.get(j).dept_id, allGroupsDatas);
+//                    }
+//                }
+//            }
 
 //                if(groupsDatasNode.size()==0){
 //                    isHaveChild=false;
@@ -148,6 +216,7 @@ public class CommuContactFragment extends BaseFragment{
 //                }
 //            }
         }
+        return childList;
     }
     @Override
     protected void initViews(View contentView) {
@@ -183,10 +252,10 @@ public class CommuContactFragment extends BaseFragment{
 
     @Override
     protected void initDatas() {
-
-
     }
 
+
+    //
 
 
 
