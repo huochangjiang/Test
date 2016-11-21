@@ -58,7 +58,11 @@ public class App extends MultiDexApplication{
  */
         if (getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext())) ||
                 "io.rong.push".equals(getCurProcessName(getApplicationContext()))) {
-
+//            try {
+////                RongPushClient.registerGCM(this);
+//            } catch (RongException e) {
+//                e.printStackTrace();
+//            }
             /**
              * IMKit SDK调用第一步 初始化
              */
