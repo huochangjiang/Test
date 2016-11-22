@@ -63,6 +63,7 @@ public class CompleteActivity extends BaseActivity implements View.OnClickListen
 
     private Uri uritempFile;
     private EditText editText;
+    private String taskId;
 
     @Override
     protected int getLayoutId() {
@@ -71,6 +72,10 @@ public class CompleteActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     protected void initViews(Bundle savedInstanceState) {
+        Intent intent=getIntent();
+        if(intent!=null){
+            taskId = intent.getStringExtra("tastid");
+        }
           RelativeLayout rl = (RelativeLayout) findViewById(R.id.id_toolbar).findViewById(R.id.rl);
         rl.setOnClickListener(this);
         Button mButton= (Button) findViewById(R.id.denglu);
@@ -310,7 +315,7 @@ public class CompleteActivity extends BaseActivity implements View.OnClickListen
                 break;
             case R.id.denglu:
                 dataBean.setTask_comment(editText.getText().toString().trim());
-                dataBean.setTask_id("1");
+                dataBean.setTask_id(taskId);
                 dataBean.setPhotos(mPhoneBeans);
          initDatas1(new Gson().toJson(new TiJiaoCanShu(new TiJiaoCanShu.UserBean(App.getContext().getLogo("logo").data.id,"1234345"),
         dataBean)));

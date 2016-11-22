@@ -135,7 +135,8 @@
             android:name="UMENG_CHANNEL"
             android:value="CHENGZI"></meta-data>
 
-        <activity android:name=".CompleteActivity"></activity>
+        <activity android:name=".CompleteActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
     </application>
 
 </manifest>
