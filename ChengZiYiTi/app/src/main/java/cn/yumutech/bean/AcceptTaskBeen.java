@@ -9,9 +9,12 @@ public class AcceptTaskBeen {
      * data : {"task_id":"1"}
      */
 
-    private UserBean user;
-    private DataBean data;
-
+    public UserBean user;
+    public DataBean data;
+    public AcceptTaskBeen(UserBean user,DataBean data){
+        this.user=user;
+        this.data=data;
+    }
     public UserBean getUser() {
         return user;
     }
@@ -36,7 +39,10 @@ public class AcceptTaskBeen {
 
         private String account;
         private String session;
-
+        public UserBean(String account,String session){
+            this.account=account;
+            this.session=session;
+        }
         public String getAccount() {
             return account;
         }
@@ -59,8 +65,10 @@ public class AcceptTaskBeen {
          * task_id : 1
          */
 
-        private String task_id;
-
+        public String task_id;
+        public DataBean(String task_id){
+            this.task_id=task_id;
+        }
         public String getTask_id() {
             return task_id;
         }

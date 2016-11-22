@@ -6,9 +6,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import cn.yumutech.bean.AcceptTask;
+import cn.yumutech.bean.AcceptTaskBeen;
 import cn.yumutech.bean.ShowTaskDetail;
 import cn.yumutech.bean.ShowTaskDetailBeen;
 import cn.yumutech.netUtil.Api;
@@ -24,6 +27,7 @@ public class ShowTaskDetailActivity extends BaseActivity{
     private String task_id;
     private TextView status,date,neirong;
     Subscription subscription;
+    Subscription subscription1;
     private TextView title;
     private RelativeLayout accept;
     private RelativeLayout complete;
@@ -31,6 +35,7 @@ public class ShowTaskDetailActivity extends BaseActivity{
     private ImageView back;
     private View myprog;
     private RelativeLayout all;
+    private ShowTaskDetail mData;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_show_task_detail;
@@ -78,7 +83,50 @@ public class ShowTaskDetailActivity extends BaseActivity{
                 finish();
             }
         });
+        accept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mData!=null&&mData.data!=null&&mData.data.task_id!=null){
+                    initAcceptTask(mData.data.task_id);
+                }
+
+            }
+        });
     }
+    //接受任务方法
+    private void initAcceptTask(String id){
+        if(App.getContext().getLogo("logo")!=null){
+            AcceptTaskBeen been=new AcceptTaskBeen(new AcceptTaskBeen.UserBean(App.getContext().getLogo("logo").data.id,""),
+                    new AcceptTaskBeen.DataBean(id));
+            initAcceptTask1(new Gson().toJson(been));
+        }
+    }
+    private void initAcceptTask1(String canshu){
+        subscription1 = Api.getMangoApi1().getAcceptTask(canshu)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer1);
+    }
+    Observer<AcceptTask> observer1=new Observer<AcceptTask>() {
+        @Override
+        public void onCompleted() {
+            unsubscribe(subscription);
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            e.printStackTrace();
+        }
+
+        @Override
+        public void onNext(AcceptTask acceptTask) {
+            if(acceptTask.status.code.equals("0")&&acceptTask.data!=null){
+                Toast.makeText(ShowTaskDetailActivity.this,"您已接受任务",Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        }
+    };
+
     //获取任务详情信息
     private void initData1(String canshu) {
         subscription = Api.getMangoApi1().getShowTaskDetail(canshu)
@@ -89,12 +137,12 @@ public class ShowTaskDetailActivity extends BaseActivity{
     Observer<ShowTaskDetail> observer=new Observer<ShowTaskDetail>() {
         @Override
         public void onCompleted() {
-
+            unsubscribe(subscription);
         }
 
         @Override
         public void onError(Throwable e) {
-
+            e.printStackTrace();
         }
 
         @Override
@@ -102,6 +150,7 @@ public class ShowTaskDetailActivity extends BaseActivity{
             String data=new Gson().toJson(showTaskDetail);
             Log.e("getShowTaskDetail",data);
             if(showTaskDetail.status.code.equals("0")&&showTaskDetail!=null){
+                mData=showTaskDetail;
                 if(showTaskDetail.data.task_status_name.equals("待接受")){
                     accept.setVisibility(View.VISIBLE);
                     complete.setVisibility(View.GONE);
@@ -128,6 +177,10 @@ public class ShowTaskDetailActivity extends BaseActivity{
       status.setText(data.data.task_status_name);
       date.setText(data.data.task_end_date);
       neirong.setText(data.data.task_content);
-
   }
+    protected void unsubscribe(Subscription subscription) {
+        if (subscription != null && !subscription.isUnsubscribed()) {
+            subscription.unsubscribe();
+        }
+    }
 }
