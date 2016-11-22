@@ -160,4 +160,16 @@ public class MyFaBuDeFragment extends BaseFragment implements PullToRefreshBase.
             initDatas1(new Gson().toJson(been));
         }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        isShangla=false;
+        page=0;
+        if(App.getContext().getLogo("logo")!=null){
+            ShowMyPublishedTaskBeen been=new ShowMyPublishedTaskBeen(new ShowMyPublishedTaskBeen.UserBean(App.getContext().getLogo("logo").data.id,
+                    ""),new ShowMyPublishedTaskBeen.DataBean(page+"",pageSize+""));
+            initDatas1(new Gson().toJson(been));
+        }
+    }
 }

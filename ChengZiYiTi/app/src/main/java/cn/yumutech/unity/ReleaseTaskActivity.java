@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +31,7 @@ public class ReleaseTaskActivity extends BaseActivity implements View.OnClickLis
     private RelativeLayout rl_end_time;
     private RelativeLayout rl_send;
     private TextView who;
+    private ImageView back;
     Subscription subscription;
     @Override
     protected int getLayoutId() {
@@ -44,6 +46,7 @@ public class ReleaseTaskActivity extends BaseActivity implements View.OnClickLis
         rl_end_time= (RelativeLayout) findViewById(R.id.rl_end_time);
         rl_send= (RelativeLayout) findViewById(R.id.rl_send);
         who= (TextView) findViewById(R.id.who);
+        back= (ImageView) findViewById(R.id.back);
         rl_who.setOnClickListener(this);
         rl_end_time.setOnClickListener(this);
         rl_send.setOnClickListener(this);
@@ -74,6 +77,9 @@ public class ReleaseTaskActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.rl_send:
                 mHandler.sendEmptyMessage(1);
+                break;
+            case R.id.back:
+                finish();
                 break;
         }
     }

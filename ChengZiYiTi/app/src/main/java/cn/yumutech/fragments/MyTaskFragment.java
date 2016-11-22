@@ -163,4 +163,15 @@ public class MyTaskFragment extends BaseFragment implements PullToRefreshBase.On
             initDatas1(new Gson().toJson(showMyTaskBeen));
         }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        isShangla=false;
+        page=0;
+        if(App.getContext().getLogo("logo")!=null){
+            ShowMyTaskBeen showMyTaskBeen=new ShowMyTaskBeen(new ShowMyTaskBeen.UserBean(App.getContext().getLogo("logo").data.id,"1234567890"),new ShowMyTaskBeen.DataBean(page+"",pageSize+""));
+            initDatas1(new Gson().toJson(showMyTaskBeen));
+        }
+    }
 }

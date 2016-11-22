@@ -74,7 +74,7 @@ public class TaskToWhoActivity extends BaseActivity{
             super.handleMessage(msg);
             switch (msg.what){
                 case 1:
-                    initData1(mData.get(i).dept_id);
+                    initData1(mData.get(i-1).dept_id);
                     break;
             }
         }
@@ -118,9 +118,9 @@ public class TaskToWhoActivity extends BaseActivity{
         public void onNext(UserAboutPerson channels) {
             if(channels.status.code.equals("0")){
                 chengyuanData.addAll(channels.data);
-                i++;
                 if(i<postion){
                     isOver=false;
+                    i++;
                     mHandler.sendEmptyMessage(1);
                 }else if(i==postion){
                     isOver=true;
