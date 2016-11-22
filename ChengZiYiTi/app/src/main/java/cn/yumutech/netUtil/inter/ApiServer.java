@@ -4,6 +4,7 @@ import cn.yumutech.bean.AcceptTask;
 import cn.yumutech.bean.AddErrorPinglun;
 import cn.yumutech.bean.AddPingLun;
 import cn.yumutech.bean.ChaXunQunMenmber;
+import cn.yumutech.bean.CompleteBean;
 import cn.yumutech.bean.CreateQunZu;
 import cn.yumutech.bean.DepartListNew;
 import cn.yumutech.bean.ExchangeCommenList;
@@ -154,7 +155,9 @@ Observable<WorkDetails> getWorkDetais(@Query("req") String policy);
     //查询群成员
     @POST("QueryUserList")
     Observable<ChaXunQunMenmber> getChaXunMember(@Query("req") String item);
-
+//提交完成的任務
+    @POST("FinishTask")
+    Observable<CompleteBean> getComplete(@Query("req") String item);
 
 
     //显示任务详情
