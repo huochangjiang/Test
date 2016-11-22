@@ -11,9 +11,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 import cn.yumutech.Adapter.TaskToWhoAdapter;
 import cn.yumutech.bean.GroupClass;
@@ -141,11 +139,21 @@ public class TaskToWhoActivity extends BaseActivity{
     }
 
     //去掉重复的数据
-    public static List<UserAboutPerson.DataBean> removeDuplicate(List<UserAboutPerson.DataBean> list) {
-        Set set = new LinkedHashSet<UserAboutPerson.DataBean>();
-        set.addAll(list);
-        list.clear();
-        list.addAll(set);
-        return list;
+    private static List<UserAboutPerson.DataBean> removeDuplicate(List<UserAboutPerson.DataBean> data){
+        for (int i=0;i<data.size();i++){
+            for(int j=data.size()-1;j>i;j--){
+                if(data.get(j).id.equals(data.get(i).id)){
+                    data.remove(j);
+                }
+            }
+        }
+        return data;
     }
+//    public static List<UserAboutPerson.DataBean> removeDuplicate(List<UserAboutPerson.DataBean> list) {
+//        Set set = new LinkedHashSet<UserAboutPerson.DataBean>();
+//        set.addAll(list);
+//        list.clear();
+//        list.addAll(set);
+//        return list;
+//    }
 }

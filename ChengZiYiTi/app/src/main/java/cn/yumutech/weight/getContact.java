@@ -60,8 +60,8 @@ public class getContact {
     }
     public void getData() {
         if (App.getContext().getLogo("logo") != null) {
-//            mDept_id = App.getContext().getLogo("logo").data.dept_id;
-            mDept_id ="3";
+            mDept_id = App.getContext().getLogo("logo").data.dept_id;
+//            mDept_id ="3";
             user_id = App.getContext().getLogo("logo").data.id;
             nickname=App.getContext().getLogo("logo").data.nickname;
         }
