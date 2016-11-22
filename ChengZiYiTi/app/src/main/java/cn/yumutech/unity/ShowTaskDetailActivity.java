@@ -1,8 +1,10 @@
 package cn.yumutech.unity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -55,6 +57,15 @@ public class ShowTaskDetailActivity extends BaseActivity{
         myprog=findViewById(R.id.myprog);
         all= (RelativeLayout) findViewById(R.id.all);
         myprog.setVisibility(View.VISIBLE);
+       Button mbutton= (Button) findViewById(R.id.submit);
+        mbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(ShowTaskDetailActivity.this,CompleteActivity.class);
+                intent.putExtra("tastid",mData.data.task_id);
+                startActivity(intent);
+            }
+        });
         all.setVisibility(View.GONE);
     }
 
