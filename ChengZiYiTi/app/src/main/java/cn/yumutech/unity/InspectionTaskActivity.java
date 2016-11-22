@@ -1,5 +1,6 @@
 package cn.yumutech.unity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -20,7 +21,7 @@ import cn.yumutech.fragments.MyTaskFragment;
  */
 public class InspectionTaskActivity extends BaseActivity implements View.OnClickListener{
     private ViewPager viewpager;
-
+    private ImageView back,add;
     private TextView mytask,release_task;
     private List<Fragment> fragmentlist=new ArrayList<Fragment>();
     private List<TextView> tvs = new ArrayList<>();
@@ -38,7 +39,10 @@ public class InspectionTaskActivity extends BaseActivity implements View.OnClick
         mytask.setOnClickListener(this);
         release_task.setOnClickListener(this);
         hengxian_mytask= (ImageView) findViewById(R.id.hengxian_mytask);
-        hengxian_release= (ImageView) findViewById(R.id.hengxian_mytask);
+        hengxian_release= (ImageView) findViewById(R.id.hengxian_release);
+        back= (ImageView) findViewById(R.id.back);
+        add= (ImageView) findViewById(R.id.add);
+        add.setOnClickListener(this);
         initFragment();
     }
     private void initFragment(){
@@ -68,11 +72,24 @@ public class InspectionTaskActivity extends BaseActivity implements View.OnClick
             @Override
             public void onPageSelected(int position) {
                 chanColor(position);
+                if(position==0){
+                    hengxian_mytask.setVisibility(View.VISIBLE);
+                    hengxian_release.setVisibility(View.GONE);
+                }else if(position==1){
+                    hengxian_mytask.setVisibility(View.GONE);
+                    hengxian_release.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
 
+            }
+        });
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }
@@ -99,6 +116,11 @@ public class InspectionTaskActivity extends BaseActivity implements View.OnClick
                 viewpager.setCurrentItem(1);
                 hengxian_mytask.setVisibility(View.GONE);
                 hengxian_release.setVisibility(View.VISIBLE);
+                break;
+            case R.id.add:
+                Intent intent=new Intent();
+                intent.setClass(InspectionTaskActivity.this,ReleaseTaskActivity.class);
+                startActivity(intent);
                 break;
         }
     }

@@ -9,9 +9,12 @@ public class PublishTaskBeen {
      * data : {"task_title":"任务 1","task_content":"任务内容 1","task_end_date":"2016-11-16","director":"2","supporter":"3"}
      */
 
-    private UserBean user;
-    private DataBean data;
-
+    public UserBean user;
+    public DataBean data;
+    public PublishTaskBeen(UserBean user,DataBean data){
+        this.user=user;
+        this.data=data;
+    }
     public UserBean getUser() {
         return user;
     }
@@ -34,9 +37,12 @@ public class PublishTaskBeen {
          * session : 1234567890
          */
 
-        private String account;
-        private String session;
-
+        public String account;
+        public String session;
+        public UserBean(String account,String session){
+            this.account=account;
+            this.session=session;
+        }
         public String getAccount() {
             return account;
         }
@@ -68,7 +74,13 @@ public class PublishTaskBeen {
         private String task_end_date;
         private String director;
         private String supporter;
-
+        public DataBean(String task_title,String task_content,String task_end_date,String director,String supporter){
+            this.task_title=task_title;
+            this.task_content=task_content;
+            this.task_end_date=task_end_date;
+            this.director=director;
+            this.supporter=supporter;
+        }
         public String getTask_title() {
             return task_title;
         }

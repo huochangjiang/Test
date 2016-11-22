@@ -138,6 +138,7 @@ public class App extends MultiDexApplication{
             return user;
         }
     }
+
     //返回用户部门信息
     //返回用户信息
     public DepartListNew getContactGroup(String key){
@@ -165,6 +166,10 @@ public class App extends MultiDexApplication{
         String readJson =aCache.getAsString(key);
         return readJson;
     }
+    /**
+     * 返回用户部门信息
+     */
+
     /**
      * 清除登陆信息
      */

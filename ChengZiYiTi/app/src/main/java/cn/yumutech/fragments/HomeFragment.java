@@ -34,6 +34,7 @@ import cn.yumutech.weight.ImagePagerAdapterApply;
 import cn.yumutech.weight.MyGridView;
 import cn.yumutech.weight.StringUtils1;
 import cn.yumutech.weight.ViewFlow;
+import cn.yumutech.weight.getContact;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -81,10 +82,8 @@ public class HomeFragment extends BaseFragment {
         baibaos.add(new BaiBao("友情链接", R.drawable.touxiao));
         baibaos.add(new BaiBao("督察督办", R.drawable.touxiao));
         baibaos.add(new BaiBao("互动交流", R.drawable.touxiao));
-
         BaiBaoAdatper baiBaoAdatper=new BaiBaoAdatper(getActivity(), (ArrayList<BaiBao>) baibaos);
         myGridView.setAdapter(baiBaoAdatper);
-
         myGridView.setFocusable(false);
         mViewFlow.setLiserner(new ViewFlow.postion() {
             @Override
@@ -106,6 +105,8 @@ public class HomeFragment extends BaseFragment {
         });
         net_connect = contentView.findViewById(R.id.netconnect);
         initLocal();
+        //正常登录
+        getContact.getInstance().getData();
     }
     //加载缓存
     private void initLocal() {

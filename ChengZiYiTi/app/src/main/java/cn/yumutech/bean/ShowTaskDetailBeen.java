@@ -9,9 +9,12 @@ public class ShowTaskDetailBeen {
      * data : {"task_id":"2"}
      */
 
-    private UserBean user;
-    private DataBean data;
-
+    public UserBean user;
+    public DataBean data;
+    public ShowTaskDetailBeen(UserBean user,DataBean data){
+        this.user=user;
+        this.data=data;
+    }
     public UserBean getUser() {
         return user;
     }
@@ -34,9 +37,12 @@ public class ShowTaskDetailBeen {
          * session : 1234567890
          */
 
-        private String account;
-        private String session;
-
+        public String account;
+        public String session;
+        public UserBean(String account,String session){
+            this.account=account;
+            this.session=session;
+        }
         public String getAccount() {
             return account;
         }
@@ -60,7 +66,9 @@ public class ShowTaskDetailBeen {
          */
 
         private String task_id;
-
+        public DataBean(String task_id){
+            this.task_id=task_id;
+        }
         public String getTask_id() {
             return task_id;
         }

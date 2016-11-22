@@ -7,7 +7,6 @@ import cn.yumutech.bean.ChaXunQunMenmber;
 import cn.yumutech.bean.CreateQunZu;
 import cn.yumutech.bean.DepartListNew;
 import cn.yumutech.bean.ExchangeCommenList;
-import cn.yumutech.bean.FaBuRenWu;
 import cn.yumutech.bean.FinishTask;
 import cn.yumutech.bean.GetTaShanPingLunLieBIao;
 import cn.yumutech.bean.GroupDetais;
@@ -155,9 +154,7 @@ Observable<WorkDetails> getWorkDetais(@Query("req") String policy);
     //查询群成员
     @POST("QueryUserList")
     Observable<ChaXunQunMenmber> getChaXunMember(@Query("req") String item);
-    //发布任务
-    @POST("PublishTask")
-    Observable<FaBuRenWu> getFaBuRenWu();
+
 
 
     //显示任务详情

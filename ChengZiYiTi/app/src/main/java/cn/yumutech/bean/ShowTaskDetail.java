@@ -1,7 +1,5 @@
 package cn.yumutech.bean;
 
-import java.util.List;
-
 /**
  * Created by Administrator on 2016/11/16.
  */
@@ -12,7 +10,7 @@ public class ShowTaskDetail {
      */
 
     private StatusBean status;
-    private List<DataBean> data;
+    private DataBean data;
 
     public StatusBean getStatus() {
         return status;
@@ -22,11 +20,11 @@ public class ShowTaskDetail {
         this.status = status;
     }
 
-    public List<DataBean> getData() {
+    public DataBean getData() {
         return data;
     }
 
-    public void setData(List<DataBean> data) {
+    public void setData(DataBean data) {
         this.data = data;
     }
 

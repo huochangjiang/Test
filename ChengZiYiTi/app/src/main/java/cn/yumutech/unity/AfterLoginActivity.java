@@ -11,6 +11,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import cn.yumutech.weight.DataCleanManager;
 import cn.yumutech.weight.FileUtils1;
+import cn.yumutech.weight.SaveData;
 
 /**
  * Created by Administrator on 2016/11/14.
@@ -80,6 +81,7 @@ public class AfterLoginActivity extends BaseActivity implements View.OnClickList
             @Override
             public void onClick(View v) {
                 app.cleanLogoInformation();
+                SaveData.getInstance().taskToChildGroups.clear();
 //                if(SaveData.getInstance().chindDatas!=null){
 //                    SaveData.getInstance().chindDatas.clear();
 //                }

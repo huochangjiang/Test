@@ -56,6 +56,10 @@
         <activity android:name=".HuDongJIaoLIuActivity" />
         <activity android:name=".MailListActivity" />
         <activity android:name=".InspectionTaskActivity"/>
+        <activity android:name=".ReleaseTaskActivity"/>
+        <activity android:name=".TaskToWhoActivity"/>
+        <activity android:name=".TaskEndDateActivity"/>
+        <activity android:name=".ShowTaskDetailActivity"/>
         <!-- 会话页面 -->
         <activity
             android:name=".ConversationActivity"
