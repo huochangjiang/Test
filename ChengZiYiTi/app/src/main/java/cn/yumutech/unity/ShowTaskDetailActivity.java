@@ -32,6 +32,7 @@ public class ShowTaskDetailActivity extends BaseActivity{
     Subscription subscription1;
     private TextView title;
     private RelativeLayout accept;
+    private Button bt_accept;
     private RelativeLayout complete;
     private RelativeLayout wanchen;
     private ImageView back;
@@ -53,19 +54,13 @@ public class ShowTaskDetailActivity extends BaseActivity{
         accept= (RelativeLayout) findViewById(R.id.accept);
         complete= (RelativeLayout) findViewById(R.id.complete);
         wanchen= (RelativeLayout) findViewById(R.id.wanchen);
+        bt_accept= (Button) findViewById(R.id.bt_accept);
         back= (ImageView) findViewById(R.id.back);
         myprog=findViewById(R.id.myprog);
         all= (RelativeLayout) findViewById(R.id.all);
         myprog.setVisibility(View.VISIBLE);
-       Button mbutton= (Button) findViewById(R.id.submit);
-        mbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(ShowTaskDetailActivity.this,CompleteActivity.class);
-                intent.putExtra("tastid",mData.data.task_id);
-                startActivity(intent);
-            }
-        });
+//       Button mbutton= (Button) findViewById(R.id.submit);
+
         all.setVisibility(View.GONE);
     }
 
@@ -94,13 +89,20 @@ public class ShowTaskDetailActivity extends BaseActivity{
                 finish();
             }
         });
-        accept.setOnClickListener(new View.OnClickListener() {
+        bt_accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(mData!=null&&mData.data!=null&&mData.data.task_id!=null){
                     initAcceptTask(mData.data.task_id);
                 }
-
+            }
+        });
+        complete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(ShowTaskDetailActivity.this,CompleteActivity.class);
+                intent.putExtra("tastid",mData.data.task_id);
+                startActivity(intent);
             }
         });
     }

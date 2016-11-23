@@ -2,10 +2,14 @@ package cn.yumutech.unity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.google.gson.Gson;
 
@@ -38,6 +42,9 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
     private boolean isMoreLoading = false;
     private boolean isRefresh=false;
     private View myprog;
+    private LinearLayout ll_feilei;
+    private Button bt1,bt2,bt3,bt4,bt5,bt6;
+    private String fenlei="";
     //是否还是有数据
     private boolean isHave;
     protected void unsubscribe( Subscription subscription) {
@@ -55,6 +62,13 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
         app= (App) PolicyFileActivity.this.getApplicationContext();
         recyclerView = (RecyclerView) findViewById(R.id.recyleview);
         pullToRefresh = (SwipeRefreshLayout) findViewById(R.id.pull_to_refresh);
+        ll_feilei= (LinearLayout) findViewById(R.id.ll_feilei);
+        bt1= (Button) findViewById(R.id.bt1);
+        bt2= (Button) findViewById(R.id.bt2);
+        bt3= (Button) findViewById(R.id.bt3);
+        bt4= (Button) findViewById(R.id.bt4);
+        bt5= (Button) findViewById(R.id.bt5);
+        bt6= (Button) findViewById(R.id.bt6);
         myprog=findViewById(R.id.myprog);
         mAdapter = new PolicyAdapter(this,mdatas);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
@@ -80,6 +94,7 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
             if(!app.isNetworkConnected(this)){
                 net_connect.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.GONE);
+                ll_feilei.setVisibility(View.GONE);
                 myprog.setVisibility(View.GONE);
             }
         }
@@ -105,13 +120,14 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
         mAdapter.dataChange(mdatas,isHave);
         myprog.setVisibility(View.GONE);
         net_connect.setVisibility(View.GONE);
+        ll_feilei.setVisibility(View.VISIBLE);
        recyclerView.setVisibility(View.VISIBLE);
     }
     @Override
     protected void initData() {
         if(App.getContext().getLogo("logo")!=null){
             RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.nickname,App.getContext().getLogo("logo").data.id),
-                    new RequestCanShu.DataBean("中央",mPage+"",mPageSize+""));
+                    new RequestCanShu.DataBean(fenlei,mPage+"",mPageSize+""));
             initDatas1(new Gson().toJson(canshus));
         }else {
            App.getContext().noLogin(PolicyFileActivity.this);
@@ -120,6 +136,48 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
     }
     @Override
     protected void initListeners() {
+        bt1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fenlei=bt1.getText().toString().trim();
+                mHandler.sendEmptyMessage(1);
+            }
+        });
+        bt2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fenlei=bt2.getText().toString().trim();
+                mHandler.sendEmptyMessage(1);
+            }
+        });
+        bt3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fenlei=bt3.getText().toString().trim();
+                mHandler.sendEmptyMessage(1);
+            }
+        });
+        bt4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fenlei=bt4.getText().toString().trim();
+                mHandler.sendEmptyMessage(1);
+            }
+        });
+        bt5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fenlei=bt5.getText().toString().trim();
+                mHandler.sendEmptyMessage(1);
+            }
+        });
+        bt6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fenlei=bt6.getText().toString().trim();
+                mHandler.sendEmptyMessage(1);
+            }
+        });
         mAdapter.setLisener(new PolicyAdapter.OnitemClick() {
             @Override
             public void onitemClice(ZhengCeFile.DataBean data) {
@@ -134,6 +192,7 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
                 if(app.isNetworkConnected(PolicyFileActivity.this)){
                     net_connect.setVisibility(View.GONE);
                     myprog.setVisibility(View.VISIBLE);
+                    ll_feilei.setVisibility(View.VISIBLE);
                     initData();
                 }
             }
@@ -150,7 +209,7 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
                         mPage=mdatas.size();
                         if(App.getContext().getLogo("logo")!=null){
                             RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.nickname,App.getContext().getLogo("logo").data.id),
-                                    new RequestCanShu.DataBean("中央",mPage+"",mPageSize+""));
+                                    new RequestCanShu.DataBean(fenlei,mPage+"",mPageSize+""));
                             initDatas1(new Gson().toJson(canshus));
                         }else {
                             App.getContext().noLogin(PolicyFileActivity.this);
@@ -200,18 +259,29 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
         }
     };
 
+    //上拉刷新
     @Override
     public void onRefresh() {
-        mPage=0;
-        isRefresh=false;
-        if(App.getContext().getLogo("logo")!=null){
-            RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.nickname,App.getContext().getLogo("logo").data.id),
-                    new RequestCanShu.DataBean("中央",mPage+"",mPageSize+""));
-            initDatas1(new Gson().toJson(canshus));
-        }else {
-            App.getContext().noLogin(PolicyFileActivity.this);
-        }
-
+        fenlei="";
+        mHandler.sendEmptyMessage(1);
     }
-
+    Handler mHandler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case 1:
+                    mPage=0;
+                    isRefresh=false;
+                    if(App.getContext().getLogo("logo")!=null){
+                        RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.nickname,App.getContext().getLogo("logo").data.id),
+                                new RequestCanShu.DataBean(fenlei,mPage+"",mPageSize+""));
+                        initDatas1(new Gson().toJson(canshus));
+                    }else {
+                        App.getContext().noLogin(PolicyFileActivity.this);
+                    }
+                    break;
+            }
+        }
+    };
 }

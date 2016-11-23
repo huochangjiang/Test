@@ -2,10 +2,14 @@ package cn.yumutech.unity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.google.gson.Gson;
 
@@ -21,7 +25,7 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLayout.OnRefreshListener{
+public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLayout.OnRefreshListener,View.OnClickListener{
 
     private RecyclerView recyclerView;
     private SwipeRefreshLayout pullToRefresh;
@@ -40,6 +44,9 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
     //是否还有数据
     private boolean isHave;
     private View myprog;
+    private String fenlei="";
+    private LinearLayout ll_feilei;
+    private Button bt1,bt2,bt3;
     protected void unsubscribe( Subscription subscription) {
         if (subscription != null && !subscription.isUnsubscribed()) {
             subscription.unsubscribe();
@@ -54,6 +61,13 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
     protected void initViews(Bundle savedInstanceState) {
         app= (App) WorkDongTaiActivity.this.getApplicationContext();
         recyclerView = (RecyclerView) findViewById(R.id.recyleview);
+        ll_feilei= (LinearLayout) findViewById(R.id.ll_feilei);
+        bt1= (Button) findViewById(R.id.bt1);
+        bt2= (Button) findViewById(R.id.bt2);
+        bt3= (Button) findViewById(R.id.bt3);
+        bt1.setOnClickListener(this);
+        bt2.setOnClickListener(this);
+        bt3.setOnClickListener(this);
         pullToRefresh = (SwipeRefreshLayout) findViewById(R.id.pull_to_refresh);
         mAdapter = new WorkDongTaiAdapter(this,leaderActivitys);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
@@ -81,6 +95,7 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
                 net_connect.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.GONE);
                 myprog.setVisibility(View.GONE);
+                ll_feilei.setVisibility(View.GONE);
             }
         }
         if (app.isNetworkConnected(WorkDongTaiActivity.this)) {
@@ -91,7 +106,7 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
     protected void initData() {
         if(App.getContext().getLogo("logo")!=null) {
             RequestCanShu canshus = new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.nickname, App.getContext().getLogo("logo").data.id),
-                    new RequestCanShu.DataBean("", "0", mPageSize + ""));
+                    new RequestCanShu.DataBean(fenlei, "0", mPageSize + ""));
             initDatas1(new Gson().toJson(canshus));
         }else {
             App.getContext().noLogin(WorkDongTaiActivity.this);
@@ -129,7 +144,7 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
                         mPage=leaderActivitys.size();
                         if(App.getContext().getLogo("logo")!=null) {
                             RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.nickname,App.getContext().getLogo("logo").data.id),
-                                    new RequestCanShu.DataBean("",mPage+"",mPageSize+""));
+                                    new RequestCanShu.DataBean(fenlei,mPage+"",mPageSize+""));
                             initDatas1(new Gson().toJson(canshus));
                         }else {
                            App.getContext().noLogin(WorkDongTaiActivity.this);
@@ -150,6 +165,7 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
                 if(app.isNetworkConnected(WorkDongTaiActivity.this)){
                     net_connect.setVisibility(View.GONE);
                     myprog.setVisibility(View.VISIBLE);
+                    ll_feilei.setVisibility(View.VISIBLE);
                     initData();
                 }
             }
@@ -208,15 +224,44 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
     }
     @Override
     public void onRefresh() {
-        mPage=0;
-        isRefresh=false;
-        if(App.getContext().getLogo("logo")!=null){
-            RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.nickname,App.getContext().getLogo("logo").data.id),
-                    new RequestCanShu.DataBean("","0",mPageSize+""));
-            initDatas1(new Gson().toJson(canshus));
-        }else {
-           App.getContext().noLogin(WorkDongTaiActivity.this);
-        }
-
+        fenlei="";
+        mHandler.sendEmptyMessage(1);
     }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.bt1:
+                fenlei=bt1.getText().toString().trim();
+                mHandler.sendEmptyMessage(1);
+                break;
+            case R.id.bt2:
+                fenlei=bt2.getText().toString().trim();
+                mHandler.sendEmptyMessage(1);
+                break;
+            case R.id.bt3:
+                fenlei=bt3.getText().toString().trim();
+                mHandler.sendEmptyMessage(1);
+                break;
+        }
+    }
+    Handler mHandler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case 1:
+                    mPage=0;
+                    isRefresh=false;
+                    if(App.getContext().getLogo("logo")!=null){
+                        RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.nickname,App.getContext().getLogo("logo").data.id),
+                                new RequestCanShu.DataBean(fenlei,"0",mPageSize+""));
+                        initDatas1(new Gson().toJson(canshus));
+                    }else {
+                        App.getContext().noLogin(WorkDongTaiActivity.this);
+                    }
+                    break;
+            }
+        }
+    };
 }

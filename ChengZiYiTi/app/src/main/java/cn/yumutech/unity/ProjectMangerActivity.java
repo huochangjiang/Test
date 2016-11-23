@@ -2,10 +2,14 @@ package cn.yumutech.unity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.google.gson.Gson;
 
@@ -21,7 +25,7 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class ProjectMangerActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener{
+public class ProjectMangerActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener,View.OnClickListener{
     private RecyclerView recyclerView;
     private SwipeRefreshLayout pullToRefresh;
     private ProjectMangerAdpater mAdapter;
@@ -38,6 +42,9 @@ public class ProjectMangerActivity extends BaseActivity implements SwipeRefreshL
     private int mPageSize=10;
     private boolean isHave;
     private View myprog;
+    private String fenlei="";
+    private LinearLayout ll_feilei;
+    private Button bt1,bt2,bt3;
     protected void unsubscribe( Subscription subscription) {
         if (subscription != null && !subscription.isUnsubscribed()) {
             subscription.unsubscribe();
@@ -54,6 +61,13 @@ public class ProjectMangerActivity extends BaseActivity implements SwipeRefreshL
         recyclerView = (RecyclerView) findViewById(R.id.recyleview);
         pullToRefresh = (SwipeRefreshLayout) findViewById(R.id.pull_to_refresh);
         mAdapter = new ProjectMangerAdpater(this,leaderActivitys);
+        ll_feilei= (LinearLayout) findViewById(R.id.ll_feilei);
+        bt1= (Button) findViewById(R.id.bt1);
+        bt2= (Button) findViewById(R.id.bt2);
+        bt3= (Button) findViewById(R.id.bt3);
+        bt1.setOnClickListener(this);
+        bt2.setOnClickListener(this);
+        bt3.setOnClickListener(this);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(mAdapter);
@@ -77,6 +91,7 @@ public class ProjectMangerActivity extends BaseActivity implements SwipeRefreshL
             if(!app.isNetworkConnected(this)){
                 myprog.setVisibility(View.GONE);
                 net_connect.setVisibility(View.VISIBLE);
+                ll_feilei.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.GONE);
             }
         }
@@ -102,13 +117,14 @@ public class ProjectMangerActivity extends BaseActivity implements SwipeRefreshL
         myprog.setVisibility(View.GONE);
         net_connect.setVisibility(View.GONE);
         recyclerView.setVisibility(View.VISIBLE);
+        ll_feilei.setVisibility(View.VISIBLE);
         mAdapter.dataChange(leaderActivitys,isHave);
     }
     @Override
     protected void initData() {
         if(App.getContext().getLogo("logo")!=null){
             RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.nickname,App.getContext().getLogo("logo").data.id),
-                    new RequestCanShu.DataBean("资阳",mPage+"",mPageSize+""));
+                    new RequestCanShu.DataBean(fenlei,mPage+"",mPageSize+""));
             initDatas1(new Gson().toJson(canshus));
         }else {
             App.getContext().noLogin(ProjectMangerActivity.this);
@@ -146,7 +162,7 @@ public class ProjectMangerActivity extends BaseActivity implements SwipeRefreshL
                         mPage=leaderActivitys.size();
                         if(App.getContext().getLogo("logo")!=null){
                             RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.nickname,App.getContext().getLogo("logo").data.id),
-                                    new RequestCanShu.DataBean("省级",mPage+"",mPageSize+""));
+                                    new RequestCanShu.DataBean(fenlei,mPage+"",mPageSize+""));
                             initDatas1(new Gson().toJson(canshus));
                         }else {
                             App.getContext().noLogin(ProjectMangerActivity.this);
@@ -167,6 +183,7 @@ public class ProjectMangerActivity extends BaseActivity implements SwipeRefreshL
                 if(app.isNetworkConnected(ProjectMangerActivity.this)){
                     net_connect.setVisibility(View.GONE);
                     recyclerView.setVisibility(View.GONE);
+                    ll_feilei.setVisibility(View.VISIBLE);
                     myprog.setVisibility(View.VISIBLE);
                     initData();
                 }
@@ -202,16 +219,45 @@ public class ProjectMangerActivity extends BaseActivity implements SwipeRefreshL
 
     @Override
     public void onRefresh() {
-        isRefresh=false;
-        mPage=0;
-        if(App.getContext().getLogo("logo")!=null){
-            RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean("unity","1234567890"),
-                    new RequestCanShu.DataBean("资阳",mPage+"",mPageSize+""));
-            initDatas1(new Gson().toJson(canshus));
-        }else {
-            App.getContext().noLogin(ProjectMangerActivity.this);
-        }
-
-
+        fenlei="";
+        mHandler.sendEmptyMessage(1);
     }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.bt1:
+                fenlei=bt1.getText().toString().trim();
+                mHandler.sendEmptyMessage(1);
+                break;
+            case R.id.bt2:
+                fenlei=bt2.getText().toString().trim();
+                mHandler.sendEmptyMessage(1);
+                break;
+            case R.id.bt3:
+                fenlei=bt3.getText().toString().trim();
+                mHandler.sendEmptyMessage(1);
+                break;
+
+        }
+    }
+    Handler mHandler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case 1:
+                    isRefresh=false;
+                    mPage=0;
+                    if(App.getContext().getLogo("logo")!=null){
+                        RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean("unity","1234567890"),
+                                new RequestCanShu.DataBean(fenlei,mPage+"",mPageSize+""));
+                        initDatas1(new Gson().toJson(canshus));
+                    }else {
+                        App.getContext().noLogin(ProjectMangerActivity.this);
+                    }
+                    break;
+            }
+        }
+    };
 }
