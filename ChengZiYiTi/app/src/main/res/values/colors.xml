@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="transparent">#00000000</color><!-- 透明 -->
+    <color name="semi_transparent">#22ffffff</color><!-- 半透明 -->
+
+    <color name="igray">#ffF2F2F2</color><!-- 用于页面背景 -->
+    <color name="darkblue">#ff7CA0CE</color><!-- actionbar背景 ,即是所有标题栏背景 主题色 -->
+
+    <color name="red">#ffff0000</color><!-- 红色 -->
+    <color name="igray_et">#ff999999</color><!-- 辅助文字-->
+    <color name="Orange">#F5A100</color><!-- 橙色 -->
+    <color name="dark_grey">#D2D2D2</color><!-- 深灰 -->
+    <color name="wxnavpage">#FFE1E8EB</color>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>

@@ -59,6 +59,8 @@
         <activity android:name=".TaskToWhoActivity" />
         <activity android:name=".TaskEndDateActivity" />
         <activity android:name=".ShowTaskDetailActivity" />
+        <activity android:name=".DatePickActivity"
+            android:theme="@style/MyDialogStyleBottom"/>
         <!-- 会话页面 -->
         <activity
             android:name=".ConversationActivity"

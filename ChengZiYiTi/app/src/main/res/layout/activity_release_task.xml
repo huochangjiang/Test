@@ -124,15 +124,55 @@
             android:text="指派给"
             android:padding="10dp"
             android:textColor="@color/black" />
-        <TextView
-            android:id="@+id/who"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:text="张三，赵四，王五"
+        <RelativeLayout
+            android:id="@+id/rl_zhipairen"
+            android:layout_width="wrap_content"
             android:padding="10dp"
-            android:singleLine="true"
-            android:textColor="@color/black"
-            android:layout_toLeftOf="@+id/image_who"/>
+            android:layout_toLeftOf="@+id/image_who"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/zhubanren"
+                android:layout_toLeftOf="@+id/who_zhu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:layout_centerVertical="true"
+                android:textColor="@color/item_title"
+                android:text="主办人:"/>
+        <TextView
+            android:id="@+id/who_zhu"
+            android:layout_alignTop="@+id/zhubanren"
+          android:layout_toLeftOf="@+id/xiebanren"
+            android:layout_marginRight="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="张三"
+            android:textSize="13sp"
+            android:layout_centerVertical="true"
+            android:textColor="@color/item_title"
+            android:singleLine="true" />
+            <TextView
+                android:id="@+id/xiebanren"
+                android:layout_alignTop="@+id/zhubanren"
+               android:layout_toLeftOf="@+id/who_xie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:layout_centerVertical="true"
+                android:textColor="@color/item_title"
+                android:text="协办人:"/>
+            <TextView
+                android:id="@+id/who_xie"
+                android:layout_alignTop="@+id/zhubanren"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="李四"
+                android:textSize="13sp"
+                android:textColor="@color/item_title"
+                android:singleLine="true"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"/>
+        </RelativeLayout>
         <ImageView
             android:id="@+id/image_who"
             android:layout_width="20dp"
@@ -160,6 +200,7 @@
             android:text="截止日期："
             android:padding="10dp"
             android:textColor="@color/black" />
+
         <ImageView
             android:id="@+id/image_end_time"
             android:layout_width="20dp"
@@ -168,6 +209,21 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:src="@drawable/next"/>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:padding="10dp"
+            android:layout_toLeftOf="@+id/image_end_time"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/choose_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="13sp"
+                android:textColor="@color/item_title"
+                android:layout_alignParentRight="true"
+                />
+            </RelativeLayout>
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/rl_send"
