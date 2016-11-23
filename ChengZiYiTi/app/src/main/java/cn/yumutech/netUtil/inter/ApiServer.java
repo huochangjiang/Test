@@ -1,12 +1,14 @@
 package cn.yumutech.netUtil.inter;
 
+import cn.yumutech.bean.AcceptTask;
 import cn.yumutech.bean.AddErrorPinglun;
 import cn.yumutech.bean.AddPingLun;
 import cn.yumutech.bean.ChaXunQunMenmber;
+import cn.yumutech.bean.CompleteBean;
 import cn.yumutech.bean.CreateQunZu;
-import cn.yumutech.bean.DepartList;
+import cn.yumutech.bean.DepartListNew;
 import cn.yumutech.bean.ExchangeCommenList;
-import cn.yumutech.bean.FaBuRenWu;
+import cn.yumutech.bean.FinishTask;
 import cn.yumutech.bean.GetTaShanPingLunLieBIao;
 import cn.yumutech.bean.GroupDetais;
 import cn.yumutech.bean.HuDongItem;
@@ -20,6 +22,7 @@ import cn.yumutech.bean.PrijectDetaisl;
 import cn.yumutech.bean.ProjectManger;
 import cn.yumutech.bean.PublishTask;
 import cn.yumutech.bean.ShowMyPublishedTask;
+import cn.yumutech.bean.ShowMyTask;
 import cn.yumutech.bean.ShowTaskDetail;
 import cn.yumutech.bean.ShuaXinQunZhu;
 import cn.yumutech.bean.TuiChuQun;
@@ -30,7 +33,6 @@ import cn.yumutech.bean.UserToken;
 import cn.yumutech.bean.UserXiangGuanQun;
 import cn.yumutech.bean.WorkDetails;
 import cn.yumutech.bean.WorkListManger;
-import cn.yumutech.bean.XianShiMyFaBuRenWU;
 import cn.yumutech.bean.XianShiRenWuXiangQing;
 import cn.yumutech.bean.YanZhenMessageBean;
 import cn.yumutech.bean.YouQIngLianJie;
@@ -62,6 +64,19 @@ public interface ApiServer {
     //督察督办之显示任务详情
     @POST("ShowTaskDetail")
     Observable<ShowTaskDetail> getShowTaskDetail(@Query("req") String list);
+    //督察督办之显示我的任务
+    @POST("ShowMyTask")
+    Observable<ShowMyTask> getShowMyTask(@Query("req") String list);
+    //督察督办之显示我发布的任务
+    @POST("ShowMyPublishedTask")
+    Observable<ShowMyPublishedTask> getXianShiFaBu(@Query("req") String item);
+    //督察督办之显示接受任务
+    @POST("AcceptTask")
+    Observable<AcceptTask> getAcceptTask(@Query("req") String item);
+    //督察督办之完成任务
+    @POST("FinishTask")
+    Observable<FinishTask> getFinishTask(@Query("req") String item);
+
 
     //影视推荐
     @GET("rest/VideoSourceService/getVideoIndex?u_=1&v_=1&t_=1&p_=2348")
@@ -140,19 +155,17 @@ Observable<WorkDetails> getWorkDetais(@Query("req") String policy);
     //查询群成员
     @POST("QueryUserList")
     Observable<ChaXunQunMenmber> getChaXunMember(@Query("req") String item);
-    //发布任务
-    @POST("PublishTask")
-    Observable<FaBuRenWu> getFaBuRenWu();
-    //显示我发布的任务
-    @POST("ShowMyPublishedTask")
-    Observable<XianShiMyFaBuRenWU> getXianShiFaBu(@Query("req") String item);
+//提交完成的任務
+    @POST("FinishTask")
+    Observable<CompleteBean> getComplete(@Query("req") String item);
+
 
     //显示任务详情
     @POST("ShowTaskDetail")
     Observable<XianShiRenWuXiangQing> getRenWuDetail(@Query("req") String item);
     //获取部门列表数据
     @POST("DeptList")
-    Observable<DepartList> getBumenList(@Query("req") String item);
+    Observable<DepartListNew> getBumenList(@Query("req") String item);
     //获取用户列表
     //查询用户相关的群
     @POST("QueryGroupList")

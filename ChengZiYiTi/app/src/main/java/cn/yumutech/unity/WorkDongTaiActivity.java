@@ -36,7 +36,7 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
     private boolean isMoreLoading = false;
     private boolean isRefresh=false;
     private int mPage=0;
-    private int mPageSize=5;
+    private int mPageSize=10;
     //是否还有数据
     private boolean isHave;
     private View myprog;
@@ -89,9 +89,13 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
     }
     @Override
     protected void initData() {
-        RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean("unity","1234567890"),
-                new RequestCanShu.DataBean("","0",mPageSize+""));
-        initDatas1(new Gson().toJson(canshus));
+        if(App.getContext().getLogo("logo")!=null) {
+            RequestCanShu canshus = new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.nickname, App.getContext().getLogo("logo").data.id),
+                    new RequestCanShu.DataBean("", "0", mPageSize + ""));
+            initDatas1(new Gson().toJson(canshus));
+        }else {
+            App.getContext().noLogin(WorkDongTaiActivity.this);
+        }
     }
 
 
@@ -123,9 +127,14 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
                         isMoreLoading = true;
                         isRefresh=true;
                         mPage=leaderActivitys.size();
-                        RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean("unity","1234567890"),
-                                new RequestCanShu.DataBean("省级",mPage+"",mPageSize+""));
-                        initDatas1(new Gson().toJson(canshus));
+                        if(App.getContext().getLogo("logo")!=null) {
+                            RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.nickname,App.getContext().getLogo("logo").data.id),
+                                    new RequestCanShu.DataBean("",mPage+"",mPageSize+""));
+                            initDatas1(new Gson().toJson(canshus));
+                        }else {
+                           App.getContext().noLogin(WorkDongTaiActivity.this);
+                        }
+
                     }
                 }
             }
@@ -201,8 +210,13 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
     public void onRefresh() {
         mPage=0;
         isRefresh=false;
-        RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean("unity","1234567890"),
-                new RequestCanShu.DataBean("","0",mPageSize+""));
-        initDatas1(new Gson().toJson(canshus));
+        if(App.getContext().getLogo("logo")!=null){
+            RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.nickname,App.getContext().getLogo("logo").data.id),
+                    new RequestCanShu.DataBean("","0",mPageSize+""));
+            initDatas1(new Gson().toJson(canshus));
+        }else {
+           App.getContext().noLogin(WorkDongTaiActivity.this);
+        }
+
     }
 }

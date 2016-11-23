@@ -72,7 +72,9 @@ public class ReplyToCommentAdapter extends BaseAdapter{
         vh.time.setText(mData.get(position).publish_date);
         vh.admin.setText(mData.get(position).publish_user_name);
         vh.unity.setText(mData.get(position).receiver_user_name);
-        if(mData.get(position).receiver_user_name.equals("")||mData.get(position).receiver_user_name==null){
+        if(!mData.get(position).receiver_user_name.equals("")&&mData.get(position).receiver_user_name!=null){
+            vh.reply.setVisibility(View.VISIBLE);
+        }else {
             vh.reply.setVisibility(View.GONE);
         }
         //  vh.commentsnum.setText(data.data.get(i).comment_count);
@@ -83,7 +85,7 @@ public class ReplyToCommentAdapter extends BaseAdapter{
         vh.rl_reply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SaveData.getInstance().receiver_User_ID=mData.get(position).receiver_user_id;
+                SaveData.getInstance().receiver_User_ID=mData.get(position).publish_user_id;
                 EventBus.getDefault().post(new ExchangeCommenList());
 //                vh.shurukuang.setVisibility(View.VISIBLE);
 //                //弹出软键盘

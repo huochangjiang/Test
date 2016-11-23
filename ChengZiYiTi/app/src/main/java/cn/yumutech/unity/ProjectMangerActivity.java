@@ -35,7 +35,7 @@ public class ProjectMangerActivity extends BaseActivity implements SwipeRefreshL
     private boolean isMoreLoading = false;
     private boolean isRefresh=false;
     private int mPage=0;
-    private int mPageSize=5;
+    private int mPageSize=10;
     private boolean isHave;
     private View myprog;
     protected void unsubscribe( Subscription subscription) {
@@ -106,9 +106,14 @@ public class ProjectMangerActivity extends BaseActivity implements SwipeRefreshL
     }
     @Override
     protected void initData() {
-        RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean("unity","1234567890"),
-                new RequestCanShu.DataBean("资阳",mPage+"",mPageSize+""));
-        initDatas1(new Gson().toJson(canshus));
+        if(App.getContext().getLogo("logo")!=null){
+            RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.nickname,App.getContext().getLogo("logo").data.id),
+                    new RequestCanShu.DataBean("资阳",mPage+"",mPageSize+""));
+            initDatas1(new Gson().toJson(canshus));
+        }else {
+            App.getContext().noLogin(ProjectMangerActivity.this);
+        }
+
     }
     private void initDatas1( String canshu){
         subscription = Api.getMangoApi1().getProject(canshu)
@@ -139,9 +144,14 @@ public class ProjectMangerActivity extends BaseActivity implements SwipeRefreshL
                         isMoreLoading = true;
                         isRefresh=true;
                         mPage=leaderActivitys.size();
-                        RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean("unity","1234567890"),
-                                new RequestCanShu.DataBean("省级",mPage+"",mPageSize+""));
-                        initDatas1(new Gson().toJson(canshus));
+                        if(App.getContext().getLogo("logo")!=null){
+                            RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.nickname,App.getContext().getLogo("logo").data.id),
+                                    new RequestCanShu.DataBean("省级",mPage+"",mPageSize+""));
+                            initDatas1(new Gson().toJson(canshus));
+                        }else {
+                            App.getContext().noLogin(ProjectMangerActivity.this);
+                        }
+
                     }
                 }
             }
@@ -194,8 +204,14 @@ public class ProjectMangerActivity extends BaseActivity implements SwipeRefreshL
     public void onRefresh() {
         isRefresh=false;
         mPage=0;
-        RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean("unity","1234567890"),
-                new RequestCanShu.DataBean("资阳",mPage+"",mPageSize+""));
-        initDatas1(new Gson().toJson(canshus));
+        if(App.getContext().getLogo("logo")!=null){
+            RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean("unity","1234567890"),
+                    new RequestCanShu.DataBean("资阳",mPage+"",mPageSize+""));
+            initDatas1(new Gson().toJson(canshus));
+        }else {
+            App.getContext().noLogin(ProjectMangerActivity.this);
+        }
+
+
     }
 }

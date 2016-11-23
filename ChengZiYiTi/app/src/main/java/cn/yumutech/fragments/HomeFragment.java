@@ -24,6 +24,7 @@ import cn.yumutech.unity.App;
 import cn.yumutech.unity.BaseFragment;
 import cn.yumutech.unity.CommunicationActivity;
 import cn.yumutech.unity.FriendsUrlActivity;
+import cn.yumutech.unity.InspectionTaskActivity;
 import cn.yumutech.unity.LeaderActivitysActivity;
 import cn.yumutech.unity.PolicyFileActivity;
 import cn.yumutech.unity.ProjectMangerActivity;
@@ -33,6 +34,7 @@ import cn.yumutech.weight.ImagePagerAdapterApply;
 import cn.yumutech.weight.MyGridView;
 import cn.yumutech.weight.StringUtils1;
 import cn.yumutech.weight.ViewFlow;
+import cn.yumutech.weight.getContact;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -80,10 +82,8 @@ public class HomeFragment extends BaseFragment {
         baibaos.add(new BaiBao("友情链接", R.drawable.touxiao));
         baibaos.add(new BaiBao("督察督办", R.drawable.touxiao));
         baibaos.add(new BaiBao("互动交流", R.drawable.touxiao));
-
         BaiBaoAdatper baiBaoAdatper=new BaiBaoAdatper(getActivity(), (ArrayList<BaiBao>) baibaos);
         myGridView.setAdapter(baiBaoAdatper);
-
         myGridView.setFocusable(false);
         mViewFlow.setLiserner(new ViewFlow.postion() {
             @Override
@@ -105,6 +105,8 @@ public class HomeFragment extends BaseFragment {
         });
         net_connect = contentView.findViewById(R.id.netconnect);
         initLocal();
+        //正常登录
+        getContact.getInstance().getData();
     }
     //加载缓存
     private void initLocal() {
@@ -149,6 +151,9 @@ public class HomeFragment extends BaseFragment {
                 }else if(i==4){
                     Intent intent=new Intent(getActivity(), FriendsUrlActivity.class);
                     startActivity(intent);
+                }else if(i==5){
+                    Intent intent=new Intent(getActivity(), InspectionTaskActivity.class);
+                    startActivity(intent);
                 }else if(i==6){
                     Intent intent=new Intent(getActivity(), CommunicationActivity.class);
                     startActivity(intent);
@@ -168,9 +173,15 @@ public class HomeFragment extends BaseFragment {
 Subscription subscription;
     @Override
     protected void initDatas() {
-        RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean("unity","1234567890"),
-                new RequestCanShu.DataBean("省级","0","10"));
-        initDatas1(new Gson().toJson(canshus));
+        if(App.getContext().getLogo("logo")!=null) {
+            RequestCanShu canshus = new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.nickname,
+                    App.getContext().getLogo("logo").data.id),
+                    new RequestCanShu.DataBean("省级", "0", "10"));
+            initDatas1(new Gson().toJson(canshus));
+        }else {
+            App.getContext().noLogin(getActivity());
+        }
+
     }
     private void initDatas1( String canshu){
         subscription = Api.getMangoApi1().getLeaderActiviys(canshu)

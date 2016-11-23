@@ -211,7 +211,7 @@ public class TaShanDetailActivity extends BaseActivity{
         fenlei.setText(huDongItem.data.classify);
         laiyuan.setText(huDongItem.data.original);
         time.setText(huDongItem.data.publish_date);
-        pinglun.setText(huDongItem.data.comment_count);
+        pinglun.setText(huDongItem.data.comment_count+"条回复");
         net_connect.setVisibility(View.GONE);
         scrollView.setVisibility(View.VISIBLE);
         button.setVisibility(View.VISIBLE);

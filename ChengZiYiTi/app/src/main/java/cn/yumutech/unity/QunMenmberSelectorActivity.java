@@ -63,7 +63,6 @@ public class QunMenmberSelectorActivity extends BaseActivity {
                             if ((App.getContext().mApbutPerson.get(i).id.equals(App.getContext().qunMember.get(j).userId))) {
                                 isBaoHan = true;
                             }
-
                     if(j==App.getContext().qunMember.size()-1) {
                         if (!isBaoHan) {
                             mDatas1.add(App.getContext().mApbutPerson.get(i));
@@ -72,10 +71,13 @@ public class QunMenmberSelectorActivity extends BaseActivity {
                         }
 
                 }
-
-
+                for (int k=0;k<mDatas1.size();k++){
+                    UserAboutPerson.DataBean bean=mDatas1.get(k);
+                    bean.type= UserAboutPerson.DataBean.TYPE_NOCHECKED;
+                }
             }else if(type.equals("create")){
                 mDatas1=App.getContext().mApbutPerson;
+
             }
         }
         tv_quer = (TextView) findViewById(R.id.tv_qure);

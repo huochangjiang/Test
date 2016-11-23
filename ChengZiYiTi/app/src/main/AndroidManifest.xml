@@ -39,7 +39,6 @@
         <activity android:name=".TaShanDetailActivity" />
         <activity
             android:name=".TaShanCommentsActivity"
-
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".ReplyToCommentActivity" />
         <activity android:name=".AfterLoginActivity" />
@@ -55,6 +54,11 @@
         <activity android:name=".RegistActivity" />
         <activity android:name=".HuDongJIaoLIuActivity" />
         <activity android:name=".MailListActivity" />
+        <activity android:name=".InspectionTaskActivity" />
+        <activity android:name=".ReleaseTaskActivity" />
+        <activity android:name=".TaskToWhoActivity" />
+        <activity android:name=".TaskEndDateActivity" />
+        <activity android:name=".ShowTaskDetailActivity" />
         <!-- 会话页面 -->
         <activity
             android:name=".ConversationActivity"
@@ -89,6 +93,16 @@
             </intent-filter>
         </activity>
 
+        <receiver
+            android:name=".SealNotificationReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="io.rong.push.intent.MESSAGE_ARRIVED" />
+                <action android:name="io.rong.push.intent.MI_MESSAGE_ARRIVED" />
+                <action android:name="io.rong.push.intent.MESSAGE_CLICKED" />
+                <action android:name="io.rong.push.intent.MI_MESSAGE_CLICKED" />
+            </intent-filter>
+        </receiver>
         <!-- 聚合会话列表 -->
         <activity
             android:name=".SubConversationListActivity"
@@ -108,21 +122,21 @@
         </activity>
         <activity android:name=".QunMenmberSelectorActivity" />
         <activity android:name=".CreateQunZhuActivity" />
-        <activity android:name=".BianJiActivity"></activity>
+        <activity android:name=".BianJiActivity" />
 
         <!-- 友盟推送集成 -->
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="582e731dc62dca44760011aa">
-        </meta-data>
+            android:value="582e731dc62dca44760011aa"></meta-data>
         <meta-data
             android:name="UMENG_MESSAGE_SECRET"
-            android:value="7b0d94a0f338b3c151701f5c8521d42a">
-        </meta-data>
+            android:value="7b0d94a0f338b3c151701f5c8521d42a"></meta-data>
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="CHENGZI">
-        </meta-data>
+            android:value="CHENGZI"></meta-data>
+
+        <activity android:name=".CompleteActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
     </application>
 
 </manifest>

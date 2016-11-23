@@ -9,8 +9,12 @@ public class ShowMyPublishedTaskBeen {
      * data : {"offset":"0","row_count":"5"}
      */
 
-    private UserBean user;
-    private DataBean data;
+    public UserBean user;
+    public DataBean data;
+    public ShowMyPublishedTaskBeen(UserBean user,DataBean data){
+        this.user=user;
+        this.data=data;
+    }
 
     public UserBean getUser() {
         return user;
@@ -34,9 +38,12 @@ public class ShowMyPublishedTaskBeen {
          * session : 1234567890
          */
 
-        private String account;
-        private String session;
-
+        public String account;
+        public String session;
+        public UserBean(String account,String session){
+            this.account=account;
+            this.session=session;
+        }
         public String getAccount() {
             return account;
         }
@@ -60,9 +67,12 @@ public class ShowMyPublishedTaskBeen {
          * row_count : 5
          */
 
-        private String offset;
-        private String row_count;
-
+        public String offset;
+        public String row_count;
+        public DataBean(String offset,String row_count){
+            this.offset=offset;
+            this.row_count=row_count;
+        }
         public String getOffset() {
             return offset;
         }

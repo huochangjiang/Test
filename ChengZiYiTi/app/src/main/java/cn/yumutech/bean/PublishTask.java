@@ -9,8 +9,8 @@ public class PublishTask {
      * data :
      */
 
-    private StatusBean status;
-    private String data;
+    public StatusBean status;
+    public DataBeen data;
 
     public StatusBean getStatus() {
         return status;
@@ -20,11 +20,11 @@ public class PublishTask {
         this.status = status;
     }
 
-    public String getData() {
+    public DataBeen getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(DataBeen data) {
         this.data = data;
     }
 
@@ -34,8 +34,8 @@ public class PublishTask {
          * code : 0
          */
 
-        private String message;
-        private String code;
+        public String message;
+        public String code;
 
         public String getMessage() {
             return message;
@@ -52,5 +52,8 @@ public class PublishTask {
         public void setCode(String code) {
             this.code = code;
         }
+    }
+    public static class DataBeen{
+
     }
 }

@@ -193,9 +193,9 @@ public class TaShanZhiShiActivity extends BaseActivity implements PullToRefreshB
     @Override
     public void onPullDownToRefresh(PullToRefreshBase<ScrollView> refreshView) {
         isShangla=false;
-
+        page=0;
         ExchangeListBeen exchangeItemBeen = new ExchangeListBeen(new ExchangeListBeen.UserBean("unity", "1234567890"),
-                new ExchangeListBeen.DataBean("国内","0","5"));
+                new ExchangeListBeen.DataBean("国内",page+"","5"));
         getData1(new Gson().toJson(exchangeItemBeen));
     }
 

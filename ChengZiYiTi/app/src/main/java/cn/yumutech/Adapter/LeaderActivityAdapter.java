@@ -79,7 +79,7 @@ public class LeaderActivityAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemViewType(int position) {
-        if (position + 1 == getItemCount()&&isHava&&getItemCount()>5) {
+        if (position + 1 == getItemCount()&&isHava&&getItemCount()>8) {
             return FOOT_VIEW;
         } else {
             return ITEM_VIEW;

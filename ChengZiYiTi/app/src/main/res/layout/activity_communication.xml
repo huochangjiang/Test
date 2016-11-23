@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
     <android.support.v7.widget.Toolbar
         android:id="@+id/id_toolbar"
         app:contentInsetStart="0dp"
@@ -21,11 +22,16 @@
                 android:id="@+id/back"
                 android:src="@drawable/gimi_back"
                 android:layout_height="match_parent" />
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/feilei"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true">
+                android:layout_centerInParent="true"
+                >
+                <RelativeLayout
+                    android:id="@+id/rl_message"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_centerInParent="true"
@@ -34,33 +40,60 @@
                     android:textColor="@color/white"
                     android:id="@+id/tv_message"
                     android:layout_height="wrap_content" />
+                    <ImageView
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:id="@+id/hengxian_message"
+                        android:layout_width="60dp"
+                        android:layout_height="2dp"
+                        android:background="@color/white"/>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_toRightOf="@+id/rl_message"
+                    android:id="@+id/rl_contact"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_centerInParent="true"
                     android:text="联系人"
                     android:textSize="18sp"
-                    android:layout_marginLeft="50dp"
                     android:textColor="@color/black"
                     android:id="@+id/tv_contact"
                     android:layout_height="wrap_content" />
+                    <ImageView
+                        android:visibility="gone"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:id="@+id/hengxian_contact"
+                        android:layout_width="80dp"
+                        android:layout_height="2dp"
+                        android:background="@color/white"/>
+                    </RelativeLayout>
+                <RelativeLayout
+                    android:layout_toRightOf="@+id/rl_contact"
+                    android:id="@+id/rl_group"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_centerInParent="true"
                     android:text="群组"
-                    android:layout_marginLeft="50dp"
                     android:textSize="18sp"
                     android:textColor="@color/black"
                     android:id="@+id/tv_group"
                     android:layout_height="wrap_content" />
-            </LinearLayout>
-            <ImageView
-                android:layout_alignParentBottom="true"
-                android:id="@+id/hengxian"
-                android:layout_width="60dp"
-                android:layout_height="3dp"
-                android:visibility="gone"
-                android:layout_marginLeft="120dp"
-                android:background="@color/white"/>
+                    <ImageView
+                        android:visibility="gone"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:id="@+id/hengxian_group"
+                        android:layout_width="60dp"
+                        android:layout_height="2dp"
+                        android:background="@color/white"/>
+                    </RelativeLayout>
+            </RelativeLayout>
+
         </RelativeLayout>
 
     </android.support.v7.widget.Toolbar>

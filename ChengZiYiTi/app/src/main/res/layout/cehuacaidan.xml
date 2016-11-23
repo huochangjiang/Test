@@ -1,8 +1,12 @@
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawerlayout"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <FrameLayout
         android:id="@+id/fragment_layout"
         android:layout_width="match_parent"
@@ -15,14 +19,14 @@
         android:layout_gravity="start"
         android:background="@android:color/white">
 
-        <ExpandableListView
+        <ListView
             android:childIndicator="@null"
 
             android:groupIndicator="@null"
             android:id="@+id/expandlistview"
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
-        </ExpandableListView>
+        </ListView>
     </RelativeLayout>
-
-</android.support.v4.widget.DrawerLayout>
+    </android.support.v4.widget.DrawerLayout>
+</RelativeLayout>

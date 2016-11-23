@@ -50,11 +50,14 @@
     <com.handmark.pulltorefresh.library.PullToRefreshScrollView
         android:layout_width="match_parent"
         android:id="@+id/pull_to_refresh"
+        android:scrollbars="none"
         android:layout_height="match_parent"
         android:overScrollMode="never"
+
         app:ptrShowIndicator="false">
     <cn.yumutech.weight.MyListview
         android:id="@+id/comments_list"
+        android:scrollbars="none"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
     </cn.yumutech.weight.MyListview>

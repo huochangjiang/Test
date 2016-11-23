@@ -24,6 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="回复"
+        android:visibility="gone"
         android:textColor="@color/colorPrimaryDark"
         android:layout_toRightOf="@+id/admin"
         android:layout_alignTop="@+id/admin"
@@ -40,7 +41,7 @@
         android:id="@+id/details"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/reply"
+        android:layout_below="@+id/admin"
         android:layout_marginTop="10dp"
         android:layout_alignLeft="@+id/admin"
         android:layout_marginRight="20dp"
@@ -53,6 +54,7 @@
         android:text="199-2-36 3:4:6"
         android:layout_below="@+id/details"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:layout_alignLeft="@+id/details"/>
     <RelativeLayout
         android:id="@+id/rl_reply"
@@ -67,6 +69,7 @@
         android:layout_height="wrap_content"
         android:text="回复"
         android:layout_alignParentRight="true"
+        android:layout_marginBottom="10dp"
         android:textColor="@color/colorPrimaryDark"/>
     </RelativeLayout>
     <View
