@@ -108,7 +108,7 @@
         android:layout_height="wrap_content" />
     </ScrollView>
     <RelativeLayout
-        android:id="@+id/accept"
+        android:id="@+id/complete"
         android:visibility="gone"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="10dp"
@@ -120,7 +120,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="接受"
+            android:text="提交"
             android:textSize="18sp"
             android:layout_centerInParent="true"
             android:textColor="@color/white"/>
@@ -144,8 +144,8 @@
                 android:textColor="@color/white"/>
         </RelativeLayout>
     <RelativeLayout
-        android:id="@+id/complete"
-        android:visibility="gone"
+        android:id="@+id/accept"
+
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
@@ -154,16 +154,16 @@
         android:layout_width="wrap_content"
         android:layout_height="40dp">
         <Button
-            android:id="@+id/submit"
+            android:id="@+id/bt_accept"
             android:layout_width="150dp"
             android:layout_height="match_parent"
-            android:text="提交"
+            android:text="接受"
             android:background="@drawable/logo"
             android:textColor="@color/white"/>
         <Button
             android:id="@+id/assign"
             android:layout_width="150dp"
-            android:layout_toRightOf="@+id/submit"
+            android:layout_toRightOf="@+id/bt_accept"
             android:layout_height="match_parent"
             android:text="指派"
             android:layout_marginLeft="20dp"

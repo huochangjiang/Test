@@ -46,7 +46,7 @@
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/id_toolbar">
+        android:layout_below="@+id/ll_feilei">
         <include
             layout="@layout/progressbar"
             android:id="@+id/myprog"
@@ -54,14 +54,63 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content" />
     </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/ll_feilei"
+        android:layout_below="@+id/id_toolbar"
+        android:background="@color/f0f0f0"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:weightSum="3">
+        <Button
+            android:id="@+id/bt1"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:background="@color/white"
+            android:layout_height="match_parent"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:text="资阳"
+            android:textSize="18sp"
+            android:textColor="@color/rc_location_text"/>
+        <Button
+            android:id="@+id/bt2"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:text="县区"
+            android:textSize="18sp"
+            android:textColor="@color/rc_location_text"/>
+        <Button
+            android:id="@+id/bt3"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:text="开发区"
+            android:textSize="18sp"
+            android:textColor="@color/rc_location_text"/>
+    </LinearLayout>
     <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:id="@+id/pull_to_refresh"
-        android:layout_below="@+id/id_toolbar"
+        android:layout_below="@+id/ll_feilei"
         android:layout_height="wrap_content">
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/recyleview" />
     </android.support.v4.widget.SwipeRefreshLayout>
+
 </RelativeLayout>

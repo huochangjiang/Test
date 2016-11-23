@@ -6,6 +6,8 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -40,6 +42,9 @@ public class LeaderActivitysActivity extends BaseActivity implements SwipeRefres
     private boolean isRefresh=false;
     private boolean isHave;
     private View myprog;
+    private String fenlei="";
+    private LinearLayout ll_feilei;
+    private Button bt1,bt2,bt3;
     protected void unsubscribe( Subscription subscription) {
         if (subscription != null && !subscription.isUnsubscribed()) {
             subscription.unsubscribe();
@@ -53,6 +58,10 @@ public class LeaderActivitysActivity extends BaseActivity implements SwipeRefres
     protected void initViews(Bundle savedInstanceState) {
         app= (App) LeaderActivitysActivity.this.getApplicationContext();
         recyclerView = (RecyclerView) findViewById(R.id.recyleview);
+        ll_feilei= (LinearLayout) findViewById(R.id.ll_feilei);
+        bt1= (Button) findViewById(R.id.bt1);
+        bt2= (Button) findViewById(R.id.bt2);
+        bt3= (Button) findViewById(R.id.bt3);
         myprog=  findViewById(R.id.myprog);
         myprog.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.GONE);
@@ -66,7 +75,6 @@ public class LeaderActivitysActivity extends BaseActivity implements SwipeRefres
         pullToRefresh.setOnRefreshListener(this);
         controlTitle(findViewById(R.id.back));
         net_connect = findViewById(R.id.netconnect);
-
         initLocal();
     }
     //加载缓存
@@ -80,6 +88,7 @@ public class LeaderActivitysActivity extends BaseActivity implements SwipeRefres
             if(!app.isNetworkConnected(this)){
                 myprog.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.GONE);
+                ll_feilei.setVisibility(View.GONE);
                 net_connect.setVisibility(View.VISIBLE);
             }
         }
@@ -91,7 +100,7 @@ public class LeaderActivitysActivity extends BaseActivity implements SwipeRefres
     protected void initData() {
         if(App.getContext().getLogo("logo")!=null) {
             RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.nickname,App.getContext().getLogo("logo").data.id),
-                    new RequestCanShu.DataBean("省级",mPage+"",mPageSize+""));
+                    new RequestCanShu.DataBean(fenlei,mPage+"",mPageSize+""));
             initDatas1(new Gson().toJson(canshus));
         }else {
             Toast.makeText(this,"您还未登陆",Toast.LENGTH_SHORT).show();
@@ -107,6 +116,40 @@ public class LeaderActivitysActivity extends BaseActivity implements SwipeRefres
     }
     @Override
     protected void initListeners() {
+        bt1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fenlei=bt1.getText().toString().trim();
+                mPage=0;
+                isRefresh=false;
+                RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean("unity","1234567890"),
+                        new RequestCanShu.DataBean(fenlei,mPage+"",mPageSize+""));
+                initDatas1(new Gson().toJson(canshus));
+            }
+        });
+        bt2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fenlei=bt2.getText().toString().trim();
+                mPage=0;
+                isRefresh=false;
+                RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean("unity","1234567890"),
+                        new RequestCanShu.DataBean(fenlei,mPage+"",mPageSize+""));
+                initDatas1(new Gson().toJson(canshus));
+            }
+        });
+        bt3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fenlei=bt3.getText().toString().trim();
+                mPage=0;
+                isRefresh=false;
+                RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean("unity","1234567890"),
+                        new RequestCanShu.DataBean(fenlei,mPage+"",mPageSize+""));
+                initDatas1(new Gson().toJson(canshus));
+            }
+        });
+
         mAdapter.setLisener(new LeaderActivityAdapter.OnitemClick() {
             @Override
             public void onitemClice(LeaderActivitys.DataBean data) {
@@ -127,7 +170,7 @@ public class LeaderActivitysActivity extends BaseActivity implements SwipeRefres
                         isRefresh=true;
                         mPage=leaderActivitys.size();
                         RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.nickname,App.getContext().getLogo("logo").data.id),
-                                new RequestCanShu.DataBean("省级",mPage+"",mPageSize+""));
+                                new RequestCanShu.DataBean(fenlei,mPage+"",mPageSize+""));
                         initDatas1(new Gson().toJson(canshus));
                     }
                 }
@@ -143,6 +186,7 @@ public class LeaderActivitysActivity extends BaseActivity implements SwipeRefres
             public void onClick(View v) {
                 if(app.isNetworkConnected(LeaderActivitysActivity.this)){
                     net_connect.setVisibility(View.GONE);
+                    ll_feilei.setVisibility(View.VISIBLE);
                     myprog.setVisibility(View.VISIBLE);
                     recyclerView.setVisibility(View.GONE);
                     initData();
@@ -195,15 +239,17 @@ public class LeaderActivitysActivity extends BaseActivity implements SwipeRefres
         mAdapter.dataChange(leaderActivitys,isHave);
         recyclerView.setVisibility(View.VISIBLE);
         net_connect.setVisibility(View.GONE);
+        ll_feilei.setVisibility(View.VISIBLE);
         pullToRefresh.setRefreshing(false);
         isMoreLoading = false;
     }
     @Override
     public void onRefresh() {
+        fenlei="";
         mPage=0;
         isRefresh=false;
         RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean("unity","1234567890"),
-                new RequestCanShu.DataBean("省级",mPage+"",mPageSize+""));
+                new RequestCanShu.DataBean(fenlei,mPage+"",mPageSize+""));
         initDatas1(new Gson().toJson(canshus));
     }
 }
