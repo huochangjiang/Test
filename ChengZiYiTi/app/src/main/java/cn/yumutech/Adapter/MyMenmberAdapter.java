@@ -13,6 +13,7 @@ import java.util.Map;
 
 import cn.yumutech.bean.UserAboutPerson;
 import cn.yumutech.bean.UserBean;
+import cn.yumutech.unity.App;
 import cn.yumutech.unity.R;
 
 /**
@@ -63,6 +64,10 @@ public class MyMenmberAdapter extends BaseAdapter{
             vh.cb.setChecked(true);
         }else{
             vh.cb.setChecked(false);
+        }
+        if(mDatas.get(index).id.equals(App.getContext().getLogo("logo").data.id)){
+            vh.cb.setChecked(true);
+            mDatas.get(index).type=3;
         }
         vh.cb.setOnClickListener(new View.OnClickListener() {
             @Override

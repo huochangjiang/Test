@@ -22,6 +22,7 @@ import java.util.TimerTask;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import cn.yumutech.bean.DeviceTokenUpLoad;
 import cn.yumutech.bean.MessageBean;
 import cn.yumutech.bean.UserLogin;
 import cn.yumutech.bean.UserLoginBeen;
@@ -222,6 +223,9 @@ public class LogoActivity extends BaseActivity implements View.OnClickListener{
                 UserInfo userInfo=new UserInfo(userLogin.data.id,userLogin.data.nickname,
                         Uri.parse(userLogin.data.logo_path));
                 RongIM.getInstance().refreshUserInfoCache(userInfo);
+
+                DeviceTokenUpLoad mUpLoad=new DeviceTokenUpLoad(new DeviceTokenUpLoad.UserBean(userLogin.data.id,"1222234"),new DeviceTokenUpLoad.DataBean("Android",App.getContext().mDeviceToken));
+                UserGetToken.getInstance(LogoActivity.this).getUpLoadToken(new Gson().toJson(mUpLoad));
 
                 connectRongYun(mLogin.data.token);
                 SharedPreferences.Editor edit = DemoContext.getInstance().getSharedPreferences().edit();

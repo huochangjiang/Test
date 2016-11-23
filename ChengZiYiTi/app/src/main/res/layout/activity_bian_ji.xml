@@ -57,6 +57,7 @@
                 >
            </cn.yumutech.weight.MyGridView>
            <RelativeLayout
+               android:id="@+id/rl_xiugai"
                android:layout_marginTop="10dp"
                android:layout_width="match_parent"
                android:layout_height="50dp">
@@ -71,7 +72,6 @@
                    android:layout_centerVertical="true"
                         android:id="@+id/mingcheng"
                    android:layout_width="wrap_content"
-                   android:text="群名称"
                    android:layout_alignParentRight="true"
                    android:textColor="@color/huise"
                    android:textSize="@dimen/title_size_smaller"

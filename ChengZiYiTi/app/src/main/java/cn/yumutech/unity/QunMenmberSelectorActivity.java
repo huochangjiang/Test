@@ -1,9 +1,11 @@
 package cn.yumutech.unity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,10 +18,14 @@ import java.util.List;
 import java.util.Map;
 
 import cn.yumutech.Adapter.MyMenmberAdapter;
+import cn.yumutech.bean.CreateQunZu;
 import cn.yumutech.bean.JoinQun;
+import cn.yumutech.bean.RequestCanShu;
 import cn.yumutech.bean.RequestParams;
 import cn.yumutech.bean.UserAboutPerson;
 import cn.yumutech.netUtil.Api;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.Group;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -36,9 +42,13 @@ public class QunMenmberSelectorActivity extends BaseActivity {
     private MyMenmberAdapter mAdapter;
     private String type;
     Subscription subscription;
+    Subscription subscription4;
     private String groupId;
     private String groupName;
     private List<String> ids=new ArrayList<>();
+    private EditText editText;
+    private Button button;
+
     protected void unsubscribe( Subscription subscription) {
         if (subscription != null && !subscription.isUnsubscribed()) {
             subscription.unsubscribe();
@@ -81,11 +91,28 @@ public class QunMenmberSelectorActivity extends BaseActivity {
             }
         }
         tv_quer = (TextView) findViewById(R.id.tv_qure);
+        editText = (EditText) findViewById(R.id.et);
+        button = (Button) findViewById(R.id.denglu);
         listView = (ListView) findViewById(R.id.listview);
 
         mAdapter = new MyMenmberAdapter(mDatas1, this);
         listView.setAdapter(mAdapter);
         controlTitle(findViewById(R.id.back));
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(editText.getText().toString().trim()!=null&&!editText.getText().toString().trim().equals("")) {
+                    RequestCanShu canshus = new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
+                            new RequestCanShu.DataBean(App.getContext().getLogo("logo").data.id + "," + mIds, editText.getText().toString().trim()));
+                    initDatas4(new Gson().toJson(canshus));
+                }else{
+                    Toast.makeText(QunMenmberSelectorActivity.this, "請輸入討論組名字", Toast.LENGTH_SHORT).show();
+                }
+                if(mIds==null||mIds.equals("")){
+                    Toast.makeText(QunMenmberSelectorActivity.this, "請添加群成員", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
     }
 
@@ -103,8 +130,11 @@ public class QunMenmberSelectorActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 if(type.equals("create")) {
-                    Log.e("info",mIds+"--------");
                     if(mIds!=null&&!mIds.equals("")) {
+
+                        for (int i=0;i<App.getContext().mApbutPerson.size();i++){
+                            App.getContext().mApbutPerson.get(i).type=0;
+                        }
                         Intent intent = new Intent(QunMenmberSelectorActivity.this, CreateQunZhuActivity.class);
                         intent.putExtra("id", mIds);
                         startActivity(intent);
@@ -120,6 +150,8 @@ public class QunMenmberSelectorActivity extends BaseActivity {
 //                        finish();
 
                         if(App.getContext().getLogo("logo")!=null) {
+
+
                             RequestParams canshus = new RequestParams(new RequestParams.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
                                     new RequestParams.DataBean(mIds,groupId,groupName));
                             initDatas1(new Gson().toJson(canshus));
@@ -182,6 +214,42 @@ public class QunMenmberSelectorActivity extends BaseActivity {
         @Override
         public void onNext(JoinQun channels) {
             if(channels.status.code.equals("0")){
+                for (int i=0;i<App.getContext().mApbutPerson.size();i++){
+                    App.getContext().mApbutPerson.get(i).type=0;
+                }
+                finish();
+            }
+
+        }
+    };
+
+
+    //創建qunzhu
+
+
+    private void initDatas4( String canshu){
+        subscription = Api.getMangoApi1().getCreateQunZhu(canshu)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer4);
+
+    }
+    Observer<CreateQunZu> observer4 = new Observer<CreateQunZu>() {
+        @Override
+        public void onCompleted() {
+            unsubscribe(subscription4);
+        }
+        @Override
+        public void onError(Throwable e) {
+            e.printStackTrace();
+
+        }
+        @Override
+        public void onNext(CreateQunZu channels) {
+            if(channels.status.code.equals("0")){
+                Group group=new Group(channels.data.groupId,channels.data.groupName, Uri.parse(channels.data.create_user_logo_path));
+                RongIM.getInstance().refreshGroupInfoCache(group);
+                RongIM.getInstance().startGroupChat(QunMenmberSelectorActivity.this, channels.data.groupId, channels.data.groupName);
                 finish();
             }
 

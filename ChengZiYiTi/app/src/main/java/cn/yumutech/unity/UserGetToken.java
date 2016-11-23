@@ -7,6 +7,7 @@ import android.net.Uri;
 import com.google.gson.Gson;
 
 import cn.yumutech.bean.CreateQunZu;
+import cn.yumutech.bean.DeviceTokenBean;
 import cn.yumutech.bean.RequestParams;
 import cn.yumutech.bean.RequestParams2;
 import cn.yumutech.bean.UserInfoDetail;
@@ -50,6 +51,7 @@ public class UserGetToken {
      */
     Subscription subscription;
     Subscription subscription1;
+    Subscription subscription4;
     Subscription subscription2;
     protected void unsubscribe( Subscription subscription) {
         if (subscription != null && !subscription.isUnsubscribed()) {
@@ -62,6 +64,13 @@ public class UserGetToken {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer2);
 
+    }
+
+    public void getUpLoadToken(String token){
+        subscription4 = Api.getMangoApi1().getDevieTokenBean(token)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer4);
     }
     Observer<UserToken> observer2=new Observer<UserToken>() {
         @Override
@@ -137,6 +146,25 @@ public class UserGetToken {
 
                 }else if(userToken.status.code.equals("-9")){
                 }
+            }
+        }
+    };
+
+
+    //上傳設備token到服務器上
+    Observer<DeviceTokenBean> observer4=new Observer<DeviceTokenBean>() {
+        @Override
+        public void onCompleted() {
+            unsubscribe(subscription4);
+        }
+        @Override
+        public void onError(Throwable e) {
+            e.printStackTrace();
+        }
+        @Override
+        public void onNext(DeviceTokenBean userToken) {
+            if(userToken!=null&&userToken.code!=null){
+
             }
         }
     };

@@ -53,7 +53,7 @@ public class CreateQunZhuActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.id,"1234567890"),
-                        new RequestCanShu.DataBean(ids+","+App.getContext().getLogo("logo").data.id,editText.getText().toString().trim()));
+                        new RequestCanShu.DataBean(ids,editText.getText().toString().trim()));
                 initDatas1(new Gson().toJson(canshus));
             }
         });
@@ -85,7 +85,7 @@ public class CreateQunZhuActivity extends BaseActivity {
             if(channels.status.code.equals("0")){
                 Group group=new Group(channels.data.groupId,channels.data.groupName, Uri.parse(channels.data.create_user_logo_path));
                 RongIM.getInstance().refreshGroupInfoCache(group);
-                RongIM.getInstance().startGroupChat(CreateQunZhuActivity.this, channels.data.groupId, "标题");
+                RongIM.getInstance().startGroupChat(CreateQunZhuActivity.this, channels.data.groupId, channels.data.groupName);
                 finish();
             }
 
