@@ -7,6 +7,7 @@ import cn.yumutech.bean.ChaXunQunMenmber;
 import cn.yumutech.bean.CompleteBean;
 import cn.yumutech.bean.CreateQunZu;
 import cn.yumutech.bean.DepartListNew;
+import cn.yumutech.bean.DeviceTokenBean;
 import cn.yumutech.bean.ExchangeCommenList;
 import cn.yumutech.bean.FinishTask;
 import cn.yumutech.bean.GetTaShanPingLunLieBIao;
@@ -21,6 +22,7 @@ import cn.yumutech.bean.MovieRecommend;
 import cn.yumutech.bean.PrijectDetaisl;
 import cn.yumutech.bean.ProjectManger;
 import cn.yumutech.bean.PublishTask;
+import cn.yumutech.bean.RefreshBean;
 import cn.yumutech.bean.ShowMyPublishedTask;
 import cn.yumutech.bean.ShowMyTask;
 import cn.yumutech.bean.ShowTaskDetail;
@@ -179,4 +181,10 @@ Observable<WorkDetails> getWorkDetais(@Query("req") String policy);
     //获取组详情数据
     @POST("LeaderActivityItem")
     Observable<GroupDetais> getGroupDetais(@Query("req") String item);
+    //刷新群主信息
+    @POST("GroupRefresh")
+    Observable<RefreshBean> getRefersh(@Query("req") String item);
+    //上傳設備的token
+    @POST("DeviceToken")
+    Observable<DeviceTokenBean> getDevieTokenBean(@Query("req") String item);
 }

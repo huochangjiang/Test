@@ -2,7 +2,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="match_parent"
+    android:focusable="true"
+
+    android:focusableInTouchMode="true"
 
     tools:context="cn.yumutech.unity.QunMenmberSelectorActivity">
     <android.support.v7.widget.Toolbar
@@ -33,7 +37,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="创建"
+                android:text="創建討論組"
                 android:textSize="16sp"
                 android:textColor="@color/white"
                 android:id="@+id/tv_home"
@@ -51,10 +55,41 @@
 
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
-
-    <ListView
+    <EditText
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/et"
+        android:hint="創建討論組"
+        android:paddingLeft="5dp"
+        android:textColor="@color/small_title"
+        android:textSize="16sp"
+        android:background="@drawable/edittextstoke"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
         android:layout_below="@+id/id_toolbar"
         android:layout_width="match_parent"
+        android:layout_height="50dp" />
+    <ListView
+        android:background="@color/white"
+        android:layout_marginBottom="70dp"
+        android:layout_below="@+id/et"
+        android:layout_width="match_parent"
         android:id="@+id/listview"
-        android:layout_height="wrap_content"></ListView>
+        android:layout_height="match_parent">
+    </ListView>
+
+    <Button
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/denglu"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_below="@+id/xian"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/logo"
+        android:text="提交"
+        android:textColor="#ffffff"
+        android:textSize="17sp" />
 </RelativeLayout>

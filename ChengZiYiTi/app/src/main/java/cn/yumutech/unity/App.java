@@ -47,6 +47,7 @@ public class App extends MultiDexApplication{
     public String avatarpath = "useravatar";
     public String music = "music";
     public String avatarpath_bk = "useravatar_bk";
+    public String mDeviceToken;
 
     public static String CachePath = "image_loaders_local";
     public static App getContext() {
@@ -88,6 +89,7 @@ public class App extends MultiDexApplication{
             public void onSuccess(String deviceToken) {
                 //注册成功会返回device token
                 Log.e("deviceToken",deviceToken);
+                mDeviceToken=deviceToken;
             }
 
             @Override
