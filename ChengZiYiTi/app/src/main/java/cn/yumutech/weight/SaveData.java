@@ -1,8 +1,10 @@
 package cn.yumutech.weight;
 
 import java.util.List;
+import java.util.Map;
 
 import cn.yumutech.bean.GroupClass;
+import cn.yumutech.bean.UserAboutPerson;
 
 /**
  * Created by 霍长江 on 2016/6/21.
@@ -28,6 +30,8 @@ public class SaveData {
      */
     public String Dept_Id;
     public List<GroupClass> taskToChildGroups;
-//    public List<GroupClass> groupsDatas;
+    //保存指派员工的信息
+    public String taskZhiPaiToWho;
+    public Map<Integer, UserAboutPerson.DataBean> zhiPaiBeen;
 //    public List<List<ChindClass>> chindDatas;
 }

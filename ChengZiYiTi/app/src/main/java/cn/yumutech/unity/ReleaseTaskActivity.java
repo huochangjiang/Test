@@ -1,5 +1,6 @@
 package cn.yumutech.unity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,6 +17,8 @@ import com.google.gson.Gson;
 import cn.yumutech.bean.PublishTask;
 import cn.yumutech.bean.PublishTaskBeen;
 import cn.yumutech.netUtil.Api;
+import cn.yumutech.weight.SaveData;
+import de.greenrobot.event.EventBus;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -33,6 +36,9 @@ public class ReleaseTaskActivity extends BaseActivity implements View.OnClickLis
     private TextView who;
     private ImageView back;
     Subscription subscription;
+    private TextView choose_time;
+    private TextView who_zhu,who_xie;
+    private RelativeLayout rl_zhipairen;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_release_task;
@@ -40,13 +46,19 @@ public class ReleaseTaskActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     protected void initViews(Bundle savedInstanceState) {
+        EventBus.getDefault().register(this);
         edit_title= (EditText) findViewById(R.id.edit_title);
         edit_neirong= (EditText) findViewById(R.id.edit_neirong);
         rl_who= (RelativeLayout) findViewById(R.id.rl_who);
         rl_end_time= (RelativeLayout) findViewById(R.id.rl_end_time);
         rl_send= (RelativeLayout) findViewById(R.id.rl_send);
-        who= (TextView) findViewById(R.id.who);
         back= (ImageView) findViewById(R.id.back);
+        choose_time= (TextView) findViewById(R.id.choose_time);
+        who_zhu= (TextView) findViewById(R.id.who_zhu);
+        who_xie= (TextView) findViewById(R.id.who_xie);
+        rl_zhipairen= (RelativeLayout) findViewById(R.id.rl_zhipairen);
+        rl_zhipairen.setVisibility(View.GONE);
+        back.setOnClickListener(this);
         rl_who.setOnClickListener(this);
         rl_end_time.setOnClickListener(this);
         rl_send.setOnClickListener(this);
@@ -59,9 +71,24 @@ public class ReleaseTaskActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     protected void initListeners() {
-
+        // 为预约时间edittext绑定点击事件
+        rl_end_time.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ReleaseTaskActivity.this, DatePickActivity.class);
+                intent.putExtra("date", choose_time.getText().toString());
+                startActivityForResult(intent, 1);
+            }
+        });
     }
-
+    //将指派人
+    public void onEventMainThread(PublishTask task){
+        if( SaveData.getInstance().zhiPaiBeen!=null&&SaveData.getInstance().zhiPaiBeen.size()>0){
+            who_zhu.setText(SaveData.getInstance().zhiPaiBeen.get(0).nickname);
+            who_xie.setText(SaveData.getInstance().zhiPaiBeen.get(1).nickname);
+            rl_zhipairen.setVisibility(View.VISIBLE);
+        }
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -70,11 +97,11 @@ public class ReleaseTaskActivity extends BaseActivity implements View.OnClickLis
                 intent.setClass(ReleaseTaskActivity.this,TaskToWhoActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.rl_end_time:
-                Intent intent1 =new Intent();
-                intent1.setClass(ReleaseTaskActivity.this,TaskEndDateActivity.class);
-                startActivity(intent1);
-                break;
+//            case R.id.rl_end_time:
+//                Intent intent1 =new Intent();
+//                intent1.setClass(ReleaseTaskActivity.this,TaskEndDateActivity.class);
+//                startActivity(intent1);
+//                break;
             case R.id.rl_send:
                 mHandler.sendEmptyMessage(1);
                 break;
@@ -93,10 +120,15 @@ public class ReleaseTaskActivity extends BaseActivity implements View.OnClickLis
                         Toast.makeText(ReleaseTaskActivity.this,"您还未填写标题，请完善",Toast.LENGTH_SHORT).show();
                     }else if(edit_neirong.getText().toString().trim().isEmpty()){
                         Toast.makeText(ReleaseTaskActivity.this,"您还未填写内容，请完善",Toast.LENGTH_SHORT).show();
+                    }else if(choose_time.getText().toString().isEmpty()){
+                        Toast.makeText(ReleaseTaskActivity.this,"您还未选取截止日期，请完善",Toast.LENGTH_SHORT).show();
+                    }else if(SaveData.getInstance().zhiPaiBeen.isEmpty()||SaveData.getInstance().zhiPaiBeen.size()!=2){
+                        Toast.makeText(ReleaseTaskActivity.this,"您还未指派，请完善",Toast.LENGTH_SHORT).show();
                     }else {
                         PublishTaskBeen been=new PublishTaskBeen(new PublishTaskBeen.UserBean(App.getContext().getLogo("logo").data.id,"")
                                 ,new PublishTaskBeen.DataBean(edit_title.getText().toString().trim(),edit_neirong.getText().toString().trim(),
-                                "2016-11-16","2","3"));
+                                choose_time.getText().toString(),SaveData.getInstance().zhiPaiBeen.get(0).id,
+                                SaveData.getInstance().zhiPaiBeen.get(1).id));
                         initSend(new Gson().toJson(been));
                     }
                     break;
@@ -132,5 +164,29 @@ public class ReleaseTaskActivity extends BaseActivity implements View.OnClickLis
         if (subscription != null && !subscription.isUnsubscribed()) {
             subscription.unsubscribe();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    //选择截止时间时要用，我也不晓得具体啥子用
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == Activity.RESULT_OK && requestCode == 1) {
+            // 选择截止时间时间的页面被关闭
+            String date = data.getStringExtra("date");
+            if (!choose_time.getText().toString().equals(date)) {
+                String my_time=data.getStringExtra("date")+":00";
+                choose_time.setText(my_time);
+            } else {
+                System.out.println("选择未变");
+            }
+        }
+
     }
 }

@@ -79,7 +79,6 @@ public class MyMenmberAdapter extends BaseAdapter{
                 }else{
                     mDatas.get(index).type=UserBean.TYPE_CHECKED;
                     if(ids!=null){
-
                             maps.put(index,mDatas.get(index));
                             ids.getMenmberIds(maps);
                     }

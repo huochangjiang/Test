@@ -141,38 +141,5 @@ public class UserGetToken {
         }
     };
 
-    public void asyncGroup(final String s){
-        RequestParams2 userTokenBeen=new RequestParams2(new RequestParams2.UserBean(s,"1234678"),new RequestParams2.DataBean(s));
-        subscription2 = Api.getMangoApi1().getUserDetais(new Gson().toJson(userTokenBeen))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(observer4);
-    }
 
-    Observer<UserInfoDetail> observer4=new Observer<UserInfoDetail>() {
-        @Override
-        public void onCompleted() {
-            unsubscribe(subscription1);
-        }
-        @Override
-        public void onError(Throwable e) {
-            e.printStackTrace();
-        }
-        @Override
-        public void onNext(UserInfoDetail userToken) {
-            if(userToken!=null&&userToken.status.code!=null){
-
-                if(userToken.status.code.equals("0")){
-                    String a=new Gson().toJson(userToken);
-                    App.getContext().saveLogo("userinfo",a);
-
-
-                    UserInfo info=new UserInfo(userToken.data.id,userToken.data.nickname, Uri.parse(userToken.data.logo_path));
-                    RongIM.getInstance().refreshUserInfoCache(info);
-
-                }else if(userToken.status.code.equals("-9")){
-                }
-            }
-        }
-    };
 }
