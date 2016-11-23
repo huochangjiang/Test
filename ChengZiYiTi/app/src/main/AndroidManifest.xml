@@ -136,7 +136,7 @@
             android:value="CHENGZI"></meta-data>
 
         <activity android:name=".CompleteActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
     </application>
 
 </manifest>
