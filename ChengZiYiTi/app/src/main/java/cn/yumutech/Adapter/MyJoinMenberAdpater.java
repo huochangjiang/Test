@@ -17,15 +17,14 @@ import cn.yumutech.unity.App;
 import cn.yumutech.unity.R;
 
 /**
- * Created by 霍长江 on 2016/11/16.
+ * Created by huo on 2016/11/24.
  */
-public class MyMenmberAdapter extends BaseAdapter{
-
+public class MyJoinMenberAdpater extends BaseAdapter{
     private List<UserAboutPerson.DataBean> mDatas;
     private Context mContext;
     private int type;
     private Map<Integer,UserAboutPerson.DataBean> maps=new HashMap<>();
-    public MyMenmberAdapter(List<UserAboutPerson.DataBean> data,Context context){
+    public MyJoinMenberAdpater(List<UserAboutPerson.DataBean> data,Context context){
         this.mDatas=data;
         this.mContext=context;
     }
@@ -73,21 +72,21 @@ public class MyMenmberAdapter extends BaseAdapter{
             @Override
             public void onClick(View v) {
                 if(!mDatas.get(index).id.equals(App.getContext().getLogo("logo").data.id)){
-                if(mDatas.get(index).type==UserBean.TYPE_CHECKED){
-                    mDatas.get(index).type=UserBean.TYPE_NOCHECKED;
-                    if(ids!=null){
-                        if(maps!=null&&maps.size()>0) {
-                            maps.remove(index);
+                    if(mDatas.get(index).type==UserBean.TYPE_CHECKED){
+                        mDatas.get(index).type=UserBean.TYPE_NOCHECKED;
+                        if(ids!=null){
+                            if(maps!=null&&maps.size()>0) {
+                                maps.remove(index);
+                                ids.getMenmberIds(maps);
+                            }
+                        }
+                    }else {
+                        mDatas.get(index).type = UserBean.TYPE_CHECKED;
+                        if (ids != null) {
+                            maps.put(index, mDatas.get(index));
                             ids.getMenmberIds(maps);
                         }
                     }
-                }else {
-                    mDatas.get(index).type = UserBean.TYPE_CHECKED;
-                    if (ids != null) {
-                        maps.put(index, mDatas.get(index));
-                        ids.getMenmberIds(maps);
-                    }
-                }
                 }
             }
         });
@@ -100,5 +99,4 @@ public class MyMenmberAdapter extends BaseAdapter{
     public interface getIds{
         void getMenmberIds(Map<Integer,UserAboutPerson.DataBean> beans);
     }
-
 }

@@ -127,7 +127,7 @@ public class BianJiActivity extends BaseActivity {
             public void getUserBean(final ChaXunQunMenmber.DataBean.UsersBean beans, final int postion) {
 
                 if(beans==null){
-                    Intent intent=new Intent(BianJiActivity.this,QunMenmberSelectorActivity.class);
+                    Intent intent=new Intent(BianJiActivity.this,SelectorJoinActivity.class);
                     intent.putExtra("type","join");
                     intent.putExtra("groupName",mChannels.data.groupName);
                     intent.putExtra("groupId",mChannels.data.groupId);
