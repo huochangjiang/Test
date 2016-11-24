@@ -105,6 +105,7 @@ public class ReleaseTaskActivity extends BaseActivity implements View.OnClickLis
             case R.id.rl_who:
                 Intent intent =new Intent();
                 intent.setClass(ReleaseTaskActivity.this,TaskToWhoActivity.class);
+                intent.putExtra("type","1");
                 startActivity(intent);
                 break;
 //            case R.id.rl_end_time:

@@ -59,6 +59,7 @@
         <activity android:name=".TaskToWhoActivity" />
         <activity android:name=".TaskEndDateActivity" />
         <activity android:name=".ShowTaskDetailActivity" />
+        <activity android:name=".LookResultActivity"/>
         <activity
             android:name=".DatePickActivity"
             android:theme="@style/MyDialogStyleBottom" />
