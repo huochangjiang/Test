@@ -8,6 +8,8 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
@@ -37,6 +39,7 @@ import cn.yumutech.bean.CompleteBean;
 import cn.yumutech.bean.TiJiaoCanShu;
 import cn.yumutech.netUtil.Api;
 import cn.yumutech.netUtil.FileUtils;
+import cn.yumutech.netUtil.HttpRequest;
 import cn.yumutech.weight.MyGridView;
 import rx.Observer;
 import rx.Subscription;
@@ -317,11 +320,20 @@ public class CompleteActivity extends BaseActivity implements View.OnClickListen
                 dataBean.setTask_comment(editText.getText().toString().trim());
                 dataBean.setTask_id(taskId);
                 dataBean.setPhotos(mPhoneBeans);
-         initDatas1(new Gson().toJson(new TiJiaoCanShu(new TiJiaoCanShu.UserBean(App.getContext().getLogo("logo").data.id,"1234345"),
-        dataBean)));
+                HttpRequest.getInstance(this).upLoadTouXiang(new Gson().toJson(new TiJiaoCanShu(new TiJiaoCanShu.UserBean(App.getContext().getLogo("logo").data.id,"1234345"),
+                        dataBean)),mHandler);
+
                 break;
         }
     }
+
+    Handler mHandler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            finish();
+        }
+    };
 
     Subscription subscription;
     protected void unsubscribe( Subscription subscription) {

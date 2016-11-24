@@ -1,6 +1,7 @@
 package cn.yumutech.fragments;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import cn.yumutech.unity.R;
 import cn.yumutech.unity.TaShanZhiShiActivity;
 import cn.yumutech.weight.MyListview;
 import io.rong.imkit.RongIM;
+import io.rong.imlib.model.Group;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -139,6 +141,11 @@ public class CommuGroupFragment extends BaseFragment implements View.OnClickList
         public void onNext(UserXiangGuanQun channels) {
             if(channels.status.code.equals("0")){
                 adapter.dataChange(channels.data);
+                for (int i=0;i<channels.data.size();i++) {
+                    Group group = new Group(channels.data.get(i).groupId, channels.data.get(i).groupName, Uri.parse(channels.data.get(i).create_user_logo_path));
+                    RongIM.getInstance().refreshGroupInfoCache(group);
+                }
+
             }
 
         }

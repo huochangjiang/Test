@@ -4,20 +4,29 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
 import java.util.Locale;
 
+import cn.yumutech.bean.RequestParams2;
 import cn.yumutech.bean.UserInfoDetail;
+import cn.yumutech.netUtil.Api;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationFragment;
+import io.rong.imkit.userInfoCache.RongUserInfoManager;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.UserInfo;
 import rx.Observer;
 import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by 霍长江 on 2016/11/15.
@@ -63,11 +72,60 @@ public class ConversationActivity extends FragmentActivity{
         title = intent.getData().getQueryParameter("title");
         //intent.getData().getLastPathSegment();//获得当前会话类型
         mConversationType = Conversation.ConversationType.valueOf(intent.getData().getLastPathSegment().toUpperCase(Locale.getDefault()));
-
+        setActionBarTitle(mConversationType,mTargetId);
         enterFragment(mConversationType, mTargetId);
         setActionBarTitle(mTargetId);
     }
+    /**
+     * 设置会话页面 Title
+     *
+     * @param conversationType 会话类型
+     * @param targetId         目标 Id
+     */
+    private void setActionBarTitle(Conversation.ConversationType conversationType, String targetId) {
 
+        if (conversationType == null)
+            return;
+
+        if (conversationType.equals(Conversation.ConversationType.PRIVATE)) {
+            setPrivateActionBar(targetId);
+        } else if (conversationType.equals(Conversation.ConversationType.GROUP)) {
+            setGroupActionBar(targetId);
+        }
+
+    }
+    /**
+     * 设置群聊界面 ActionBar
+     *
+     * @param targetId 会话 Id
+     */
+    private void setGroupActionBar(String targetId) {
+        if (!TextUtils.isEmpty(title)) {
+            setTitle(title);
+        } else {
+            setTitle(targetId);
+        }
+    }
+    /**
+     * 设置私聊界面 ActionBar
+     */
+    private void setPrivateActionBar(String targetId) {
+        if (!TextUtils.isEmpty(title)) {
+            if (title.equals("null")) {
+                if (!TextUtils.isEmpty(targetId)) {
+                    UserInfo userInfo = RongUserInfoManager.getInstance().getUserInfo(targetId);
+                    if (userInfo != null) {
+                        setTitle(userInfo.getName());
+                    }
+                }
+            } else {
+                setTitle(title);
+            }
+
+        } else {
+            asyneUserInfo(mTargetId);
+        }
+    }
 
     /**
      * 加载会话页面 ConversationFragment
@@ -220,5 +278,39 @@ public class ConversationActivity extends FragmentActivity{
             }
         }
     };
+    Subscription subscription1;
+
+    public void asyneUserInfo(final String s){
+        RequestParams2 userTokenBeen=new RequestParams2(new RequestParams2.UserBean(s,"1234678"),new RequestParams2.DataBean(s));
+        subscription1 = Api.getMangoApi1().getUserDetais(new Gson().toJson(userTokenBeen))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer3);
+
+    }
+    Observer<UserInfoDetail> observer3=new Observer<UserInfoDetail>() {
+        @Override
+        public void onCompleted() {
+            unsubscribe(subscription1);
+        }
+        @Override
+        public void onError(Throwable e) {
+            e.printStackTrace();
+        }
+        @Override
+        public void onNext(UserInfoDetail userToken) {
+            if(userToken!=null&&userToken.status.code!=null){
+                if(userToken.status.code.equals("0")){
+                    mTitle.setText(userToken.data.nickname);
+//                    UserInfo info=new UserInfo(userToken.data.id,userToken.data.nickname, Uri.parse(userToken.data.logo_path));
+//                    RongIM.getInstance().refreshUserInfoCache(info);
+
+                }else if(userToken.status.code.equals("-9")){
+                }
+            }
+        }
+    };
+
+
 
 }
