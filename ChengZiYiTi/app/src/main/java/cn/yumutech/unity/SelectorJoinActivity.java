@@ -10,7 +10,9 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import cn.yumutech.Adapter.MyJoinMenberAdpater;
 import cn.yumutech.bean.JoinQun;
@@ -62,14 +64,22 @@ public class SelectorJoinActivity extends BaseActivity {
 
        MyJoinMenberAdpater mAdapter = new MyJoinMenberAdpater(mDatas1, this);
         listView.setAdapter(mAdapter);
+        mAdapter.setLisener(new MyJoinMenberAdpater.getIds() {
+            @Override
+            public void getMenmberIds(Map<Integer, UserAboutPerson.DataBean> beans) {
+            mIds=getMemberIds(beans);
+            }
+        });
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mIds==null||mIds.equals("")){
-                    Toast.makeText(SelectorJoinActivity.this, "請添加群成員", Toast.LENGTH_SHORT).show();
+                if(mIds!=null&&!(mIds.equals(""))){
                     RequestParams canshus = new RequestParams(new RequestParams.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
                             new RequestParams.DataBean(mIds,groupId,groupName));
                     initDatas1(new Gson().toJson(canshus));
+                }else{
+                    Toast.makeText(SelectorJoinActivity.this, "请添加成员", Toast.LENGTH_SHORT).show();
+
                 }
 
             }
@@ -119,4 +129,26 @@ public class SelectorJoinActivity extends BaseActivity {
 
         }
     };
+    List<String> iids = new ArrayList<>();
+
+    private String getMemberIds(Map<Integer, UserAboutPerson.DataBean> beans) {
+        StringBuffer sb = new StringBuffer();
+        iids.clear();
+        Iterator iter = beans.entrySet().iterator();
+        while (iter.hasNext()) {
+            Map.Entry entry = (Map.Entry) iter.next();
+            int key = (int) entry.getKey();
+            UserAboutPerson.DataBean val = (UserAboutPerson.DataBean) entry.getValue();
+            iids.add(val.id);
+        }
+        for (int i = 0; i < iids.size(); i++) {
+
+            if (i == iids.size() - 1) {
+                sb.append(iids.get(i));
+            } else {
+                sb.append(iids.get(i) + ",");
+            }
+        }
+        return sb.toString();
+    }
 }

@@ -21,7 +21,6 @@ import cn.yumutech.Adapter.MyMenmberAdapter;
 import cn.yumutech.bean.CreateQunZu;
 import cn.yumutech.bean.JoinQun;
 import cn.yumutech.bean.RequestCanShu;
-import cn.yumutech.bean.RequestParams;
 import cn.yumutech.bean.UserAboutPerson;
 import cn.yumutech.netUtil.Api;
 import io.rong.imkit.RongIM;
@@ -87,10 +86,13 @@ public class QunMenmberSelectorActivity extends BaseActivity {
                 }
             }else if(type.equals("create")){
                 mDatas1=App.getContext().mApbutPerson;
+                for (int k=0;k<mDatas1.size();k++){
+                    UserAboutPerson.DataBean bean=mDatas1.get(k);
+                    bean.type= UserAboutPerson.DataBean.TYPE_NOCHECKED;
+                }
 
             }
         }
-        tv_quer = (TextView) findViewById(R.id.tv_qure);
         editText = (EditText) findViewById(R.id.et);
         button = (Button) findViewById(R.id.denglu);
         listView = (ListView) findViewById(R.id.listview);
@@ -101,15 +103,18 @@ public class QunMenmberSelectorActivity extends BaseActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(editText.getText().toString().trim()!=null&&!editText.getText().toString().trim().equals("")) {
-                    RequestCanShu canshus = new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
-                            new RequestCanShu.DataBean(App.getContext().getLogo("logo").data.id + "," + mIds, editText.getText().toString().trim()));
-                    initDatas4(new Gson().toJson(canshus));
+
+                if(mIds!=null&&!(mIds.equals(""))){
+                    if(editText.getText().toString().trim()!=null&&!editText.getText().toString().trim().equals("")) {
+                        RequestCanShu canshus = new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
+                                new RequestCanShu.DataBean(App.getContext().getLogo("logo").data.id + "," + mIds, editText.getText().toString().trim()));
+                        initDatas4(new Gson().toJson(canshus));
+                    }else{
+                        Toast.makeText(QunMenmberSelectorActivity.this, "请输入讨论组名字", Toast.LENGTH_SHORT).show();
+                    }
+
                 }else{
-                    Toast.makeText(QunMenmberSelectorActivity.this, "請輸入討論組名字", Toast.LENGTH_SHORT).show();
-                }
-                if(mIds==null||mIds.equals("")){
-                    Toast.makeText(QunMenmberSelectorActivity.this, "請添加群成員", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(QunMenmberSelectorActivity.this, "请添加群成员", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -126,44 +131,44 @@ public class QunMenmberSelectorActivity extends BaseActivity {
                     mIds = getMemberIds(beans);
             }
         });
-        tv_quer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(type.equals("create")) {
-                    if(mIds!=null&&!mIds.equals("")) {
-
-                        for (int i=0;i<App.getContext().mApbutPerson.size();i++){
-                            App.getContext().mApbutPerson.get(i).type=0;
-                        }
-                        Intent intent = new Intent(QunMenmberSelectorActivity.this, CreateQunZhuActivity.class);
-                        intent.putExtra("id", mIds);
-                        startActivity(intent);
-                        finish();
-                    }else{
-                        Toast.makeText(QunMenmberSelectorActivity.this, "请选择成员", Toast.LENGTH_SHORT).show();
-                    }
-                }else{
-                    if(mIds!=null&&!mIds.equals("")) {
+//        tv_quer.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(type.equals("create")) {
+//                    if(mIds!=null&&!mIds.equals("")) {
+//
+//                        for (int i=0;i<App.getContext().mApbutPerson.size();i++){
+//                            App.getContext().mApbutPerson.get(i).type=0;
+//                        }
 //                        Intent intent = new Intent(QunMenmberSelectorActivity.this, CreateQunZhuActivity.class);
 //                        intent.putExtra("id", mIds);
 //                        startActivity(intent);
 //                        finish();
-
-                        if(App.getContext().getLogo("logo")!=null) {
-
-
-                            RequestParams canshus = new RequestParams(new RequestParams.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
-                                    new RequestParams.DataBean(mIds,groupId,groupName));
-                            initDatas1(new Gson().toJson(canshus));
-                        }
-
-                    }else{
-                        Toast.makeText(QunMenmberSelectorActivity.this, "请选择成员", Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-            }
-        });
+//                    }else{
+//                        Toast.makeText(QunMenmberSelectorActivity.this, "请选择成员", Toast.LENGTH_SHORT).show();
+//                    }
+//                }else{
+//                    if(mIds!=null&&!mIds.equals("")) {
+////                        Intent intent = new Intent(QunMenmberSelectorActivity.this, CreateQunZhuActivity.class);
+////                        intent.putExtra("id", mIds);
+////                        startActivity(intent);
+////                        finish();
+//
+//                        if(App.getContext().getLogo("logo")!=null) {
+//
+//
+//                            RequestParams canshus = new RequestParams(new RequestParams.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
+//                                    new RequestParams.DataBean(mIds,groupId,groupName));
+//                            initDatas1(new Gson().toJson(canshus));
+//                        }
+//
+//                    }else{
+//                        Toast.makeText(QunMenmberSelectorActivity.this, "请选择成员", Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//
+//            }
+//        });
     }
     private void initDatas1( String canshu){
         subscription = Api.getMangoApi1().getJoinQun(canshu)

@@ -63,7 +63,7 @@
                     android:layout_marginLeft="10dp"
                     android:textColor="@color/small_title"
                     android:layout_width="wrap_content"
-                    android:text="上穿照片"
+                    android:text="上传照片"
                     android:layout_height="wrap_content" />
             </RelativeLayout>
 
