@@ -2,8 +2,8 @@ package cn.yumutech.unity;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -12,7 +12,7 @@ import com.umeng.message.PushAgent;
 /**
  * Created by 霍长江 on 2016/11/6.
  */
-public abstract  class BaseActivity extends AppCompatActivity {
+public abstract  class BaseActivity extends FragmentActivity {
 
 
     @Override

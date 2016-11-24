@@ -205,9 +205,9 @@ public class CompleteActivity extends BaseActivity implements View.OnClickListen
                         }
                         bitmapBeen.add(bitmap);
                         mAdapter.dataChange(bitmapBeen);
-                        mPhoneBeans.add(new TiJiaoCanShu.DataBean.PhotosBean("jpg",bitmaptoString(bitmap,100)));
-                        setPicToView(bitmaptoString(bitmap, 100));
-//					touxiang.setImageBitmap(bitmap);
+                        mPhoneBeans.add(new TiJiaoCanShu.DataBean.PhotosBean("jpg",bitmaptoString(bitmap,10)));
+//                        setPicToView(bitmaptoString(bitmap, 100));
+//					      touxiang.setImageBitmap(bitmap);
 
                         ImageLoader.getInstance().clearDiskCache();
                         ImageLoader.getInstance().clearMemoryCache();
@@ -225,7 +225,7 @@ public class CompleteActivity extends BaseActivity implements View.OnClickListen
     public String bitmaptoString(Bitmap bitmap, int bitmapQuality) {
         String string1;
         ByteArrayOutputStream bStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, bitmapQuality, bStream);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 40, bStream);
         byte[] bytes = bStream.toByteArray();
         string1 = Base64.encodeToString(bytes, Base64.DEFAULT);
         return string1;
@@ -343,6 +343,7 @@ public class CompleteActivity extends BaseActivity implements View.OnClickListen
         @Override
         public void onNext(CompleteBean channels) {
             if(channels.status.code.equals("0")){
+                finish();
             }
 
         }
