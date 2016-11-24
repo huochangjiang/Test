@@ -14,8 +14,14 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import cn.yumutech.bean.Poeple;
 import cn.yumutech.bean.PublishTask;
 import cn.yumutech.bean.PublishTaskBeen;
+import cn.yumutech.bean.UserAboutPerson;
 import cn.yumutech.netUtil.Api;
 import cn.yumutech.weight.SaveData;
 import de.greenrobot.event.EventBus;
@@ -39,6 +45,7 @@ public class ReleaseTaskActivity extends BaseActivity implements View.OnClickLis
     private TextView choose_time;
     private TextView who_zhu,who_xie;
     private RelativeLayout rl_zhipairen;
+    public Map<Integer, UserAboutPerson.DataBean> zhipaiPeople;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_release_task;
@@ -83,12 +90,28 @@ public class ReleaseTaskActivity extends BaseActivity implements View.OnClickLis
     }
     //将指派人
     public void onEventMainThread(PublishTask task){
-        if( SaveData.getInstance().zhiPaiBeen!=null&&SaveData.getInstance().zhiPaiBeen.size()>0){
-            who_zhu.setText(SaveData.getInstance().zhiPaiBeen.get(0).nickname);
-            who_xie.setText(SaveData.getInstance().zhiPaiBeen.get(1).nickname);
+        if( SaveData.getInstance().twoPeople!=null&&SaveData.getInstance().twoPeople.size()>1){
+            zhuPoeples=SaveData.getInstance().twoPeople;
+           // addPeople(zhipaiPeople);
+            who_zhu.setText(zhuPoeples.get(0).name);
+            who_xie.setText(zhuPoeples.get(1).name);
             rl_zhipairen.setVisibility(View.VISIBLE);
         }
     }
+    //遍历map集合，。取出其中的人名和id
+    private List<Poeple> zhuPoeples=new ArrayList<>();
+//    private List<Poeple> addPeople(Map<Integer, UserAboutPerson.DataBean> beans){
+////        StringBuffer sb = new StringBuffer();
+//        poeples.clear();
+//        Iterator iter = beans.entrySet().iterator();
+//        while (iter.hasNext()) {
+//            Map.Entry entry = (Map.Entry) iter.next();
+//            int key = (int) entry.getKey();
+//            UserAboutPerson.DataBean val = (UserAboutPerson.DataBean) entry.getValue();
+//            poeples.add(new Poeple(val.nickname,val.id));
+//        }
+//        return poeples;
+//    }
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -122,13 +145,13 @@ public class ReleaseTaskActivity extends BaseActivity implements View.OnClickLis
                         Toast.makeText(ReleaseTaskActivity.this,"您还未填写内容，请完善",Toast.LENGTH_SHORT).show();
                     }else if(choose_time.getText().toString().isEmpty()){
                         Toast.makeText(ReleaseTaskActivity.this,"您还未选取截止日期，请完善",Toast.LENGTH_SHORT).show();
-                    }else if(SaveData.getInstance().zhiPaiBeen.isEmpty()||SaveData.getInstance().zhiPaiBeen.size()!=2){
+                    }else if(zhuPoeples.isEmpty()||zhuPoeples.size()<2){
                         Toast.makeText(ReleaseTaskActivity.this,"您还未指派，请完善",Toast.LENGTH_SHORT).show();
                     }else {
                         PublishTaskBeen been=new PublishTaskBeen(new PublishTaskBeen.UserBean(App.getContext().getLogo("logo").data.id,"")
                                 ,new PublishTaskBeen.DataBean(edit_title.getText().toString().trim(),edit_neirong.getText().toString().trim(),
-                                choose_time.getText().toString(),SaveData.getInstance().zhiPaiBeen.get(0).id,
-                                SaveData.getInstance().zhiPaiBeen.get(1).id));
+                                choose_time.getText().toString(),zhuPoeples.get(0).id,
+                                zhuPoeples.get(1).id));
                         initSend(new Gson().toJson(been));
                     }
                     break;

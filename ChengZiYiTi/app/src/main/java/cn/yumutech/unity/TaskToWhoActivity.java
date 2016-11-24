@@ -18,6 +18,7 @@ import java.util.Map;
 
 import cn.yumutech.Adapter.TaskToWhoAdapter;
 import cn.yumutech.bean.GroupClass;
+import cn.yumutech.bean.Poeple;
 import cn.yumutech.bean.PublishTask;
 import cn.yumutech.bean.RequestParams;
 import cn.yumutech.bean.UserAboutPerson;
@@ -103,13 +104,30 @@ public class TaskToWhoActivity extends BaseActivity implements View.OnClickListe
         adapter.setLisener(new TaskToWhoAdapter.getIds() {
             @Override
             public void getMenmberIds(Map<Integer, UserAboutPerson.DataBean> beans) {
-                mBeen=beans;
-                mName = getMemberIds(mBeen);
-                SaveData.getInstance().zhiPaiBeen=beans;
+                addPeople(beans);
+//                beans.clear();
+                SaveData.getInstance().twoPeople.addAll(poeples);
+                if(SaveData.getInstance().twoPeople.size()>2){
+                    SaveData.getInstance().twoPeople.remove(0);
+                }
+
             }
         });
     }
-
+    //遍历map集合，。取出其中的人名和id,
+    private List<Poeple> poeples=new ArrayList<>();
+    private List<Poeple> addPeople(Map<Integer, UserAboutPerson.DataBean> beans){
+//        StringBuffer sb = new StringBuffer();
+        poeples.clear();
+        Iterator iter = beans.entrySet().iterator();
+        while (iter.hasNext()) {
+            Map.Entry entry = (Map.Entry) iter.next();
+            int key = (int) entry.getKey();
+            UserAboutPerson.DataBean val = (UserAboutPerson.DataBean) entry.getValue();
+            poeples.add(new Poeple(val.nickname,val.id));
+        }
+        return poeples;
+    }
 
     private void initData1(String dept_id){
         if(App.getContext().getLogo("logo")!=null&&App.getContext().getLogo("logo").data!=null) {

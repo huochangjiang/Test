@@ -1,9 +1,11 @@
 package cn.yumutech.weight;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import cn.yumutech.bean.GroupClass;
+import cn.yumutech.bean.Poeple;
 import cn.yumutech.bean.UserAboutPerson;
 
 /**
@@ -33,5 +35,7 @@ public class SaveData {
     //保存指派员工的信息
     public String taskZhiPaiToWho;
     public Map<Integer, UserAboutPerson.DataBean> zhiPaiBeen;
+    //保存取出的主办人和协办人信息
+    public List<Poeple> twoPeople=new ArrayList<>();
 //    public List<List<ChindClass>> chindDatas;
 }
