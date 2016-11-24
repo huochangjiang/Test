@@ -3,6 +3,7 @@ package cn.yumutech.netUtil.inter;
 import cn.yumutech.bean.AcceptTask;
 import cn.yumutech.bean.AddErrorPinglun;
 import cn.yumutech.bean.AddPingLun;
+import cn.yumutech.bean.AssignTask;
 import cn.yumutech.bean.ChaXunQunMenmber;
 import cn.yumutech.bean.CompleteBean;
 import cn.yumutech.bean.CreateQunZu;
@@ -78,6 +79,9 @@ public interface ApiServer {
     //督察督办之完成任务
     @POST("FinishTask")
     Observable<FinishTask> getFinishTask(@Query("req") String item);
+    //督察督办之指派任务
+    @POST("AssignTask")
+    Observable<AssignTask> getAssignTask(@Query("req") String item);
 
 
     //影视推荐

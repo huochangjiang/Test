@@ -183,7 +183,7 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
                 if(isClick2){
                     isClick2=false;
                     fenlei="";
-                    bt1.setBackgroundResource(R.drawable.logo_no);
+                    bt2.setBackgroundResource(R.drawable.logo_no);
                 }else{
                     isClick2=true;
                     isClick1=false;
@@ -203,7 +203,7 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
                 if(isClick3){
                     isClick3=false;
                     fenlei="";
-                    bt1.setBackgroundResource(R.drawable.logo_no);
+                    bt3.setBackgroundResource(R.drawable.logo_no);
                 }else{
                     isClick3=true;
                     isClick2=false;
@@ -223,7 +223,7 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
                 if(isClick4){
                     isClick4=false;
                     fenlei="";
-                    bt1.setBackgroundResource(R.drawable.logo_no);
+                    bt4.setBackgroundResource(R.drawable.logo_no);
                 }else{
                     isClick4=true;
                     isClick2=false;
@@ -241,9 +241,9 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
             @Override
             public void onClick(View view) {
                 if(isClick5){
-                    isClick1=false;
+                    isClick5=false;
                     fenlei="";
-                    bt1.setBackgroundResource(R.drawable.logo_no);
+                    bt5.setBackgroundResource(R.drawable.logo_no);
                 }else{
                     isClick5=true;
                     isClick2=false;
@@ -263,7 +263,7 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
                 if(isClick6){
                     isClick6=false;
                     fenlei="";
-                    bt1.setBackgroundResource(R.drawable.logo_no);
+                    bt6.setBackgroundResource(R.drawable.logo_no);
                 }else{
                     isClick6=true;
                     isClick2=false;
