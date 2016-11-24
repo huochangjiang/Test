@@ -29,7 +29,7 @@ public class CompleteBean {
      * task_comment : {"taskcomment_content":"sdfdsfsdf","taskcomment_user_id":"1","taskcomment_user_name":"zhangsan","taskcomment_date":"2016-11-16 11:12:13","photos":[{"photo_path":"http://sdfdsfdsf","photo_thumbnail_path":"http://sdfdsfs"}]}
      */
 
-    public List<DataBean> data;
+//    public List<DataBean> data;
 
     public StatusBean getStatus() {
         return status;
@@ -39,13 +39,7 @@ public class CompleteBean {
         this.status = status;
     }
 
-    public List<DataBean> getData() {
-        return data;
-    }
 
-    public void setData(List<DataBean> data) {
-        this.data = data;
-    }
 
     public static class StatusBean {
         public String message;
