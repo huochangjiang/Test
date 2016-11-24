@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -44,6 +45,7 @@ public class TaskToWhoActivity extends BaseActivity implements View.OnClickListe
     private boolean isOver;
     private String type="0";
     private String task_id;
+    private TextView qianyiye;
     //保存详情页跳过来的主办人和协办人
     public List<Poeple> detailToThis;
 
@@ -70,11 +72,17 @@ public class TaskToWhoActivity extends BaseActivity implements View.OnClickListe
         back= (ImageView) findViewById(R.id.back);
         listview= (ListView) findViewById(R.id.listview);
         rl_send= (RelativeLayout) findViewById(R.id.rl_send);
+        qianyiye= (TextView) findViewById(R.id.qianyiye);
         rl_send.setOnClickListener(this);
         if(!SaveData.getInstance().allEmployees.isEmpty()&&SaveData.getInstance().allEmployees.size()>0){
             for(int i=0;i<SaveData.getInstance().allEmployees.size();i++){
                 SaveData.getInstance().allEmployees.get(i).setType(0);
             }
+        }
+        if(type.equals("1")){
+            qianyiye.setText("发布任务");
+        }else if(type.equals("2")){
+            qianyiye.setText("任务详情");
         }
         chengyuanData=SaveData.getInstance().allEmployees;
         adapter=new TaskToWhoAdapter(TaskToWhoActivity.this,chengyuanData);
