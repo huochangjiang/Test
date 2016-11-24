@@ -105,6 +105,12 @@ public class ShowTaskDetailActivity extends BaseActivity{
                 startActivity(intent);
             }
         });
+        wanchen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
     //接受任务方法
     private void initAcceptTask(String id){
@@ -181,8 +187,6 @@ public class ShowTaskDetailActivity extends BaseActivity{
                 all.setVisibility(View.VISIBLE);
                 setData(showTaskDetail);
             }
-
-
         }
     };
   private void setData(ShowTaskDetail data){

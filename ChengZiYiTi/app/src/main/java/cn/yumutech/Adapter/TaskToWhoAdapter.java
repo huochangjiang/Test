@@ -78,21 +78,20 @@ public class TaskToWhoAdapter extends BaseAdapter{
             vh.selecte.setImageResource(R.drawable.story_wei);
         }
         maps.clear();
+        mapsbeen.clear();
         myView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               if(isSelector){
-                   isSelector=false;
-               }else {
-                   isSelector=true;
-               }
                 if(mData.get(index).type==UserBean.TYPE_CHECKED){
                     mData.get(index).type=UserBean.TYPE_NOCHECKED;
                     if(ids!=null){
                         if(maps!=null&&maps.size()>0) {
                             vh.selecte.setImageResource(R.drawable.story_wei);
                             maps.remove(index);
-                            ids.getMenmberIds(maps);
+                            mapsbeen.remove(index);
+                            mapsbeen.put(index,mData.get(index));
+                            ids.getMenmberIds(maps,mapsbeen,false);
+                            mapsbeen.remove(index);
                         }
                     }
                 }else{
@@ -100,7 +99,8 @@ public class TaskToWhoAdapter extends BaseAdapter{
                     if(ids!=null){
                         vh.selecte.setImageResource(R.drawable.story_selector);
                         maps.put(index,mData.get(index));
-                        ids.getMenmberIds(maps);
+                        mapsbeen.put(index,mData.get(index));
+                        ids.getMenmberIds(maps,mapsbeen,true);
                     }
                 }
             }
@@ -114,6 +114,6 @@ public class TaskToWhoAdapter extends BaseAdapter{
         public ImageView selecte;
     }
     public interface getIds{
-        void getMenmberIds(Map<Integer,UserAboutPerson.DataBean> beans);
+        void getMenmberIds(Map<Integer,UserAboutPerson.DataBean> beans,Map<Integer,UserAboutPerson.DataBean> cleanBeen,boolean isAdd);
     }
 }

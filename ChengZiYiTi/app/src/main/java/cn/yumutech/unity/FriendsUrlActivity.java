@@ -28,6 +28,7 @@ public class FriendsUrlActivity extends BaseActivity {
     private App app;
     private View net_connect;
     private View myprog;
+    private View tishi;
     protected void unsubscribe( Subscription subscription) {
         if (subscription != null && !subscription.isUnsubscribed()) {
             subscription.unsubscribe();
@@ -42,6 +43,8 @@ public class FriendsUrlActivity extends BaseActivity {
     protected void initViews(Bundle savedInstanceState) {
         app=App.getContext();
         listView = (ListView) findViewById(R.id.listview);
+        tishi=findViewById(R.id.tishi);
+        tishi.setVisibility(View.GONE);
         mAdapter = new YouQIngAdapter(this,data);
         listView.setAdapter(mAdapter);
         controlTitle(findViewById(R.id.back));
@@ -61,6 +64,7 @@ public class FriendsUrlActivity extends BaseActivity {
             if(!app.isNetworkConnected(this)){
                 listView.setVisibility(View.GONE);
                 myprog.setVisibility(View.GONE);
+                tishi.setVisibility(View.GONE);
                 net_connect.setVisibility(View.VISIBLE);
             }
         }
@@ -72,8 +76,15 @@ public class FriendsUrlActivity extends BaseActivity {
      * 加载列表数据
      */
     private void loadHome(List<YouQIngLianJie.DataBean> channels){
+        if(channels.isEmpty()){
+            tishi.setVisibility(View.VISIBLE);
+            listView.setVisibility(View.GONE);
+        }else {
+            tishi.setVisibility(View.GONE);
+            listView.setVisibility(View.VISIBLE);
+        }
         myprog.setVisibility(View.GONE);
-        listView.setVisibility(View.VISIBLE);
+
         data=channels;
         mAdapter.dataChange(channels);
     }
@@ -113,6 +124,7 @@ public class FriendsUrlActivity extends BaseActivity {
                 if(app.isNetworkConnected(FriendsUrlActivity.this)){
                     net_connect.setVisibility(View.GONE);
                     myprog.setVisibility(View.VISIBLE);
+                    tishi.setVisibility(View.GONE);
                     listView.setVisibility(View.GONE);
                     initData();
                 }

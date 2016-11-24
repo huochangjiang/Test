@@ -32,6 +32,10 @@ public class SaveData {
      */
     public String Dept_Id;
     public List<GroupClass> taskToChildGroups;
+    /**
+     * 保存被可以被指派的所有员工信息
+     */
+    public List<UserAboutPerson.DataBean> allEmployees=new ArrayList<>();
     //保存指派员工的信息
     public String taskZhiPaiToWho;
     public Map<Integer, UserAboutPerson.DataBean> zhiPaiBeen;

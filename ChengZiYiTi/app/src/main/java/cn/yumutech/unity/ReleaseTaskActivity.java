@@ -92,7 +92,6 @@ public class ReleaseTaskActivity extends BaseActivity implements View.OnClickLis
     public void onEventMainThread(PublishTask task){
         if( SaveData.getInstance().twoPeople!=null&&SaveData.getInstance().twoPeople.size()>1){
             zhuPoeples=SaveData.getInstance().twoPeople;
-           // addPeople(zhipaiPeople);
             who_zhu.setText(zhuPoeples.get(0).name);
             who_xie.setText(zhuPoeples.get(1).name);
             rl_zhipairen.setVisibility(View.VISIBLE);
@@ -100,18 +99,6 @@ public class ReleaseTaskActivity extends BaseActivity implements View.OnClickLis
     }
     //遍历map集合，。取出其中的人名和id
     private List<Poeple> zhuPoeples=new ArrayList<>();
-//    private List<Poeple> addPeople(Map<Integer, UserAboutPerson.DataBean> beans){
-////        StringBuffer sb = new StringBuffer();
-//        poeples.clear();
-//        Iterator iter = beans.entrySet().iterator();
-//        while (iter.hasNext()) {
-//            Map.Entry entry = (Map.Entry) iter.next();
-//            int key = (int) entry.getKey();
-//            UserAboutPerson.DataBean val = (UserAboutPerson.DataBean) entry.getValue();
-//            poeples.add(new Poeple(val.nickname,val.id));
-//        }
-//        return poeples;
-//    }
     @Override
     public void onClick(View v) {
         switch (v.getId()){

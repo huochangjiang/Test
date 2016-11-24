@@ -60,8 +60,8 @@ public class getContact {
     }
     public void getData() {
         if (App.getContext().getLogo("logo") != null) {
-            mDept_id = App.getContext().getLogo("logo").data.dept_id;
-//            mDept_id ="3";
+//            mDept_id = App.getContext().getLogo("logo").data.dept_id;
+            mDept_id ="0";
             user_id = App.getContext().getLogo("logo").data.id;
             nickname=App.getContext().getLogo("logo").data.nickname;
         }
@@ -69,6 +69,7 @@ public class getContact {
             RequestCanShu canshus = new RequestCanShu(new RequestCanShu.UserBean(nickname, user_id),
                     new RequestCanShu.DataBean(null));
             initDatas1(new Gson().toJson(canshus));
+
         }
     }
     private void initDatas1( String canshu){
@@ -104,6 +105,7 @@ public class getContact {
                 Log.e("DepartList",data);
                 groupsDatas1.clear();
                 App.getContext().savaHomeJson("Contact",data);
+
                 mHandler.sendEmptyMessage(2);
             }
         }
@@ -160,6 +162,7 @@ public class getContact {
 //                    childGroupsDatasNode.add(0,groupsDatas.get(0));
                     groupsDatas.addAll(childGroupsDatasNode);
                     SaveData.getInstance().taskToChildGroups=childGroupsDatasNode;
+                    mHandler.sendEmptyMessageDelayed(50,500);
                     for (int m=0;m<childGroupsDatasNode.size();m++){
                         Log.e("info",childGroupsDatasNode.get(m).name);
                     }
@@ -182,6 +185,10 @@ public class getContact {
                         threrGroups(groupClasses);
                     }
                     mHandler.sendEmptyMessageDelayed(1,1000);
+
+                    break;
+                case 50:
+                    getAllMenbers();
                     break;
             }
         }
@@ -215,61 +222,108 @@ public class getContact {
                     childList.add(allGroupsDatas.get(i));
                 }
             }
-
-//            for(int i=0;i<mData.size();i++) {
-//                //有子部门进入循环
-//                if (myDept_id.equals(mData.get(i).dept_parent_id)) {
-//                    childGroupsDatasNode.add(new GroupClass(mData.get(i).name, mData.get(i).dept_id, mData.get(i).dept_parent_id));
-////                    groupsDatasNode.add(new GroupClass(mData.get(i).name, mData.get(i).dept_id, mData.get(i).dept_parent_id));
-//                }
-//                //判断是否有孩子
-//                if(childGroupsDatasNode.size()>0){
-//                    isHaveChild=true;
-//                }else {
-//                    isHaveChild=false;
-//                }
-//                //判断是否已经遍历完
-//                if(isHaveChild) {
-//                    if (i == mData.size() - 1) {
-//                        isOver = true;
-//                        groupsDatasNode.clear();
-//                        groupsDatasNode.addAll(childGroupsDatasNode);
-//                        groupsDatas.addAll(childGroupsDatasNode);
-//                        allGroupsDatas.removeAll(childGroupsDatasNode);
-//                        childGroupsDatasNode.clear();
-//                    }
-//                }
-//                if(isOver) {
-//                    for (int j = 0; j < groupsDatasNode.size(); j++) {
-//                        isOver=false;
-//                        childrenGroups(groupsDatasNode.get(j).dept_id, allGroupsDatas);
-//                    }
-//                }
-//            }
-
-//                if(groupsDatasNode.size()==0){
-//                    isHaveChild=false;
-//                }
-//                if(i==mData.size()-1&&isHaveChild){
-//                    groupsDatas.addAll(groupsDatasNode);
-//                }
-//                if(isOver){
-//                    childGroupsDatasNode.addAll(groupsDatasNode);
-//                }
-//                if(childGroupsDatasNode.size()>0){
-//                    for(int j=0;j<childGroupsDatasNode.size();j++){
-//                        if(j==groupsDatas.size()-1){
-//                            isOver=true;
-////                    groupsDatasNode.clear();
-//                        }else {
-//                            isOver=false;
-//                        }
-//                        childrenGroups(childGroupsDatasNode.get(j).dept_id,allGroupsDatas);
-//
-//                    }
-//                }
-//            }
         }
         return childList;
+    }
+
+
+    /**
+     * 以下为指派页面获取所有成员的数据
+     */
+    private List<UserAboutPerson.DataBean> chengyuanData=new ArrayList<>();
+    Subscription subscription2;
+    private List<GroupClass> mData=new ArrayList<>();
+    private int postion;
+    private int i=1;
+    private void getAllMenbers(){
+         new Thread(new Runnable() {
+             @Override
+             public void run() {
+                 if(SaveData.getInstance().taskToChildGroups!=null) {
+                     mData.addAll(SaveData.getInstance().taskToChildGroups);
+                 }
+                 if(mData!=null&&mData.size()>0){
+                     postion=mData.size();
+                 }
+                 otherHandler.sendEmptyMessageDelayed(10,1000);
+//                 otherHandler.sendEmptyMessage(10);
+             }
+         }).start();
+
+    }
+    Handler otherHandler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case 10:
+                    if(mData!=null&&mData.size()>0){
+                        otherData1(mData.get(i-1).dept_id);
+                    }
+                    break;
+            }
+        }
+    };
+    private void otherData1(String dept_id){
+        if(App.getContext().getLogo("logo")!=null&&App.getContext().getLogo("logo").data!=null) {
+            RequestParams canshus = new RequestParams(new RequestParams.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
+                    new RequestParams.DataBean(dept_id));
+            otherDatas2(new Gson().toJson(canshus));
+        }else {
+//            Toast.makeText(TaskToWhoActivity.this,"您还未登陆",Toast.LENGTH_SHORT).show();
+        }
+    }
+    private void otherDatas2( String canshu){
+        subscription2 = Api.getMangoApi1().getUserAboutPerson(canshu)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer2);
+
+    }
+    Observer<UserAboutPerson> observer2 = new Observer<UserAboutPerson>() {
+        @Override
+        public void onCompleted() {
+            unsubscribe(subscription2);
+        }
+        @Override
+        public void onError(Throwable e) {
+            e.printStackTrace();
+
+        }
+        @Override
+        public void onNext(UserAboutPerson channels) {
+            if(channels.status.code.equals("0")){
+                chengyuanData.addAll(channels.data);
+                if(i<postion){
+                    isOver=false;
+                    Log.e("cishu","来的第"+i+""+"次"+"部门个数"+mData.size()+"");
+                    i++;
+                    otherHandler.sendEmptyMessageDelayed(10,50);
+                }else if(i==postion){
+                    isOver=true;
+                    Log.e("wanle","走完了"+i+""+"次");
+                }
+                if(isOver){
+                    Log.e("jiashuju",chengyuanData.size()+"");
+                    SaveData.getInstance().allEmployees.addAll(removeDuplicate(chengyuanData));
+                    for (int i=0;i<SaveData.getInstance().allEmployees.size();i++){
+                        Log.e("chengyuan","第"+i+"个员工"+SaveData.getInstance().allEmployees.get(i).nickname);
+                    }
+
+//                    adapter.dataChange(removeDuplicate(chengyuanData));
+                }
+            }
+        }
+    };
+    //去掉重复的数据
+    private static List<UserAboutPerson.DataBean> removeDuplicate(List<UserAboutPerson.DataBean> data){
+        for (int i=0;i<data.size();i++){
+            for(int j=data.size()-1;j>i;j--){
+                if(data.get(j).id.equals(data.get(i).id)){
+                    data.remove(j);
+                }
+            }
+        }
+        return data;
     }
 }

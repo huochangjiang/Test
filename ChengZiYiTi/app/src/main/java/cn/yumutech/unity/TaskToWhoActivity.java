@@ -1,15 +1,11 @@
 package cn.yumutech.unity;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -20,15 +16,10 @@ import cn.yumutech.Adapter.TaskToWhoAdapter;
 import cn.yumutech.bean.GroupClass;
 import cn.yumutech.bean.Poeple;
 import cn.yumutech.bean.PublishTask;
-import cn.yumutech.bean.RequestParams;
 import cn.yumutech.bean.UserAboutPerson;
-import cn.yumutech.netUtil.Api;
 import cn.yumutech.weight.SaveData;
 import de.greenrobot.event.EventBus;
-import rx.Observer;
 import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by Administrator on 2016/11/22.
@@ -36,7 +27,6 @@ import rx.schedulers.Schedulers;
 public class TaskToWhoActivity extends BaseActivity implements View.OnClickListener{
     public ImageView back;
     private TaskToWhoAdapter adapter;
-    private List<GroupClass> mData1=new ArrayList<>();
     private List<GroupClass> mData=new ArrayList<>();
     private List<UserAboutPerson.DataBean> chengyuanData=new ArrayList<>();
     Subscription subscription;
@@ -59,39 +49,53 @@ public class TaskToWhoActivity extends BaseActivity implements View.OnClickListe
             mData.addAll(SaveData.getInstance().taskToChildGroups);
 //            mData.add(App.getContext().getDepartment("department"));
         }
+        if( SaveData.getInstance().twoPeople.size()>0){
+            SaveData.getInstance().twoPeople.clear();
+        }
         back= (ImageView) findViewById(R.id.back);
         listview= (ListView) findViewById(R.id.listview);
         rl_send= (RelativeLayout) findViewById(R.id.rl_send);
         rl_send.setOnClickListener(this);
+        if(!SaveData.getInstance().allEmployees.isEmpty()&&SaveData.getInstance().allEmployees.size()>0){
+            for(int i=0;i<SaveData.getInstance().allEmployees.size();i++){
+                SaveData.getInstance().allEmployees.get(i).setType(0);
+            }
+        }
+        chengyuanData=SaveData.getInstance().allEmployees;
         adapter=new TaskToWhoAdapter(TaskToWhoActivity.this,chengyuanData);
         listview.setAdapter(adapter);
         isOver=false;
     }
-
     private int postion;
     private int i=1;
     @Override
     protected void initData() {
-            if(mData!=null&&mData.size()>0){
-                postion=mData.size();
-            }
-            mHandler.sendEmptyMessage(1);
-
+//        initThreaData();
     }
-
-    Handler mHandler=new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what){
-                case 1:
-                    if(mData!=null&&mData.size()>0){
-                        initData1(mData.get(i-1).dept_id);
-                    }
-                    break;
-            }
-        }
-    };
+//    private void initThreaData(){
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                if(mData!=null&&mData.size()>0){
+//                    postion=mData.size();
+//                }
+//                mHandler.sendEmptyMessage(1);
+//            }
+//        }).start();
+//    }
+//    Handler mHandler=new Handler(){
+//        @Override
+//        public void handleMessage(Message msg) {
+//            super.handleMessage(msg);
+//            switch (msg.what){
+//                case 1:
+//                    if(mData!=null&&mData.size()>0){
+//                        initData1(mData.get(i-1).dept_id);
+//                    }
+//                    break;
+//            }
+//        }
+//    };
 
     @Override
     protected void initListeners() {
@@ -103,21 +107,33 @@ public class TaskToWhoActivity extends BaseActivity implements View.OnClickListe
         });
         adapter.setLisener(new TaskToWhoAdapter.getIds() {
             @Override
-            public void getMenmberIds(Map<Integer, UserAboutPerson.DataBean> beans) {
-                addPeople(beans);
-//                beans.clear();
-                SaveData.getInstance().twoPeople.addAll(poeples);
-                if(SaveData.getInstance().twoPeople.size()>2){
-                    SaveData.getInstance().twoPeople.remove(0);
+            public void getMenmberIds(Map<Integer, UserAboutPerson.DataBean> beans,Map<Integer,UserAboutPerson.DataBean> cleanBeen,boolean isAdd) {
+                if(isAdd){
+                    addPeople(cleanBeen);
+                    SaveData.getInstance().twoPeople.addAll(poeples);
+                }else {
+                    deletePeople(cleanBeen);
+                    for(int i=0;i< SaveData.getInstance().twoPeople.size();i++){
+                        if((deletepoeples.get(0).id).equals(SaveData.getInstance().twoPeople.get(i).id)){
+                            SaveData.getInstance().twoPeople.remove(i);
+                        }
+                    }
                 }
+                shijiPoeples=beans;
+                cleanBeen.clear();
+//                if(SaveData.getInstance().twoPeople.size()>2){
+//                    SaveData.getInstance().twoPeople.remove(0);
+//                }
 
             }
         });
     }
-    //遍历map集合，。取出其中的人名和id,
+    //遍历map集合，。取出其中的人名和id放入poeples中，shijiPoeples中存放被选中的人的个数,deletepoeples存放要删除的那一个数据
     private List<Poeple> poeples=new ArrayList<>();
+    private List<Poeple> deletepoeples=new ArrayList<>();
+    private Map<Integer, UserAboutPerson.DataBean> shijiPoeples;
+    //打钩时的正常遍历添加
     private List<Poeple> addPeople(Map<Integer, UserAboutPerson.DataBean> beans){
-//        StringBuffer sb = new StringBuffer();
         poeples.clear();
         Iterator iter = beans.entrySet().iterator();
         while (iter.hasNext()) {
@@ -128,56 +144,68 @@ public class TaskToWhoActivity extends BaseActivity implements View.OnClickListe
         }
         return poeples;
     }
-
-    private void initData1(String dept_id){
-        if(App.getContext().getLogo("logo")!=null&&App.getContext().getLogo("logo").data!=null) {
-            RequestParams canshus = new RequestParams(new RequestParams.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
-                    new RequestParams.DataBean(dept_id));
-            initDatas2(new Gson().toJson(canshus));
-        }else {
-            Toast.makeText(TaskToWhoActivity.this,"您还未登陆",Toast.LENGTH_SHORT).show();
+    //取消打钩的遍历，从集合中找到他并删除他个狗日的，妈卖批
+    private List<Poeple> deletePeople(Map<Integer, UserAboutPerson.DataBean> beans){
+        deletepoeples.clear();
+        Iterator iter = beans.entrySet().iterator();
+        while (iter.hasNext()) {
+            Map.Entry entry = (Map.Entry) iter.next();
+            int key = (int) entry.getKey();
+            UserAboutPerson.DataBean val = (UserAboutPerson.DataBean) entry.getValue();
+            deletepoeples.add(new Poeple(val.nickname,val.id));
         }
+        return deletepoeples;
     }
-    private void initDatas2( String canshu){
-        subscription = Api.getMangoApi1().getUserAboutPerson(canshu)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(observer);
 
-    }
-    Observer<UserAboutPerson> observer = new Observer<UserAboutPerson>() {
-        @Override
-        public void onCompleted() {
-            unsubscribe(subscription);
-        }
-        @Override
-        public void onError(Throwable e) {
-            e.printStackTrace();
-
-        }
-        @Override
-        public void onNext(UserAboutPerson channels) {
-            if(channels.status.code.equals("0")){
-                chengyuanData.addAll(channels.data);
-                if(i<postion){
-                    isOver=false;
-                    i++;
-                    mHandler.sendEmptyMessage(1);
-                }else if(i==postion){
-                    isOver=true;
-                }
-                if(isOver){
-                    adapter.dataChange(removeDuplicate(chengyuanData));
-                }
-            }
-        }
-    };
-
-    protected void unsubscribe( Subscription subscription) {
-        if (subscription != null && !subscription.isUnsubscribed()) {
-            subscription.unsubscribe();
-        }
-    }
+//    private void initData1(String dept_id){
+//        if(App.getContext().getLogo("logo")!=null&&App.getContext().getLogo("logo").data!=null) {
+//            RequestParams canshus = new RequestParams(new RequestParams.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
+//                    new RequestParams.DataBean(dept_id));
+//            initDatas2(new Gson().toJson(canshus));
+//        }else {
+//            Toast.makeText(TaskToWhoActivity.this,"您还未登陆",Toast.LENGTH_SHORT).show();
+//        }
+//    }
+//    private void initDatas2( String canshu){
+//        subscription = Api.getMangoApi1().getUserAboutPerson(canshu)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(observer);
+//
+//    }
+//    Observer<UserAboutPerson> observer = new Observer<UserAboutPerson>() {
+//        @Override
+//        public void onCompleted() {
+//            unsubscribe(subscription);
+//        }
+//        @Override
+//        public void onError(Throwable e) {
+//            e.printStackTrace();
+//
+//        }
+//        @Override
+//        public void onNext(UserAboutPerson channels) {
+//            if(channels.status.code.equals("0")){
+//                chengyuanData.addAll(channels.data);
+//                if(i<postion){
+//                    isOver=false;
+//                    i++;
+//                    mHandler.sendEmptyMessage(1);
+//                }else if(i==postion){
+//                    isOver=true;
+//                }
+//                if(isOver){
+//                    adapter.dataChange(removeDuplicate(chengyuanData));
+//                }
+//            }
+//        }
+//    };
+//
+//    protected void unsubscribe( Subscription subscription) {
+//        if (subscription != null && !subscription.isUnsubscribed()) {
+//            subscription.unsubscribe();
+//        }
+//    }
 
     //去掉重复的数据
     private static List<UserAboutPerson.DataBean> removeDuplicate(List<UserAboutPerson.DataBean> data){
@@ -195,8 +223,12 @@ public class TaskToWhoActivity extends BaseActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.rl_send:
-                EventBus.getDefault().post(new PublishTask());
-                finish();
+                if(shijiPoeples.size()>2){
+                    Toast.makeText(TaskToWhoActivity.this,"您最多可指派两人",Toast.LENGTH_SHORT).show();
+                }else {
+                    EventBus.getDefault().post(new PublishTask());
+                    finish();
+                }
                 break;
         }
     }
