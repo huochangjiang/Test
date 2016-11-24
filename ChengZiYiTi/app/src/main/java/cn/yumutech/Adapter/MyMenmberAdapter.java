@@ -48,7 +48,7 @@ public class MyMenmberAdapter extends BaseAdapter{
     }
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        ViewHolder vh;
+      final  ViewHolder vh;
         final int index=position;
         if(convertView==null){
             vh=new ViewHolder();
@@ -78,12 +78,16 @@ public class MyMenmberAdapter extends BaseAdapter{
                     if(ids!=null){
                         if(maps!=null&&maps.size()>0) {
                             maps.remove(index);
+                            vh.cb.setImageResource(R.drawable.story_wei);
+
                             ids.getMenmberIds(maps);
                         }
                     }
                 }else {
                     mDatas.get(index).type = UserBean.TYPE_CHECKED;
                     if (ids != null) {
+                        vh.cb.setImageResource(R.drawable.story_selector);
+
                         maps.put(index, mDatas.get(index));
                         ids.getMenmberIds(maps);
                     }

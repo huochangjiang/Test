@@ -37,21 +37,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="創建討論組"
+                android:text="创建讨论组"
                 android:textSize="16sp"
                 android:textColor="@color/white"
                 android:id="@+id/tv_home"
                 android:layout_height="wrap_content" />
-            <TextView
-                android:layout_width="60dp"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:text="确定"
-                android:gravity="center"
-                android:textSize="16sp"
-                android:textColor="@color/white"
-                android:id="@+id/tv_qure"
-                android:layout_height="match_parent" />
+
 
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
@@ -59,16 +50,16 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:id="@+id/et"
-        android:hint="創建討論組"
+        android:hint="新建讨论组"
         android:paddingLeft="5dp"
         android:textColor="@color/small_title"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:background="@drawable/edittextstoke"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
         android:layout_below="@+id/id_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="50dp" />
+        android:layout_height="35dp" />
     <ListView
         android:background="@color/white"
         android:layout_marginBottom="70dp"

@@ -1,6 +1,5 @@
 package cn.yumutech.unity;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -365,11 +364,11 @@ public class LogoActivity extends BaseActivity implements View.OnClickListener{
             @Override
             public void onSuccess(String s) {
                 UserGetToken.getInstance(LogoActivity.this).asyneUserInfo(App.getContext().getLogo("logo").data.id);
-                   Intent intent=new Intent();
-                    intent.setClass(LogoActivity.this,AfterLoginActivity.class);
-                    intent.putExtra("name",mLogin.data.nickname);
-                    intent.putExtra("logo",mLogin.data.logo_path);
-                    startActivity(intent);
+//                   Intent intent=new Intent();
+//                    intent.setClass(LogoActivity.this,AfterLoginActivity.class);
+//                    intent.putExtra("name",mLogin.data.nickname);
+//                    intent.putExtra("logo",mLogin.data.logo_path);
+//                    startActivity(intent);
                    finish();
 //            Log.e("info",s+"---");
 //                if(RongIM.getInstance()!=null){
