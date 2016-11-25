@@ -168,14 +168,12 @@ public class DralayoutFragment extends BaseFragment {
         }else {
             Toast.makeText(getActivity(),"您还未登陆",Toast.LENGTH_SHORT).show();
         }
-
     }
     @Override
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
-
     /**
      * 联系人查查找
      * @param data

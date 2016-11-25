@@ -22,7 +22,6 @@ import cn.yumutech.fragments.MailListFragment;
 import cn.yumutech.fragments.PersonFragment;
 import cn.yumutech.fragments.SuperviseFragment;
 import cn.yumutech.netUtil.FileUtils;
-import cn.yumutech.netUtil.UpdateManager;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Group;

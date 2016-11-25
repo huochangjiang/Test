@@ -1,58 +1,33 @@
 package cn.yumutech.unity;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.DrawerLayout;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
+import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import cn.yumutech.Adapter.MyMenmberAdapter;
-import cn.yumutech.bean.CreateQunZu;
-import cn.yumutech.bean.JoinQun;
-import cn.yumutech.bean.RequestCanShu;
+import cn.yumutech.Adapter.SimpleTreeAdapter;
+import cn.yumutech.bean.BaiBao;
+import cn.yumutech.bean.FileBean;
+import cn.yumutech.bean.GroupClass;
 import cn.yumutech.bean.UserAboutPerson;
-import cn.yumutech.netUtil.Api;
-import io.rong.imkit.RongIM;
-import io.rong.imlib.model.Group;
-import rx.Observer;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import cn.yumutech.fragments.CreatQunZhuFragment;
+import cn.yumutech.tree.been.Node;
+import cn.yumutech.tree.been.TreeListViewAdapter;
+import de.greenrobot.event.EventBus;
 
 public class QunMenmberSelectorActivity extends BaseActivity {
+    private ListView expandableListView;
+    private DrawerLayout drawerlayout;
+    private SimpleTreeAdapter adapter;
 
-
-    private TextView tv_quer;
-    private boolean isBaoHan=false;
-    private ListView listView;
-    private List<UserAboutPerson.DataBean> mDatas = new ArrayList<>();
-    private List<UserAboutPerson.DataBean> mDatas1 = new ArrayList<>();
-    private MyMenmberAdapter mAdapter;
-    private String type;
-    Subscription subscription;
-    Subscription subscription4;
-    private String groupId;
-    private String groupName;
-    private List<String> ids=new ArrayList<>();
-    private EditText editText;
-    private Button button;
-
-    protected void unsubscribe( Subscription subscription) {
-        if (subscription != null && !subscription.isUnsubscribed()) {
-            subscription.unsubscribe();
-        }
-    }
     @Override
     protected int getLayoutId() {
         return R.layout.activity_qun_menmber_selector;
@@ -60,127 +35,66 @@ public class QunMenmberSelectorActivity extends BaseActivity {
 
     @Override
     protected void initViews(Bundle savedInstanceState) {
-        Intent intent=getIntent();
-        if(intent!=null){
-            type = intent.getStringExtra("type");
-            groupId = intent.getStringExtra("groupId");
-            groupName = intent.getStringExtra("groupName");
-            if(type.equals("join")){
-                for (int i=0;i<App.getContext().mApbutPerson.size();i++){
-                    isBaoHan=false;
-                    for (int j=0;j<App.getContext().qunMember.size();j++){
-                            if ((App.getContext().mApbutPerson.get(i).id.equals(App.getContext().qunMember.get(j).userId))) {
-                                isBaoHan = true;
-                            }
-                    if(j==App.getContext().qunMember.size()-1) {
-                        if (!isBaoHan) {
-                            mDatas1.add(App.getContext().mApbutPerson.get(i));
-                        }
-                    }
-                        }
-
-                }
-                for (int k=0;k<mDatas1.size();k++){
-                    UserAboutPerson.DataBean bean=mDatas1.get(k);
-                    bean.type= UserAboutPerson.DataBean.TYPE_NOCHECKED;
-                }
-            }else if(type.equals("create")){
-                mDatas1=App.getContext().mApbutPerson;
-                for (int k=0;k<mDatas1.size();k++){
-                    UserAboutPerson.DataBean bean=mDatas1.get(k);
-                    bean.type= UserAboutPerson.DataBean.TYPE_NOCHECKED;
-                }
-
-            }
-        }
-        editText = (EditText) findViewById(R.id.et);
-        button = (Button) findViewById(R.id.denglu);
-        listView = (ListView) findViewById(R.id.listview);
-
-        mAdapter = new MyMenmberAdapter(mDatas1, this);
-        listView.setAdapter(mAdapter);
         controlTitle(findViewById(R.id.back));
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if(mIds!=null&&!(mIds.equals(""))){
-                    if(editText.getText().toString().trim()!=null&&!editText.getText().toString().trim().equals("")) {
-                        RequestCanShu canshus = new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
-                                new RequestCanShu.DataBean(App.getContext().getLogo("logo").data.id + "," + mIds, editText.getText().toString().trim()));
-                        initDatas4(new Gson().toJson(canshus));
-                    }else{
-                        Toast.makeText(QunMenmberSelectorActivity.this, "请输入讨论组名字", Toast.LENGTH_SHORT).show();
+        drawerlayout= (DrawerLayout) findViewById(R.id.drawerlayout).findViewById(R.id.drawer);
+        expandableListView = (ListView) findViewById(R.id.expandlistview);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.fragment_layout, CreatQunZhuFragment.newInstance()).commitAllowingStateLoss();
+        initDatas1();
+        try
+        {
+            adapter = new SimpleTreeAdapter<FileBean>(expandableListView, QunMenmberSelectorActivity.this, mDatas2, 10);
+            adapter.setOnTreeNodeClickListener(new TreeListViewAdapter.OnTreeNodeClickListener()
+            {
+                @Override
+                public void onClick(Node node, int position)
+                {
+                    if (node.isLeaf())
+                    {
+                        Toast.makeText(QunMenmberSelectorActivity.this, node.getName(),
+                                Toast.LENGTH_SHORT).show();
                     }
-
-                }else{
-                    Toast.makeText(QunMenmberSelectorActivity.this, "请添加群成员", Toast.LENGTH_SHORT).show();
                 }
-            }
-        });
 
+            });
+
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        expandableListView.setAdapter(adapter);
     }
-
-    String mIds;
-
     @Override
     protected void initData() {
-        mAdapter.setLisener(new MyMenmberAdapter.getIds() {
+        expandableListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void getMenmberIds(Map<Integer, UserAboutPerson.DataBean> beans) {
-                    mIds = getMemberIds(beans);
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                drawerlayout.closeDrawers();
+                if(mData!=null){
+                    cn.yumutech.weight.SaveData.getInstance().createDetpt_id=mData.get(i).dept_id;
+                    EventBus.getDefault().post(new BaiBao("cc",0));
+                }
+
             }
         });
-//        tv_quer.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if(type.equals("create")) {
-//                    if(mIds!=null&&!mIds.equals("")) {
 //
-//                        for (int i=0;i<App.getContext().mApbutPerson.size();i++){
-//                            App.getContext().mApbutPerson.get(i).type=0;
-//                        }
-//                        Intent intent = new Intent(QunMenmberSelectorActivity.this, CreateQunZhuActivity.class);
-//                        intent.putExtra("id", mIds);
-//                        startActivity(intent);
-//                        finish();
-//                    }else{
-//                        Toast.makeText(QunMenmberSelectorActivity.this, "请选择成员", Toast.LENGTH_SHORT).show();
-//                    }
-//                }else{
-//                    if(mIds!=null&&!mIds.equals("")) {
-////                        Intent intent = new Intent(QunMenmberSelectorActivity.this, CreateQunZhuActivity.class);
-////                        intent.putExtra("id", mIds);
-////                        startActivity(intent);
-////                        finish();
-//
-//                        if(App.getContext().getLogo("logo")!=null) {
-//
-//
-//                            RequestParams canshus = new RequestParams(new RequestParams.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
-//                                    new RequestParams.DataBean(mIds,groupId,groupName));
-//                            initDatas1(new Gson().toJson(canshus));
-//                        }
-//
-//                    }else{
-//                        Toast.makeText(QunMenmberSelectorActivity.this, "请选择成员", Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-//
-//            }
-//        });
     }
-    private void initDatas1( String canshu){
-        subscription = Api.getMangoApi1().getJoinQun(canshu)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(observer);
 
-    }
     @Override
     protected void initListeners() {
     }
+    private List<FileBean> mDatas2 = new ArrayList<FileBean>();
+    private List<GroupClass> mData=new ArrayList<>();
 
+    private void initDatas1() {
+        if(cn.yumutech.weight.SaveData.getInstance().taskToChildGroups!=null) {
+            mData.addAll(cn.yumutech.weight.SaveData.getInstance().taskToChildGroups);
+
+        }
+        for(int i=0;i<mData.size();i++){
+            mDatas2.add(new FileBean(Integer.valueOf(mData.get(i).dept_id),Integer.valueOf(mData.get(i).dept_parent_id),mData.get(i).name));
+        }
+    }
     List<String> iids = new ArrayList<>();
 
     private String getMemberIds(Map<Integer, UserAboutPerson.DataBean> beans) {
@@ -203,61 +117,4 @@ public class QunMenmberSelectorActivity extends BaseActivity {
         }
         return sb.toString();
     }
-
-
-    //加入群组
-    Observer<JoinQun> observer = new Observer<JoinQun>() {
-        @Override
-        public void onCompleted() {
-            unsubscribe(subscription);
-        }
-        @Override
-        public void onError(Throwable e) {
-            e.printStackTrace();
-
-        }
-        @Override
-        public void onNext(JoinQun channels) {
-            if(channels.status.code.equals("0")){
-                for (int i=0;i<App.getContext().mApbutPerson.size();i++){
-                    App.getContext().mApbutPerson.get(i).type=0;
-                }
-                finish();
-            }
-
-        }
-    };
-
-
-    //創建qunzhu
-
-
-    private void initDatas4( String canshu){
-        subscription = Api.getMangoApi1().getCreateQunZhu(canshu)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(observer4);
-
-    }
-    Observer<CreateQunZu> observer4 = new Observer<CreateQunZu>() {
-        @Override
-        public void onCompleted() {
-            unsubscribe(subscription4);
-        }
-        @Override
-        public void onError(Throwable e) {
-            e.printStackTrace();
-
-        }
-        @Override
-        public void onNext(CreateQunZu channels) {
-            if(channels.status.code.equals("0")){
-                Group group=new Group(channels.data.groupId,channels.data.groupName, Uri.parse(channels.data.create_user_logo_path));
-                RongIM.getInstance().refreshGroupInfoCache(group);
-                RongIM.getInstance().startGroupChat(QunMenmberSelectorActivity.this, channels.data.groupId, channels.data.groupName);
-                finish();
-            }
-
-        }
-    };
 }
