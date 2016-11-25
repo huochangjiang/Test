@@ -29,6 +29,7 @@ import cn.yumutech.bean.ShowMyTask;
 import cn.yumutech.bean.ShowTaskDetail;
 import cn.yumutech.bean.ShuaXinQunZhu;
 import cn.yumutech.bean.TuiChuQun;
+import cn.yumutech.bean.Update;
 import cn.yumutech.bean.UserAboutPerson;
 import cn.yumutech.bean.UserInfoDetail;
 import cn.yumutech.bean.UserLogin;
@@ -191,4 +192,7 @@ Observable<WorkDetails> getWorkDetais(@Query("req") String policy);
     //上傳設備的token
     @POST("DeviceToken")
     Observable<DeviceTokenBean> getDevieTokenBean(@Query("req") String item);
+    //檢查設備信息
+    @POST("CheckLatestVersion")
+    Observable<Update> getSheBeiXinXi(@Query("req") String item);
 }

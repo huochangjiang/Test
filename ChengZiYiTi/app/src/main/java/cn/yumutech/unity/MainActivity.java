@@ -21,6 +21,8 @@ import cn.yumutech.fragments.HomeFragment;
 import cn.yumutech.fragments.MailListFragment;
 import cn.yumutech.fragments.PersonFragment;
 import cn.yumutech.fragments.SuperviseFragment;
+import cn.yumutech.netUtil.FileUtils;
+import cn.yumutech.netUtil.UpdateManager;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Group;
@@ -52,6 +54,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,R
     @Override
     protected void initViews(Bundle savedInstanceState) {
         app= App.getContext();
+        savePath=getDir("update", 0).getAbsolutePath();
         addFragement(HomeFragment.newInstance());
         addFragement(SuperviseFragment.newInstance());
         addFragement(MailListFragment.newInstance());
@@ -145,6 +148,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,R
         }
     }
 
+    public String savePath;
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+            FileUtils.deleteFolderFile(savePath, false);
+    }
 
     //改变标签栏的颜色
     private void initTabs(){
