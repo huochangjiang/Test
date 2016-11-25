@@ -45,4 +45,15 @@ public class SaveData {
 //    public List<List<ChindClass>> chindDatas;
     //查看完成任务时的信息
     public ShowTaskDetail showTaskComplete;
+
+
+    /**
+     * 指派人哪儿的数据
+     */
+    //保存跳转到指派页面时的type，判断其是从哪个页面跳转过来的
+    public String type="0";
+    //保存从详情页面跳转过来时的task_id
+    public String task_id;
+    //保存树形的数据顺序
+    public  List<GroupClass> shuXingData=new ArrayList<>();
 }

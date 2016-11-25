@@ -60,6 +60,8 @@
         <activity android:name=".TaskEndDateActivity" />
         <activity android:name=".ShowTaskDetailActivity" />
         <activity android:name=".LookResultActivity"/>
+        <activity android:name=".TaskToWhoNewActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
         <activity
             android:name=".DatePickActivity"
             android:theme="@style/MyDialogStyleBottom" />

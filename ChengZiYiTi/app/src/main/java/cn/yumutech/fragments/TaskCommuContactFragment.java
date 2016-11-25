@@ -29,16 +29,16 @@ import cn.yumutech.weight.SaveData;
 import de.greenrobot.event.EventBus;
 
 /**
- * Created by Allen on 2016/11/13.
+ * Created by Allen on 2016/11/25.
  */
-public class CommuContactFragment extends BaseFragment{
-
+public class TaskCommuContactFragment extends BaseFragment {
     private static CommuContactFragment fragment;
     private View contactView;
     private ListView expandableListView;
     private DrawerLayout drawerlayout;
     public String mDept_id;
     public String user_id;
+
     private List<GroupClass> mData=new ArrayList<>();
     private GroupsDatasAdapter mAdapter;
     private SimpleTreeAdapter adapter;
@@ -50,7 +50,7 @@ public class CommuContactFragment extends BaseFragment{
 
     private boolean isOver1;
 
-    public CommuContactFragment() {
+    public TaskCommuContactFragment() {
 
     }
 
@@ -79,7 +79,7 @@ public class CommuContactFragment extends BaseFragment{
         initExtra();
         expandableListView = (ListView) contentView.findViewById(R.id.expandlistview);
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.fragment_layout, DralayoutFragment.newInstance()).commitAllowingStateLoss();
+        fragmentManager.beginTransaction().replace(R.id.fragment_layout, TaskDralayoutFragment.newInstance()).commitAllowingStateLoss();
         initDatas1();
         try
         {
@@ -103,6 +103,9 @@ public class CommuContactFragment extends BaseFragment{
             e.printStackTrace();
         }
         expandableListView.setAdapter(adapter);
+        for(int a=0;a<SaveData.getInstance().shuXingData.size();a++){
+            Log.e("shu",SaveData.getInstance().shuXingData.get(a).name+SaveData.getInstance().shuXingData.get(a).dept_id);
+        }
 
     }
 
@@ -122,7 +125,6 @@ public class CommuContactFragment extends BaseFragment{
                     SaveData.getInstance().Dept_Id=SaveData.getInstance().shuXingData.get(i).dept_id;
                     EventBus.getDefault().post(new UserAboutPerson());
                 }
-
             }
         });
 
@@ -136,47 +138,11 @@ public class CommuContactFragment extends BaseFragment{
     private void initDatas1() {
         if(SaveData.getInstance().taskToChildGroups!=null) {
             mData.addAll(SaveData.getInstance().taskToChildGroups);
-//            mAdapter = new GroupsDatasAdapter(mActivity, mData);
-//            expandableListView.setAdapter(mAdapter);
         }
-//        mDatas.add(new Bean(1, 0, "根目录1"));
-//        mDatas.add(new Bean(2, 0, "根目录2"));
-//        mDatas.add(new Bean(3, 0, "根目录3"));
-//        mDatas.add(new Bean(4, 0, "根目录4"));
-//        mDatas.add(new Bean(5, 1, "子目录1-1"));
-//        mDatas.add(new Bean(6, 1, "子目录1-2"));
-//
-//        mDatas.add(new Bean(7, 5, "子目录1-1-1"));
-//        mDatas.add(new Bean(8, 2, "子目录2-1"));
-//
-//        mDatas.add(new Bean(9, 4, "子目录4-1"));
-//        mDatas.add(new Bean(10, 4, "子目录4-2"));
-//
-//        mDatas.add(new Bean(11, 10, "子目录4-2-1"));
-//        mDatas.add(new Bean(12, 10, "子目录4-2-3"));
-//        mDatas.add(new Bean(13, 10, "子目录4-2-2"));
-//        mDatas.add(new Bean(14, 9, "子目录4-1-1"));
-//        mDatas.add(new Bean(15, 9, "子目录4-1-2"));
-//        mDatas.add(new Bean(16, 9, "子目录4-1-3"));
-//
-//        mDatas2.add(new FileBean(1, 0, " 文件管理系统"));
-//        mDatas2.add(new FileBean(2, 1, "游戏"));
-//        mDatas2.add(new FileBean(3, 1, "文档"));
-//        mDatas2.add(new FileBean(4, 1, "程序"));
-//        mDatas2.add(new FileBean(5, 2, "war3"));
-//        mDatas2.add(new FileBean(6, 2, "刀塔传奇"));
-
         for(int i=0;i<mData.size();i++){
             mDatas2.add(new FileBean(Integer.valueOf(mData.get(i).dept_id),Integer.valueOf(mData.get(i).dept_parent_id),mData.get(i).name));
         }
-//        mDatas2.add(new FileBean(7, 4, "面向对象"));
-//        mDatas2.add(new FileBean(8, 4, "非面向对象"));
-//
-//        mDatas2.add(new FileBean(9, 7, "C++"));
-//        mDatas2.add(new FileBean(10, 7, "JAVA"));
-//        mDatas2.add(new FileBean(11, 7, "Javascript"));
-//        mDatas2.add(new FileBean(12, 8, "C"));
+
 
     }
-
 }

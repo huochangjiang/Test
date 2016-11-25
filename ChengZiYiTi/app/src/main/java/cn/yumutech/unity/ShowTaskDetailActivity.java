@@ -122,7 +122,7 @@ public class ShowTaskDetailActivity extends BaseActivity{
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent();
-                intent.setClass(ShowTaskDetailActivity.this,TaskToWhoActivity.class);
+                intent.setClass(ShowTaskDetailActivity.this,TaskToWhoNewActivity.class);
                 intent.putExtra("type","2");
                 intent.putExtra("task_id",mData.data.task_id);
                 startActivity(intent);
