@@ -137,40 +137,38 @@
                 android:layout_height="wrap_content"
                 android:textSize="13sp"
                 android:layout_centerVertical="true"
-                android:textColor="@color/item_title"
+
                 android:text="主办人:"/>
         <TextView
             android:id="@+id/who_zhu"
-            android:layout_alignTop="@+id/zhubanren"
+            android:layout_centerVertical="true"
           android:layout_toLeftOf="@+id/xiebanren"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="张三"
             android:textSize="13sp"
-            android:layout_centerVertical="true"
-            android:textColor="@color/item_title"
+
             android:singleLine="true" />
             <TextView
                 android:id="@+id/xiebanren"
-                android:layout_alignTop="@+id/zhubanren"
                android:layout_toLeftOf="@+id/who_xie"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="13sp"
                 android:layout_centerVertical="true"
-                android:textColor="@color/item_title"
+
                 android:text="协办人:"/>
             <TextView
                 android:id="@+id/who_xie"
-                android:layout_alignTop="@+id/zhubanren"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="李四"
                 android:textSize="13sp"
-                android:textColor="@color/item_title"
-                android:singleLine="true"
                 android:layout_centerVertical="true"
+                android:singleLine="true"
+
                 android:layout_alignParentRight="true"/>
         </RelativeLayout>
         <ImageView
@@ -220,7 +218,7 @@
                 android:layout_height="wrap_content"
                 android:text=""
                 android:textSize="13sp"
-                android:textColor="@color/item_title"
+
                 android:layout_alignParentRight="true"
                 />
             </RelativeLayout>

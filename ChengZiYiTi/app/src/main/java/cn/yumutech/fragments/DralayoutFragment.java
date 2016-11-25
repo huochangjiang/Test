@@ -1,5 +1,6 @@
 package cn.yumutech.fragments;
 
+import android.net.Uri;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -28,6 +29,7 @@ import cn.yumutech.unity.R;
 import cn.yumutech.weight.SaveData;
 import de.greenrobot.event.EventBus;
 import io.rong.imkit.RongIM;
+import io.rong.imlib.model.UserInfo;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -150,6 +152,10 @@ public class DralayoutFragment extends BaseFragment {
                 mAdapter.dataChange(channels.data);
                 mDatas=channels.data;
                 App.getContext().mApbutPerson=channels.data;
+                for (int i=0;i<channels.data.size();i++){
+                    UserInfo info=new UserInfo(channels.data.get(i).id,channels.data.get(i).nickname, Uri.parse(channels.data.get(i).logo_path));
+                    RongIM.getInstance().refreshUserInfoCache(info);
+                }
             }
         }
     };

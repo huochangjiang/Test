@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 
@@ -43,10 +44,14 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
     private boolean isRefresh=false;
     private View myprog;
     private LinearLayout ll_feilei;
+    private List<Button> bts = new ArrayList<>();
     private Button bt1,bt2,bt3,bt4,bt5,bt6;
     private String fenlei="";
+    //判断上面的分类按钮是否被点击
+    private boolean isClick1,isClick2,isClick3,isClick4,isClick5,isClick6;
     //是否还是有数据
     private boolean isHave;
+    private View tishi;
     protected void unsubscribe( Subscription subscription) {
         if (subscription != null && !subscription.isUnsubscribed()) {
             subscription.unsubscribe();
@@ -69,6 +74,14 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
         bt4= (Button) findViewById(R.id.bt4);
         bt5= (Button) findViewById(R.id.bt5);
         bt6= (Button) findViewById(R.id.bt6);
+        bts.add(bt1);
+        bts.add(bt2);
+        bts.add(bt3);
+        bts.add(bt4);
+        bts.add(bt5);
+        bts.add(bt6);
+        tishi=findViewById(R.id.tishi);
+        tishi.setVisibility(View.GONE);
         myprog=findViewById(R.id.myprog);
         mAdapter = new PolicyAdapter(this,mdatas);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
@@ -92,6 +105,7 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
 
         }else{
             if(!app.isNetworkConnected(this)){
+                tishi.setVisibility(View.GONE);
                 net_connect.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.GONE);
                 ll_feilei.setVisibility(View.GONE);
@@ -118,10 +132,17 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
             mdatas=data;
         }
         mAdapter.dataChange(mdatas,isHave);
+        if(mdatas.isEmpty()){
+            tishi.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+        }else {
+            tishi.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+        }
         myprog.setVisibility(View.GONE);
         net_connect.setVisibility(View.GONE);
         ll_feilei.setVisibility(View.VISIBLE);
-       recyclerView.setVisibility(View.VISIBLE);
+
     }
     @Override
     protected void initData() {
@@ -139,42 +160,120 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
         bt1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fenlei=bt1.getText().toString().trim();
+                if(isClick1){
+                    isClick1=false;
+                    fenlei="";
+                    bt1.setBackgroundResource(R.drawable.logo_no);
+                }else{
+                    isClick1=true;
+                    isClick2=false;
+                    isClick3=false;
+                    isClick4=false;
+                    isClick5=false;
+                    isClick6=false;
+                    fenlei=bt1.getText().toString().trim();
+                    chanColor(0);
+                }
                 mHandler.sendEmptyMessage(1);
             }
         });
         bt2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fenlei=bt2.getText().toString().trim();
+                if(isClick2){
+                    isClick2=false;
+                    fenlei="";
+                    bt2.setBackgroundResource(R.drawable.logo_no);
+                }else{
+                    isClick2=true;
+                    isClick1=false;
+                    isClick3=false;
+                    isClick4=false;
+                    isClick5=false;
+                    isClick6=false;
+                    fenlei=bt2.getText().toString().trim();
+                    chanColor(1);
+                }
                 mHandler.sendEmptyMessage(1);
             }
         });
         bt3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fenlei=bt3.getText().toString().trim();
+                if(isClick3){
+                    isClick3=false;
+                    fenlei="";
+                    bt3.setBackgroundResource(R.drawable.logo_no);
+                }else{
+                    isClick3=true;
+                    isClick2=false;
+                    isClick1=false;
+                    isClick4=false;
+                    isClick5=false;
+                    isClick6=false;
+                    fenlei=bt3.getText().toString().trim();
+                    chanColor(2);
+                }
                 mHandler.sendEmptyMessage(1);
             }
         });
         bt4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fenlei=bt4.getText().toString().trim();
+                if(isClick4){
+                    isClick4=false;
+                    fenlei="";
+                    bt4.setBackgroundResource(R.drawable.logo_no);
+                }else{
+                    isClick4=true;
+                    isClick2=false;
+                    isClick3=false;
+                    isClick1=false;
+                    isClick5=false;
+                    isClick6=false;
+                    fenlei=bt4.getText().toString().trim();
+                    chanColor(3);
+                }
                 mHandler.sendEmptyMessage(1);
             }
         });
         bt5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fenlei=bt5.getText().toString().trim();
+                if(isClick5){
+                    isClick5=false;
+                    fenlei="";
+                    bt5.setBackgroundResource(R.drawable.logo_no);
+                }else{
+                    isClick5=true;
+                    isClick2=false;
+                    isClick3=false;
+                    isClick4=false;
+                    isClick1=false;
+                    isClick6=false;
+                    fenlei=bt5.getText().toString().trim();
+                    chanColor(4);
+                }
                 mHandler.sendEmptyMessage(1);
             }
         });
         bt6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fenlei=bt6.getText().toString().trim();
+                if(isClick6){
+                    isClick6=false;
+                    fenlei="";
+                    bt6.setBackgroundResource(R.drawable.logo_no);
+                }else{
+                    isClick6=true;
+                    isClick2=false;
+                    isClick3=false;
+                    isClick4=false;
+                    isClick5=false;
+                    isClick1=false;
+                    fenlei=bt6.getText().toString().trim();
+                    chanColor(5);
+                }
                 mHandler.sendEmptyMessage(1);
             }
         });
@@ -192,6 +291,7 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
                 if(app.isNetworkConnected(PolicyFileActivity.this)){
                     net_connect.setVisibility(View.GONE);
                     myprog.setVisibility(View.VISIBLE);
+                    tishi.setVisibility(View.GONE);
                     ll_feilei.setVisibility(View.VISIBLE);
                     initData();
                 }
@@ -262,7 +362,6 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
     //上拉刷新
     @Override
     public void onRefresh() {
-        fenlei="";
         mHandler.sendEmptyMessage(1);
     }
     Handler mHandler=new Handler(){
@@ -284,4 +383,15 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
             }
         }
     };
+    //判断那个button变背景
+    private void chanColor(int postion) {
+        for (int i = 0; i < bts.size(); i++) {
+            TextView bt = bts.get(i);
+            if (i == postion) {
+                bt.setBackgroundResource(R.drawable.logo);
+            } else {
+                bt.setBackgroundResource(R.drawable.logo_no);
+            }
+        }
+    }
 }

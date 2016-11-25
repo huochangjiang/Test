@@ -68,7 +68,7 @@ public class UserAboutPerson {
     public static class DataBean {
         public static final int TYPE_CHECKED = 1;
         public static final int TYPE_NOCHECKED = 0;
-        public int type=0;
+        public int type;
         public String id;
         public String birthday;
         public String dept_id;
@@ -80,6 +80,12 @@ public class UserAboutPerson {
         public String dept_name;
         public String mobile;
 
+        public int getType(){
+            return type;
+        }
+        public void setType(int type){
+            this.type=type;
+        }
         public String getId() {
             return id;
         }

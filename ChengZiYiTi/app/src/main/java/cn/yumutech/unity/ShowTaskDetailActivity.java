@@ -17,6 +17,7 @@ import cn.yumutech.bean.AcceptTaskBeen;
 import cn.yumutech.bean.ShowTaskDetail;
 import cn.yumutech.bean.ShowTaskDetailBeen;
 import cn.yumutech.netUtil.Api;
+import cn.yumutech.weight.SaveData;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -39,6 +40,7 @@ public class ShowTaskDetailActivity extends BaseActivity{
     private View myprog;
     private RelativeLayout all;
     private ShowTaskDetail mData;
+    private Button assign;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_show_task_detail;
@@ -57,7 +59,9 @@ public class ShowTaskDetailActivity extends BaseActivity{
         bt_accept= (Button) findViewById(R.id.bt_accept);
         back= (ImageView) findViewById(R.id.back);
         myprog=findViewById(R.id.myprog);
+        assign= (Button) findViewById(R.id.assign);
         all= (RelativeLayout) findViewById(R.id.all);
+
         myprog.setVisibility(View.VISIBLE);
 //       Button mbutton= (Button) findViewById(R.id.submit);
 
@@ -102,6 +106,25 @@ public class ShowTaskDetailActivity extends BaseActivity{
             public void onClick(View view) {
                 Intent intent=new Intent(ShowTaskDetailActivity.this,CompleteActivity.class);
                 intent.putExtra("tastid",mData.data.task_id);
+                startActivity(intent);
+            }
+        });
+        wanchen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SaveData.getInstance().showTaskComplete=mData;
+                Intent intent=new Intent();
+                intent.setClass(ShowTaskDetailActivity.this,LookResultActivity.class);
+                startActivity(intent);
+            }
+        });
+        assign.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent();
+                intent.setClass(ShowTaskDetailActivity.this,TaskToWhoActivity.class);
+                intent.putExtra("type","2");
+                intent.putExtra("task_id",mData.data.task_id);
                 startActivity(intent);
             }
         });
@@ -181,8 +204,6 @@ public class ShowTaskDetailActivity extends BaseActivity{
                 all.setVisibility(View.VISIBLE);
                 setData(showTaskDetail);
             }
-
-
         }
     };
   private void setData(ShowTaskDetail data){

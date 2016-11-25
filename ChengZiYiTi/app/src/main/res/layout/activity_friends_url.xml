@@ -52,6 +52,13 @@
         android:layout_height="match_parent"
         layout="@layout/net_connect"
         android:layout_width="match_parent"/>
+    <include
+        android:id="@+id/tishi"
+        layout="@layout/nodata_item"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_feilei"/>
     <ListView
         android:layout_below="@+id/id_toolbar"
         android:layout_width="match_parent"

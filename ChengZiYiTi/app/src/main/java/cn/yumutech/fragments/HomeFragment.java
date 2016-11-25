@@ -105,7 +105,7 @@ public class HomeFragment extends BaseFragment {
         });
         net_connect = contentView.findViewById(R.id.netconnect);
         initLocal();
-        //正常登录
+       //正常登录
         getContact.getInstance().getData();
     }
     //加载缓存
@@ -247,5 +247,11 @@ Subscription subscription;
     public void onDestroyView() {
         super.onDestroyView();
         baibaos.clear();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initDatas();
     }
 }
