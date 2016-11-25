@@ -159,7 +159,7 @@ public class DralayoutFragment extends BaseFragment {
             }
         }
     };
-    //评论回复按键响应事件
+    //点击部门按键响应事件
     public void onEventMainThread(UserAboutPerson userAboutPerson){
         if(App.getContext().getLogo("logo")!=null&&App.getContext().getLogo("logo").data!=null&&SaveData.getInstance().Dept_Id!=null) {
             RequestParams canshus = new RequestParams(new RequestParams.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),

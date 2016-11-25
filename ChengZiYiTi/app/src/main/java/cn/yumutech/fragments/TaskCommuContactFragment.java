@@ -29,16 +29,16 @@ import cn.yumutech.weight.SaveData;
 import de.greenrobot.event.EventBus;
 
 /**
- * Created by Allen on 2016/11/13.
+ * Created by Allen on 2016/11/25.
  */
-public class CommuContactFragment extends BaseFragment{
-
+public class TaskCommuContactFragment extends BaseFragment {
     private static CommuContactFragment fragment;
     private View contactView;
     private ListView expandableListView;
     private DrawerLayout drawerlayout;
     public String mDept_id;
     public String user_id;
+
     private List<GroupClass> mData=new ArrayList<>();
     private GroupsDatasAdapter mAdapter;
     private SimpleTreeAdapter adapter;
@@ -50,7 +50,7 @@ public class CommuContactFragment extends BaseFragment{
 
     private boolean isOver1;
 
-    public CommuContactFragment() {
+    public TaskCommuContactFragment() {
 
     }
 
@@ -79,7 +79,7 @@ public class CommuContactFragment extends BaseFragment{
         initExtra();
         expandableListView = (ListView) contentView.findViewById(R.id.expandlistview);
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.fragment_layout, DralayoutFragment.newInstance()).commitAllowingStateLoss();
+        fragmentManager.beginTransaction().replace(R.id.fragment_layout, TaskDralayoutFragment.newInstance()).commitAllowingStateLoss();
         initDatas1();
         try
         {
@@ -103,6 +103,9 @@ public class CommuContactFragment extends BaseFragment{
             e.printStackTrace();
         }
         expandableListView.setAdapter(adapter);
+        for(int a=0;a<SaveData.getInstance().shuXingData.size();a++){
+            Log.e("shu",SaveData.getInstance().shuXingData.get(a).name+SaveData.getInstance().shuXingData.get(a).dept_id);
+        }
 
     }
 
@@ -122,7 +125,6 @@ public class CommuContactFragment extends BaseFragment{
                     SaveData.getInstance().Dept_Id=SaveData.getInstance().shuXingData.get(i).dept_id;
                     EventBus.getDefault().post(new UserAboutPerson());
                 }
-
             }
         });
 
@@ -131,14 +133,16 @@ public class CommuContactFragment extends BaseFragment{
     @Override
     protected void initDatas() {
     }
+
+
     private void initDatas1() {
         if(SaveData.getInstance().taskToChildGroups!=null) {
             mData.addAll(SaveData.getInstance().taskToChildGroups);
-
         }
         for(int i=0;i<mData.size();i++){
             mDatas2.add(new FileBean(Integer.valueOf(mData.get(i).dept_id),Integer.valueOf(mData.get(i).dept_parent_id),mData.get(i).name));
         }
-    }
 
+
+    }
 }
