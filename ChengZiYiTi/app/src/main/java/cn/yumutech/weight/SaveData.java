@@ -32,7 +32,7 @@ public class SaveData {
      * 保存联系人的部门id
      */
     public String Dept_Id;
-    public List<GroupClass> taskToChildGroups;
+    public List<GroupClass> taskToChildGroups=new ArrayList<>();
     /**
      * 保存被可以被指派的所有员工信息
      */
