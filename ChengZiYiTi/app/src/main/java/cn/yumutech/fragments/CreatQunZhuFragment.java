@@ -227,7 +227,6 @@ public class CreatQunZhuFragment extends BaseFragment {
         @Override
         public void onNext(UserAboutPerson channels) {
             if(channels.status.code.equals("0")){
-                Log.e("info","a");
                 mAdapter.dataChange(channels.data);
                 mDatas=channels.data;
                 App.getContext().mApbutPerson=channels.data;
