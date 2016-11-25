@@ -88,6 +88,7 @@ public class ConversationActivity extends FragmentActivity{
             return;
 
         if (conversationType.equals(Conversation.ConversationType.PRIVATE)) {
+            mTitle3.setVisibility(View.GONE);
             setPrivateActionBar(targetId);
         } else if (conversationType.equals(Conversation.ConversationType.GROUP)) {
             setGroupActionBar(targetId);
