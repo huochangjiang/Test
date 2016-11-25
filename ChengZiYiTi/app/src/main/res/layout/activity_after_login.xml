@@ -78,11 +78,11 @@
             android:background="#ffffff" />
         <include
             android:id="@+id/two"
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             layout="@layout/user_item_function"
             android:background="#ffffff" />
+
     </LinearLayout>
     <Button
         android:id="@+id/unlogo"

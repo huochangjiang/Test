@@ -7,8 +7,11 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import cn.yumutech.bean.ShengJiRequest;
+import cn.yumutech.netUtil.UpdateManager;
 import cn.yumutech.weight.DataCleanManager;
 import cn.yumutech.weight.FileUtils1;
 import cn.yumutech.weight.SaveData;
@@ -43,7 +46,9 @@ public class AfterLoginActivity extends BaseActivity implements View.OnClickList
         tv_one= (TextView) findViewById(R.id.one).findViewById(R.id.tv);
         tv_one.setText("清除缓存");
         tv_two= (TextView) findViewById(R.id.two).findViewById(R.id.tv);
-        tv_two.setText("关于我们");
+        tv_two.setText("版本更新");
+        View view=findViewById(R.id.two);
+        view.setOnClickListener(this);
         back.setOnClickListener(this);
         unlogo= (Button) findViewById(R.id.unlogo);
         if(clearImageLoaderCache()/1024/1024>50){
@@ -115,6 +120,10 @@ public class AfterLoginActivity extends BaseActivity implements View.OnClickList
                 ImageLoader.getInstance().clearDiskCache();
                 ImageLoader.getInstance().clearMemoryCache();
                 tv_size.setText(clearImageLoaderCache() / 1024 / 1024 + "M");
+                break;
+            case R.id.two:
+                ShengJiRequest sheng=new ShengJiRequest(new ShengJiRequest.UserBean(App.getContext().getLogo("logo").data.id,"1233454"),new ShengJiRequest.DataBean("Android"));
+                UpdateManager.getUpdateManager().initDatas1(new Gson().toJson(sheng),this);
                 break;
         }
     }
