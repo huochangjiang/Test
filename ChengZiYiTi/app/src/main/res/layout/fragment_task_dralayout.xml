@@ -43,6 +43,13 @@
         android:layout_above="@+id/rl_send"
         android:layout_height="wrap_content">
     </ListView>
+    <include
+        layout="@layout/progressbar"
+        android:id="@+id/myprog"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content" />
     <RelativeLayout
         android:id="@+id/rl_send"
         android:layout_width="match_parent"

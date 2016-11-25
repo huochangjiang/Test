@@ -11,7 +11,6 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.NumberPicker;
-import android.widget.TimePicker;
 
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ContentView;
@@ -33,8 +32,8 @@ public class DatePickActivity extends Activity {
 	@ViewInject(R.id.date_picker)
 	private DatePicker datePicker;
 
-	@ViewInject(R.id.time_picker)
-	private TimePicker timePicker;
+//	@ViewInject(R.id.time_picker)
+//	private TimePicker timePicker;
 
 	private String datestrold;
 	private String datestr;
@@ -51,9 +50,9 @@ public class DatePickActivity extends Activity {
 	 */
 	private void init() {
 		datePicker.setCalendarViewShown(false);
-		timePicker.setIs24HourView(true);
+//		timePicker.setIs24HourView(true);
 		resizePikcer(datePicker);// 调整datepicker大小
-		resizePikcer(timePicker);// 调整timepicker大小
+//		resizePikcer(timePicker);// 调整timepicker大小
 		String str = getIntent().getStringExtra("date");
 		if (TextUtils.isEmpty(str)) {
 			System.out.println("isempty");
@@ -166,7 +165,7 @@ public class DatePickActivity extends Activity {
 			intent.putExtra("date", datestrold);
 		} else {
 			datestr = getData();
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			try {
 				Date date = sdf.parse(datestr);
 				if (!compare(date))
@@ -202,11 +201,11 @@ public class DatePickActivity extends Activity {
 				.append("-")
 				.append((datePicker.getDayOfMonth() < 10) ? "0" + datePicker.getDayOfMonth()
 						: datePicker.getDayOfMonth())
-				.append(" ")
-				.append((timePicker.getCurrentHour() < 10) ? "0" + timePicker.getCurrentHour()
-						: timePicker.getCurrentHour())
-				.append(":").append((timePicker.getCurrentMinute() < 10) ? "0" + timePicker.getCurrentMinute()
-						: timePicker.getCurrentMinute());
+				.append(" ");
+//				.append((timePicker.getCurrentHour() < 10) ? "0" + timePicker.getCurrentHour()
+//						: timePicker.getCurrentHour())
+//				.append(":").append((timePicker.getCurrentMinute() < 10) ? "0" + timePicker.getCurrentMinute()
+//						: timePicker.getCurrentMinute());
 
 		return str.toString();
 	}

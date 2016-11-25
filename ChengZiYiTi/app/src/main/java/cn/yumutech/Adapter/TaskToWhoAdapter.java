@@ -63,7 +63,7 @@ public class TaskToWhoAdapter extends BaseAdapter{
             vh = new ViewHolder();
             myView=View.inflate(context, R.layout.task_to_who_item,null);
             vh.touxiang= (Yuanxing) myView.findViewById(R.id.touxiang);
-
+            vh.tv_phone= (TextView) myView.findViewById(R.id.tv_phone);
             vh.employees= (TextView) myView.findViewById(R.id.employees);
             vh.selecte= (ImageView) myView.findViewById(R.id.selecte);
             myView.setTag(vh);
@@ -72,6 +72,7 @@ public class TaskToWhoAdapter extends BaseAdapter{
         }
         ImageLoader.getInstance().displayImage(mData.get(position).logo_path,vh.touxiang);
         vh.employees.setText(mData.get(position).nickname);
+        vh.tv_phone.setText(mData.get(position).mobile);
         if(mData.get(index).type == UserBean.TYPE_CHECKED){
             vh.selecte.setImageResource(R.drawable.story_selector);
         }else{
@@ -110,7 +111,7 @@ public class TaskToWhoAdapter extends BaseAdapter{
 
     public class ViewHolder{
         public Yuanxing touxiang;
-        public TextView employees;
+        public TextView employees,tv_phone;
         public ImageView selecte;
     }
     public interface getIds{

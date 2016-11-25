@@ -192,7 +192,7 @@ public class ReleaseTaskActivity extends BaseActivity implements View.OnClickLis
             // 选择截止时间时间的页面被关闭
             String date = data.getStringExtra("date");
             if (!choose_time.getText().toString().equals(date)) {
-                String my_time=data.getStringExtra("date")+":00";
+                String my_time=data.getStringExtra("date");
                 choose_time.setText(my_time);
             } else {
                 System.out.println("选择未变");
