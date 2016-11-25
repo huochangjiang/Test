@@ -50,7 +50,7 @@ public class PolyDetasActivity extends BaseActivity {
 //自适应屏幕
         webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         webView.getSettings().setLoadWithOverviewMode(true);
-        webView.getSettings().setDefaultFontSize(18);
+//        webView.getSettings().setDefaultFontSize(18);
         controlTitle(findViewById(R.id.back));
         title1 = (CenterTextView) findViewById(R.id.tv1);
         laiyan = (TextView) findViewById(R.id.laiyuan);

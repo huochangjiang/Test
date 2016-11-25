@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:text="发布任务"
                 android:textSize="18sp"
-
+                android:visibility="gone"
                 android:textColor="@color/white"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/back"/>

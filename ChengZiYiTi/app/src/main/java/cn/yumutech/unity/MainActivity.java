@@ -190,9 +190,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,R
             case CONNECTING://连接中。
 
                 break;
-            case NETWORK_UNAVAILABLE://网络不可用。
-                Toast.makeText(MainActivity.this, "王出搓", Toast.LENGTH_SHORT).show();
-                break;
+//            case NETWORK_UNAVAILABLE://网络不可用。
+////                Toast.makeText(MainActivity.this, "网络出错", Toast.LENGTH_SHORT).show();
+//                break;
             case KICKED_OFFLINE_BY_OTHER_CLIENT://用户账户在其他设备登录，本机会被踢掉线
                 Toast.makeText(MainActivity.this, "用户账户在其他设备登录", Toast.LENGTH_SHORT).show();
                 break;

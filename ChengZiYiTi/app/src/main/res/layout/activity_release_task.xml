@@ -25,6 +25,7 @@
                 android:layout_height="wrap_content"
                 android:text="我发布的"
                 android:textSize="18sp"
+                android:visibility="gone"
                 android:textColor="@color/white"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/back"/>

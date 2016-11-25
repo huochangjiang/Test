@@ -105,8 +105,14 @@ public class getContact {
                 Log.e("DepartList",data);
                 groupsDatas1.clear();
                 App.getContext().savaHomeJson("Contact",data);
+                if (channels!=null&&channels.data!=null&&channels.data.size()>0){
+                    for(int i=0;i<channels.data.size();i++){
+                        SaveData.getInstance().taskToChildGroups.add(new GroupClass(channels.data.get(i).dept_name,channels.data.get(i).dept_id,
+                                channels.data.get(i).dept_parent_id));
+                    }
+                }
 
-                mHandler.sendEmptyMessage(2);
+             //   mHandler.sendEmptyMessage(2);
             }
         }
     };
