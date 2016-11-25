@@ -1,0 +1,32 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="cn.yumutech.fragments.JoninFragment">
+
+
+    <ListView
+        android:background="@color/white"
+        android:layout_marginBottom="70dp"
+        android:layout_below="@+id/id_toolbar"
+        android:layout_width="match_parent"
+        android:id="@+id/listview"
+        android:layout_height="match_parent">
+    </ListView>
+
+    <Button
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/denglu"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_below="@+id/xian"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/logo"
+        android:text="確定"
+        android:textColor="#ffffff"
+        android:textSize="17sp" />
+
+</RelativeLayout>

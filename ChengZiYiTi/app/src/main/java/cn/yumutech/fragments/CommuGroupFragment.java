@@ -46,9 +46,7 @@ public class CommuGroupFragment extends BaseFragment implements View.OnClickList
             subscription.unsubscribe();
         }
     }
-    private String[] mData={"1群","2群","3群","4群","5群","6群",
-            "7群","8群","9群","10群","11群","12群","13群",
-            "14群","15群","16群","17群","18群","19群"};
+
     public CommuGroupFragment() {
         // Required empty public constructor
     }

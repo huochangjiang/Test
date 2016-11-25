@@ -29,6 +29,11 @@ public class MyJoinMenberAdpater extends BaseAdapter{
         this.mContext=context;
     }
 
+    public void dataChange(List<UserAboutPerson.DataBean> data){
+        this.mDatas=data;
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getCount() {
         return mDatas.size();

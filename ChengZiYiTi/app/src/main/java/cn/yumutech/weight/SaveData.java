@@ -33,6 +33,10 @@ public class SaveData {
      */
     public String Dept_Id;
     public List<GroupClass> taskToChildGroups=new ArrayList<>();
+    //創建聯係人選擇的id
+    public String createDetpt_id;
+    //添加群成員的id
+    public String qunMenmberId;
     /**
      * 保存被可以被指派的所有员工信息
      */
