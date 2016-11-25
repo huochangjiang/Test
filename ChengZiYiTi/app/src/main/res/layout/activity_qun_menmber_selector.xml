@@ -50,7 +50,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:id="@+id/et"
-        android:hint="新建讨论组"
+        android:hint="新建群组"
         android:paddingLeft="5dp"
         android:textColor="@color/small_title"
         android:textSize="14sp"
