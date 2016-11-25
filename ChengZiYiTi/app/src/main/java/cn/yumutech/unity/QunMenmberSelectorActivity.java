@@ -71,7 +71,7 @@ public class QunMenmberSelectorActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 drawerlayout.closeDrawers();
                 if(mData!=null){
-                    cn.yumutech.weight.SaveData.getInstance().createDetpt_id=mData.get(i).dept_id;
+                    cn.yumutech.weight.SaveData.getInstance().createDetpt_id= cn.yumutech.weight.SaveData.getInstance().shuXingData.get(i).dept_id;
                     EventBus.getDefault().post(new BaiBao("cc",0));
                 }
 
