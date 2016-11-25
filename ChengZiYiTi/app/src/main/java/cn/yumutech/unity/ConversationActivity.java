@@ -58,6 +58,18 @@ public class ConversationActivity extends FragmentActivity{
         Intent intent = getIntent();
         setActionBar();
         getIntentDate(intent);
+        if (App.getContext().getLogo("logo").data == null) {
+            startActivity(new Intent(ConversationActivity.this, LogoActivity.class));
+        }
+        if (DemoContext.getInstance() != null) {
+              String token;
+            token = DemoContext.getInstance().getSharedPreferences().getString("DEMO_TOKEN", "default");
+            if (token.equals("default")) {
+                startActivity(new Intent(ConversationActivity.this, LogoActivity.class));
+            } else {
+                reconnect(token);
+            }
+        }
 
         isReconnect(intent);
     }
@@ -159,6 +171,7 @@ public class ConversationActivity extends FragmentActivity{
             token = DemoContext.getInstance().getSharedPreferences().getString("DEMO_TOKEN", "default");
         }
 
+
         //push或通知过来
         if (intent != null && intent.getData() != null && intent.getData().getScheme().equals("rong")) {
 
@@ -228,7 +241,12 @@ public class ConversationActivity extends FragmentActivity{
             RongIM.connect(token, new RongIMClient.ConnectCallback() {
                 @Override
                 public void onTokenIncorrect() {
-                    UserGetToken.getInstance(ConversationActivity.this).getToken(mTargetId);
+                    if(!(App.getContext().getLogo("logo").data==null)) {
+                        UserGetToken.getInstance(ConversationActivity.this).getToken(mTargetId);
+                    }else{
+                        Intent intent=new Intent(ConversationActivity.this,LogoActivity.class);
+                        startActivity(intent);
+                    }
                 }
 
                 @Override
