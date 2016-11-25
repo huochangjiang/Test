@@ -1,6 +1,7 @@
 package cn.yumutech.fragments;
 
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -226,6 +227,7 @@ public class CreatQunZhuFragment extends BaseFragment {
         @Override
         public void onNext(UserAboutPerson channels) {
             if(channels.status.code.equals("0")){
+                Log.e("info","a");
                 mAdapter.dataChange(channels.data);
                 mDatas=channels.data;
                 App.getContext().mApbutPerson=channels.data;
