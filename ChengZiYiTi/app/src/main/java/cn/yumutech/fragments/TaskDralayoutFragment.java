@@ -52,6 +52,7 @@ public class TaskDralayoutFragment extends BaseFragment implements View.OnClickL
     private RelativeLayout rl_send;
     //保存详情页跳过来的主办人和协办人
     public List<Poeple> detailToThis;
+    private View myprog;
 
     Subscription subscription;
     protected void unsubscribe( Subscription subscription) {
@@ -79,6 +80,8 @@ public class TaskDralayoutFragment extends BaseFragment implements View.OnClickL
     protected void initViews(View contentView) {
         EventBus.getDefault().register(this);
         rl_send= (RelativeLayout) contentView.findViewById(R.id.rl_send);
+        myprog=contentView.findViewById(R.id.myprog);
+        myprog.setVisibility(View.VISIBLE);
         rl_send.setOnClickListener(this);
         if( SaveData.getInstance().twoPeople.size()>0){
             SaveData.getInstance().twoPeople.clear();
@@ -87,6 +90,7 @@ public class TaskDralayoutFragment extends BaseFragment implements View.OnClickL
         search= (EditText) contentView.findViewById(R.id.search);
         mAdapter = new TaskToWhoAdapter(mActivity,mDatas);
         listView.setAdapter(mAdapter);
+
     }
     @Override
     protected void initListeners() {
@@ -176,7 +180,7 @@ public class TaskDralayoutFragment extends BaseFragment implements View.OnClickL
             if(channels.status.code.equals("0")){
                 mDatas=channels.data;
                 mAdapter.dataChange(mDatas);
-
+                myprog.setVisibility(View.GONE);
                 App.getContext().mApbutPerson=channels.data;
 //                for (int i=0;i<channels.data.size();i++){
 //                    UserInfo info=new UserInfo(channels.data.get(i).id,channels.data.get(i).nickname, Uri.parse(channels.data.get(i).logo_path));
@@ -256,6 +260,7 @@ public class TaskDralayoutFragment extends BaseFragment implements View.OnClickL
                     EventBus.getDefault().post(new AssignTask());
                 }else if(shijiPoeples!=null&&shijiPoeples.size()>0&&shijiPoeples.size()<3&&SaveData.getInstance().type.equals("2")){
                     mGetAssignTask();
+                    EventBus.getDefault().post(new AssignTask());
                 }else {
                     EventBus.getDefault().post(new AssignTask());
                 }
@@ -294,6 +299,7 @@ public class TaskDralayoutFragment extends BaseFragment implements View.OnClickL
 
         @Override
         public void onNext(AssignTask assignTask) {
+            myprog.setVisibility(View.GONE);
             if(assignTask!=null&&assignTask.status.code.equals("0")){
                 Toast.makeText(getActivity(),assignTask.status.message,Toast.LENGTH_SHORT).show();;
                 EventBus.getDefault().post(new AssignTask());
