@@ -2,6 +2,7 @@ package cn.yumutech.netUtil;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Build;
 import android.telephony.TelephonyManager;
@@ -93,20 +94,25 @@ public class DeviceUtils {
 	 * @param context
 	 * @return
 	 */
-	public static int getappVersionCode(Context context) {
-
-		int appVersionCode = 999;
-
+	/**
+	 * 获取apk的版本号 currentVersionCode
+	 *
+	 * @param ctx
+	 * @return
+	 */
+	public static int getAPPVersionCodeFromAPP(Context ctx) {
+		int currentVersionCode = 0;
+		PackageManager manager = ctx.getPackageManager();
 		try {
-			PackageInfo info = context.getPackageManager().getPackageInfo(
-					context.getPackageName(), 0);
-			appVersionCode = info.versionCode;
+			PackageInfo info = manager.getPackageInfo(ctx.getPackageName(), 0);
+			String appVersionName = info.versionName; // 版本名
+			currentVersionCode = info.versionCode; // 版本号
+			System.out.println(currentVersionCode + " " + appVersionName);
 		} catch (NameNotFoundException e) {
+			// TODO Auto-generated catch blockd
 			e.printStackTrace();
 		}
-
-		return appVersionCode;
-
+		return currentVersionCode;
 	}
 
 	/**

@@ -13,7 +13,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-
             <ImageView
                 android:id="@+id/img1"
                 android:layout_width="50dp"
@@ -23,21 +22,19 @@
                 android:src="@drawable/de_title_back" />
 
 
-
             <TextView
                 android:id="@+id/txt1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="70dp"
                 android:singleLine="true"
+                android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="12dp"
-                android:layout_toRightOf="@+id/img1"
                 android:textColor="#e4e4e4" />
 
             <ImageView
                 android:id="@+id/img3"
-                android:src="@drawable/de_address_new_friend"
+                android:src="@drawable/iv_shoudong"
                 android:layout_width="50dp"
                 android:scaleType="centerInside"
                 android:layout_height="match_parent"

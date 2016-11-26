@@ -3,6 +3,7 @@ package cn.yumutech.unity;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -18,7 +19,10 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.umeng.message.IUmengRegisterCallback;
+import com.umeng.message.MsgConstant;
 import com.umeng.message.PushAgent;
+import com.umeng.message.UmengNotificationClickHandler;
+import com.umeng.message.entity.UMessage;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -74,15 +78,37 @@ public class App extends MultiDexApplication{
              * IMKit SDK调用第一步 初始化
              */
             RongIM.init(this);
-
             if (getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext()))) {
-
                 DemoContext.init(this);
             }
         }
         initImageLoader();
         PushAgent mPushAgent = PushAgent.getInstance(this);
-      //注册推送服务，每次调用register方法都会回调该接口
+        mPushAgent.setNotificationPlaySound(MsgConstant.NOTIFICATION_PLAY_SDK_ENABLE);
+
+
+        /**
+         * 自定义行为的回调处理
+         * UmengNotificationClickHandler是在BroadcastReceiver中被调用，故
+         * 如果需启动Activity，需添加Intent.FLAG_ACTIVITY_NEW_TASK
+         * */
+        UmengNotificationClickHandler notificationClickHandler = new UmengNotificationClickHandler() {
+            @Override
+            public void dealWithCustomAction(Context context, UMessage msg) {
+                Log.e("info","laile ");
+                if(msg.custom!=null){
+                    Intent intent=new Intent(getApplicationContext(),LeaderActivitysActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    getApplicationContext().startActivity(intent);
+
+                }
+            }
+        };
+        //使用自定义的NotificationHandler，来结合友盟统计处理消息通知
+        //参考http://bbs.umeng.com/thread-11112-1-1.html
+        //CustomNotificationHandler notificationClickHandler = new CustomNotificationHandler();
+        mPushAgent.setNotificationClickHandler(notificationClickHandler);
+
         mPushAgent.register(new IUmengRegisterCallback() {
 
             @Override

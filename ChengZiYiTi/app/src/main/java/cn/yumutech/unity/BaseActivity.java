@@ -9,11 +9,14 @@ import android.widget.ImageView;
 
 import com.umeng.message.PushAgent;
 
+import cn.yumutech.weight.MyProgressDialog;
+
 /**
  * Created by 霍长江 on 2016/11/6.
  */
 public abstract  class BaseActivity extends FragmentActivity {
 
+    private MyProgressDialog dilog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +36,16 @@ public abstract  class BaseActivity extends FragmentActivity {
      * @return layout id
      */
     protected abstract int getLayoutId();
-
-
+    public void showDilog(String s){
+        dilog=new MyProgressDialog(this, s);
+        dilog.show();
+    }
+    public void MissDilog() {
+        if(dilog!=null){
+            dilog.dismiss();
+            dilog = null;
+        }
+    }
     /**
      * Initialize the view in the layout
      *

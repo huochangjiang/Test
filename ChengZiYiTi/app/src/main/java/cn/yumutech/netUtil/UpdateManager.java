@@ -1,17 +1,7 @@
 package cn.yumutech.netUtil;
 
-import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.TextView;
+import android.os.Handler;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -21,10 +11,10 @@ import com.loopj.android.http.FileAsyncHttpResponseHandler;
 import org.apache.http.Header;
 
 import java.io.File;
-import java.io.IOException;
 
 import cn.yumutech.bean.Update;
-import cn.yumutech.unity.R;
+import cn.yumutech.unity.UserGetToken;
+import de.greenrobot.event.EventBus;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -52,6 +42,7 @@ public class UpdateManager {
 	private String apkFilePath = "";
 	private static final int ANALYZEDONE = 1;
 	public Context mContext;
+	public int mCurrentVesionCode;
 
 	public static UpdateManager getUpdateManager() {
 
@@ -79,115 +70,16 @@ public class UpdateManager {
 			@Override
 			public void onSuccess(int arg0, Header[] arg1, File arg2) {
 				// 下载成功之后提示用户升级
-				showUpdateDialog();
+				EventBus.getDefault().post(mUpdate);
 			}
 			@Override
 			public void onFailure(int arg0, Header[] arg1, Throwable arg2, File arg3) {
 				// 下载失败的情况下，清除apk文件
-				FileUtils.deleteFolderFile(savePath, false);
+				FileUtils.deleteFolderFile(UserGetToken.getInstance(mContext).path, false);
 			}
 		});
 	}
 
-	/**
-	 * 安装apk
-	 * 
-	 */
-	private void installApk(String apk_path) {
-
-		if (!new File(apk_path).exists()) {
-			return;
-		}
-
-		// 安装之前先修改apk的权限，避免出现解析包错误的问题
-		try {
-			String command = "chmod 777 " + apk_path;
-			Runtime runtime = Runtime.getRuntime();
-			runtime.exec(command);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		Intent i = new Intent(Intent.ACTION_VIEW);
-		i.setDataAndType(Uri.parse("file://" + apk_path), "application/vnd.android.package-archive");
-		mContext.startActivity(i);
-	}
-	public  String ToSBC(String input) {
-		char c[] = input.toCharArray();
-		for (int i = 0; i < c.length; i++) {
-			if (c[i] == ' ') {
-				c[i] = '\u3000';
-			} else if (c[i] < '\177') {
-				c[i] = (char) (c[i] + 65248);
-			}
-		}
-		return new String(c);
-	}
-	/**
-	 * 安装提示对话框
-	 */
-	private void showUpdateDialog() {
-		View view = LayoutInflater.from(mContext).inflate(R.layout.welcomedilog, null);
-
-		final Dialog dialog = new Dialog(mContext, R.style.transparentFrameWindowStyle);
-		dialog.setContentView(view);
-
-
-		TextView textView_version = (TextView) view.findViewById(R.id.text1);
-		TextView textView_log = (TextView) view.findViewById(R.id.text2);
-
-
-		textView_log.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				installApk(apkFilePath);
-				dialog.dismiss();
-			}
-		});
-		textView_version.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				dialog.dismiss();
-			}
-		});
-
-		// 获取屏幕分辨率来控制宽度
-		int width = ToosUtil.getInstance().getScreenWidth((Activity) mContext);
-
-		Window window = dialog.getWindow();
-		WindowManager.LayoutParams wl = window.getAttributes();
-		wl.width = width * 8 / 10;
-		wl.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-
-		// 设置显示位置
-		dialog.onWindowAttributesChanged(wl);
-
-		dialog.setCanceledOnTouchOutside(false);
-
-		dialog.show();
-
-	}
-
-	/**
-	 * 校验下载的apk文件的md5值
-	 * 
-	 * @param md5
-	 *            期望的md5值
-	 * @return
-	 */
-	private boolean MD5Check(String md5) {
-		boolean b = false;
-
-		String local_md5 = MD5Util.getFileMD5String(new File(apkFilePath));
-
-		if (local_md5.equals(md5)) {
-			b = true;
-		}
-
-		return b;
-	}
 
 	/**
 	 * 获取封面更新图片
@@ -225,11 +117,12 @@ public class UpdateManager {
 //		});
 //
 //	}
-
-	public void initDatas1( String canshu,Context mContext){
+Handler mHandler;
+	public void initDatas1(String canshu, Context mContext, int versionCode, Handler mhandler){
 		this.mContext=mContext;
-		savePath = mContext.getDir("update", 0).getAbsolutePath();
-		apkFilePath = savePath + File.separator   + "cz.apk";
+		this.mHandler=mhandler;
+		this.mCurrentVesionCode=versionCode;
+
 		subscription = Api.getMangoApi1().getSheBeiXinXi(canshu)
 				.subscribeOn(Schedulers.io())
 				.observeOn(AndroidSchedulers.mainThread())
@@ -254,11 +147,14 @@ public class UpdateManager {
 		@Override
 		public void onNext(Update channels) {
 			if(channels.status.code.equals("0")){
-				if (DeviceUtils.getappVersionCode(mContext) < Integer.valueOf(mUpdate.data.bh)) {
+				mUpdate=channels;
+				if (mCurrentVesionCode < Integer.valueOf(mUpdate.data.bh)) {
+					mUpdate=channels;
+					mHandler.sendEmptyMessage(1);
 					Download(channels.data.url, apkFilePath);
-					Toast.makeText(mContext, "升级中", Toast.LENGTH_SHORT).show();
+					Toast.makeText(mContext, "下载中...", Toast.LENGTH_SHORT).show();
 				}else{
-					Toast.makeText(mContext, "已经是最新版本", Toast.LENGTH_SHORT).show();
+					mHandler.sendEmptyMessage(0);
 				}
 			}
 		}

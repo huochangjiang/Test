@@ -2,19 +2,40 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
-    <TextView
-        android:text="空"
-        android:singleLine="true"
-          android:id="@+id/tv"
-        android:textColor="@color/huise"
-        android:textSize="@dimen/title_size"
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:padding="10dp"
+    android:layout_height="80dp">
+    <ImageView
+        android:id="@+id/iv_phone"
         android:layout_centerVertical="true"
+        android:scaleType="centerInside"
+        android:layout_width="40dp"
+        android:src="@drawable/touxiao"
+        android:layout_height="40dp" />
+    <LinearLayout
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/iv_phone"
+        android:layout_marginLeft="10dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_name"
+            android:text="李四"
+            android:textColor="@color/small_title"
+            android:textSize="@dimen/title_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_phone"
+            android:layout_marginTop="5dp"
+            android:text="1821558752"
+            android:textColor="@color/huise"
+            android:textSize="@dimen/title_size_smaller"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
     <ImageView
         android:id="@+id/cb"
         android:layout_alignParentRight="true"
@@ -24,5 +45,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         />
-    </RelativeLayout>
+</RelativeLayout>
 </RelativeLayout>

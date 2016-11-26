@@ -27,7 +27,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -133,10 +134,10 @@
         <!-- 友盟推送集成 -->
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="582e731dc62dca44760011aa" />
+            android:value="582e64a5310c9328970004a7" />
         <meta-data
             android:name="UMENG_MESSAGE_SECRET"
-            android:value="7b0d94a0f338b3c151701f5c8521d42a" />
+            android:value="ce2cfa5eb18e5c5672aeea37b6c1e474" />
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="CHENGZI" />
@@ -145,6 +146,8 @@
             android:name=".CompleteActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity android:name=".SelectorJoinActivity"></activity>
+
+
     </application>
 
 </manifest>

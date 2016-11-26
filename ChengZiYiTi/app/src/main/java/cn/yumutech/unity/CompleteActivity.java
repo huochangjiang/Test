@@ -317,6 +317,7 @@ public class CompleteActivity extends BaseActivity implements View.OnClickListen
                 finish();
                 break;
             case R.id.denglu:
+                showDilog("提交中...");
                 dataBean.setTask_comment(editText.getText().toString().trim());
                 dataBean.setTask_id(taskId);
                 dataBean.setPhotos(mPhoneBeans);
@@ -331,6 +332,7 @@ public class CompleteActivity extends BaseActivity implements View.OnClickListen
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+            MissDilog();
             finish();
         }
     };

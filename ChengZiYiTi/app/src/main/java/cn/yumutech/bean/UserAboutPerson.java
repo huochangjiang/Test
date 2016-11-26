@@ -69,6 +69,7 @@ public class UserAboutPerson {
         public static final int TYPE_CHECKED = 1;
         public static final int TYPE_NOCHECKED = 0;
         public int type;
+        public boolean isCance;
         public String id;
         public String birthday;
         public String dept_id;
@@ -79,6 +80,14 @@ public class UserAboutPerson {
         public String gender;
         public String dept_name;
         public String mobile;
+
+        public boolean isCance() {
+            return isCance;
+        }
+
+        public void setCance(boolean cance) {
+            isCance = cance;
+        }
 
         public int getType(){
             return type;

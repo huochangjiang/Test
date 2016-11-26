@@ -71,6 +71,7 @@ public class CommuContactFragment extends BaseFragment{
         contactView = inflater.inflate(R.layout.fragment_commu_contact, container, false);
         drawerlayout= (DrawerLayout) contactView.findViewById(R.id.drawerlayout).findViewById(R.id.drawer);
         search= (EditText) contactView.findViewById(R.id.search);
+
         return contactView;
     }
     //查找出所有子部门的树形递归算法
@@ -79,7 +80,7 @@ public class CommuContactFragment extends BaseFragment{
         initExtra();
         expandableListView = (ListView) contentView.findViewById(R.id.expandlistview);
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.fragment_layout, DralayoutFragment.newInstance()).commitAllowingStateLoss();
+        fragmentManager.beginTransaction().replace(R.id.fragment_layout, DralayoutFragment.newInstance(drawerlayout)).commitAllowingStateLoss();
         initDatas1();
         try
         {

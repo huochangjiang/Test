@@ -6,6 +6,7 @@
     <ImageView
         android:id="@+id/iv_phone"
         android:layout_gravity="center"
+        android:scaleType="centerInside"
         android:layout_width="40dp"
         android:src="@drawable/touxiao"
         android:layout_height="40dp" />

@@ -61,8 +61,8 @@ public class QunMenmberAdapter extends BaseAdapter{
             vh = (ViewHolder) convertView.getTag();
         }
         if (position == mDatas.size()) {
-            vh.tv.setText("添加群成员");
-            vh.iv.setImageResource(R.drawable.touxiao);
+            vh.tv.setText("添加讨论组成员");
+            vh.iv.setImageResource(R.drawable.iv_shoudong);
         } else {
             vh.tv.setVisibility(View.VISIBLE);
         }

@@ -20,11 +20,11 @@
             android:textSize="16sp"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:text="輸入討論組名稱"/>
+            android:text="讨论组名称"/>
         <EditText
             android:layout_marginTop="20dp"
             android:id="@+id/et"
-            android:hint="測試"
+            android:hint="请输入讨论组名称"
             android:paddingLeft="5dp"
             android:textColor="@color/small_title"
             android:textSize="16sp"

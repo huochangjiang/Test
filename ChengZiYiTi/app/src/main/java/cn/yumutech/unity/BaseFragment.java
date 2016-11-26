@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import cn.yumutech.weight.MyProgressDialog;
+
 /**
  * Created by 霍长江 on 2016/11/6.
  */
@@ -35,6 +37,18 @@ public abstract  class BaseFragment extends Fragment {
      * @param inflater
      * @return
      */
+    private MyProgressDialog dilog;
+
+    public void showDilog(String s){
+        dilog=new MyProgressDialog(getActivity(), s);
+        dilog.show();
+    }
+    public void MissDilog() {
+        if(dilog!=null){
+            dilog.dismiss();
+            dilog = null;
+        }
+    }
     protected abstract View getContentView(LayoutInflater inflater ,ViewGroup container);
 
     /**
