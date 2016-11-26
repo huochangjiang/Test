@@ -31,7 +31,7 @@ import rx.schedulers.Schedulers;
 /**
  * Created by 霍长江 on 2016/11/15.
  */
-public class ConversationActivity extends FragmentActivity{
+public class ConversationActivity extends FragmentActivity implements RongIMClient.ConnectionStatusListener{
 
     private TextView mTitle;
     private RelativeLayout mBack;
@@ -49,7 +49,7 @@ public class ConversationActivity extends FragmentActivity{
     private Conversation.ConversationType mConversationType;
     private ImageView mTitle3;
     private String title;
-
+    String token;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,16 +58,15 @@ public class ConversationActivity extends FragmentActivity{
         Intent intent = getIntent();
         setActionBar();
         getIntentDate(intent);
+        RongIM.setConnectionStatusListener(this);
         if (App.getContext().getLogo("logo").data == null) {
             startActivity(new Intent(ConversationActivity.this, LogoActivity.class));
         }
         if (DemoContext.getInstance() != null) {
-              String token;
             token = DemoContext.getInstance().getSharedPreferences().getString("DEMO_TOKEN", "default");
             if (token.equals("default")) {
                 startActivity(new Intent(ConversationActivity.this, LogoActivity.class));
             } else {
-                reconnect(token);
             }
         }
 
@@ -332,4 +331,23 @@ public class ConversationActivity extends FragmentActivity{
 
 
 
+    @Override
+    public void onChanged(ConnectionStatus connectionStatus) {
+        switch (connectionStatus){
+
+            case CONNECTED://连接成功。
+
+                break;
+            case DISCONNECTED://断开连接。
+              reconnect(token);
+                break;
+            case CONNECTING://连接中。
+
+                break;
+//            case NETWORK_UNAVAILABLE://网络不可用。
+//                break;
+            case KICKED_OFFLINE_BY_OTHER_CLIENT://用户账户在其他设备登录，本机会被踢掉线
+                break;
+        }
+    }
 }
