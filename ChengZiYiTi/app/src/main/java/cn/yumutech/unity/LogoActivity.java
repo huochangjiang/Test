@@ -78,7 +78,7 @@ public class LogoActivity extends BaseActivity implements View.OnClickListener{
 
     }
     private void getYanzheng(){
-        MessageBean yanzhengma=new MessageBean(new MessageBean.UserBean("",""),new MessageBean.DataBean(phone.getText().toString().trim()));
+        MessageBean yanzhengma=new MessageBean(new MessageBean.UserBean("12345","2222"),new MessageBean.DataBean(phone.getText().toString().trim()));
         getYanzheng1(new Gson().toJson(yanzhengma));
     }
     private void getYanzheng1( String yanzhengma){
@@ -91,15 +91,20 @@ public class LogoActivity extends BaseActivity implements View.OnClickListener{
     Observer<YanZhenMessageBean> observer = new Observer<YanZhenMessageBean>() {
         @Override
         public void onCompleted() {
+            MissDilog();
             unsubscribe(subscription);
         }
         @Override
         public void onError(Throwable e) {
+            MissDilog();
+
             e.printStackTrace();
 
         }
         @Override
         public void onNext(YanZhenMessageBean channels) {
+            MissDilog();
+
             if(channels!=null&&channels.status.code!=null){
                 if(channels.status.code.equals("0")){
                     statrTimer();
@@ -135,7 +140,7 @@ public class LogoActivity extends BaseActivity implements View.OnClickListener{
                     Toast.makeText(LogoActivity.this,"请填写手机号码",Toast.LENGTH_SHORT).show();
                     return ;
                 }else {
-//                    showDilog("获取中...");
+                    showDilog("获取中...");
                     if(phone.getText().toString().trim().length()==11) {
 //                        statrTimer();
                         //获取验证码
@@ -191,6 +196,7 @@ public class LogoActivity extends BaseActivity implements View.OnClickListener{
      * 登陆
      */
     public void userRegister(){
+        showDilog("登录中...");
         UserLoginBeen userLoginBeen=new UserLoginBeen(new UserLoginBeen.UserBean("",""),new UserLoginBeen.DataBean(phone.getText().toString().trim(),password.getText().toString().trim()));
         getUserLogin(new Gson().toJson(userLoginBeen));
     }
@@ -205,16 +211,20 @@ public class LogoActivity extends BaseActivity implements View.OnClickListener{
     Observer<UserLogin> observer1=new Observer<UserLogin>() {
         @Override
         public void onCompleted() {
+            MissDilog();
             unsubscribe(subscription1);
         }
 
         @Override
         public void onError(Throwable e) {
+            MissDilog();
+
             e.printStackTrace();
         }
 
         @Override
         public void onNext(UserLogin userLogin) {
+            MissDilog();
             if(userLogin!=null&&userLogin.status.code.equals("0")){
                 String a=new Gson().toJson(userLogin);
                 Log.e("info",a);
@@ -241,13 +251,10 @@ public class LogoActivity extends BaseActivity implements View.OnClickListener{
                 //手机号不存在
                 Toast.makeText(LogoActivity.this,userLogin.status.message,Toast.LENGTH_SHORT).show();
             }else if(userLogin!=null&&userLogin.status.code.equals("-8")){
-                //验证码过期了
                 Toast.makeText(LogoActivity.this,userLogin.status.message,Toast.LENGTH_SHORT).show();
             }
     }
    };
-
-
     /**
      * 获取Token
      */

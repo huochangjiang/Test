@@ -63,6 +63,7 @@ public class BianJiActivity extends BaseActivity {
 
     @Override
     protected void initViews(Bundle savedInstanceState) {
+        showDilog("加载中...");
         Intent intent=getIntent();
         if(intent!=null){
             targid = intent.getStringExtra("mTargetId");
@@ -78,18 +79,17 @@ public class BianJiActivity extends BaseActivity {
         mXiuGai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SignOutDilog1 mDlogOutDilog1=new SignOutDilog1(BianJiActivity.this,"輸入討論組名稱");
+                SignOutDilog1 mDlogOutDilog1=new SignOutDilog1(BianJiActivity.this,"讨论组名称");
                 mDlogOutDilog1.show();
                 mDlogOutDilog1.setOnLisener(new SignOutDilog1.onListern1() {
                     @Override
                     public void send(String name) {
                         tv.setText(name);
+                        showDilog("修改中...");
                         ShuaXinQunXinXi xinxibean=new ShuaXinQunXinXi(new ShuaXinQunXinXi.UserBean(App.getContext().getLogo("logo").data.id,"1343434"),new ShuaXinQunXinXi.DataBean(targid,name));
-
                         initDatas5(new Gson().toJson(xinxibean));
                     }
                 });
-
             }
         });
         back.setOnClickListener(new View.OnClickListener() {
@@ -111,11 +111,12 @@ public class BianJiActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 if(mChannels.data.create_user_id.equals(App.getContext().getLogo("logo").data.id)) {
-
+                    showDilog("解散讨论组...");
                     RequestCanShu1 canshus = new RequestCanShu1(new RequestCanShu1.UserBean(App.getContext().getLogo("logo").data.id, "134669"),
                             new RequestCanShu1.DataBean(App.getContext().getLogo("logo").data.id,targid));
                     initDatas3(new Gson().toJson(canshus));
                 }else{
+                    showDilog("退出讨论组...");
                     RequestCanshu2 canshus = new RequestCanshu2(new RequestCanshu2.UserBean("3", "134669"),
                             new RequestCanshu2.DataBean(targid, App.getContext().getLogo("logo").data.id));
                     initDatas2(new Gson().toJson(canshus));
@@ -127,7 +128,7 @@ public class BianJiActivity extends BaseActivity {
             public void getUserBean(final ChaXunQunMenmber.DataBean.UsersBean beans, final int postion) {
 
                 if(beans==null){
-                    Intent intent=new Intent(BianJiActivity.this,SelectorJoinActivity.class);
+                    Intent intent=new Intent(BianJiActivity.this,QunMenmberSelectorActivity.class);
                     intent.putExtra("type","join");
                     intent.putExtra("groupName",mChannels.data.groupName);
                     intent.putExtra("groupId",mChannels.data.groupId);
@@ -184,17 +185,22 @@ public class BianJiActivity extends BaseActivity {
         @Override
         public void onCompleted() {
             unsubscribe(subscription);
+            MissDilog();
         }
         @Override
         public void onError(Throwable e) {
             e.printStackTrace();
+            MissDilog();
+
         }
         @Override
         public void onNext(ChaXunQunMenmber channels) {
+            MissDilog();
+
             if(channels.status.code.equals("0")){
                 title.setText(channels.data.groupName);
                 if(channels.data.create_user_id.equals(App.getContext().getLogo("logo").data.id)){
-                    mButton.setText("解散群组");
+                    mButton.setText("解散讨论组");
                 }
                 tv.setText(channels.data.groupName);
                 mChannels=channels;
@@ -209,13 +215,19 @@ public class BianJiActivity extends BaseActivity {
         @Override
         public void onCompleted() {
             unsubscribe(subscription1);
+            MissDilog();
+
         }
         @Override
         public void onError(Throwable e) {
             e.printStackTrace();
+            MissDilog();
+
         }
         @Override
         public void onNext(TuiChuQun channels) {
+            MissDilog();
+
             if(channels.status.code.equals("0")){
                 if(mChannels.data.create_user_id.equals(App.getContext().getLogo("logo").data.id)) {
                     mDatas.remove(mPosition);
@@ -232,6 +244,7 @@ public class BianJiActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
         RequestCanshu2 canshus=new RequestCanshu2(new RequestCanshu2.UserBean("3","134669"),
                 new RequestCanshu2.DataBean(targid));
         initDatas1(new Gson().toJson(canshus));
@@ -241,15 +254,20 @@ public class BianJiActivity extends BaseActivity {
     Observer<JieSanQun> observer2 = new Observer<JieSanQun>() {
         @Override
         public void onCompleted() {
+            MissDilog();
             unsubscribe(subscription2);
         }
         @Override
         public void onError(Throwable e) {
+            MissDilog();
+
             e.printStackTrace();
 
         }
         @Override
         public void onNext(JieSanQun channels) {
+            MissDilog();
+
             if(channels.status.code.equals("0")){
                 App.getContext().destoryActivity("conversation");
                 finish();
@@ -264,14 +282,16 @@ public class BianJiActivity extends BaseActivity {
         @Override
         public void onCompleted() {
             unsubscribe(subscription5);
+            MissDilog();
         }
         @Override
         public void onError(Throwable e) {
             e.printStackTrace();
-
+            MissDilog();
         }
         @Override
         public void onNext(RefreshBean channels) {
+            MissDilog();
             if(channels.status.code.equals("0")){
                 Group group=new Group(channels.data.groupId,channels.data.groupName, Uri.parse(channels.data.create_user_logo_path));
                 RongIM.getInstance().refreshGroupInfoCache(group);

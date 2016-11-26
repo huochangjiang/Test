@@ -7,6 +7,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +17,7 @@ import cn.yumutech.bean.UserAboutPerson;
 import cn.yumutech.bean.UserBean;
 import cn.yumutech.unity.App;
 import cn.yumutech.unity.R;
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by 霍长江 on 2016/11/16.
@@ -59,17 +62,21 @@ public class MyMenmberAdapter extends BaseAdapter{
             vh=new ViewHolder();
             convertView=View.inflate(mContext, R.layout.member_item,null);
             vh.cb= (ImageView) convertView.findViewById(R.id.cb);
-            vh.tv= (TextView) convertView.findViewById(R.id.tv);
+            vh.tv_phone= (TextView) convertView.findViewById(R.id.tv_phone);
+            vh.tv_name= (TextView) convertView.findViewById(R.id.tv_name);
+            vh.iv= (ImageView) convertView.findViewById(R.id.iv_phone);
+
             convertView.setTag(vh);
         }else{
             vh= (ViewHolder) convertView.getTag();
         }
-        vh.tv.setText(mDatas.get(position).nickname);
+        vh.tv_name.setText(mDatas.get(position).nickname);
+        vh.tv_phone.setText(mDatas.get(position).mobile);
+        ImageLoader.getInstance().displayImage(mDatas.get(position).logo_path,vh.iv);
         if(mDatas.get(index).type == UserBean.TYPE_CHECKED){
             vh.cb.setImageResource(R.drawable.story_selector);
         }else{
             vh.cb.setImageResource(R.drawable.story_wei);
-
         }
         if(mDatas.get(index).id.equals(App.getContext().getLogo("logo").data.id)){
             vh.cb.setImageResource(R.drawable.story_selector);
@@ -84,17 +91,20 @@ public class MyMenmberAdapter extends BaseAdapter{
                         if(maps!=null&&maps.size()>0) {
                             maps.remove(index);
                             vh.cb.setImageResource(R.drawable.story_wei);
-
                             ids.getMenmberIds(maps);
+                            mDatas.get(index).setCance(true);
+                            EventBus.getDefault().post(mDatas.get(index));
                         }
                     }
                 }else {
                     mDatas.get(index).type = UserBean.TYPE_CHECKED;
                     if (ids != null) {
                         vh.cb.setImageResource(R.drawable.story_selector);
-
                         maps.put(index, mDatas.get(index));
                         ids.getMenmberIds(maps);
+                        mDatas.get(index).setCance(false);
+
+                        EventBus.getDefault().post(mDatas.get(index));
                     }
                 }
                 }
@@ -104,7 +114,9 @@ public class MyMenmberAdapter extends BaseAdapter{
     }
     public class ViewHolder{
         public ImageView cb;
-        public TextView tv;
+        public ImageView iv;
+        public TextView tv_phone;
+        public TextView tv_name;
     }
     public interface getIds{
         void getMenmberIds(Map<Integer,UserAboutPerson.DataBean> beans);

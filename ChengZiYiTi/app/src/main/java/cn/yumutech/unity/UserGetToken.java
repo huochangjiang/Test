@@ -30,6 +30,8 @@ public class UserGetToken {
     public static String token;
     public static Context mContext;
     public CreateQunZu mQunZhus;
+    //保存下载的路径
+    public String path;
     private UserGetToken(){
 
     }

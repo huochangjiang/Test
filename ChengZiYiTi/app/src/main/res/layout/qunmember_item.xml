@@ -12,7 +12,7 @@
         android:layout_gravity="center"
         android:id="@+id/iv"
         android:layout_width="50dp"
-        android:src="@drawable/touxiao"
+        android:src="@drawable/iv_shoudong"
         android:layout_height="50dp" />
 <TextView
     android:singleLine="true"

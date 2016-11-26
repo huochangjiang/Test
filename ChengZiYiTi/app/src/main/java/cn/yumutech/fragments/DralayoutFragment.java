@@ -1,6 +1,7 @@
 package cn.yumutech.fragments;
 
 import android.net.Uri;
+import android.support.v4.widget.DrawerLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -45,6 +46,9 @@ public class DralayoutFragment extends BaseFragment {
     public List<UserAboutPerson.DataBean> searchData=new ArrayList<>();
 
     Subscription subscription;
+    public boolean isAllPerson=false;
+    private static DralayoutFragment fragment;
+
     protected void unsubscribe( Subscription subscription) {
         if (subscription != null && !subscription.isUnsubscribed()) {
             subscription.unsubscribe();
@@ -53,9 +57,14 @@ public class DralayoutFragment extends BaseFragment {
     public DralayoutFragment() {
         // Required empty public constructor
     }
+
     // TODO: Rename and change types and number of parameters
-    public static DralayoutFragment newInstance() {
-        DralayoutFragment fragment = new DralayoutFragment();
+   public static  DrawerLayout dmralayoutFragment;
+    public static DralayoutFragment newInstance(DrawerLayout dralayoutFragment) {
+        if(fragment==null) {
+            fragment = new DralayoutFragment();
+            dmralayoutFragment=dralayoutFragment;
+        }
         return fragment;
     }
 
@@ -112,6 +121,7 @@ public class DralayoutFragment extends BaseFragment {
             @Override
             public void afterTextChanged(Editable s) {
                 if(search.getText().toString().trim().length()==0){
+
                     mAdapter.dataChange(mDatas);
                     listView.setFocusable(false);
                 }
@@ -123,7 +133,7 @@ public class DralayoutFragment extends BaseFragment {
     protected void initDatas() {
         if(App.getContext().getLogo("logo")!=null&&App.getContext().getLogo("logo").data!=null&&App.getContext().getLogo("logo").data.dept_id!=null) {
             RequestParams canshus = new RequestParams(new RequestParams.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
-                    new RequestParams.DataBean(App.getContext().getLogo("logo").data.dept_id));
+                    new RequestParams.DataBean("0"));
             initDatas1(new Gson().toJson(canshus));
         }else {
             Toast.makeText(getActivity(),"您还未登陆",Toast.LENGTH_SHORT).show();
@@ -144,14 +154,16 @@ public class DralayoutFragment extends BaseFragment {
         @Override
         public void onError(Throwable e) {
             e.printStackTrace();
-
         }
         @Override
         public void onNext(UserAboutPerson channels) {
             if(channels.status.code.equals("0")){
                 mAdapter.dataChange(channels.data);
                 mDatas=channels.data;
-                App.getContext().mApbutPerson=channels.data;
+                if(!isAllPerson) {
+                    App.getContext().mApbutPerson = channels.data;
+                    isAllPerson=true;
+                }
                 for (int i=0;i<channels.data.size();i++){
                     UserInfo info=new UserInfo(channels.data.get(i).id,channels.data.get(i).nickname, Uri.parse(channels.data.get(i).logo_path));
                     RongIM.getInstance().refreshUserInfoCache(info);

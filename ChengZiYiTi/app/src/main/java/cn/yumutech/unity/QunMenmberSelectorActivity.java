@@ -1,11 +1,13 @@
 package cn.yumutech.unity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -27,6 +29,9 @@ public class QunMenmberSelectorActivity extends BaseActivity {
     private ListView expandableListView;
     private DrawerLayout drawerlayout;
     private SimpleTreeAdapter adapter;
+    public String type;
+    public String groupId;
+    public String groupName;
 
     @Override
     protected int getLayoutId() {
@@ -36,6 +41,18 @@ public class QunMenmberSelectorActivity extends BaseActivity {
     @Override
     protected void initViews(Bundle savedInstanceState) {
         controlTitle(findViewById(R.id.back));
+        Intent intent=getIntent();
+        type = intent.getStringExtra("type");
+        TextView tv= (TextView) findViewById(R.id.tv_home);
+
+        if(type.equals("join")) {
+            groupId = intent.getStringExtra("groupId");
+            tv.setText("讨论组");
+            groupName = intent.getStringExtra("groupName");
+        }else{
+            tv.setText("讨论组");
+
+        }
         drawerlayout= (DrawerLayout) findViewById(R.id.drawerlayout).findViewById(R.id.drawer);
         expandableListView = (ListView) findViewById(R.id.expandlistview);
         FragmentManager fragmentManager = getSupportFragmentManager();

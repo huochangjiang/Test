@@ -1,12 +1,17 @@
 package cn.yumutech.fragments;
 
 import android.net.Uri;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -19,18 +24,21 @@ import java.util.Map;
 import cn.yumutech.Adapter.MyMenmberAdapter;
 import cn.yumutech.bean.BaiBao;
 import cn.yumutech.bean.CreateQunZu;
+import cn.yumutech.bean.JoinQun;
 import cn.yumutech.bean.RequestCanShu;
 import cn.yumutech.bean.RequestParams;
 import cn.yumutech.bean.UserAboutPerson;
 import cn.yumutech.netUtil.Api;
 import cn.yumutech.unity.App;
 import cn.yumutech.unity.BaseFragment;
+import cn.yumutech.unity.QunMenmberSelectorActivity;
 import cn.yumutech.unity.R;
+import cn.yumutech.weight.MyEditText;
 import cn.yumutech.weight.SaveData;
+import cn.yumutech.weight.SignOutDilog1;
 import de.greenrobot.event.EventBus;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Group;
-import io.rong.imlib.model.UserInfo;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -40,8 +48,6 @@ import rx.schedulers.Schedulers;
 public class CreatQunZhuFragment extends BaseFragment {
     private boolean isBaoHan=false;
     private ListView listView;
-    private List<UserAboutPerson.DataBean> mDatas = new ArrayList<>();
-    private List<UserAboutPerson.DataBean> mDatas1 = new ArrayList<>();
     private MyMenmberAdapter mAdapter;
     private String type;
     Subscription subscription;
@@ -52,9 +58,9 @@ public class CreatQunZhuFragment extends BaseFragment {
     private List<String> ids=new ArrayList<>();
     private EditText editText;
     private Button button;
-
     private static CreatQunZhuFragment fragment;
     private View view;
+    private QunMenmberSelectorActivity qunMenmberSelectorActivity;
 
     public CreatQunZhuFragment() {
         // Required empty public constructor
@@ -65,7 +71,6 @@ public class CreatQunZhuFragment extends BaseFragment {
         if (fragment == null){
             fragment = new CreatQunZhuFragment();
     }
-
         return fragment;
     }
     protected void unsubscribe( Subscription subscription) {
@@ -80,44 +85,111 @@ public class CreatQunZhuFragment extends BaseFragment {
 
         return view;
     }
+    public List<UserAboutPerson.DataBean> searchData=new ArrayList<>();
 
     @Override
     protected void initViews(View contentView) {
         EventBus.getDefault().register(this);
-        mDatas1= App.getContext().mApbutPerson;
-        for (int k=0;k<mDatas1.size();k++){
-            UserAboutPerson.DataBean bean=mDatas1.get(k);
+        for (int k=0;k<App.getContext().mApbutPerson.size();k++){
+            UserAboutPerson.DataBean bean=App.getContext().mApbutPerson.get(k);
             bean.type= UserAboutPerson.DataBean.TYPE_NOCHECKED;
         }
+        qunMenmberSelectorActivity = (QunMenmberSelectorActivity) getActivity();
 
-        editText = (EditText) contentView.findViewById(R.id.et);
+        editText = (MyEditText) contentView.findViewById(R.id.et);
         button = (Button) contentView.findViewById(R.id.denglu);
         listView = (ListView) contentView.findViewById(R.id.listview);
-
-        mAdapter = new MyMenmberAdapter(mDatas1, getActivity());
+        mAdapter = new MyMenmberAdapter(App.getContext().mApbutPerson, getActivity());
         listView.setAdapter(mAdapter);
+        if(qunMenmberSelectorActivity.type.equals("create")){
+        button.setText("创建讨论组");
+        }else{
+            button.setText("邀请");
+        }
+        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
-        button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH||actionId==KeyEvent.KEYCODE_ENTER||actionId == EditorInfo.IME_ACTION_DONE) {
+                    searchData.clear();
+                    String str=editText.getText().toString().trim();
+                    getmDataSub(str);
+                    listView.setFocusable(false);
+                }
+                return false;
+            }
+        });
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                if(mIds!=null&&!(mIds.equals(""))){
-                    if(editText.getText().toString().trim()!=null&&!editText.getText().toString().trim().equals("")) {
-                        RequestCanShu canshus = new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
-                                new RequestCanShu.DataBean(App.getContext().getLogo("logo").data.id + "," + mIds, editText.getText().toString().trim()));
-                        initDatas4(new Gson().toJson(canshus));
-                    }else{
-                        Toast.makeText(getActivity(), "请输入讨论组名字", Toast.LENGTH_SHORT).show();
-                    }
+            }
 
-                }else{
-                    Toast.makeText(getActivity(), "请添加群成员", Toast.LENGTH_SHORT).show();
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(editText.getText().toString().trim().length()==0){
+                    mAdapter.dataChange(App.getContext().mApbutPerson);
                 }
             }
         });
+        button.setOnClickListener(new View.OnClickListener() {
+
+            private StringBuffer sb;
+
+            @Override
+            public void onClick(View view) {
+                sb = new StringBuffer();
+                for (int i = 0; i < App.getContext().mApbutPerson.size(); i++) {
+                    if (App.getContext().mApbutPerson.get(i).getType() == 1) {
+                        if (i == App.getContext().mApbutPerson.size() - 1) {
+                            sb.append(App.getContext().mApbutPerson.get(i).id);
+                        } else {
+                            sb.append(App.getContext().mApbutPerson.get(i).id + ",");
+                        }
+                    }
+                }
+                        if(qunMenmberSelectorActivity.type.equals("create")) {
+
+                            SignOutDilog1 mDlogOutDilog1=new SignOutDilog1(getActivity(),"讨论组名称");
+                            mDlogOutDilog1.show();
+                            mDlogOutDilog1.setOnLisener(new SignOutDilog1.onListern1() {
+                                @Override
+                                public void send(String name) {
+                                    RequestCanShu canshus = new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
+                                            new RequestCanShu.DataBean(App.getContext().getLogo("logo").data.id + "," + sb.toString(), name));
+                                    showDilog("创建中...");
+                                    initDatas4(new Gson().toJson(canshus));
+                                }
+                            });
+
+                        }else if(qunMenmberSelectorActivity.type.equals("join")){
+                            showDilog("邀请中..");
+                            RequestParams canshus = new RequestParams(new RequestParams.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
+                                    new RequestParams.DataBean(sb.toString(), ((QunMenmberSelectorActivity) getActivity()).groupId,( (QunMenmberSelectorActivity) getActivity()).groupName));
+                            initDatas10(new Gson().toJson(canshus));
+                        }
+                }
+        });
 
     }
-
+    /**
+     * 联系人查查找
+     * @param data
+     */
+    private void getmDataSub(String data){
+        if(App.getContext().mApbutPerson!=null) {
+            for (int i = 0; i < App.getContext().mApbutPerson.size(); i++) {
+                if (App.getContext().mApbutPerson.get(i).nickname.contains(data) || App.getContext().mApbutPerson.get(i).mobile.contains(data)) {
+                    searchData.add(App.getContext().mApbutPerson.get(i));
+                }
+            }
+            mAdapter.dataChange(searchData);
+        }
+    }
     List<String> iids = new ArrayList<>();
 
     private String getMemberIds(Map<Integer, UserAboutPerson.DataBean> beans) {
@@ -128,7 +200,6 @@ public class CreatQunZhuFragment extends BaseFragment {
             Map.Entry entry = (Map.Entry) iter.next();
             int key = (int) entry.getKey();
             UserAboutPerson.DataBean val = (UserAboutPerson.DataBean) entry.getValue();
-            iids.add(val.id);
         }
         for (int i = 0; i < iids.size(); i++) {
 
@@ -154,7 +225,7 @@ public class CreatQunZhuFragment extends BaseFragment {
             }
         });
     }
-    //創建qunzhu
+
 
 
     private void initDatas4( String canshu){
@@ -171,29 +242,57 @@ public class CreatQunZhuFragment extends BaseFragment {
         EventBus.getDefault().unregister(this);
     }
 
-    //评论回复按键响应事件
+//创建临时的需要刷新的集合
+    public List<UserAboutPerson.DataBean> linshiPersons=new ArrayList<>();
     public void onEventMainThread(BaiBao userAboutPerson){
+        linshiPersons.clear();
         if(App.getContext().getLogo("logo")!=null&&App.getContext().getLogo("logo").data!=null&& SaveData.getInstance().createDetpt_id!=null) {
-            RequestParams canshus = new RequestParams(new RequestParams.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
-                    new RequestParams.DataBean(SaveData.getInstance().createDetpt_id));
-            initDatas1(new Gson().toJson(canshus));
+            for (int i=0;i<App.getContext().mApbutPerson.size();i++){
+                if(App.getContext().mApbutPerson.get(i).dept_id.equals(SaveData.getInstance().createDetpt_id)){
+                    linshiPersons.add(App.getContext().mApbutPerson.get(i));
+                }
+            }
+            mAdapter.dataChange(linshiPersons);
+//            RequestParams canshus = new RequestParams(new RequestParams.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
+//                    new RequestParams.DataBean(SaveData.getInstance().createDetpt_id));
+//            initDatas1(new Gson().toJson(canshus));
         }else {
             Toast.makeText(getActivity(),"您还未登陆",Toast.LENGTH_SHORT).show();
         }
     }
 
+    public void onEventMainThread(UserAboutPerson.DataBean userAboutPerson){
+        for (int i=0;i<App.getContext().mApbutPerson.size();i++){
+            if(userAboutPerson.id.equals(App.getContext().mApbutPerson.get(i).id)){
+                if(userAboutPerson.isCance){
+                    App.getContext().mApbutPerson.get(i).type=0;
+                }else{
+                    App.getContext().mApbutPerson.get(i).type=1;
+                }
+            }
+        }
+
+
+
+
+    }
+
+
     Observer<CreateQunZu> observer4 = new Observer<CreateQunZu>() {
         @Override
         public void onCompleted() {
+            MissDilog();
             unsubscribe(subscription4);
         }
         @Override
         public void onError(Throwable e) {
+            MissDilog();
             e.printStackTrace();
 
         }
         @Override
         public void onNext(CreateQunZu channels) {
+            MissDilog();
             if(channels.status.code.equals("0")){
                 Group group=new Group(channels.data.groupId,channels.data.groupName, Uri.parse(channels.data.create_user_logo_path));
                 RongIM.getInstance().refreshGroupInfoCache(group);
@@ -227,13 +326,40 @@ public class CreatQunZhuFragment extends BaseFragment {
         public void onNext(UserAboutPerson channels) {
             if(channels.status.code.equals("0")){
                 mAdapter.dataChange(channels.data);
-                mDatas=channels.data;
-                App.getContext().mApbutPerson=channels.data;
-                for (int i=0;i<channels.data.size();i++){
-                    UserInfo info=new UserInfo(channels.data.get(i).id,channels.data.get(i).nickname, Uri.parse(channels.data.get(i).logo_path));
-                    RongIM.getInstance().refreshUserInfoCache(info);
-                }
+
             }
+        }
+    };
+
+
+    Subscription subscription10;
+    private void initDatas10( String canshu){
+        subscription10 = Api.getMangoApi1().getJoinQun(canshu)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer10);
+
+    }
+    //加入群组
+    Observer<JoinQun> observer10 = new Observer<JoinQun>() {
+        @Override
+        public void onCompleted() {
+            MissDilog();
+            unsubscribe(subscription10);
+        }
+        @Override
+        public void onError(Throwable e) {
+            MissDilog();
+            e.printStackTrace();
+
+        }
+        @Override
+        public void onNext(JoinQun channels) {
+            MissDilog();
+            if(channels.status.code.equals("0")){
+                getActivity(). finish();
+            }
+
         }
     };
 }

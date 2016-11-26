@@ -78,7 +78,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_centerInParent="true"
-                    android:text="群组"
+                    android:text="讨论组"
                     android:textSize="18sp"
                     android:textColor="@color/black"
                     android:id="@+id/tv_group"

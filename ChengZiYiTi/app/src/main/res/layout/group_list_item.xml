@@ -11,6 +11,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/touxiao"
+            android:scaleType="centerInside"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:layout_marginLeft="10dp"/>
@@ -19,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="群"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@+id/iv_tou"/>
@@ -27,6 +28,7 @@
             android:id="@+id/iv_next"
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:scaleType="centerInside"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"

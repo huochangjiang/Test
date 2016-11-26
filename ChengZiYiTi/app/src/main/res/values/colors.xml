@@ -11,8 +11,8 @@
     <color name="Orange">#F5A100</color><!-- 橙色 -->
     <color name="dark_grey">#D2D2D2</color><!-- 深灰 -->
     <color name="wxnavpage">#FFE1E8EB</color>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#4392F3</color>
+    <color name="colorPrimaryDark">#4392F3</color>
     <color name="colorAccent">#FF4081</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>

@@ -16,21 +16,21 @@
             >
             <ImageView
                 android:scaleType="centerInside"
-                android:layout_width="wrap_content"
+                android:layout_width="50dp"
+
                 android:id="@+id/back"
                 android:src="@drawable/gimi_back"
                 android:layout_marginLeft="5dp"
                 android:layout_height="match_parent" />
             <TextView
                 android:id="@+id/tv"
+                android:layout_centerHorizontal="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="首页"
-                android:visibility="gone"
                 android:textSize="16sp"
                 android:textColor="@color/white"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/back"/>
+              />
 
 
         </RelativeLayout>
@@ -63,8 +63,9 @@
                android:layout_width="match_parent"
                android:layout_height="50dp">
                <TextView
+
                    android:layout_width="wrap_content"
-                   android:text="群名称"
+                   android:text="讨论组名称"
                    android:layout_centerVertical="true"
                    android:textColor="@color/small_title"
                    android:textSize="@dimen/title_size"
@@ -85,7 +86,7 @@
                android:layout_below="@+id/xian"
                android:layout_marginTop="30dp"
                android:background="@drawable/logo"
-               android:text="退出群组"
+               android:text="退出讨论组"
                android:textColor="#ffffff"
                android:textSize="17sp" />
        </LinearLayout>

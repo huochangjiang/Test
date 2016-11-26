@@ -1,5 +1,6 @@
 package cn.yumutech.unity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -8,22 +9,32 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.yumutech.bean.Update;
 import cn.yumutech.fragments.HomeFragment;
 import cn.yumutech.fragments.MailListFragment;
 import cn.yumutech.fragments.PersonFragment;
 import cn.yumutech.fragments.SuperviseFragment;
+import cn.yumutech.netUtil.DeviceUtils;
 import cn.yumutech.netUtil.FileUtils;
+import cn.yumutech.netUtil.MD5Util;
+import cn.yumutech.netUtil.ToosUtil;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Group;
@@ -34,6 +45,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,R
 
     List<ImageView> ivs=new ArrayList<>();
     List<TextView> tvs=new ArrayList<>();
+    String savePath ;
+    String apkFilePath;
     public Fragment last_fragment;
     private ImageView login;
     private int index=0;
@@ -56,6 +69,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,R
     protected void initViews(Bundle savedInstanceState) {
         app= App.getContext();
         savePath=getDir("update", 0).getAbsolutePath();
+        apkFilePath= savePath + File.separator   + "cz.apk";
         addFragement(HomeFragment.newInstance());
         addFragement(SuperviseFragment.newInstance());
         addFragement(MailListFragment.newInstance());
@@ -82,7 +96,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,R
         id_toolbar= (Toolbar) findViewById(R.id.id_toolbar);
        RongIM.setUserInfoProvider(this,true);
        RongIM.setGroupInfoProvider(this,true);
-
+        UserGetToken.getInstance(this).path=savePath;
         login.setOnClickListener(this);
         ll_animation.setOnClickListener(this);
         ll_story.setOnClickListener(this);
@@ -149,7 +163,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,R
         }
     }
 
-    public String savePath;
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -158,6 +171,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,R
 
     //改变标签栏的颜色
     private void initTabs(){
+       Log.e("info",DeviceUtils.getAPPVersionCodeFromAPP(this)+"---") ;
         ImageView iv1=(ImageView) findViewById(R.id.iv_one);
         ImageView iv2=(ImageView) findViewById(R.id.iv_two);
         ImageView iv3=(ImageView) findViewById(R.id.iv_three);
@@ -284,4 +298,108 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,R
 
         return null;
     }
+
+
+
+    /**
+     * 安装apk
+     *
+     */
+    private void installApk(String apk_path) {
+
+        if (!new File(apk_path).exists()) {
+            return;
+        }
+
+        // 安装之前先修改apk的权限，避免出现解析包错误的问题
+        try {
+            String command = "chmod 777 " + apk_path;
+            Runtime runtime = Runtime.getRuntime();
+            runtime.exec(command);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setDataAndType(Uri.parse("file://" + apk_path), "application/vnd.android.package-archive");
+        startActivity(i);
+    }
+    public  String ToSBC(String input) {
+        char c[] = input.toCharArray();
+        for (int i = 0; i < c.length; i++) {
+            if (c[i] == ' ') {
+                c[i] = '\u3000';
+            } else if (c[i] < '\177') {
+                c[i] = (char) (c[i] + 65248);
+            }
+        }
+        return new String(c);
+    }
+    /**
+     * 安装提示对话框
+     */
+    private void showUpdateDialog(Update mUpdate) {
+        View view = LayoutInflater.from(this).inflate(R.layout.welcomedilog, null);
+
+        final Dialog dialog = new Dialog(this, R.style.transparentFrameWindowStyle);
+        dialog.setContentView(view);
+
+
+        TextView textView_version = (TextView) view.findViewById(R.id.bh);
+        TextView shaohou = (TextView) view.findViewById(R.id.text1);
+        TextView newNow = (TextView) view.findViewById(R.id.text2);
+        TextView textView_log = (TextView) view.findViewById(R.id.tv);
+        textView_log.setText(mUpdate.data.getRemarks());
+        newNow.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                installApk(apkFilePath);
+                dialog.dismiss();
+            }
+        });
+        shaohou.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        // 获取屏幕分辨率来控制宽度
+        int width = ToosUtil.getInstance().getScreenWidth(this);
+
+        Window window = dialog.getWindow();
+        WindowManager.LayoutParams wl = window.getAttributes();
+        wl.width = width * 8 / 10;
+        wl.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+
+        // 设置显示位置
+        dialog.onWindowAttributesChanged(wl);
+
+        dialog.setCanceledOnTouchOutside(false);
+
+        dialog.show();
+
+    }
+
+    /**
+     * 校验下载的apk文件的md5值
+     *
+     * @param md5
+     *            期望的md5值
+     * @return
+     */
+    private boolean MD5Check(String md5) {
+        boolean b = false;
+
+        String local_md5 = MD5Util.getFileMD5String(new File(apkFilePath));
+
+        if (local_md5.equals(md5)) {
+            b = true;
+        }
+
+        return b;
+    }
+
 }

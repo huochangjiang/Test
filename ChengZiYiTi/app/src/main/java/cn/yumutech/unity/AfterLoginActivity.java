@@ -1,20 +1,25 @@
 package cn.yumutech.unity;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import cn.yumutech.bean.ShengJiRequest;
+import cn.yumutech.netUtil.DeviceUtils;
 import cn.yumutech.netUtil.UpdateManager;
 import cn.yumutech.weight.DataCleanManager;
 import cn.yumutech.weight.FileUtils1;
 import cn.yumutech.weight.SaveData;
+import cn.yumutech.weight.TiShiDilog;
 
 /**
  * Created by Administrator on 2016/11/14.
@@ -110,6 +115,23 @@ public class AfterLoginActivity extends BaseActivity implements View.OnClickList
         }
     }
 
+    Handler mHandler=new Handler(){
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case 0:
+                    MissDilog();
+                    TiShiDilog tiShiDilog=new TiShiDilog(AfterLoginActivity.this);
+                    tiShiDilog.show();
+                    break;
+                case 1:
+                    Toast.makeText(AfterLoginActivity.this, "升级中...", Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }
+    };
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -122,8 +144,9 @@ public class AfterLoginActivity extends BaseActivity implements View.OnClickList
                 tv_size.setText(clearImageLoaderCache() / 1024 / 1024 + "M");
                 break;
             case R.id.two:
+                showDilog("检查更新...");
                 ShengJiRequest sheng=new ShengJiRequest(new ShengJiRequest.UserBean(App.getContext().getLogo("logo").data.id,"1233454"),new ShengJiRequest.DataBean("Android"));
-                UpdateManager.getUpdateManager().initDatas1(new Gson().toJson(sheng),this);
+                UpdateManager.getUpdateManager().initDatas1(new Gson().toJson(sheng),this, DeviceUtils.getAPPVersionCodeFromAPP(this),mHandler);
                 break;
         }
     }

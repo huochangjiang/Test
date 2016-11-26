@@ -42,4 +42,11 @@
         android:id="@+id/listview"
         android:layout_height="wrap_content">
     </ListView>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:src="@drawable/back_press"
+        android:layout_centerVertical="true"
+        android:id="@+id/iv_huadong"
+        android:layout_height="wrap_content" />
 </RelativeLayout>

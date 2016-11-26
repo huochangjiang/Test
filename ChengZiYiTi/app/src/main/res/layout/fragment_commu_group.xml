@@ -34,11 +34,11 @@
             android:id="@+id/newgroup"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:src="@drawable/touxiao"/>
+            android:src="@drawable/iv_shoudong"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="新建群组"
+            android:text="新建讨论组"
             android:textSize="15sp"
             android:layout_below="@+id/newgroup"
             android:layout_marginTop="5dp"
@@ -74,23 +74,19 @@
     </LinearLayout>
     <RelativeLayout
         android:id="@+id/rl_two"
+        android:padding="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/fengexianone"
         >
-        <View
-            android:id="@+id/vi"
-            android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:background="@color/fengexianone"
-            ></View>
+
     <TextView
-        android:layout_below="@+id/vi"
         android:id="@+id/textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="我加入的群"
-        android:textSize="20sp"
+        android:text="我加入的讨论组"
+        android:textSize="16sp"
+        android:textColor="@color/small_title"
         />
 
     </RelativeLayout>

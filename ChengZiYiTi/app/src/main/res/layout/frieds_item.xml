@@ -8,12 +8,13 @@
     android:layout_gravity="center_vertical"
     android:layout_width="50dp"
     android:id="@+id/iv"
-    android:src="@drawable/tiaojiao"
+    android:scaleType="centerInside"
+    android:src="@drawable/iv_live"
     android:layout_height="50dp" />
     <TextView
         android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/iv"
-        android:layout_marginLeft="15dp"
+        android:layout_marginLeft="10dp"
         android:layout_width="wrap_content"
         android:textColor="@color/small_title"
         android:textSize="18sp"
