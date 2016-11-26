@@ -71,6 +71,22 @@ public class ShowMyPublishedTask {
         public String task_end_date;
         public String task_status;
         public String task_status_name;
+        public String task_accept_user_id;
+        public String task_accept_user_name;
+        public String task_accept_date;
+        public String task_finish_user_id;
+        public String task_finish_user_name;
+        public String task_finish_date;
+        public String task_publish_user_id;
+        public String task_publish_user_name;
+        public String task_publish_date;
+        public List<assignees> assignees;
+        public static class assignees{
+            public String assignee_user_id;
+            public String assignee_user_name;
+            public String assignee_user_mobile;
+            public String assignee_user_type;
+        }
 
         public String getTask_id() {
             return task_id;

@@ -62,7 +62,8 @@
         android:layout_height="60dp"
         android:orientation="horizontal"
         android:weightSum="3">
-        <Button
+        <TextView
+            android:gravity="center"
             android:id="@+id/bt1"
             android:layout_weight="1"
             android:layout_width="0dp"
@@ -75,7 +76,8 @@
             android:text="资阳"
             android:textSize="18sp"
             android:textColor="@color/rc_location_text"/>
-        <Button
+        <TextView
+            android:gravity="center"
             android:id="@+id/bt2"
             android:layout_weight="1"
             android:background="@color/white"
@@ -88,7 +90,8 @@
             android:text="县区"
             android:textSize="18sp"
             android:textColor="@color/rc_location_text"/>
-        <Button
+        <TextView
+            android:gravity="center"
             android:id="@+id/bt3"
             android:layout_weight="1"
             android:background="@color/white"

@@ -28,10 +28,12 @@
                 android:id="@+id/tv_home"
                 android:layout_height="wrap_content" />
             <ImageView
+                android:scaleType="centerInside"
                 android:id="@+id/login"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/tiaojiao"
+                android:layout_width="60dp"
+
+                android:layout_height="match_parent"
+                android:src="@drawable/iv_find"
                 android:layout_alignParentRight="true"/>
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
