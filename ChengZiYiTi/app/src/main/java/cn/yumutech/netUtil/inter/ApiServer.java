@@ -19,6 +19,7 @@ import cn.yumutech.bean.JieSanQun;
 import cn.yumutech.bean.JoinQun;
 import cn.yumutech.bean.LeaderActivitsDetails;
 import cn.yumutech.bean.LeaderActivitys;
+import cn.yumutech.bean.ModuleClassifyList;
 import cn.yumutech.bean.MovieRecommend;
 import cn.yumutech.bean.PrijectDetaisl;
 import cn.yumutech.bean.ProjectManger;
@@ -83,6 +84,9 @@ public interface ApiServer {
     //督察督办之指派任务
     @POST("AssignTask")
     Observable<AssignTask> getAssignTask(@Query("req") String item);
+    //1.15.1获取模块分类
+    @POST("ModuleClassifyList")
+    Observable<ModuleClassifyList> getModuleClassifyList(@Query("req") String item);
 
 
     //影视推荐

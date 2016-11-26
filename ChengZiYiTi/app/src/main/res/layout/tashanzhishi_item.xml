@@ -86,12 +86,13 @@
         android:layout_alignTop="@+id/source"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-        <ImageView
+        <TextView
             android:id="@+id/browse"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/fen_xuan"
-            />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="浏览"
+            android:textColor="@color/item_title"
+            android:layout_centerVertical="true"/>
         <TextView
             android:id="@+id/browse_num"
             android:layout_width="wrap_content"
@@ -102,14 +103,15 @@
             android:layout_centerVertical="true"
             android:textColor="@color/item_title"
             android:layout_toRightOf="@+id/browse"/>
-        <ImageView
+        <TextView
             android:id="@+id/comments"
             android:layout_toRightOf="@+id/browse_num"
             android:layout_marginLeft="20dp"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/fen_xuan"
-            />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="评论"
+            android:textColor="@color/item_title"
+            android:layout_centerVertical="true" />
         <TextView
             android:id="@+id/comments_num"
             android:layout_width="wrap_content"

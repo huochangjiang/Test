@@ -3,10 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:background="@color/white"
+    android:background="@color/f0f0f0"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="cn.yumutech.unity.LeaderActivitysActivity">
+    tools:context="cn.yumutech.unity.LeaderActivitysActivity"
+    >
     <android.support.v7.widget.Toolbar
         android:id="@+id/id_toolbar"
         app:contentInsetStart="0dp"
@@ -58,53 +59,62 @@
     <LinearLayout
         android:id="@+id/ll_feilei"
         android:layout_below="@+id/id_toolbar"
-        android:background="@color/f0f0f0"
+        android:background="@color/white"
+        android:padding="10dp"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="3">
-        <TextView
-            android:id="@+id/bt1"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:background="@drawable/logo_no"
-            android:layout_height="match_parent"
-            android:layout_marginRight="5dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            android:text="省级"
-            android:gravity="center"
-            android:textSize="18sp"
-            android:textColor="@color/rc_location_text"/>
-        <TextView
-            android:id="@+id/bt2"
-            android:layout_weight="1"
-            android:background="@drawable/logo_no"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginRight="5dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            android:text="成都"
-            android:gravity="center"
-            android:textSize="18sp"
-            android:textColor="@color/rc_location_text"/>
-        <TextView
-            android:id="@+id/bt3"
-            android:layout_weight="1"
-            android:background="@drawable/logo_no"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginRight="5dp"
-            android:layout_marginLeft="10dp"
-            android:gravity="center"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            android:text="资阳"
-            android:textSize="18sp"
-            android:textColor="@color/rc_location_text"/>
+        android:focusable="true">
+        <HorizontalScrollView
+            android:id="@+id/horscroll_one"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:background="#ffffff"
+            android:scrollbars="none" >
+        </HorizontalScrollView>
+        <!--<TextView-->
+            <!--android:id="@+id/bt1"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:background="@drawable/logo_no"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_marginRight="5dp"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:layout_marginBottom="10dp"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:text="省级"-->
+            <!--android:gravity="center"-->
+            <!--android:textSize="18sp"-->
+            <!--android:textColor="@color/rc_location_text"/>-->
+        <!--<TextView-->
+            <!--android:id="@+id/bt2"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="@drawable/logo_no"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_marginRight="5dp"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:layout_marginBottom="10dp"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:text="成都"-->
+            <!--android:gravity="center"-->
+            <!--android:textSize="18sp"-->
+            <!--android:textColor="@color/rc_location_text"/>-->
+        <!--<TextView-->
+            <!--android:id="@+id/bt3"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="@drawable/logo_no"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_marginRight="5dp"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:gravity="center"-->
+            <!--android:layout_marginBottom="10dp"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:text="资阳"-->
+            <!--android:textSize="18sp"-->
+            <!--android:textColor="@color/rc_location_text"/>-->
     </LinearLayout>
     <include
         android:id="@+id/tishi"
@@ -116,12 +126,14 @@
     <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:id="@+id/pull_to_refresh"
+        android:layout_marginTop="10dp"
         android:layout_below="@+id/ll_feilei"
         android:layout_height="wrap_content">
         <android.support.v7.widget.RecyclerView
             android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/recyleview" />
+            android:id="@+id/recyleview"
+           />
     </android.support.v4.widget.SwipeRefreshLayout>
 </RelativeLayout>

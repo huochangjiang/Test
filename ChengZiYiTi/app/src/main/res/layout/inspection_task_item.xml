@@ -25,13 +25,50 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
         android:layout_alignLeft="@+id/title"/>
+    <RelativeLayout
+        android:id="@+id/rl_fabu"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/faburen"
+            android:textSize="15sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="发布人:"/>
+        <TextView
+            android:id="@+id/tv_faburen"
+            android:layout_toRightOf="@+id/faburen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="陈"
+            android:textSize="15sp"
+            android:layout_marginLeft="5dp"/>
+        <TextView
+            android:id="@+id/tv_fabushijian"
+            android:layout_marginRight="10dp"
+            android:text="2016-12-10"
+            android:textSize="15sp"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_toLeftOf="@+id/tv_fabushijian"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="发布时间:"/>
+    </RelativeLayout>
     <TextView
         android:id="@+id/status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="状态"
-        android:layout_alignLeft="@+id/title"
-        android:layout_below="@+id/content"
+        android:layout_alignLeft="@+id/rl_fabu"
+        android:layout_below="@+id/rl_fabu"
         android:layout_marginTop="10dp"
         android:textSize="15sp"
         android:textColor="@color/juse"/>

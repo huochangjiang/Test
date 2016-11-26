@@ -51,6 +51,8 @@ public class MyFaBuDeAdapter extends BaseAdapter{
             vh.content= (TextView) myView.findViewById(R.id.content);
             vh.status= (TextView) myView.findViewById(R.id.status);
             vh.date= (TextView) myView.findViewById(R.id.date);
+            vh.tv_faburen= (TextView) myView.findViewById(R.id.tv_faburen);
+            vh.tv_fabushijian= (TextView) myView.findViewById(R.id.tv_fabushijian);
             myView.setTag(vh);
         }else {
             vh= (ViewHolder) myView.getTag();
@@ -59,9 +61,12 @@ public class MyFaBuDeAdapter extends BaseAdapter{
         vh.content.setText(mData.get(position).task_content);
         vh.status.setText(mData.get(position).task_status_name);
         vh.date.setText(mData.get(position).task_end_date);
+        vh.tv_faburen.setText(mData.get(position).task_publish_user_name);
+        vh.tv_fabushijian.setText(mData.get(position).task_publish_date);
         return myView;
     }
     public class ViewHolder{
         public TextView title,content,status,date;
+        private TextView tv_faburen,tv_fabushijian;
     }
 }

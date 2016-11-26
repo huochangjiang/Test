@@ -43,6 +43,7 @@ public class MyTaskFragment extends BaseFragment implements PullToRefreshBase.On
     private InspectionTaskAdapter adapter;
     private PullToRefreshScrollView pullToRefresh;
     private boolean isShangla=false;
+
     private List<ShowMyTask.DataBean> mData=new ArrayList<>();
     @Override
     protected View getContentView(LayoutInflater inflater, ViewGroup container) {
@@ -56,11 +57,13 @@ public class MyTaskFragment extends BaseFragment implements PullToRefreshBase.On
         adapter=new InspectionTaskAdapter(getActivity(),mData);
         listView.setAdapter(adapter);
         myprog=contentView.findViewById(R.id.myprog);
+
         myprog.setVisibility(View.VISIBLE);
         listView.setVisibility(View.GONE);
         pullToRefresh = (PullToRefreshScrollView) contactView.findViewById(R.id.pull_to_refresh);
         pullToRefresh.setMode(PullToRefreshBase.Mode.BOTH);
         pullToRefresh.setOnRefreshListener(this);
+
         //下拉刷新设置
         ILoadingLayout startLabels = pullToRefresh
                 .getLoadingLayoutProxy(true, false);

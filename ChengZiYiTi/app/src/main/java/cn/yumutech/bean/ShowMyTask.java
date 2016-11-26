@@ -56,6 +56,9 @@ public class ShowMyTask {
         public String task_finish_user_id;
         public String task_finish_user_name;
         public String task_finish_date;
+        public String task_publish_user_id;
+        public String task_publish_user_name;
+        public String task_publish_date;
 
     }
 }

@@ -49,17 +49,32 @@ public class ShowTaskDetail {
         public String task_finish_user_id;
         public String task_finish_user_name;
         public String task_finish_date;
+        public String task_publish_user_id;
+        public String task_publish_user_name;
+        public String task_publish_date;
+        public List<assign> assign;
         public task_comment task_comment;
         public static class task_comment{
             public String taskcomment_content;
             public String taskcomment_user_id;
             public String taskcomment_user_name;
             public String taskcomment_date;
+
             public List<photos> photos;
             public static class photos{
                 public String photo_path;
                 public String photo_thumbnail_path;
             }
+        }
+        public static class assign{
+            public String assigner_user_id;
+            public String assigner_user_name;
+            public String assigner_user_mobile;
+            public String assign_date;
+            public String assignee_user_id;
+            public String assignee_user_name;
+            public String assignee_user_mobile;
+            public String assignee_user_type;
         }
     }
 }

@@ -41,6 +41,9 @@ public class ShowTaskDetailActivity extends BaseActivity{
     private RelativeLayout all;
     private ShowTaskDetail mData;
     private Button assign;
+    private TextView tv_faburen,tv_fabushijian,zhu_zhipaishijian,tv_zhipairen1,zhu_banren,zhu_zhipaishijian2,tv_zhipairen2,zhu_banren2;
+    private RelativeLayout rl_zhipai,rl_zhipai2;
+    private View xian;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_show_task_detail;
@@ -59,6 +62,21 @@ public class ShowTaskDetailActivity extends BaseActivity{
         bt_accept= (Button) findViewById(R.id.bt_accept);
         back= (ImageView) findViewById(R.id.back);
         myprog=findViewById(R.id.myprog);
+
+
+        rl_zhipai= (RelativeLayout) findViewById(R.id.rl_zhipai);
+        rl_zhipai2= (RelativeLayout) findViewById(R.id.rl_zhipai2);
+        xian=findViewById(R.id.xian);
+        tv_faburen= (TextView) findViewById(R.id.tv_faburen);
+        tv_fabushijian= (TextView) findViewById(R.id.tv_fabushijian);
+        tv_zhipairen1= (TextView) findViewById(R.id.tv_zhipairen1);
+        zhu_banren= (TextView) findViewById(R.id.zhu_banren);
+        zhu_zhipaishijian2= (TextView) findViewById(R.id.zhu_zhipaishijian2);
+        tv_zhipairen2= (TextView) findViewById(R.id.tv_zhipairen2);
+        zhu_banren2= (TextView) findViewById(R.id.zhu_banren2);
+        zhu_zhipaishijian= (TextView) findViewById(R.id.zhu_zhipaishijian);
+
+
         assign= (Button) findViewById(R.id.assign);
         all= (RelativeLayout) findViewById(R.id.all);
 
@@ -211,6 +229,36 @@ public class ShowTaskDetailActivity extends BaseActivity{
       status.setText(data.data.task_status_name);
       date.setText(data.data.task_end_date);
       neirong.setText(data.data.task_content);
+      tv_fabushijian.setText(data.data.task_publish_date);
+      tv_faburen.setText(data.data.task_publish_user_name);
+      if(data.data.assign!=null&&data.data.assign.size()>0){
+          for(int i=0;i<data.data.assign.size();i++){
+
+              if(data.data.assign.get(i).assignee_user_type.equals("director")){
+                  zhu_zhipaishijian.setText(data.data.assign.get(i).assign_date);
+                  tv_zhipairen1.setText(data.data.assign.get(i).assigner_user_name);
+                  zhu_banren.setText(data.data.assign.get(i).assignee_user_name);
+                  rl_zhipai.setVisibility(View.VISIBLE);
+                  xian.setVisibility(View.VISIBLE);
+              }else {
+//                  rl_zhipai.setVisibility(View.GONE);
+              }
+              if(data.data.assign.get(i).assignee_user_type.equals("supporter")){
+                  zhu_zhipaishijian2.setText(data.data.assign.get(i).assign_date);
+                  tv_zhipairen2.setText(data.data.assign.get(i).assigner_user_name);
+                  zhu_banren2.setText(data.data.assign.get(i).assignee_user_name);
+                  rl_zhipai2.setVisibility(View.VISIBLE);
+                  xian.setVisibility(View.VISIBLE);
+              }else {
+//                  rl_zhipai2.setVisibility(View.GONE);
+              }
+          }
+
+      }else {
+          rl_zhipai.setVisibility(View.GONE);
+          rl_zhipai2.setVisibility(View.GONE);
+          xian.setVisibility(View.GONE);
+      }
   }
     protected void unsubscribe(Subscription subscription) {
         if (subscription != null && !subscription.isUnsubscribed()) {
