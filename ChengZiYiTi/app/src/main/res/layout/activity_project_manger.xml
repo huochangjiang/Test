@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent"
+    android:background="@color/f0f0f0"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="cn.yumutech.unity.LeaderActivitysActivity">
     <android.support.v7.widget.Toolbar
@@ -132,6 +133,7 @@
     <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:id="@+id/pull_to_refresh"
+        android:layout_marginTop="10dp"
         android:layout_below="@+id/ll_feilei"
         android:layout_height="wrap_content">
         <android.support.v7.widget.RecyclerView

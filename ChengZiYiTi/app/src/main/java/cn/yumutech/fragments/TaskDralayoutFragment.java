@@ -273,6 +273,7 @@ public class TaskDralayoutFragment extends BaseFragment implements View.OnClickL
     Subscription subscription1;
     private void mGetAssignTask(){
         if(App.getContext().getLogo("logo")!=null&&detailToThis.size()==2){
+            showDilog("指派中...");
             Log.e("ZHU","主办人"+detailToThis.get(0).name+"协办人"+detailToThis.get(1).name);
             AssignTaskBeen assignTaskBeen = new AssignTaskBeen(new AssignTaskBeen.UserBeen(App.getContext().getLogo("logo").data.id,
                     "1234567890"),new AssignTaskBeen.DataBeen(SaveData.getInstance().task_id,detailToThis.get(0).id,detailToThis.get(1).id));
@@ -303,6 +304,7 @@ public class TaskDralayoutFragment extends BaseFragment implements View.OnClickL
             if(assignTask!=null&&assignTask.status.code.equals("0")){
                 Toast.makeText(getActivity(),assignTask.status.message,Toast.LENGTH_SHORT).show();;
                 EventBus.getDefault().post(new AssignTask());
+                MissDilog();
             }
         }
     };

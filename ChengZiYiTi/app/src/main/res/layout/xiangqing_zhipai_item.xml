@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/rl_zhipai"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/rl_head"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/zhu_zhipaishijian"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2016-12-10:"
+            android:textSize="15sp"
+            android:layout_marginLeft="10dp"/>
+        <TextView
+            android:id="@+id/tv_zhipairen1"
+            android:layout_toRightOf="@+id/zhu_zhipaishijian"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="成"
+            android:textSize="15sp"
+            android:textColor="@color/blue"/>
+        <TextView
+            android:id="@+id/tv_wocao"
+            android:layout_toRightOf="@+id/tv_zhipairen1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="指派给了"
+            android:textSize="15sp" />
+        <TextView
+            android:id="@+id/zhu_banren"
+            android:layout_toRightOf="@+id/tv_wocao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="成"
+            android:textSize="15sp"
+            android:textColor="@color/blue"/>
+    </RelativeLayout>
+</RelativeLayout>

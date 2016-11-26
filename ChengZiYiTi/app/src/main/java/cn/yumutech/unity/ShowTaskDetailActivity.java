@@ -12,11 +12,13 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import cn.yumutech.Adapter.XiangqingZhipaiAdaper;
 import cn.yumutech.bean.AcceptTask;
 import cn.yumutech.bean.AcceptTaskBeen;
 import cn.yumutech.bean.ShowTaskDetail;
 import cn.yumutech.bean.ShowTaskDetailBeen;
 import cn.yumutech.netUtil.Api;
+import cn.yumutech.weight.MyListview;
 import cn.yumutech.weight.SaveData;
 import rx.Observer;
 import rx.Subscription;
@@ -41,8 +43,12 @@ public class ShowTaskDetailActivity extends BaseActivity{
     private RelativeLayout all;
     private ShowTaskDetail mData;
     private Button assign;
-    private TextView tv_faburen,tv_fabushijian,zhu_zhipaishijian,tv_zhipairen1,zhu_banren,zhu_zhipaishijian2,tv_zhipairen2,zhu_banren2;
-    private RelativeLayout rl_zhipai,rl_zhipai2;
+    private MyListview listview;
+    private TextView tv_faburen,tv_fabushijian;
+    private XiangqingZhipaiAdaper adaper;
+
+//
+//    private RelativeLayout rl_zhipai,rl_zhipai2;
     private View xian;
     @Override
     protected int getLayoutId() {
@@ -62,19 +68,20 @@ public class ShowTaskDetailActivity extends BaseActivity{
         bt_accept= (Button) findViewById(R.id.bt_accept);
         back= (ImageView) findViewById(R.id.back);
         myprog=findViewById(R.id.myprog);
-
-
-        rl_zhipai= (RelativeLayout) findViewById(R.id.rl_zhipai);
-        rl_zhipai2= (RelativeLayout) findViewById(R.id.rl_zhipai2);
+        listview= (MyListview) findViewById(R.id.listview);
+        adaper=new XiangqingZhipaiAdaper(mData,this);
+        listview.setAdapter(adaper);
+//        rl_zhipai= (RelativeLayout) findViewById(R.id.rl_zhipai);
+//        rl_zhipai2= (RelativeLayout) findViewById(R.id.rl_zhipai2);
         xian=findViewById(R.id.xian);
         tv_faburen= (TextView) findViewById(R.id.tv_faburen);
         tv_fabushijian= (TextView) findViewById(R.id.tv_fabushijian);
-        tv_zhipairen1= (TextView) findViewById(R.id.tv_zhipairen1);
-        zhu_banren= (TextView) findViewById(R.id.zhu_banren);
-        zhu_zhipaishijian2= (TextView) findViewById(R.id.zhu_zhipaishijian2);
-        tv_zhipairen2= (TextView) findViewById(R.id.tv_zhipairen2);
-        zhu_banren2= (TextView) findViewById(R.id.zhu_banren2);
-        zhu_zhipaishijian= (TextView) findViewById(R.id.zhu_zhipaishijian);
+//        tv_zhipairen1= (TextView) findViewById(R.id.tv_zhipairen1);
+//        zhu_banren= (TextView) findViewById(R.id.zhu_banren);
+//        zhu_zhipaishijian2= (TextView) findViewById(R.id.zhu_zhipaishijian2);
+//        tv_zhipairen2= (TextView) findViewById(R.id.tv_zhipairen2);
+//        zhu_banren2= (TextView) findViewById(R.id.zhu_banren2);
+//        zhu_zhipaishijian= (TextView) findViewById(R.id.zhu_zhipaishijian);
 
 
         assign= (Button) findViewById(R.id.assign);
@@ -115,6 +122,7 @@ public class ShowTaskDetailActivity extends BaseActivity{
             @Override
             public void onClick(View view) {
                 if(mData!=null&&mData.data!=null&&mData.data.task_id!=null){
+                    showDilog("接受中...");
                     initAcceptTask(mData.data.task_id);
                 }
             }
@@ -175,6 +183,7 @@ public class ShowTaskDetailActivity extends BaseActivity{
         @Override
         public void onNext(AcceptTask acceptTask) {
             if(acceptTask.status.code.equals("0")&&acceptTask.data!=null){
+                MissDilog();
                 Toast.makeText(ShowTaskDetailActivity.this,"您已接受任务",Toast.LENGTH_SHORT).show();
                 finish();
             }
@@ -232,31 +241,9 @@ public class ShowTaskDetailActivity extends BaseActivity{
       tv_fabushijian.setText(data.data.task_publish_date);
       tv_faburen.setText(data.data.task_publish_user_name);
       if(data.data.assign!=null&&data.data.assign.size()>0){
-          for(int i=0;i<data.data.assign.size();i++){
-
-              if(data.data.assign.get(i).assignee_user_type.equals("director")){
-                  zhu_zhipaishijian.setText(data.data.assign.get(i).assign_date);
-                  tv_zhipairen1.setText(data.data.assign.get(i).assigner_user_name);
-                  zhu_banren.setText(data.data.assign.get(i).assignee_user_name);
-                  rl_zhipai.setVisibility(View.VISIBLE);
-                  xian.setVisibility(View.VISIBLE);
-              }else {
-//                  rl_zhipai.setVisibility(View.GONE);
-              }
-              if(data.data.assign.get(i).assignee_user_type.equals("supporter")){
-                  zhu_zhipaishijian2.setText(data.data.assign.get(i).assign_date);
-                  tv_zhipairen2.setText(data.data.assign.get(i).assigner_user_name);
-                  zhu_banren2.setText(data.data.assign.get(i).assignee_user_name);
-                  rl_zhipai2.setVisibility(View.VISIBLE);
-                  xian.setVisibility(View.VISIBLE);
-              }else {
-//                  rl_zhipai2.setVisibility(View.GONE);
-              }
-          }
-
+          adaper.dataChange(data);
+          xian.setVisibility(View.VISIBLE);
       }else {
-          rl_zhipai.setVisibility(View.GONE);
-          rl_zhipai2.setVisibility(View.GONE);
           xian.setVisibility(View.GONE);
       }
   }

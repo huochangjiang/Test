@@ -65,7 +65,7 @@ public class CommuContactFragment extends BaseFragment{
         if (App.getContext().getLogo("logo") != null) {
             //我的ID，现在测试用最高等级
             mDept_id = App.getContext().getLogo("logo").data.dept_id;
-            Log.e("info",mDept_id+"huo");
+            Log.e("infomDept_id",mDept_id+"huo");
             user_id = App.getContext().getLogo("logo").data.id;
         }
         contactView = inflater.inflate(R.layout.fragment_commu_contact, container, false);

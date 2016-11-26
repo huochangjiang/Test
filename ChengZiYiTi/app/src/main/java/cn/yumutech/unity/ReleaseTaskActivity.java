@@ -114,6 +114,7 @@ public class ReleaseTaskActivity extends BaseActivity implements View.OnClickLis
 //                startActivity(intent1);
 //                break;
             case R.id.rl_send:
+                showDilog("发布中...");
                 mHandler.sendEmptyMessage(1);
                 break;
             case R.id.back:
@@ -166,6 +167,7 @@ public class ReleaseTaskActivity extends BaseActivity implements View.OnClickLis
         @Override
         public void onNext(PublishTask publishTask) {
             if(publishTask!=null&&publishTask.status.code.equals("0")){
+                MissDilog();
                 Toast.makeText(ReleaseTaskActivity.this,publishTask.status.message,Toast.LENGTH_SHORT).show();
                 finish();
             }
