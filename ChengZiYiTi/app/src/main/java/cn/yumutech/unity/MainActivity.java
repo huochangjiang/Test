@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -242,7 +244,41 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,R
 //            }
 //        return null;
     }
-
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        // TODO Auto-generated method stub
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
+                exit();
+            } else {
+                super.onBackPressed();
+            }
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+    Handler mHandler = new Handler() {
+        public void handleMessage(android.os.Message msg) {
+            switch (msg.what) {
+                case EXIT:
+                    isExit = false;
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+    public static final int EXIT = 1005;
+    public  boolean isExit = false;
+    public void exit() {
+        if (!isExit) {
+            isExit = true;
+            Toast.makeText(MainActivity.this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+            mHandler.sendEmptyMessageDelayed(EXIT, 2000);
+        } else {
+            finish();
+        }
+    }
     @Override
     public Group getGroupInfo(String s) {
 

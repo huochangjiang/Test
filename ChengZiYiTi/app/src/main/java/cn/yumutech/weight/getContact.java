@@ -65,6 +65,9 @@ public class getContact {
             user_id = App.getContext().getLogo("logo").data.id;
             nickname=App.getContext().getLogo("logo").data.nickname;
         }
+        if(SaveData.getInstance().taskToChildGroups!=null){
+            SaveData.getInstance().taskToChildGroups.clear();
+        }
         if (user_id != null && !user_id.equals("")&&nickname!=null) {
             RequestCanShu canshus = new RequestCanShu(new RequestCanShu.UserBean(nickname, user_id),
                     new RequestCanShu.DataBean(null));

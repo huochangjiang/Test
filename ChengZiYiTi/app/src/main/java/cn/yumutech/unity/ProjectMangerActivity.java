@@ -1,6 +1,7 @@
 package cn.yumutech.unity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -8,7 +9,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -46,8 +46,8 @@ public class ProjectMangerActivity extends BaseActivity implements SwipeRefreshL
     private View myprog;
     private String fenlei="";
     private LinearLayout ll_feilei;
-    private Button bt1,bt2,bt3;
-    private List<Button> bts = new ArrayList<>();
+    private TextView bt1,bt2,bt3;
+    private List<TextView> bts = new ArrayList<>();
     //判断上面的分类按钮是否被点击
     private boolean isClick1,isClick2,isClick3;
     private View tishi;
@@ -68,9 +68,9 @@ public class ProjectMangerActivity extends BaseActivity implements SwipeRefreshL
         pullToRefresh = (SwipeRefreshLayout) findViewById(R.id.pull_to_refresh);
         mAdapter = new ProjectMangerAdpater(this,leaderActivitys);
         ll_feilei= (LinearLayout) findViewById(R.id.ll_feilei);
-        bt1= (Button) findViewById(R.id.bt1);
-        bt2= (Button) findViewById(R.id.bt2);
-        bt3= (Button) findViewById(R.id.bt3);
+        bt1= (TextView) findViewById(R.id.bt1);
+        bt2= (TextView) findViewById(R.id.bt2);
+        bt3= (TextView) findViewById(R.id.bt3);
         bts.add(bt1);
         bts.add(bt2);
         bts.add(bt3);
@@ -249,6 +249,7 @@ public class ProjectMangerActivity extends BaseActivity implements SwipeRefreshL
                 if(isClick1){
                     isClick1=false;
                     fenlei="";
+                    bt1.setTextColor(Color.parseColor("#7F000000"));
                     bt1.setBackgroundResource(R.drawable.logo_no);
                 }else{
                     isClick1=true;
@@ -263,6 +264,7 @@ public class ProjectMangerActivity extends BaseActivity implements SwipeRefreshL
                 if(isClick2){
                     isClick2=false;
                     fenlei="";
+                    bt2.setTextColor(Color.parseColor("#7F000000"));
                     bt2.setBackgroundResource(R.drawable.logo_no);
                 }else{
                     isClick1=false;
@@ -277,6 +279,7 @@ public class ProjectMangerActivity extends BaseActivity implements SwipeRefreshL
                 if(isClick3){
                     isClick3=false;
                     fenlei="";
+                    bt3.setTextColor(Color.parseColor("#7F000000"));
                     bt3.setBackgroundResource(R.drawable.logo_no);
                 }else{
                     isClick1=false;
@@ -315,8 +318,10 @@ public class ProjectMangerActivity extends BaseActivity implements SwipeRefreshL
             TextView bt = bts.get(i);
             if (i == postion) {
                 bt.setBackgroundResource(R.drawable.logo);
+                bt.setTextColor(Color.parseColor("#ffffff"));
             } else {
                 bt.setBackgroundResource(R.drawable.logo_no);
+                bt.setTextColor(Color.parseColor("#7F000000"));
             }
         }
     }

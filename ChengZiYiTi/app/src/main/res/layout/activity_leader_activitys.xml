@@ -63,7 +63,7 @@
         android:layout_height="60dp"
         android:orientation="horizontal"
         android:weightSum="3">
-        <Button
+        <TextView
             android:id="@+id/bt1"
             android:layout_weight="1"
             android:layout_width="0dp"
@@ -74,9 +74,10 @@
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:text="省级"
+            android:gravity="center"
             android:textSize="18sp"
             android:textColor="@color/rc_location_text"/>
-        <Button
+        <TextView
             android:id="@+id/bt2"
             android:layout_weight="1"
             android:background="@drawable/logo_no"
@@ -87,9 +88,10 @@
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:text="成都"
+            android:gravity="center"
             android:textSize="18sp"
             android:textColor="@color/rc_location_text"/>
-        <Button
+        <TextView
             android:id="@+id/bt3"
             android:layout_weight="1"
             android:background="@drawable/logo_no"
@@ -97,6 +99,7 @@
             android:layout_height="match_parent"
             android:layout_marginRight="5dp"
             android:layout_marginLeft="10dp"
+            android:gravity="center"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:text="资阳"

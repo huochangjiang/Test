@@ -1,6 +1,7 @@
 package cn.yumutech.unity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -8,7 +9,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -44,8 +44,8 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
     private boolean isRefresh=false;
     private View myprog;
     private LinearLayout ll_feilei;
-    private List<Button> bts = new ArrayList<>();
-    private Button bt1,bt2,bt3,bt4,bt5,bt6;
+    private List<TextView> bts = new ArrayList<>();
+    private TextView bt1,bt2,bt3,bt4,bt5,bt6;
     private String fenlei="";
     //判断上面的分类按钮是否被点击
     private boolean isClick1,isClick2,isClick3,isClick4,isClick5,isClick6;
@@ -68,12 +68,12 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
         recyclerView = (RecyclerView) findViewById(R.id.recyleview);
         pullToRefresh = (SwipeRefreshLayout) findViewById(R.id.pull_to_refresh);
         ll_feilei= (LinearLayout) findViewById(R.id.ll_feilei);
-        bt1= (Button) findViewById(R.id.bt1);
-        bt2= (Button) findViewById(R.id.bt2);
-        bt3= (Button) findViewById(R.id.bt3);
-        bt4= (Button) findViewById(R.id.bt4);
-        bt5= (Button) findViewById(R.id.bt5);
-        bt6= (Button) findViewById(R.id.bt6);
+        bt1= (TextView) findViewById(R.id.bt1);
+        bt2= (TextView) findViewById(R.id.bt2);
+        bt3= (TextView) findViewById(R.id.bt3);
+        bt4= (TextView) findViewById(R.id.bt4);
+        bt5= (TextView) findViewById(R.id.bt5);
+        bt6= (TextView) findViewById(R.id.bt6);
         bts.add(bt1);
         bts.add(bt2);
         bts.add(bt3);
@@ -163,6 +163,7 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
                 if(isClick1){
                     isClick1=false;
                     fenlei="";
+                    bt1.setTextColor(Color.parseColor("#7F000000"));
                     bt1.setBackgroundResource(R.drawable.logo_no);
                 }else{
                     isClick1=true;
@@ -183,6 +184,7 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
                 if(isClick2){
                     isClick2=false;
                     fenlei="";
+                    bt2.setTextColor(Color.parseColor("#7F000000"));
                     bt2.setBackgroundResource(R.drawable.logo_no);
                 }else{
                     isClick2=true;
@@ -203,6 +205,7 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
                 if(isClick3){
                     isClick3=false;
                     fenlei="";
+                    bt3.setTextColor(Color.parseColor("#7F000000"));
                     bt3.setBackgroundResource(R.drawable.logo_no);
                 }else{
                     isClick3=true;
@@ -223,6 +226,7 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
                 if(isClick4){
                     isClick4=false;
                     fenlei="";
+                    bt4.setTextColor(Color.parseColor("#7F000000"));
                     bt4.setBackgroundResource(R.drawable.logo_no);
                 }else{
                     isClick4=true;
@@ -243,6 +247,7 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
                 if(isClick5){
                     isClick5=false;
                     fenlei="";
+                    bt5.setTextColor(Color.parseColor("#7F000000"));
                     bt5.setBackgroundResource(R.drawable.logo_no);
                 }else{
                     isClick5=true;
@@ -263,6 +268,7 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
                 if(isClick6){
                     isClick6=false;
                     fenlei="";
+                    bt6.setTextColor(Color.parseColor("#7F000000"));
                     bt6.setBackgroundResource(R.drawable.logo_no);
                 }else{
                     isClick6=true;
@@ -389,8 +395,10 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
             TextView bt = bts.get(i);
             if (i == postion) {
                 bt.setBackgroundResource(R.drawable.logo);
+                bt.setTextColor(Color.parseColor("#ffffff"));
             } else {
                 bt.setBackgroundResource(R.drawable.logo_no);
+                bt.setTextColor(Color.parseColor("#7F000000"));
             }
         }
     }
