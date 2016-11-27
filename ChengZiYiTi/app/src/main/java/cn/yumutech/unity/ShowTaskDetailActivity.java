@@ -186,6 +186,7 @@ public class ShowTaskDetailActivity extends BaseActivity{
         public void onNext(AcceptTask acceptTask) {
             if(acceptTask.status.code.equals("0")&&acceptTask.data!=null){
                 MissDilog();
+                SaveData.getInstance().isJieshou=true;
                 Toast.makeText(ShowTaskDetailActivity.this,"您已接受任务",Toast.LENGTH_SHORT).show();
                 finish();
             }

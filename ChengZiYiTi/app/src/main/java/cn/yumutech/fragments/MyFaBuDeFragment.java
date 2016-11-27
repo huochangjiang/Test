@@ -24,6 +24,7 @@ import cn.yumutech.unity.BaseFragment;
 import cn.yumutech.unity.R;
 import cn.yumutech.unity.ShowTaskDetailActivity;
 import cn.yumutech.weight.MyListview;
+import cn.yumutech.weight.SaveData;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -80,6 +81,7 @@ public class MyFaBuDeFragment extends BaseFragment implements PullToRefreshBase.
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                SaveData.getInstance().isJieshou=false;
                 Intent intent=new Intent();
                 intent.setClass(getActivity(),ShowTaskDetailActivity.class);
                 intent.putExtra("task_id",mData.get(position).task_id);
@@ -164,12 +166,15 @@ public class MyFaBuDeFragment extends BaseFragment implements PullToRefreshBase.
     @Override
     public void onResume() {
         super.onResume();
-        isShangla=false;
-        page=0;
-        if(App.getContext().getLogo("logo")!=null){
-            ShowMyPublishedTaskBeen been=new ShowMyPublishedTaskBeen(new ShowMyPublishedTaskBeen.UserBean(App.getContext().getLogo("logo").data.id,
-                    ""),new ShowMyPublishedTaskBeen.DataBean(page+"",pageSize+""));
-            initDatas1(new Gson().toJson(been));
+        if( SaveData.getInstance().isJieshou){
+            isShangla=false;
+            page=0;
+            if(App.getContext().getLogo("logo")!=null){
+                ShowMyPublishedTaskBeen been=new ShowMyPublishedTaskBeen(new ShowMyPublishedTaskBeen.UserBean(App.getContext().getLogo("logo").data.id,
+                        ""),new ShowMyPublishedTaskBeen.DataBean(page+"",pageSize+""));
+                initDatas1(new Gson().toJson(been));
+            }
         }
+
     }
 }
