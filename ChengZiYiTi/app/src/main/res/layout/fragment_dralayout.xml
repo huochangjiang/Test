@@ -35,6 +35,14 @@
 
         </cn.yumutech.weight.MyEditText>
     </RelativeLayout>
+    <include
+        android:id="@+id/wuquanxian"
+        android:layout_below="@+id/rl_search"
+        layout="@layout/noquanxian"
+        android:visibility="gone"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+      />
     <ListView
         android:layout_below="@+id/rl_search"
         android:layout_marginTop="10dp"

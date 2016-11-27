@@ -39,6 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:text="成"
+            android:singleLine="true"
             android:textSize="15sp"
             android:textColor="@color/blue"/>
     </RelativeLayout>

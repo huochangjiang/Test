@@ -114,7 +114,7 @@ public class ReleaseTaskActivity extends BaseActivity implements View.OnClickLis
 //                startActivity(intent1);
 //                break;
             case R.id.rl_send:
-                showDilog("发布中...");
+
                 mHandler.sendEmptyMessage(1);
                 break;
             case R.id.back:
@@ -137,6 +137,7 @@ public class ReleaseTaskActivity extends BaseActivity implements View.OnClickLis
                     }else if(zhuPoeples.isEmpty()||zhuPoeples.size()<2){
                         Toast.makeText(ReleaseTaskActivity.this,"您还未指派，请完善",Toast.LENGTH_SHORT).show();
                     }else {
+                        showDilog("发布中...");
                         PublishTaskBeen been=new PublishTaskBeen(new PublishTaskBeen.UserBean(App.getContext().getLogo("logo").data.id,"")
                                 ,new PublishTaskBeen.DataBean(edit_title.getText().toString().trim(),edit_neirong.getText().toString().trim(),
                                 choose_time.getText().toString(),zhuPoeples.get(0).id,

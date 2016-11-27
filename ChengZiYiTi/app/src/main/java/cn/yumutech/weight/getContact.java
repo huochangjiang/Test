@@ -110,10 +110,10 @@ public class getContact {
                 App.getContext().savaHomeJson("Contact",data);
                 if (channels!=null&&channels.data!=null&&channels.data.size()>0){
                     SaveData.getInstance().taskToChildGroups.clear();
-//                    for(int i=0;i<channels.data.size();i++){
-//                        SaveData.getInstance().taskToChildGroups.add(new GroupClass(channels.data.get(i).dept_name,channels.data.get(i).dept_id,
-//                                channels.data.get(i).dept_parent_id));
-//                    }
+                    for(int i=0;i<channels.data.size();i++){
+                        SaveData.getInstance().taskToChildGroups.add(new GroupClass(channels.data.get(i).dept_name,channels.data.get(i).dept_id,
+                                channels.data.get(i).dept_parent_id));
+                    }
                 }
 
                 mHandler.sendEmptyMessage(2);
@@ -171,7 +171,7 @@ public class getContact {
                 case 1:
 //                    childGroupsDatasNode.add(0,groupsDatas.get(0));
                     groupsDatas.addAll(childGroupsDatasNode);
-                    SaveData.getInstance().taskToChildGroups=childGroupsDatasNode;
+                    SaveData.getInstance().underTaskToChildGroups=childGroupsDatasNode;
                     mHandler.sendEmptyMessageDelayed(50,500);
                     for (int m=0;m<childGroupsDatasNode.size();m++){
                         Log.e("info",childGroupsDatasNode.get(m).name);

@@ -25,6 +25,7 @@ import java.util.List;
 import cn.yumutech.Adapter.ConstancAdapter;
 import cn.yumutech.bean.RequestParams;
 import cn.yumutech.bean.UserAboutPerson;
+import cn.yumutech.bean.UserToken;
 import cn.yumutech.netUtil.Api;
 import cn.yumutech.unity.App;
 import cn.yumutech.unity.BaseFragment;
@@ -50,6 +51,7 @@ public class DralayoutFragment extends BaseFragment {
     Subscription subscription;
     public boolean isAllPerson=false;
     private static DralayoutFragment fragment;
+    private View wuquanxian;
 
     protected void unsubscribe( Subscription subscription) {
         if (subscription != null && !subscription.isUnsubscribed()) {
@@ -82,6 +84,7 @@ public class DralayoutFragment extends BaseFragment {
     @Override
     protected void initViews(View contentView) {
         EventBus.getDefault().register(this);
+        wuquanxian=contentView.findViewById(R.id.wuquanxian);
         listView = (ListView) contentView.findViewById(R.id.listview);
         search= (EditText) contentView.findViewById(R.id.search);
         mAdapter = new ConstancAdapter(mActivity,mDatas);
@@ -188,9 +191,16 @@ public class DralayoutFragment extends BaseFragment {
             RequestParams canshus = new RequestParams(new RequestParams.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
                     new RequestParams.DataBean(SaveData.getInstance().Dept_Id));
             initDatas1(new Gson().toJson(canshus));
+            wuquanxian.setVisibility(View.GONE);
+            listView.setVisibility(View.VISIBLE);
         }else {
             Toast.makeText(getActivity(),"您还未登陆",Toast.LENGTH_SHORT).show();
         }
+    }
+    //点击部门按键响应事件
+    public void onEventMainThread(UserToken userToken){
+        wuquanxian.setVisibility(View.VISIBLE);
+        listView.setVisibility(View.GONE);
     }
     @Override
     public void onDestroy() {
