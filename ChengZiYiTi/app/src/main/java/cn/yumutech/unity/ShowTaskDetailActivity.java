@@ -45,6 +45,7 @@ public class ShowTaskDetailActivity extends BaseActivity{
     private Button assign;
     private MyListview listview;
     private TextView tv_faburen,tv_fabushijian;
+    private TextView zhuangtaishijian;
     private XiangqingZhipaiAdaper adaper;
 
 //
@@ -67,6 +68,7 @@ public class ShowTaskDetailActivity extends BaseActivity{
         wanchen= (RelativeLayout) findViewById(R.id.wanchen);
         bt_accept= (Button) findViewById(R.id.bt_accept);
         back= (ImageView) findViewById(R.id.back);
+        zhuangtaishijian= (TextView) findViewById(R.id.zhuangtaishijian);
         myprog=findViewById(R.id.myprog);
         listview= (MyListview) findViewById(R.id.listview);
         adaper=new XiangqingZhipaiAdaper(mData,this);
@@ -215,14 +217,20 @@ public class ShowTaskDetailActivity extends BaseActivity{
             if(showTaskDetail.status.code.equals("0")&&showTaskDetail!=null){
                 mData=showTaskDetail;
                 if(showTaskDetail.data.task_status_name.equals("待接受")){
+                    zhuangtaishijian.setText("截止时间:");
+                    date.setText(showTaskDetail.data.task_end_date);
                     accept.setVisibility(View.VISIBLE);
                     complete.setVisibility(View.GONE);
                     wanchen.setVisibility(View.GONE);
                 }else if(showTaskDetail.data.task_status_name.equals("已接受")){
+                    zhuangtaishijian.setText("接受时间:");
+                    date.setText(showTaskDetail.data.task_accept_date);
                     accept.setVisibility(View.GONE);
                     complete.setVisibility(View.VISIBLE);
                     wanchen.setVisibility(View.GONE);
                 }else if(showTaskDetail.data.task_status_name.equals("已完成")){
+                    zhuangtaishijian.setText("完成时间:");
+                    date.setText(showTaskDetail.data.task_finish_date);
                     accept.setVisibility(View.GONE);
                     complete.setVisibility(View.GONE);
                     wanchen.setVisibility(View.VISIBLE);
@@ -236,7 +244,7 @@ public class ShowTaskDetailActivity extends BaseActivity{
   private void setData(ShowTaskDetail data){
       title.setText(data.data.task_title);
       status.setText(data.data.task_status_name);
-      date.setText(data.data.task_end_date);
+
       neirong.setText(data.data.task_content);
       tv_fabushijian.setText(data.data.task_publish_date);
       tv_faburen.setText(data.data.task_publish_user_name);
@@ -250,6 +258,16 @@ public class ShowTaskDetailActivity extends BaseActivity{
     protected void unsubscribe(Subscription subscription) {
         if (subscription != null && !subscription.isUnsubscribed()) {
             subscription.unsubscribe();
+        }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        if(App.getContext().getLogo("logo")!=null&&task_id!=null){
+            ShowTaskDetailBeen been=new ShowTaskDetailBeen(new ShowTaskDetailBeen.UserBean(App.getContext().getLogo("logo").data.id,""),
+                    new ShowTaskDetailBeen.DataBean(task_id));
+            initData1(new Gson().toJson(been));
         }
     }
 }

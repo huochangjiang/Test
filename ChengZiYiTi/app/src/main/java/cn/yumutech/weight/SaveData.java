@@ -32,7 +32,10 @@ public class SaveData {
      * 保存联系人的部门id
      */
     public String Dept_Id;
+    //保存所有部门
     public List<GroupClass> taskToChildGroups=new ArrayList<>();
+    //保存自己id一下的部门
+    public List<GroupClass> underTaskToChildGroups=new ArrayList<>();
     //創建聯係人選擇的id
     public String createDetpt_id;
     //添加群成員的id

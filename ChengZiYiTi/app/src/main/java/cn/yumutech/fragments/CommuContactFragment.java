@@ -20,6 +20,7 @@ import cn.yumutech.bean.Bean;
 import cn.yumutech.bean.FileBean;
 import cn.yumutech.bean.GroupClass;
 import cn.yumutech.bean.UserAboutPerson;
+import cn.yumutech.bean.UserToken;
 import cn.yumutech.tree.been.Node;
 import cn.yumutech.tree.been.TreeListViewAdapter;
 import cn.yumutech.unity.App;
@@ -121,7 +122,16 @@ public class CommuContactFragment extends BaseFragment{
                 drawerlayout.closeDrawers();
                 if(SaveData.getInstance().shuXingData!=null){
                     SaveData.getInstance().Dept_Id=SaveData.getInstance().shuXingData.get(i).dept_id;
-                    EventBus.getDefault().post(new UserAboutPerson());
+
+                    if(SaveData.getInstance().underTaskToChildGroups!=null&&SaveData.getInstance().underTaskToChildGroups.size()>0){
+                        for(int j=0;j<SaveData.getInstance().underTaskToChildGroups.size();j++){
+                            if(SaveData.getInstance().Dept_Id.equals(SaveData.getInstance().underTaskToChildGroups.get(j).dept_id)){
+                                EventBus.getDefault().post(new UserAboutPerson());
+                            }else {
+                                EventBus.getDefault().post(new UserToken());
+                            }
+                        }
+                    }
                 }
 
             }

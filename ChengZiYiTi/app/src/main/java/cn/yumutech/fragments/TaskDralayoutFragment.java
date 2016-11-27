@@ -28,6 +28,7 @@ import cn.yumutech.bean.Poeple;
 import cn.yumutech.bean.PublishTask;
 import cn.yumutech.bean.RequestParams;
 import cn.yumutech.bean.UserAboutPerson;
+import cn.yumutech.bean.UserToken;
 import cn.yumutech.netUtil.Api;
 import cn.yumutech.unity.App;
 import cn.yumutech.unity.BaseFragment;
@@ -53,6 +54,7 @@ public class TaskDralayoutFragment extends BaseFragment implements View.OnClickL
     //保存详情页跳过来的主办人和协办人
     public List<Poeple> detailToThis;
     private View myprog;
+    private View wuquanxian;
 
     Subscription subscription;
     protected void unsubscribe( Subscription subscription) {
@@ -83,6 +85,7 @@ public class TaskDralayoutFragment extends BaseFragment implements View.OnClickL
         myprog=contentView.findViewById(R.id.myprog);
         myprog.setVisibility(View.VISIBLE);
         rl_send.setOnClickListener(this);
+        wuquanxian=contentView.findViewById(R.id.wuquanxian);
         if( SaveData.getInstance().twoPeople.size()>0){
             SaveData.getInstance().twoPeople.clear();
         }
@@ -195,10 +198,17 @@ public class TaskDralayoutFragment extends BaseFragment implements View.OnClickL
             RequestParams canshus = new RequestParams(new RequestParams.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
                     new RequestParams.DataBean(SaveData.getInstance().Dept_Id));
             initDatas1(new Gson().toJson(canshus));
+            wuquanxian.setVisibility(View.GONE);
+            listView.setVisibility(View.VISIBLE);
         }else {
             Toast.makeText(getActivity(),"您还未登陆",Toast.LENGTH_SHORT).show();
         }
 
+    }
+    //点击部门按键响应事件
+    public void onEventMainThread(UserToken userToken){
+        wuquanxian.setVisibility(View.VISIBLE);
+        listView.setVisibility(View.GONE);
     }
     @Override
     public void onDestroy() {
