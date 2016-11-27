@@ -63,4 +63,6 @@ public class SaveData {
     public String task_id;
     //保存树形的数据顺序
     public  List<GroupClass> shuXingData=new ArrayList<>();
+    //保存是不是详情页接受键点击后返回的
+    public Boolean isJieshou=false;
 }

@@ -45,7 +45,7 @@ public class CommuContactFragment extends BaseFragment{
     private SimpleTreeAdapter adapter;
     private List<Bean> mDatas = new ArrayList<Bean>();
     private List<FileBean> mDatas2 = new ArrayList<FileBean>();
-
+    private boolean isHave;
 
     private EditText search;
 
@@ -127,10 +127,15 @@ public class CommuContactFragment extends BaseFragment{
                     if(SaveData.getInstance().underTaskToChildGroups!=null&&SaveData.getInstance().underTaskToChildGroups.size()>0){
                         for(int j=0;j<SaveData.getInstance().underTaskToChildGroups.size();j++){
                             if(SaveData.getInstance().Dept_Id.equals(SaveData.getInstance().underTaskToChildGroups.get(j).dept_id)){
-                                EventBus.getDefault().post(new UserAboutPerson());
-                            }else {
-                                EventBus.getDefault().post(new UserToken());
+                                isHave=true;
+                            }else if(!isHave){
+                                isHave=false;
                             }
+                        }
+                        if(isHave){
+                            EventBus.getDefault().post(new UserAboutPerson());
+                        } else if(!isHave){
+                            EventBus.getDefault().post(new UserToken());
                         }
                     }
                 }
