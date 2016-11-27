@@ -80,8 +80,9 @@ public class CommuContactFragment extends BaseFragment{
         initExtra();
         expandableListView = (ListView) contentView.findViewById(R.id.expandlistview);
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.fragment_layout, DralayoutFragment.newInstance(drawerlayout)).commitAllowingStateLoss();
+        fragmentManager.beginTransaction().replace(R.id.fragment_layout, DralayoutFragment.newInstance()).commitAllowingStateLoss();
         initDatas1();
+        DralayoutFragment.newInstance().getDrablelayout(drawerlayout);
         try
         {
             adapter = new SimpleTreeAdapter<FileBean>(expandableListView, getActivity(), mDatas2, 10);
