@@ -1,5 +1,6 @@
 package cn.yumutech.unity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -98,6 +99,8 @@ public class AfterLoginActivity extends BaseActivity implements View.OnClickList
                 if(App.getContext().getContactGroup("Contact")!=null){
                     App.getContext().cleanContactGroup();
                 }
+                Intent intent=new Intent(AfterLoginActivity.this,LogoActivity.class);
+                startActivity(intent);
 
                 finish();
 //                if(RongIM.getInstance()!=null){
@@ -127,6 +130,7 @@ public class AfterLoginActivity extends BaseActivity implements View.OnClickList
                     tiShiDilog.show();
                     break;
                 case 1:
+                    MissDilog();
                     Toast.makeText(AfterLoginActivity.this, "升级中...", Toast.LENGTH_SHORT).show();
                     break;
             }
