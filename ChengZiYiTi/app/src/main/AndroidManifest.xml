@@ -29,11 +29,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity"
             android:launchMode="singleTask">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".CommunicationActivity" />
         <activity android:name=".TaShanZhiShiActivity" />
@@ -51,7 +47,13 @@
         <activity android:name=".ProjectMangerActivity" />
         <activity android:name=".FriendsUrlActivity" />
         <activity android:name=".FriendDetasActivity" />
-        <activity android:name=".LogoActivity" />
+        <activity android:name=".LogoActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            </activity>
         <activity android:name=".RegistActivity" />
         <activity android:name=".HuDongJIaoLIuActivity" />
         <activity android:name=".MailListActivity" />

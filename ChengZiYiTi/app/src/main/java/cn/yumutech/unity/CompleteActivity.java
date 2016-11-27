@@ -2,6 +2,7 @@ package cn.yumutech.unity;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -23,6 +24,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -130,12 +132,19 @@ public class CompleteActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-
+                String state = Environment.getExternalStorageState();
+                if (state.equals(Environment.MEDIA_MOUNTED)) {
+                    Intent getImageByCamera = new Intent("android.media.action.IMAGE_CAPTURE");
+                    startActivityForResult(getImageByCamera, PHOTO_REQUEST_TAKEPHOTO);
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "请确认已经插入SD卡", Toast.LENGTH_LONG).show();
+                }
                 // 调用系统的拍照功能
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                // 指定调用相机拍照后照片的储存路径
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(tempFile));
-                startActivityForResult(intent, PHOTO_REQUEST_TAKEPHOTO);
+//                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                // 指定调用相机拍照后照片的储存路径
+//                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(tempFile));
+//                startActivityForResult(intent, PHOTO_REQUEST_TAKEPHOTO);
 
             }
         });
@@ -144,10 +153,14 @@ public class CompleteActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                Intent intent = new Intent(Intent.ACTION_PICK, null);
-                intent.setDataAndType(
-                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");//相片类型
                 startActivityForResult(intent, PHOTO_REQUEST_GALLERY);
+
+//                Intent intent = new Intent(Intent.ACTION_PICK, null);
+//                intent.setDataAndType(
+//                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+//                startActivityForResult(intent, PHOTO_REQUEST_GALLERY);
 
             }
         });
@@ -186,16 +199,60 @@ public class CompleteActivity extends BaseActivity implements View.OnClickListen
         switch (requestCode) {
 
             case PHOTO_REQUEST_TAKEPHOTO:// 当选择拍照时调用
+                if (resultCode == RESULT_OK) {
 
-                if (tempFile != null && tempFile.exists()) {
-                    startPhotoZoom(Uri.fromFile(tempFile), CUTSIZE);
-                }
+                        Uri uri = data.getData();
+                        if(uri == null){
+                            //use bundle to get data
+                            Bundle bundle = data.getExtras();
+                            if (bundle != null) {
+                                Bitmap  photo = (Bitmap) bundle.get("data"); //get bitmap
+                                //spath :生成图片取个名字和路径包含类型
+                                bitmapBeen.add(photo);
+                                mAdapter.dataChange(bitmapBeen);
+                                mPhoneBeans.add(new TiJiaoCanShu.DataBean.PhotosBean("jpg",bitmaptoString(photo,10)));
+                            } else {
+                                Toast.makeText(getApplicationContext(), "err****", Toast.LENGTH_LONG).show();
+                                return;
+                            }
+                        }else{
+                            String img_url = uri.getPath();//这是本机的图片路径
+                            ContentResolver cr = this.getContentResolver();
+                            try {
+                                Bitmap bitmap = BitmapFactory.decodeStream(cr.openInputStream(uri));
+                                bitmapBeen.add(bitmap);
+                                mAdapter.dataChange(bitmapBeen);
+                                mPhoneBeans.add(new TiJiaoCanShu.DataBean.PhotosBean("jpg",bitmaptoString(bitmap,10)));
+                /* 将Bitmap设定到ImageView */
+                            } catch (FileNotFoundException e) {
+                                Log.e("Exception", e.getMessage(), e);
+                            }
+                        }
+                    }
+
+
+//                if (tempFile != null && tempFile.exists()) {
+//                    startPhotoZoom(Uri.fromFile(tempFile), CUTSIZE);
                 break;
 
             case PHOTO_REQUEST_GALLERY:// 当选择从本地获取图片时
                 // 做非空判断，当我们觉得不满意想重新剪裁的时候便不会报异常，下同
-                if (data != null)
-                    startPhotoZoom(data.getData(), CUTSIZE);
+                if (resultCode == RESULT_OK) {
+                    Uri uri = data.getData();
+                    String img_url = uri.getPath();//这是本机的图片路径
+                    ContentResolver cr = this.getContentResolver();
+                    try {
+                        Bitmap bitmap = BitmapFactory.decodeStream(cr.openInputStream(uri));
+                        bitmapBeen.add(bitmap);
+                        mAdapter.dataChange(bitmapBeen);
+                        mPhoneBeans.add(new TiJiaoCanShu.DataBean.PhotosBean("jpg",bitmaptoString(bitmap,10)));
+                /* 将Bitmap设定到ImageView */
+                    } catch (FileNotFoundException e) {
+                        Log.e("Exception", e.getMessage(), e);
+                    }
+                }
+//                if (data != null)
+//                    startPhotoZoom(data.getData(), CUTSIZE);
                 break;
 
             case PHOTO_REQUEST_CUT:// 返回的结果
@@ -244,7 +301,7 @@ public class CompleteActivity extends BaseActivity implements View.OnClickListen
         Intent intent = new Intent("com.android.camera.action.CROP");
         intent.setDataAndType(uri, "image/*");
         // crop为true是设置在开启的intent中设置显示的view可以剪裁
-        intent.putExtra("crop", "true");
+        intent.putExtra("crop", "false");
 
         // aspectX aspectY 是宽高的比例
         intent.putExtra("aspectX", 1);

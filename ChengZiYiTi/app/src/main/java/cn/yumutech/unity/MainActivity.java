@@ -9,8 +9,8 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -35,6 +35,7 @@ import cn.yumutech.netUtil.DeviceUtils;
 import cn.yumutech.netUtil.FileUtils;
 import cn.yumutech.netUtil.MD5Util;
 import cn.yumutech.netUtil.ToosUtil;
+import de.greenrobot.event.EventBus;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Group;
@@ -67,9 +68,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,R
 
     @Override
     protected void initViews(Bundle savedInstanceState) {
+        EventBus.getDefault().register(this);
         app= App.getContext();
         savePath=getDir("update", 0).getAbsolutePath();
         apkFilePath= savePath + File.separator   + "cz.apk";
+        App.getContext().downLoadPath=apkFilePath;
         addFragement(HomeFragment.newInstance());
         addFragement(SuperviseFragment.newInstance());
         addFragement(MailListFragment.newInstance());
@@ -110,8 +113,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,R
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if(App.getContext().getLogo("logo")==null){
+            Intent intent=new Intent(MainActivity.this,LogoActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    @Override
     protected void initListeners() {
 
+    }
+
+    public void onEventMainThread(Update userAboutPerson){
+        Log.e("info","gengxingle ");
+        showUpdateDialog(userAboutPerson);
     }
 
     @Override
@@ -166,6 +183,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,R
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        EventBus.getDefault().unregister(this);
             FileUtils.deleteFolderFile(savePath, false);
     }
 

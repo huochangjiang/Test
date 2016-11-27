@@ -1,5 +1,6 @@
 package cn.yumutech.unity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -67,10 +68,12 @@ public class LogoActivity extends BaseActivity implements View.OnClickListener{
         back= (ImageView) findViewById(R.id.back);
         token= (TextView) findViewById(R.id.token);
         controlTitle(findViewById(R.id.back));
-
-
-
-
+if(App.getContext().getLogo("logo")!=null)
+{
+    Intent intent=new Intent(this,MainActivity.class);
+    startActivity(intent);
+    finish();
+}
     }
 
     @Override

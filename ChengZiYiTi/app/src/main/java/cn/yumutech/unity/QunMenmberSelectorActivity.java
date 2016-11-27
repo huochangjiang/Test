@@ -4,11 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -16,14 +13,10 @@ import java.util.List;
 import java.util.Map;
 
 import cn.yumutech.Adapter.SimpleTreeAdapter;
-import cn.yumutech.bean.BaiBao;
 import cn.yumutech.bean.FileBean;
 import cn.yumutech.bean.GroupClass;
 import cn.yumutech.bean.UserAboutPerson;
 import cn.yumutech.fragments.CreatQunZhuFragment;
-import cn.yumutech.tree.been.Node;
-import cn.yumutech.tree.been.TreeListViewAdapter;
-import de.greenrobot.event.EventBus;
 
 public class QunMenmberSelectorActivity extends BaseActivity {
     private ListView expandableListView;
@@ -53,47 +46,47 @@ public class QunMenmberSelectorActivity extends BaseActivity {
             tv.setText("讨论组");
 
         }
-        drawerlayout= (DrawerLayout) findViewById(R.id.drawerlayout).findViewById(R.id.drawer);
-        expandableListView = (ListView) findViewById(R.id.expandlistview);
+//        drawerlayout= (DrawerLayout) findViewById(R.id.drawerlayout).findViewById(R.id.drawer);
+//        expandableListView = (ListView) findViewById(R.id.expandlistview);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.fragment_layout, CreatQunZhuFragment.newInstance()).commitAllowingStateLoss();
         initDatas1();
-        try
-        {
-            adapter = new SimpleTreeAdapter<FileBean>(expandableListView, QunMenmberSelectorActivity.this, mDatas2, 10);
-            adapter.setOnTreeNodeClickListener(new TreeListViewAdapter.OnTreeNodeClickListener()
-            {
-                @Override
-                public void onClick(Node node, int position)
-                {
-                    if (node.isLeaf())
-                    {
-                        Toast.makeText(QunMenmberSelectorActivity.this, node.getName(),
-                                Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-            });
-
-        } catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-        expandableListView.setAdapter(adapter);
+//        try
+//        {
+//            adapter = new SimpleTreeAdapter<FileBean>(expandableListView, QunMenmberSelectorActivity.this, mDatas2, 10);
+//            adapter.setOnTreeNodeClickListener(new TreeListViewAdapter.OnTreeNodeClickListener()
+//            {
+//                @Override
+//                public void onClick(Node node, int position)
+//                {
+//                    if (node.isLeaf())
+//                    {
+//                        Toast.makeText(QunMenmberSelectorActivity.this, node.getName(),
+//                                Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//
+//            });
+//
+//        } catch (Exception e)
+//        {
+//            e.printStackTrace();
+//        }
+//        expandableListView.setAdapter(adapter);
     }
     @Override
     protected void initData() {
-        expandableListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                drawerlayout.closeDrawers();
-                if(mData!=null){
-                    cn.yumutech.weight.SaveData.getInstance().createDetpt_id= cn.yumutech.weight.SaveData.getInstance().shuXingData.get(i).dept_id;
-                    EventBus.getDefault().post(new BaiBao("cc",0));
-                }
-
-            }
-        });
+//        expandableListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                drawerlayout.closeDrawers();
+//                if(mData!=null){
+//                    cn.yumutech.weight.SaveData.getInstance().createDetpt_id= cn.yumutech.weight.SaveData.getInstance().shuXingData.get(i).dept_id;
+//                    EventBus.getDefault().post(new BaiBao("cc",0));
+//                }
+//
+//            }
+//        });
 //
     }
 

@@ -54,6 +54,7 @@ public class App extends MultiDexApplication{
     public String mDeviceToken;
 
     public static String CachePath = "image_loaders_local";
+    public String downLoadPath;
     public static App getContext() {
         return INSTANCE;
     }

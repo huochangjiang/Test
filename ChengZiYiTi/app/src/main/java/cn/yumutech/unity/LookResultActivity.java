@@ -2,13 +2,18 @@ package cn.yumutech.unity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import cn.yumutech.LookResultAdapter;
 import cn.yumutech.bean.ShowTaskDetail;
 import cn.yumutech.weight.SaveData;
+import cn.yumutech.weight.ViewPagerDilog;
 
 /**
  * Created by Allen on 2016/11/24.
@@ -20,6 +25,7 @@ public class LookResultActivity extends BaseActivity{
     private ShowTaskDetail mData;
     private View fenge;
     private LookResultAdapter adapter;
+    public List<String> phones=new ArrayList<>();
     @Override
     protected int getLayoutId() {
         return R.layout.activity_look_result;
@@ -36,9 +42,24 @@ public class LookResultActivity extends BaseActivity{
         gridView= (GridView) findViewById(R.id.gridView);
         if(SaveData.getInstance().showTaskComplete!=null){
             mData=SaveData.getInstance().showTaskComplete;
+            adapter=new LookResultAdapter(LookResultActivity.this,mData);
+            gridView.setAdapter(adapter);
+
+            for (int i=0;i<mData.data.task_comment.photos.size();i++){
+                    phones.add(mData.data.task_comment.photos.get(i).photo_path);
+            }
+            gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                    ViewPagerDilog vp=new ViewPagerDilog(LookResultActivity.this, (ArrayList<String>) phones,i);
+                    vp.show();
+                }
+            });
         }
-        adapter=new LookResultAdapter(LookResultActivity.this,mData);
-        gridView.setAdapter(adapter);
+
+
+
 
     }
 

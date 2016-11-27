@@ -46,7 +46,7 @@
     <include
         android:layout_below="@+id/id_toolbar"
         android:id="@+id/drawerlayout"
-        layout="@layout/cehuacaidan"
+        layout="@layout/qunzhu_drawable"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

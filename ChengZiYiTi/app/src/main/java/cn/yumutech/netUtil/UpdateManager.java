@@ -2,7 +2,6 @@ package cn.yumutech.netUtil;
 
 import android.content.Context;
 import android.os.Handler;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
@@ -13,6 +12,7 @@ import org.apache.http.Header;
 import java.io.File;
 
 import cn.yumutech.bean.Update;
+import cn.yumutech.unity.App;
 import cn.yumutech.unity.UserGetToken;
 import de.greenrobot.event.EventBus;
 import rx.Observer;
@@ -151,8 +151,7 @@ Handler mHandler;
 				if (mCurrentVesionCode < Integer.valueOf(mUpdate.data.bh)) {
 					mUpdate=channels;
 					mHandler.sendEmptyMessage(1);
-					Download(channels.data.url, apkFilePath);
-					Toast.makeText(mContext, "下载中...", Toast.LENGTH_SHORT).show();
+					Download(channels.data.url, App.getContext().downLoadPath);
 				}else{
 					mHandler.sendEmptyMessage(0);
 				}
