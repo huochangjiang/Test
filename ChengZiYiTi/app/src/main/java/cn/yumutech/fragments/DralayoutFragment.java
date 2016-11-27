@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.support.v4.widget.DrawerLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -61,15 +63,17 @@ public class DralayoutFragment extends BaseFragment {
     }
 
     // TODO: Rename and change types and number of parameters
-   public static  DrawerLayout dmralayoutFragment;
-    public static DralayoutFragment newInstance(DrawerLayout dralayoutFragment) {
+    public static DralayoutFragment newInstance() {
         if(fragment==null) {
             fragment = new DralayoutFragment();
-            dmralayoutFragment=dralayoutFragment;
         }
         return fragment;
     }
 
+    DrawerLayout drawerLayout;
+    public void getDrablelayout(DrawerLayout ddd){
+        this.drawerLayout=ddd;
+    }
 
     @Override
     protected View getContentView(LayoutInflater inflater, ViewGroup container) {
@@ -85,6 +89,13 @@ public class DralayoutFragment extends BaseFragment {
         search= (EditText) contentView.findViewById(R.id.search);
         mAdapter = new ConstancAdapter(mActivity,mDatas);
         listView.setAdapter(mAdapter);
+        ImageView iv= (ImageView) contentView.findViewById(R.id.iv_huadong);
+        iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawerLayout.openDrawer(Gravity.LEFT);
+            }
+        });
     }
     @Override
     protected void initListeners() {
