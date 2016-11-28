@@ -13,7 +13,6 @@ import java.io.File;
 
 import cn.yumutech.bean.Update;
 import cn.yumutech.unity.App;
-import cn.yumutech.unity.UserGetToken;
 import de.greenrobot.event.EventBus;
 import rx.Observer;
 import rx.Subscription;
@@ -70,12 +69,15 @@ public class UpdateManager {
 			@Override
 			public void onSuccess(int arg0, Header[] arg1, File arg2) {
 				// 下载成功之后提示用户升级
+				mHandler.sendEmptyMessage(2);
 				EventBus.getDefault().post(mUpdate);
+
 			}
 			@Override
 			public void onFailure(int arg0, Header[] arg1, Throwable arg2, File arg3) {
 				// 下载失败的情况下，清除apk文件
-				FileUtils.deleteFolderFile(UserGetToken.getInstance(mContext).path, false);
+//				FileUtils.deleteFolderFile(UserGetToken.getInstance(mContext).path, false);
+				mHandler.sendEmptyMessage(3);
 			}
 		});
 	}
