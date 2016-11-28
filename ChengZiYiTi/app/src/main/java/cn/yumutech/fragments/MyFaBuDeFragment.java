@@ -61,6 +61,7 @@ public class MyFaBuDeFragment extends BaseFragment implements PullToRefreshBase.
         pullToRefresh = (PullToRefreshScrollView) view.findViewById(R.id.pull_to_refresh);
         pullToRefresh.setMode(PullToRefreshBase.Mode.BOTH);
         pullToRefresh.setOnRefreshListener(this);
+        SaveData.getInstance().isJieshou=false;
         //下拉刷新设置
         ILoadingLayout startLabels = pullToRefresh
                 .getLoadingLayoutProxy(true, false);

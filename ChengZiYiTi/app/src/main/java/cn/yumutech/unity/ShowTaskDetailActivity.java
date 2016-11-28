@@ -219,19 +219,22 @@ public class ShowTaskDetailActivity extends BaseActivity{
                 mData=showTaskDetail;
                 if(showTaskDetail.data.task_status_name.equals("待接受")){
                     zhuangtaishijian.setText("截止时间:");
-                    date.setText(showTaskDetail.data.task_end_date);
+                    String time1=SaveData.getInstance().getStringDateShort(showTaskDetail.data.task_end_date);
+                    date.setText(time1);
                     accept.setVisibility(View.VISIBLE);
                     complete.setVisibility(View.GONE);
                     wanchen.setVisibility(View.GONE);
                 }else if(showTaskDetail.data.task_status_name.equals("已接受")){
                     zhuangtaishijian.setText("接受时间:");
-                    date.setText(showTaskDetail.data.task_accept_date);
+                    String time1=SaveData.getInstance().getStringDateShort(showTaskDetail.data.task_accept_date);
+                    date.setText(time1);
                     accept.setVisibility(View.GONE);
                     complete.setVisibility(View.VISIBLE);
                     wanchen.setVisibility(View.GONE);
                 }else if(showTaskDetail.data.task_status_name.equals("已完成")){
                     zhuangtaishijian.setText("完成时间:");
-                    date.setText(showTaskDetail.data.task_finish_date);
+                    String time1=SaveData.getInstance().getStringDateShort(showTaskDetail.data.task_finish_date);
+                    date.setText(time1);
                     accept.setVisibility(View.GONE);
                     complete.setVisibility(View.GONE);
                     wanchen.setVisibility(View.VISIBLE);
@@ -247,7 +250,8 @@ public class ShowTaskDetailActivity extends BaseActivity{
       status.setText(data.data.task_status_name);
 
       neirong.setText(data.data.task_content);
-      tv_fabushijian.setText(data.data.task_publish_date);
+      String time=SaveData.getInstance().getStringDateShort(data.data.task_publish_date);
+      tv_fabushijian.setText(time);
       tv_faburen.setText(data.data.task_publish_user_name);
       if(data.data.assign!=null&&data.data.assign.size()>0){
           adaper.dataChange(data);

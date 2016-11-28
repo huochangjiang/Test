@@ -34,6 +34,8 @@
             android:textSize="@dimen/title_size_small"
             android:textColor="@color/item_title"
             android:layout_marginLeft="10dp"
+            android:lines="4"
+            android:ellipsize="end"
             android:layout_height="wrap_content" />
     </LinearLayout>
     <LinearLayout
@@ -55,7 +57,7 @@
             android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:text="四川新闻网"
-            android:textColor="@color/other"
+            android:textColor="@color/item_title"
             android:textSize="@dimen/title_size_smaller"
             android:layout_height="wrap_content" />
         <TextView

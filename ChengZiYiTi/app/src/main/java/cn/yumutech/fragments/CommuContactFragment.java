@@ -121,6 +121,7 @@ public class CommuContactFragment extends BaseFragment{
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 drawerlayout.closeDrawers();
+                isHave=false;
                 if(SaveData.getInstance().shuXingData!=null){
                     SaveData.getInstance().Dept_Id=SaveData.getInstance().shuXingData.get(i).dept_id;
 

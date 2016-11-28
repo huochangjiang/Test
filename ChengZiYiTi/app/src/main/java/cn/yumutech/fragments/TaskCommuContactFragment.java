@@ -33,7 +33,7 @@ import de.greenrobot.event.EventBus;
  * Created by Allen on 2016/11/25.
  */
 public class TaskCommuContactFragment extends BaseFragment {
-    private static CommuContactFragment fragment;
+    private static TaskCommuContactFragment fragment;
     private View contactView;
     private ListView expandableListView;
     private DrawerLayout drawerlayout;
@@ -56,9 +56,9 @@ public class TaskCommuContactFragment extends BaseFragment {
 
     }
 
-    public static CommuContactFragment newInstance() {
+    public static TaskCommuContactFragment newInstance() {
         if(fragment==null)
-            fragment = new CommuContactFragment();
+            fragment = new TaskCommuContactFragment();
 
         return fragment;
     }
@@ -83,6 +83,7 @@ public class TaskCommuContactFragment extends BaseFragment {
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.fragment_layout, TaskDralayoutFragment.newInstance()).commitAllowingStateLoss();
         initDatas1();
+        TaskDralayoutFragment.newInstance().getDrablelayout(drawerlayout);
         try
         {
             adapter = new SimpleTreeAdapter<FileBean>(expandableListView, getActivity(), mDatas2, 10);
@@ -123,6 +124,7 @@ public class TaskCommuContactFragment extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 drawerlayout.closeDrawers();
+                isHave=false;
                 if(SaveData.getInstance().shuXingData!=null){
 
                     SaveData.getInstance().Dept_Id=SaveData.getInstance().shuXingData.get(i).dept_id;

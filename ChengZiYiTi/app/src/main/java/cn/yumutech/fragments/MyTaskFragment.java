@@ -58,7 +58,7 @@ public class MyTaskFragment extends BaseFragment implements PullToRefreshBase.On
         adapter=new InspectionTaskAdapter(getActivity(),mData);
         listView.setAdapter(adapter);
         myprog=contentView.findViewById(R.id.myprog);
-
+        SaveData.getInstance().isJieshou=false;
         myprog.setVisibility(View.VISIBLE);
         listView.setVisibility(View.GONE);
         pullToRefresh = (PullToRefreshScrollView) contactView.findViewById(R.id.pull_to_refresh);
@@ -180,6 +180,5 @@ public class MyTaskFragment extends BaseFragment implements PullToRefreshBase.On
                 initDatas1(new Gson().toJson(showMyTaskBeen));
             }
         }
-
     }
 }

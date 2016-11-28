@@ -169,6 +169,7 @@ public class ReleaseTaskActivity extends BaseActivity implements View.OnClickLis
         public void onNext(PublishTask publishTask) {
             if(publishTask!=null&&publishTask.status.code.equals("0")){
                 MissDilog();
+                SaveData.getInstance().isJieshou=true;
                 Toast.makeText(ReleaseTaskActivity.this,publishTask.status.message,Toast.LENGTH_SHORT).show();
                 finish();
             }

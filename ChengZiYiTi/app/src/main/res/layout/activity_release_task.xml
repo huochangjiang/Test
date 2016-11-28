@@ -148,8 +148,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="张三"
-            android:textSize="13sp"
-
+            android:textSize="12sp"
+            android:layout_alignBottom="@+id/zhubanren"
             android:singleLine="true" />
             <TextView
                 android:id="@+id/xiebanren"
@@ -158,15 +158,15 @@
                 android:layout_height="wrap_content"
                 android:textSize="13sp"
                 android:layout_centerVertical="true"
-
+                android:layout_alignBottom="@+id/zhubanren"
                 android:text="协办人:"/>
             <TextView
                 android:id="@+id/who_xie"
-
+                android:layout_alignBottom="@+id/zhubanren"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="李四"
-                android:textSize="13sp"
+                android:textSize="12sp"
                 android:layout_centerVertical="true"
                 android:singleLine="true"
 
