@@ -13,7 +13,7 @@
             android:id="@+id/iv"
             android:scaleType="fitXY"
             android:layout_width="70dp"
-            android:src="@drawable/touxiao"
+            android:src="@drawable/iv_shoudong"
 
             android:layout_height="70dp" />
     </LinearLayout>

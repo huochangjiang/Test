@@ -174,14 +174,20 @@ public class DralayoutFragment extends BaseFragment {
             if(channels.status.code.equals("0")){
                 mAdapter.dataChange(channels.data);
                 mDatas=channels.data;
-                if(!isAllPerson) {
-                    App.getContext().mApbutPerson = channels.data;
-                    isAllPerson=true;
-                }
                 for (int i=0;i<channels.data.size();i++){
                     UserInfo info=new UserInfo(channels.data.get(i).id,channels.data.get(i).nickname, Uri.parse(channels.data.get(i).logo_path));
                     RongIM.getInstance().refreshUserInfoCache(info);
                 }
+                if(!isAllPerson) {
+                    for (int i=0;i<channels.data.size();i++){
+                        if(channels.data.get(i).id.equals(App.getContext().getLogo("logo").data.id)){
+                            channels.data.remove(i);
+                        }
+                    }
+                    App.getContext().mApbutPerson = channels.data;
+                    isAllPerson=true;
+                }
+
             }
         }
     };

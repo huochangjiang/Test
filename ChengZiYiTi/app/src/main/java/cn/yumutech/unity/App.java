@@ -100,7 +100,7 @@ public class App extends MultiDexApplication{
                 if(msg.custom!=null){
                     Intent intent=new Intent(getApplicationContext(),LeaderActivitysActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    getApplicationContext().startActivity(intent);
+                  startActivity(intent);
 
                 }
             }

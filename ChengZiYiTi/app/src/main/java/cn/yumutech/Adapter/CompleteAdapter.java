@@ -58,7 +58,7 @@ public void dataChange(List<Bitmap> data){
             vh= (ViewHolders) view.getTag();
         }
         if(i==mDatas.size()){
-            vh.iv.setImageResource(R.drawable.touxiao);
+            vh.iv.setImageResource(R.drawable.iv_shoudong);
         }else {
             vh.iv.setImageBitmap(mDatas.get(i));
         }

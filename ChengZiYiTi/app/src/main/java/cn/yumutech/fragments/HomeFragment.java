@@ -176,7 +176,7 @@ Subscription subscription;
         if(App.getContext().getLogo("logo")!=null) {
             RequestCanShu canshus = new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.nickname,
                     App.getContext().getLogo("logo").data.id),
-                    new RequestCanShu.DataBean("省级", "0", "3"));
+                    new RequestCanShu.DataBean("省级", "0", "5"));
             initDatas1(new Gson().toJson(canshus));
         }else {
             App.getContext().noLogin(getActivity());

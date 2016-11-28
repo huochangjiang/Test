@@ -1,10 +1,17 @@
 package cn.yumutech.unity;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -14,13 +21,19 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import java.io.File;
+import java.io.IOException;
+
 import cn.yumutech.bean.ShengJiRequest;
+import cn.yumutech.bean.Update;
 import cn.yumutech.netUtil.DeviceUtils;
+import cn.yumutech.netUtil.ToosUtil;
 import cn.yumutech.netUtil.UpdateManager;
 import cn.yumutech.weight.DataCleanManager;
 import cn.yumutech.weight.FileUtils1;
 import cn.yumutech.weight.SaveData;
 import cn.yumutech.weight.TiShiDilog;
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by Administrator on 2016/11/14.
@@ -42,6 +55,7 @@ public class AfterLoginActivity extends BaseActivity implements View.OnClickList
     protected void initViews(Bundle savedInstanceState) {
         app= (App) AfterLoginActivity.this.getApplicationContext();
         initExtra();
+        EventBus.getDefault().register(this);
         touxiang= (ImageView) findViewById(R.id.touxiang);
         userName= (TextView) findViewById(R.id.name);
         back= (ImageView) findViewById(R.id.back);
@@ -84,6 +98,12 @@ public class AfterLoginActivity extends BaseActivity implements View.OnClickList
     @Override
     protected void initData() {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -131,11 +151,100 @@ public class AfterLoginActivity extends BaseActivity implements View.OnClickList
                     break;
                 case 1:
                     MissDilog();
-                    Toast.makeText(AfterLoginActivity.this, "升级中...", Toast.LENGTH_SHORT).show();
+                    showDilog("升级中，请稍后...");
+                    break;
+                case 2:
+                    MissDilog();
+                    break;
+                case 3:
+                    Toast.makeText(AfterLoginActivity.this, "网络出错，请清新下载", Toast.LENGTH_SHORT).show();
                     break;
             }
         }
     };
+
+    public void onEventMainThread(Update userAboutPerson){
+        Log.e("info","gengxingle ");
+        showUpdateDialog(userAboutPerson);
+    }
+    /**
+     * 安装提示对话框
+     */
+    private void showUpdateDialog(Update mUpdate) {
+        View view = LayoutInflater.from(this).inflate(R.layout.welcomedilog, null);
+
+        final Dialog dialog = new Dialog(this, R.style.transparentFrameWindowStyle);
+        dialog.setContentView(view);
+
+
+        TextView textView_version = (TextView) view.findViewById(R.id.bh);
+        TextView shaohou = (TextView) view.findViewById(R.id.text1);
+        TextView newNow = (TextView) view.findViewById(R.id.text2);
+        TextView textView_log = (TextView) view.findViewById(R.id.tv);
+        textView_log.setText(mUpdate.data.getRemarks());
+        newNow.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                installApk( App.getContext().downLoadPath);
+                dialog.dismiss();
+            }
+        });
+        shaohou.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        // 获取屏幕分辨率来控制宽度
+        int width = ToosUtil.getInstance().getScreenWidth(this);
+
+        Window window = dialog.getWindow();
+        WindowManager.LayoutParams wl = window.getAttributes();
+        wl.width = width * 8 / 10;
+        wl.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+
+        // 设置显示位置
+        dialog.onWindowAttributesChanged(wl);
+
+        dialog.setCanceledOnTouchOutside(false);
+
+        dialog.show();
+
+    }
+
+    /**
+     * 校验下载的apk文件的md5值
+     *
+     * @param md5
+     *            期望的md5值
+     * @return
+     */
+    /**
+     * 安装apk
+     *
+     */
+    private void installApk(String apk_path) {
+
+        if (!new File(apk_path).exists()) {
+            return;
+        }
+
+        // 安装之前先修改apk的权限，避免出现解析包错误的问题
+        try {
+            String command = "chmod 777 " + apk_path;
+            Runtime runtime = Runtime.getRuntime();
+            runtime.exec(command);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setDataAndType(Uri.parse("file://" + apk_path), "application/vnd.android.package-archive");
+        startActivity(i);
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()){

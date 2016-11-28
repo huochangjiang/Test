@@ -64,6 +64,7 @@ public class ConversationActivity extends FragmentActivity implements RongIMClie
         }
         if (DemoContext.getInstance() != null) {
             token = DemoContext.getInstance().getSharedPreferences().getString("DEMO_TOKEN", "default");
+            isFirstRongYun();
             if (token.equals("default")) {
                 startActivity(new Intent(ConversationActivity.this, LogoActivity.class));
             } else {
@@ -260,6 +261,29 @@ public class ConversationActivity extends FragmentActivity implements RongIMClie
                 }
             });
         }
+    }
+
+    //链接荣yun
+    public void isFirstRongYun(){
+        RongIM.connect(token, new RongIMClient.ConnectCallback() {
+            @Override
+            public void onTokenIncorrect() {
+                if(!(App.getContext().getLogo("logo").data==null)) {
+                    UserGetToken.getInstance(ConversationActivity.this).getToken(mTargetId);
+                }else{
+                    Intent intent=new Intent(ConversationActivity.this,LogoActivity.class);
+                    startActivity(intent);
+                }
+            }
+            @Override
+            public void onSuccess(String s) {
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+
+            }
+        });
     }
 
 
