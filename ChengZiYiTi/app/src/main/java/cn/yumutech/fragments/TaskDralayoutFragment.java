@@ -87,6 +87,7 @@ public class TaskDralayoutFragment extends BaseFragment implements View.OnClickL
     @Override
     protected void initViews(View contentView) {
         EventBus.getDefault().register(this);
+        SaveData.getInstance().isPermissions=true;
         rl_send= (RelativeLayout) contentView.findViewById(R.id.rl_send);
         myprog=contentView.findViewById(R.id.myprog);
         myprog.setVisibility(View.VISIBLE);
@@ -211,6 +212,7 @@ public class TaskDralayoutFragment extends BaseFragment implements View.OnClickL
     //点击部门按键响应事件
     public void onEventMainThread(UserAboutPerson userAboutPerson){
         if(App.getContext().getLogo("logo")!=null&&App.getContext().getLogo("logo").data!=null&& SaveData.getInstance().Dept_Id!=null) {
+            SaveData.getInstance().isPermissions=true;
             RequestParams canshus = new RequestParams(new RequestParams.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
                     new RequestParams.DataBean(SaveData.getInstance().Dept_Id));
             initDatas1(new Gson().toJson(canshus));
@@ -221,10 +223,18 @@ public class TaskDralayoutFragment extends BaseFragment implements View.OnClickL
         }
 
     }
-    //点击部门按键响应事件
+    //点击部门按键响应事件无权限时
     public void onEventMainThread(UserToken userToken){
-        wuquanxian.setVisibility(View.VISIBLE);
-        listView.setVisibility(View.GONE);
+        if(App.getContext().getLogo("logo")!=null&&App.getContext().getLogo("logo").data!=null&& SaveData.getInstance().Dept_Id!=null) {
+            SaveData.getInstance().isPermissions=false;
+            RequestParams canshus = new RequestParams(new RequestParams.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
+                    new RequestParams.DataBean(SaveData.getInstance().Dept_Id));
+            initDatas1(new Gson().toJson(canshus));
+            wuquanxian.setVisibility(View.GONE);
+            listView.setVisibility(View.VISIBLE);
+        }else {
+            Toast.makeText(getActivity(),"您还未登陆",Toast.LENGTH_SHORT).show();
+        }
     }
     @Override
     public void onDestroy() {

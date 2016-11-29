@@ -77,6 +77,10 @@ public class SaveData {
         return datetime;
     }
 
+    //点击部门是否有权限。、指派那儿
+    public boolean isPermissions=true;
+    //联系人那儿点击部门是否有权限
+    public boolean isContactPermissions=true;
     /**
      * 指派人哪儿的数据
      */

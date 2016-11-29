@@ -84,6 +84,7 @@ public class DralayoutFragment extends BaseFragment {
     @Override
     protected void initViews(View contentView) {
         EventBus.getDefault().register(this);
+        SaveData.getInstance().isContactPermissions=true;
         wuquanxian=contentView.findViewById(R.id.wuquanxian);
         listView = (ListView) contentView.findViewById(R.id.listview);
         search= (EditText) contentView.findViewById(R.id.search);
@@ -194,6 +195,7 @@ public class DralayoutFragment extends BaseFragment {
     //点击部门按键响应事件
     public void onEventMainThread(UserAboutPerson userAboutPerson){
         if(App.getContext().getLogo("logo")!=null&&App.getContext().getLogo("logo").data!=null&&SaveData.getInstance().Dept_Id!=null) {
+            SaveData.getInstance().isContactPermissions=true;
             RequestParams canshus = new RequestParams(new RequestParams.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
                     new RequestParams.DataBean(SaveData.getInstance().Dept_Id));
             initDatas1(new Gson().toJson(canshus));
@@ -205,8 +207,16 @@ public class DralayoutFragment extends BaseFragment {
     }
     //点击部门按键响应事件
     public void onEventMainThread(UserToken userToken){
-        wuquanxian.setVisibility(View.VISIBLE);
-        listView.setVisibility(View.GONE);
+        if(App.getContext().getLogo("logo")!=null&&App.getContext().getLogo("logo").data!=null&&SaveData.getInstance().Dept_Id!=null) {
+            SaveData.getInstance().isContactPermissions=false;
+            RequestParams canshus = new RequestParams(new RequestParams.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
+                    new RequestParams.DataBean(SaveData.getInstance().Dept_Id));
+            initDatas1(new Gson().toJson(canshus));
+            wuquanxian.setVisibility(View.GONE);
+            listView.setVisibility(View.VISIBLE);
+        }else {
+            Toast.makeText(getActivity(),"您还未登陆",Toast.LENGTH_SHORT).show();
+        }
     }
     @Override
     public void onDestroy() {

@@ -13,6 +13,7 @@ import java.util.List;
 
 import cn.yumutech.bean.UserAboutPerson;
 import cn.yumutech.unity.R;
+import cn.yumutech.weight.SaveData;
 
 /**
  * Created by 霍长江 on 2016/11/17.
@@ -56,8 +57,14 @@ public class ConstancAdapter extends BaseAdapter{
         }else{
             vh= (ViewHolder) convertView.getTag();
         }
+        if(SaveData.getInstance().isContactPermissions){
+            vh.tv_phone.setVisibility(View.VISIBLE);
+            vh.tv_phone.setText(mDatas.get(position).mobile);
+        }else {
+            vh.tv_phone.setVisibility(View.GONE);
+        }
         vh.tv_name.setText(mDatas.get(position).nickname);
-        vh.tv_phone.setText(mDatas.get(position).mobile);
+
         ImageLoader.getInstance().displayImage(mDatas.get(position).logo_path,vh.iv);
         return convertView;
     }
