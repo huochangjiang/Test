@@ -48,7 +48,7 @@
         <activity android:name=".FriendsUrlActivity" />
         <activity android:name=".FriendDetasActivity" />
         <activity android:name=".LogoActivity"
-            android:launchMode="singleTask">
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

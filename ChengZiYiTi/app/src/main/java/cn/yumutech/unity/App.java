@@ -85,6 +85,20 @@ public class App extends MultiDexApplication{
         }
         initImageLoader();
         PushAgent mPushAgent = PushAgent.getInstance(this);
+        mPushAgent.register(new IUmengRegisterCallback() {
+
+            @Override
+            public void onSuccess(String deviceToken) {
+                //注册成功会返回device token
+                Log.e("deviceToken",deviceToken);
+                mDeviceToken=deviceToken;
+            }
+
+            @Override
+            public void onFailure(String s, String s1) {
+
+            }
+        });
         mPushAgent.setNotificationPlaySound(MsgConstant.NOTIFICATION_PLAY_SDK_ENABLE);
 
 
@@ -110,20 +124,7 @@ public class App extends MultiDexApplication{
         //CustomNotificationHandler notificationClickHandler = new CustomNotificationHandler();
         mPushAgent.setNotificationClickHandler(notificationClickHandler);
 
-        mPushAgent.register(new IUmengRegisterCallback() {
 
-            @Override
-            public void onSuccess(String deviceToken) {
-                //注册成功会返回device token
-                Log.e("deviceToken",deviceToken);
-                mDeviceToken=deviceToken;
-            }
-
-            @Override
-            public void onFailure(String s, String s1) {
-
-            }
-        });
     }
     private void initConnect(){
 
