@@ -132,7 +132,7 @@ public class CreatQunZhuFragment extends BaseFragment {
             @Override
             public void afterTextChanged(Editable s) {
                 if(editText.getText().toString().trim().length()==0){
-                    mAdapter.dataChange(App.getContext().mApbutPerson);
+                    mAdapter.dataChange(linshiPersons,isXianshi);
                 }
             }
         });
@@ -180,14 +180,15 @@ public class CreatQunZhuFragment extends BaseFragment {
      * 联系人查查找
      * @param data
      */
+    private boolean isXianshi=false;
     private void getmDataSub(String data){
         if(App.getContext().mApbutPerson!=null) {
             for (int i = 0; i < App.getContext().mApbutPerson.size(); i++) {
-                if (App.getContext().mApbutPerson.get(i).nickname.contains(data) || App.getContext().mApbutPerson.get(i).mobile.contains(data)) {
-                    searchData.add(App.getContext().mApbutPerson.get(i));
+                if (linshiPersons.get(i).nickname.contains(data) || linshiPersons.get(i).mobile.contains(data)) {
+                    searchData.add(linshiPersons.get(i));
                 }
             }
-            mAdapter.dataChange(searchData);
+            mAdapter.dataChange(searchData,isXianshi);
         }
     }
     List<String> iids = new ArrayList<>();
@@ -252,7 +253,13 @@ public class CreatQunZhuFragment extends BaseFragment {
                     linshiPersons.add(App.getContext().mApbutPerson.get(i));
                 }
             }
-            mAdapter.dataChange(linshiPersons);
+            if(userAboutPerson.getId()==0) {
+                isXianshi=true;
+                mAdapter.dataChange(linshiPersons,true);
+            }else{
+                isXianshi=false;
+                mAdapter.dataChange(linshiPersons,false);
+            }
 //            RequestParams canshus = new RequestParams(new RequestParams.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
 //                    new RequestParams.DataBean(SaveData.getInstance().createDetpt_id));
 //            initDatas1(new Gson().toJson(canshus));
@@ -325,7 +332,7 @@ public class CreatQunZhuFragment extends BaseFragment {
         @Override
         public void onNext(UserAboutPerson channels) {
             if(channels.status.code.equals("0")){
-                mAdapter.dataChange(channels.data);
+               // mAdapter.dataChange(channels.data);
 
             }
         }

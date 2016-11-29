@@ -21,6 +21,7 @@ import cn.yumutech.weight.SaveData;
 public class ConstancAdapter extends BaseAdapter{
     private Context mContext;
     private List<UserAboutPerson.DataBean> mDatas;
+    private boolean isShuYu=true;
     public ConstancAdapter(Context context,List<UserAboutPerson.DataBean> data){
         this.mContext=context;
         this.mDatas=data;
