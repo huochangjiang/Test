@@ -8,6 +8,7 @@ import android.os.Message;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,7 +45,7 @@ public class ReleaseTaskActivity extends BaseActivity implements View.OnClickLis
     Subscription subscription;
     private TextView choose_time;
     private TextView who_zhu,who_xie;
-    private RelativeLayout rl_zhipairen;
+    private LinearLayout rl_zhipairen;
     public Map<Integer, UserAboutPerson.DataBean> zhipaiPeople;
     @Override
     protected int getLayoutId() {
@@ -63,7 +64,7 @@ public class ReleaseTaskActivity extends BaseActivity implements View.OnClickLis
         choose_time= (TextView) findViewById(R.id.choose_time);
         who_zhu= (TextView) findViewById(R.id.who_zhu);
         who_xie= (TextView) findViewById(R.id.who_xie);
-        rl_zhipairen= (RelativeLayout) findViewById(R.id.rl_zhipairen);
+        rl_zhipairen= (LinearLayout) findViewById(R.id.rl_zhipairen);
         rl_zhipairen.setVisibility(View.GONE);
         back.setOnClickListener(this);
         rl_who.setOnClickListener(this);

@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -12,7 +14,11 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import cn.yumutech.Adapter.XiangqingZhipaiAdaper;
+import cn.yumutech.LookResultAdapter;
 import cn.yumutech.bean.AcceptTask;
 import cn.yumutech.bean.AcceptTaskBeen;
 import cn.yumutech.bean.ShowTaskDetail;
@@ -20,6 +26,7 @@ import cn.yumutech.bean.ShowTaskDetailBeen;
 import cn.yumutech.netUtil.Api;
 import cn.yumutech.weight.MyListview;
 import cn.yumutech.weight.SaveData;
+import cn.yumutech.weight.ViewPagerDilog;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -47,7 +54,12 @@ public class ShowTaskDetailActivity extends BaseActivity{
     private TextView tv_faburen,tv_fabushijian;
     private TextView zhuangtaishijian;
     private XiangqingZhipaiAdaper adaper;
-
+    private TextView wancheng_title,name,complete_time,wancheng_neirong;
+    private GridView gridView;
+    private RelativeLayout rl_wancheng;
+    private LookResultAdapter lookAdapter;
+    private View fenge;
+    public List<String> phones=new ArrayList<>();
 //
 //    private RelativeLayout rl_zhipai,rl_zhipai2;
     private View xian;
@@ -73,26 +85,29 @@ public class ShowTaskDetailActivity extends BaseActivity{
         listview= (MyListview) findViewById(R.id.listview);
         adaper=new XiangqingZhipaiAdaper(mData,this);
         listview.setAdapter(adaper);
-//        rl_zhipai= (RelativeLayout) findViewById(R.id.rl_zhipai);
-//        rl_zhipai2= (RelativeLayout) findViewById(R.id.rl_zhipai2);
         xian=findViewById(R.id.xian);
         tv_faburen= (TextView) findViewById(R.id.tv_faburen);
         tv_fabushijian= (TextView) findViewById(R.id.tv_fabushijian);
-//        tv_zhipairen1= (TextView) findViewById(R.id.tv_zhipairen1);
-//        zhu_banren= (TextView) findViewById(R.id.zhu_banren);
-//        zhu_zhipaishijian2= (TextView) findViewById(R.id.zhu_zhipaishijian2);
-//        tv_zhipairen2= (TextView) findViewById(R.id.tv_zhipairen2);
-//        zhu_banren2= (TextView) findViewById(R.id.zhu_banren2);
-//        zhu_zhipaishijian= (TextView) findViewById(R.id.zhu_zhipaishijian);
-
-
         assign= (Button) findViewById(R.id.assign);
         all= (RelativeLayout) findViewById(R.id.all);
-
         myprog.setVisibility(View.VISIBLE);
-//       Button mbutton= (Button) findViewById(R.id.submit);
-
         all.setVisibility(View.GONE);
+
+
+        //查看界面的相关布局初始化
+        wancheng_title= (TextView) findViewById(R.id.wancheng_title);
+        name= (TextView) findViewById(R.id.name);
+        fenge=findViewById(R.id.fenge);
+        complete_time= (TextView) findViewById(R.id.complete_time);
+        wancheng_neirong= (TextView) findViewById(R.id.wancheng_neirong);
+        gridView= (GridView) findViewById(R.id.gridView);
+        rl_wancheng= (RelativeLayout) findViewById(R.id.rl_wancheng);
+        gridView= (GridView) findViewById(R.id.gridView);
+//        if(SaveData.getInstance().showTaskComplete!=null){
+//            mData=SaveData.getInstance().showTaskComplete;
+            lookAdapter=new LookResultAdapter(ShowTaskDetailActivity.this,mData);
+            gridView.setAdapter(lookAdapter);
+//        }
     }
 
     private void initExtra() {
@@ -108,7 +123,6 @@ public class ShowTaskDetailActivity extends BaseActivity{
                     new ShowTaskDetailBeen.DataBean(task_id));
             initData1(new Gson().toJson(been));
         }
-
     }
 
 
@@ -140,7 +154,7 @@ public class ShowTaskDetailActivity extends BaseActivity{
         wanchen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SaveData.getInstance().showTaskComplete=mData;
+
                 Intent intent=new Intent();
                 intent.setClass(ShowTaskDetailActivity.this,LookResultActivity.class);
                 startActivity(intent);
@@ -154,6 +168,14 @@ public class ShowTaskDetailActivity extends BaseActivity{
                 intent.putExtra("type","2");
                 intent.putExtra("task_id",mData.data.task_id);
                 startActivity(intent);
+            }
+        });
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                ViewPagerDilog vp=new ViewPagerDilog(ShowTaskDetailActivity.this, (ArrayList<String>) phones,i);
+                vp.show();
             }
         });
     }
@@ -217,27 +239,29 @@ public class ShowTaskDetailActivity extends BaseActivity{
             Log.e("getShowTaskDetail",data);
             if(showTaskDetail.status.code.equals("0")&&showTaskDetail!=null){
                 mData=showTaskDetail;
+
                 if(showTaskDetail.data.task_status_name.equals("待接受")){
                     zhuangtaishijian.setText("截止时间:");
                     String time1=SaveData.getInstance().getStringDateShort(showTaskDetail.data.task_end_date);
                     date.setText(time1);
                     accept.setVisibility(View.VISIBLE);
                     complete.setVisibility(View.GONE);
-                    wanchen.setVisibility(View.GONE);
+                    rl_wancheng.setVisibility(View.GONE);
                 }else if(showTaskDetail.data.task_status_name.equals("已接受")){
                     zhuangtaishijian.setText("接受时间:");
                     String time1=SaveData.getInstance().getStringDateShort(showTaskDetail.data.task_accept_date);
                     date.setText(time1);
                     accept.setVisibility(View.GONE);
                     complete.setVisibility(View.VISIBLE);
-                    wanchen.setVisibility(View.GONE);
+                    rl_wancheng.setVisibility(View.GONE);
                 }else if(showTaskDetail.data.task_status_name.equals("已完成")){
                     zhuangtaishijian.setText("完成时间:");
                     String time1=SaveData.getInstance().getStringDateShort(showTaskDetail.data.task_finish_date);
                     date.setText(time1);
                     accept.setVisibility(View.GONE);
                     complete.setVisibility(View.GONE);
-                    wanchen.setVisibility(View.VISIBLE);
+                    rl_wancheng.setVisibility(View.VISIBLE);
+                    lookResult(mData);
                 }
                 myprog.setVisibility(View.GONE);
                 all.setVisibility(View.VISIBLE);
@@ -273,6 +297,26 @@ public class ShowTaskDetailActivity extends BaseActivity{
             ShowTaskDetailBeen been=new ShowTaskDetailBeen(new ShowTaskDetailBeen.UserBean(App.getContext().getLogo("logo").data.id,""),
                     new ShowTaskDetailBeen.DataBean(task_id));
             initData1(new Gson().toJson(been));
+        }
+    }
+    private void lookResult(ShowTaskDetail data){
+        lookAdapter.dataChange(data);
+        for (int i=0;i<mData.data.task_comment.photos.size();i++){
+            phones.add(mData.data.task_comment.photos.get(i).photo_path);
+        }
+        if( data!=null){
+            name.setText(data.data.task_finish_user_name);
+            String time1=SaveData.getInstance().getStringDateShort(data.data.task_finish_date);
+            complete_time.setText(time1);
+            wancheng_neirong.setText(data.data.task_comment.taskcomment_content);
+            lookAdapter.dataChange(data);
+            if(data.data.task_comment!=null&&
+                    data.data.task_comment.photos!=null&&
+                    data.data.task_comment.photos.size()>0){
+                fenge.setVisibility(View.VISIBLE);
+            }else {
+                fenge.setVisibility(View.GONE);
+            }
         }
     }
 }
