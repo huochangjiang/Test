@@ -10,6 +10,7 @@ import java.util.List;
 
 import cn.yumutech.bean.ShowMyTask;
 import cn.yumutech.unity.R;
+import cn.yumutech.weight.SaveData;
 
 /**
  * Created by Administrator on 2016/11/21.
@@ -59,20 +60,26 @@ public class InspectionTaskAdapter extends BaseAdapter{
         }
         if(mData.get(position).task_status_name.equals("待接受")){
             vh.deadline.setText("截止时间:");
-            vh.date.setText(mData.get(position).task_end_date);
+            String time=SaveData.getInstance().getStringDateShort(mData.get(position).task_end_date);
+//            vh.date.setText(mData.get(position).task_end_date);
+            vh.date.setText(time);
         }else if(mData.get(position).task_status_name.equals("已接受")){
             vh.deadline.setText("接受时间:");
-            vh.date.setText(mData.get(position).task_accept_date);
+            String time=SaveData.getInstance().getStringDateShort(mData.get(position).task_accept_date);
+            vh.date.setText(time);
         }else if(mData.get(position).task_status_name.equals("已完成")){
             vh.deadline.setText("完成时间:");
-            vh.date.setText(mData.get(position).task_finish_date);
+            String time=SaveData.getInstance().getStringDateShort(mData.get(position).task_finish_date);
+            vh.date.setText(time);
         }
+
+        String time1=SaveData.getInstance().getStringDateShort(mData.get(position).task_publish_date);
         vh.title.setText(mData.get(position).task_title);
         vh.content.setText(mData.get(position).task_content);
         vh.status.setText(mData.get(position).task_status_name);
 //        vh.date.setText(mData.get(position).task_end_date);
         vh.tv_faburen.setText(mData.get(position).task_publish_user_name);
-        vh.tv_fabushijian.setText(mData.get(position).task_publish_date);
+        vh.tv_fabushijian.setText(time1);
         return myView;
     }
     public class ViewHolder{

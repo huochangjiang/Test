@@ -1,14 +1,17 @@
 package cn.yumutech.fragments;
 
+import android.support.v4.widget.DrawerLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -55,6 +58,7 @@ public class TaskDralayoutFragment extends BaseFragment implements View.OnClickL
     public List<Poeple> detailToThis;
     private View myprog;
     private View wuquanxian;
+    private static TaskDralayoutFragment fragment;
 
     Subscription subscription;
     protected void unsubscribe( Subscription subscription) {
@@ -67,7 +71,9 @@ public class TaskDralayoutFragment extends BaseFragment implements View.OnClickL
     }
     // TODO: Rename and change types and number of parameters
     public static TaskDralayoutFragment newInstance() {
-        TaskDralayoutFragment fragment = new TaskDralayoutFragment();
+        if(fragment==null) {
+            fragment = new TaskDralayoutFragment();
+        }
         return fragment;
     }
 
@@ -93,7 +99,17 @@ public class TaskDralayoutFragment extends BaseFragment implements View.OnClickL
         search= (EditText) contentView.findViewById(R.id.search);
         mAdapter = new TaskToWhoAdapter(mActivity,mDatas);
         listView.setAdapter(mAdapter);
-
+        ImageView iv= (ImageView) contentView.findViewById(R.id.iv_huadong);
+        iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawerLayout.openDrawer(Gravity.LEFT);
+            }
+        });
+    }
+    DrawerLayout drawerLayout;
+    public void getDrablelayout(DrawerLayout ddd){
+        this.drawerLayout=ddd;
     }
     @Override
     protected void initListeners() {

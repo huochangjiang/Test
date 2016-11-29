@@ -78,5 +78,10 @@
             android:textColor="@color/white"
             android:layout_centerInParent="true"/>
     </RelativeLayout>
-
+    <ImageView
+        android:layout_width="wrap_content"
+        android:src="@drawable/back_press"
+        android:layout_centerVertical="true"
+        android:id="@+id/iv_huadong"
+        android:layout_height="wrap_content" />
 </RelativeLayout>

@@ -1,6 +1,9 @@
 package cn.yumutech.weight;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -52,7 +55,27 @@ public class SaveData {
 //    public List<List<ChindClass>> chindDatas;
     //查看完成任务时的信息
     public ShowTaskDetail showTaskComplete;
+    /**
+     * 获取现在时间
+     *
+     * @return 返回短时间字符串格式yyyy-MM-dd
+     */
+    public static String getStringDateShort(String data) {
+//        String dtStart = "2010-10-15T09:27:37Z";
+        String datetime = null;
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date date1 = formatter.parse(data);
+            System.out.println(date1);
 
+            datetime = formatter.format(date1);
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+//        String dateString = formatter.format(data);
+        return datetime;
+    }
 
     /**
      * 指派人哪儿的数据
