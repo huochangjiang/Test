@@ -32,8 +32,10 @@ public class MyMenmberAdapter extends BaseAdapter{
         this.mDatas=data;
         this.mContext=context;
     }
+    private boolean isXianShi;
 
-    public void dataChange(List<UserAboutPerson.DataBean> data){
+    public void dataChange(List<UserAboutPerson.DataBean> data,boolean si){
+        this.isXianShi=si;
         this.mDatas=data;
         notifyDataSetChanged();
     }
@@ -70,8 +72,13 @@ public class MyMenmberAdapter extends BaseAdapter{
         }else{
             vh= (ViewHolder) convertView.getTag();
         }
+        if(isXianShi){
+            vh.tv_phone.setText(mDatas.get(position).mobile);
+
+        }else{
+            vh.tv_phone.setVisibility(View.GONE);
+        }
         vh.tv_name.setText(mDatas.get(position).nickname);
-        vh.tv_phone.setText(mDatas.get(position).mobile);
         ImageLoader.getInstance().displayImage(mDatas.get(position).logo_path,vh.iv);
         if(mDatas.get(index).type == UserBean.TYPE_CHECKED){
             vh.cb.setImageResource(R.drawable.story_selector);

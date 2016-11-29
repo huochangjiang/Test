@@ -81,6 +81,7 @@ public class QunMenmberSelectorActivity extends BaseActivity {
         }
         expandableListView.setAdapter(adapter);
     }
+    boolean isHave;
     @Override
     protected void initData() {
         expandableListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -88,8 +89,22 @@ public class QunMenmberSelectorActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 drawerlayout.closeDrawers();
                 if(mData!=null){
+
+
+
                     cn.yumutech.weight.SaveData.getInstance().createDetpt_id= cn.yumutech.weight.SaveData.getInstance().shuXingData.get(i).dept_id;
-                    EventBus.getDefault().post(new BaiBao("cc",0));
+                    isHave=false;
+                    for (int j=0;j<cn.yumutech.weight.SaveData.getInstance().underTaskToChildGroups.size();j++){
+                        if( cn.yumutech.weight.SaveData.getInstance().createDetpt_id.equals(cn.yumutech.weight.SaveData.getInstance().underTaskToChildGroups.get(j).dept_id))
+                        {
+                            isHave=true;
+                        }
+                    }
+                    if(isHave) {
+                        EventBus.getDefault().post(new BaiBao("cc", 0));
+                    }else{
+                        EventBus.getDefault().post(new BaiBao("cc", 1));
+                    }
                 }
 
             }
