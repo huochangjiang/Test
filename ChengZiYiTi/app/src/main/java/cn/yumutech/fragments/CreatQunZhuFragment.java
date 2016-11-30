@@ -99,7 +99,7 @@ public class CreatQunZhuFragment extends BaseFragment {
         editText = (MyEditText) contentView.findViewById(R.id.et);
         button = (Button) contentView.findViewById(R.id.denglu);
         listView = (ListView) contentView.findViewById(R.id.listview);
-        mAdapter = new MyMenmberAdapter(App.getContext().mApbutPerson, getActivity());
+        mAdapter = new MyMenmberAdapter(App.getContext().mApbutPerson, getActivity(),isXianshi);
         listView.setAdapter(mAdapter);
         if(qunMenmberSelectorActivity.type.equals("create")){
         button.setText("创建讨论组");
@@ -180,7 +180,7 @@ public class CreatQunZhuFragment extends BaseFragment {
      * 联系人查查找
      * @param data
      */
-    private boolean isXianshi=false;
+    private boolean isXianshi=true;
     private void getmDataSub(String data){
         if(App.getContext().mApbutPerson!=null) {
             for (int i = 0; i < App.getContext().mApbutPerson.size(); i++) {
@@ -243,10 +243,13 @@ public class CreatQunZhuFragment extends BaseFragment {
         EventBus.getDefault().unregister(this);
     }
 
+    private List<UserAboutPerson.DataBean> data;
 //创建临时的需要刷新的集合
     public List<UserAboutPerson.DataBean> linshiPersons=new ArrayList<>();
     public void onEventMainThread(BaiBao userAboutPerson){
         linshiPersons.clear();
+        String id=SaveData.getInstance().createDetpt_id;
+        data=App.getContext().mApbutPerson;
         if(App.getContext().getLogo("logo")!=null&&App.getContext().getLogo("logo").data!=null&& SaveData.getInstance().createDetpt_id!=null) {
             for (int i=0;i<App.getContext().mApbutPerson.size();i++){
                 if(App.getContext().mApbutPerson.get(i).dept_id.equals(SaveData.getInstance().createDetpt_id)){

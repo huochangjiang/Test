@@ -94,6 +94,7 @@ public class QunMenmberSelectorActivity extends BaseActivity {
 
                     cn.yumutech.weight.SaveData.getInstance().createDetpt_id= cn.yumutech.weight.SaveData.getInstance().shuXingData.get(i).dept_id;
                     isHave=false;
+                    String abc=cn.yumutech.weight.SaveData.getInstance().createDetpt_id;
                     for (int j=0;j<cn.yumutech.weight.SaveData.getInstance().underTaskToChildGroups.size();j++){
                         if( cn.yumutech.weight.SaveData.getInstance().createDetpt_id.equals(cn.yumutech.weight.SaveData.getInstance().underTaskToChildGroups.get(j).dept_id))
                         {

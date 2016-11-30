@@ -201,7 +201,7 @@ public class TaskDralayoutFragment extends BaseFragment implements View.OnClickL
                 mDatas=channels.data;
                 mAdapter.dataChange(mDatas);
                 myprog.setVisibility(View.GONE);
-                App.getContext().mApbutPerson=channels.data;
+//                App.getContext().mApbutPerson=channels.data;
 //                for (int i=0;i<channels.data.size();i++){
 //                    UserInfo info=new UserInfo(channels.data.get(i).id,channels.data.get(i).nickname, Uri.parse(channels.data.get(i).logo_path));
 ////                    RongIM.getInstance().refreshUserInfoCache(info);

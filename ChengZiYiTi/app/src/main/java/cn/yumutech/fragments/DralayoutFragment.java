@@ -150,7 +150,7 @@ public class DralayoutFragment extends BaseFragment {
     protected void initDatas() {
         if(App.getContext().getLogo("logo")!=null&&App.getContext().getLogo("logo").data!=null&&App.getContext().getLogo("logo").data.dept_id!=null) {
             RequestParams canshus = new RequestParams(new RequestParams.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
-                    new RequestParams.DataBean("0"));
+                    new RequestParams.DataBean("1"));
             initDatas1(new Gson().toJson(canshus));
         }else {
             Toast.makeText(getActivity(),"您还未登陆",Toast.LENGTH_SHORT).show();
@@ -187,7 +187,7 @@ public class DralayoutFragment extends BaseFragment {
                             channels.data.remove(i);
                         }
                     }
-                    App.getContext().mApbutPerson = channels.data;
+//                    App.getContext().mApbutPerson = channels.data;
                     isAllPerson=true;
                 }
 

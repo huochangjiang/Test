@@ -28,9 +28,10 @@ public class MyMenmberAdapter extends BaseAdapter{
     private Context mContext;
     private int type;
     private Map<Integer,UserAboutPerson.DataBean> maps=new HashMap<>();
-    public MyMenmberAdapter(List<UserAboutPerson.DataBean> data,Context context){
+    public MyMenmberAdapter(List<UserAboutPerson.DataBean> data,Context context,boolean isXianShi){
         this.mDatas=data;
         this.mContext=context;
+        this.isXianShi=isXianShi;
     }
     private boolean isXianShi;
 
@@ -73,6 +74,7 @@ public class MyMenmberAdapter extends BaseAdapter{
             vh= (ViewHolder) convertView.getTag();
         }
         if(isXianShi){
+            vh.tv_phone.setVisibility(View.VISIBLE);
             vh.tv_phone.setText(mDatas.get(position).mobile);
 
         }else{
