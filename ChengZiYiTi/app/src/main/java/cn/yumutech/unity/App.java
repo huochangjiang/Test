@@ -33,6 +33,7 @@ import java.util.Set;
 
 import cn.yumutech.bean.ChaXunQunMenmber;
 import cn.yumutech.bean.DepartListNew;
+import cn.yumutech.bean.UpdateUserPhoto;
 import cn.yumutech.bean.UserAboutPerson;
 import cn.yumutech.bean.UserLogin;
 import cn.yumutech.weight.ACache;
@@ -171,6 +172,18 @@ public class App extends MultiDexApplication{
         }else {
             Gson gson = new Gson();
             UserLogin user = gson.fromJson(readJson, UserLogin.class);
+            return user;
+        }
+    }
+    //保存跟新头像后的data
+    public UpdateUserPhoto getUpdateUserPhoto(String key){
+        String readJson =aCache.getAsString(key);
+        if(StringUtils1.isEmpty(readJson))
+        {
+            return null;
+        }else {
+            Gson gson = new Gson();
+            UpdateUserPhoto user = gson.fromJson(readJson, UpdateUserPhoto.class);
             return user;
         }
     }

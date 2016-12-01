@@ -10,6 +10,7 @@ import java.util.Map;
 import cn.yumutech.bean.GroupClass;
 import cn.yumutech.bean.Poeple;
 import cn.yumutech.bean.ShowTaskDetail;
+import cn.yumutech.bean.UpdateUserPhoto;
 import cn.yumutech.bean.UserAboutPerson;
 
 /**
@@ -92,4 +93,6 @@ public class SaveData {
     public  List<GroupClass> shuXingData=new ArrayList<>();
     //保存是不是详情页接受键点击后返回的
     public Boolean isJieshou=false;
+    //暂时保存用户更换头像信息
+    public UpdateUserPhoto updataPhone;
 }

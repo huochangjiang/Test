@@ -56,6 +56,7 @@
         android:src="@drawable/back_press"
         android:layout_centerVertical="true"
         android:id="@+id/iv_huadong"
+        android:visibility="gone"
         android:layout_height="wrap_content" />
 
 

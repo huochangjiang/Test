@@ -10,7 +10,7 @@
             android:id="@+id/iv_tou"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/touxiao"
+            android:src="@drawable/quntouxiang"
             android:scaleType="centerInside"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"

@@ -31,6 +31,7 @@ import cn.yumutech.bean.ShowTaskDetail;
 import cn.yumutech.bean.ShuaXinQunZhu;
 import cn.yumutech.bean.TuiChuQun;
 import cn.yumutech.bean.Update;
+import cn.yumutech.bean.UpdateUserPhoto;
 import cn.yumutech.bean.UserAboutPerson;
 import cn.yumutech.bean.UserInfoDetail;
 import cn.yumutech.bean.UserLogin;
@@ -87,6 +88,9 @@ public interface ApiServer {
     //1.15.1获取模块分类
     @POST("ModuleClassifyList")
     Observable<ModuleClassifyList> getModuleClassifyList(@Query("req") String item);
+    //更改用户头像
+    @POST("UpdateUserPhoto")
+    Observable<UpdateUserPhoto> getUpdateUserPhoto(@Query("req") String item);
 
 
     //影视推荐

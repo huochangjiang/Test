@@ -11,6 +11,8 @@ import com.loopj.android.http.RequestParams;
 import org.apache.http.Header;
 
 import cn.yumutech.bean.CompleteBean;
+import cn.yumutech.bean.UpdateUserPhoto;
+import cn.yumutech.unity.App;
 
 /**
  * Created by huo on 2016/11/24.
@@ -49,6 +51,37 @@ public class HttpRequest {
                     CompleteBean movie = gson.fromJson(res, CompleteBean.class);
                     if (movie.status.code.equals("0")) {
                         mHandler.sendEmptyMessage(0);
+                    }
+                } catch (Exception e) {
+                    // TODO: handle exception
+                }
+
+            }
+
+            @Override
+            public void onFailure(int arg0, Header[] arg1, byte[] arg2,
+                                  Throwable arg3) {
+                // TODO Auto-generated method stub
+            }
+        });
+
+    }
+    public void UpdateUserPhoto( String dizhi,final Handler mHandler) {
+        String url="http://182.254.167.232:20080/unity/webservice/ap/UpdateUserPhoto";
+        RequestParams pasParams = new RequestParams();
+        pasParams.put("req", dizhi);
+        httpclient.post(url, pasParams, new AsyncHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {
+                // TODO Auto-generated method stub
+                try {
+                    String res = new String(arg2);
+                    Gson gson = new Gson();
+                    UpdateUserPhoto movie = gson.fromJson(res, UpdateUserPhoto.class);
+                    if (movie.status.code.equals("0")) {
+                        App.getContext().saveLogo("upLogo",res);
+                        mHandler.sendEmptyMessage(500);
                     }
                 } catch (Exception e) {
                     // TODO: handle exception

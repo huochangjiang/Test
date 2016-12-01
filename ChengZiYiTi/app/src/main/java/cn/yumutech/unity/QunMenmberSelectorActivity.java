@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +34,7 @@ public class QunMenmberSelectorActivity extends BaseActivity {
     public String type;
     public String groupId;
     public String groupName;
+    private ImageView iv_huadong,iv_huadong1;
 
     @Override
     protected int getLayoutId() {
@@ -80,6 +83,26 @@ public class QunMenmberSelectorActivity extends BaseActivity {
             e.printStackTrace();
         }
         expandableListView.setAdapter(adapter);
+        iv_huadong= (ImageView) findViewById(R.id.drawerlayout).findViewById(R.id.iv_huadong);
+        iv_huadong1= (ImageView) findViewById(R.id.drawerlayout).findViewById(R.id.iv_huadong1);
+        iv_huadong.setVisibility(View.VISIBLE);
+        iv_huadong1.setVisibility(View.GONE);
+        iv_huadong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerlayout.openDrawer(Gravity.LEFT);
+                iv_huadong1.setImageResource(R.drawable.celanzhankai);
+                iv_huadong.setVisibility(View.GONE);
+            }
+        });
+        iv_huadong1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerlayout.closeDrawer(Gravity.LEFT);
+                iv_huadong.setImageResource(R.drawable.celanshouqi);
+                iv_huadong1.setVisibility(View.GONE);
+            }
+        });
     }
     boolean isHave;
     @Override
@@ -115,6 +138,28 @@ public class QunMenmberSelectorActivity extends BaseActivity {
 
     @Override
     protected void initListeners() {
+        drawerlayout.setDrawerListener(new DrawerLayout.SimpleDrawerListener() {
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                iv_huadong1.setImageResource(R.drawable.celanzhankai);
+                iv_huadong1.setVisibility(View.VISIBLE);
+                iv_huadong.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+                iv_huadong.setImageResource(R.drawable.celanshouqi);
+                iv_huadong.setVisibility(View.VISIBLE);
+                iv_huadong1.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+                super.onDrawerStateChanged(newState);
+            }
+        });
     }
     private List<FileBean> mDatas2 = new ArrayList<FileBean>();
     private List<GroupClass> mData=new ArrayList<>();

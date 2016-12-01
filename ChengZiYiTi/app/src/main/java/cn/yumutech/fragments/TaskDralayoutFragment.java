@@ -59,6 +59,8 @@ public class TaskDralayoutFragment extends BaseFragment implements View.OnClickL
     private View myprog;
     private View wuquanxian;
     private static TaskDralayoutFragment fragment;
+    private ImageView iv;
+
 
     Subscription subscription;
     protected void unsubscribe( Subscription subscription) {
@@ -100,11 +102,12 @@ public class TaskDralayoutFragment extends BaseFragment implements View.OnClickL
         search= (EditText) contentView.findViewById(R.id.search);
         mAdapter = new TaskToWhoAdapter(mActivity,mDatas);
         listView.setAdapter(mAdapter);
-        ImageView iv= (ImageView) contentView.findViewById(R.id.iv_huadong);
+        iv= (ImageView) contentView.findViewById(R.id.iv_huadong);
         iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 drawerLayout.openDrawer(Gravity.LEFT);
+                iv.setImageResource(R.drawable.celanzhankai);
             }
         });
     }
@@ -166,6 +169,7 @@ public class TaskDralayoutFragment extends BaseFragment implements View.OnClickL
                 }
             }
         });
+
     }
 
     @Override

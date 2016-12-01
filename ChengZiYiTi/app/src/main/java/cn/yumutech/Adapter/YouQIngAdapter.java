@@ -7,8 +7,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
-
 import java.util.List;
 
 import cn.yumutech.bean.YouQIngLianJie;
@@ -56,7 +54,7 @@ public class YouQIngAdapter extends BaseAdapter{
             vh= (ViewHolder) view.getTag();
         }
         vh.tv.setText(mDatas.get(i).title);
-        ImageLoader.getInstance().displayImage(mDatas.get(i).href,vh.iv);
+//        ImageLoader.getInstance().displayImage(mDatas.get(i).href,vh.iv);
         return view;
     }
 

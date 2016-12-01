@@ -31,5 +31,19 @@
             </ListView>
         </RelativeLayout>
     </android.support.v4.widget.DrawerLayout>
-
+    <ImageView
+        android:layout_width="50dp"
+        android:src="@drawable/celanzhankai"
+        android:layout_centerVertical="true"
+        android:id="@+id/iv_huadong1"
+        android:scaleType="fitStart"
+        android:layout_marginLeft="199dp"
+        android:layout_height="50dp" />
+    <ImageView
+        android:layout_width="50dp"
+        android:src="@drawable/celanshouqi"
+        android:layout_centerVertical="true"
+        android:id="@+id/iv_huadong"
+        android:scaleType="fitStart"
+        android:layout_height="50dp" />
 </RelativeLayout>
