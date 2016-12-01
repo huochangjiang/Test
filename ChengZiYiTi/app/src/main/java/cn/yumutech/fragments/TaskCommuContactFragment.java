@@ -6,6 +6,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -80,22 +81,40 @@ public class TaskCommuContactFragment extends BaseFragment {
         iv_huadong1= (ImageView) contactView.findViewById(R.id.drawerlayout).findViewById(R.id.iv_huadong1);
         iv_huadong.setVisibility(View.VISIBLE);
         iv_huadong1.setVisibility(View.GONE);
-        iv_huadong.setOnClickListener(new View.OnClickListener() {
+        iv_huadong.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
+            public boolean onTouch(View v, MotionEvent event) {
                 drawerlayout.openDrawer(Gravity.LEFT);
                 iv_huadong1.setImageResource(R.drawable.celanzhankai);
                 iv_huadong.setVisibility(View.GONE);
+                return false;
             }
         });
-        iv_huadong1.setOnClickListener(new View.OnClickListener() {
+//        iv_huadong.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                drawerlayout.openDrawer(Gravity.LEFT);
+//                iv_huadong1.setImageResource(R.drawable.celanzhankai);
+//                iv_huadong.setVisibility(View.GONE);
+//            }
+//        });
+        iv_huadong1.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
+            public boolean onTouch(View v, MotionEvent event) {
                 drawerlayout.closeDrawer(Gravity.LEFT);
                 iv_huadong.setImageResource(R.drawable.celanshouqi);
                 iv_huadong1.setVisibility(View.GONE);
+                return false;
             }
         });
+//        iv_huadong1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                drawerlayout.closeDrawer(Gravity.LEFT);
+//                iv_huadong.setImageResource(R.drawable.celanshouqi);
+//                iv_huadong1.setVisibility(View.GONE);
+//            }
+//        });
         search= (EditText) contactView.findViewById(R.id.search);
         return contactView;
     }

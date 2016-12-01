@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -88,22 +89,40 @@ public class QunMenmberSelectorActivity extends BaseActivity {
         iv_huadong1= (ImageView) findViewById(R.id.drawerlayout).findViewById(R.id.iv_huadong1);
         iv_huadong.setVisibility(View.VISIBLE);
         iv_huadong1.setVisibility(View.GONE);
-        iv_huadong.setOnClickListener(new View.OnClickListener() {
+        iv_huadong.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
+            public boolean onTouch(View v, MotionEvent event) {
                 drawerlayout.openDrawer(Gravity.LEFT);
                 iv_huadong1.setImageResource(R.drawable.celanzhankai);
                 iv_huadong.setVisibility(View.GONE);
+                return false;
             }
         });
-        iv_huadong1.setOnClickListener(new View.OnClickListener() {
+//        iv_huadong.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                drawerlayout.openDrawer(Gravity.LEFT);
+//                iv_huadong1.setImageResource(R.drawable.celanzhankai);
+//                iv_huadong.setVisibility(View.GONE);
+//            }
+//        });
+        iv_huadong1.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
+            public boolean onTouch(View v, MotionEvent event) {
                 drawerlayout.closeDrawer(Gravity.LEFT);
                 iv_huadong.setImageResource(R.drawable.celanshouqi);
                 iv_huadong1.setVisibility(View.GONE);
+                return false;
             }
         });
+//        iv_huadong1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                drawerlayout.closeDrawer(Gravity.LEFT);
+//                iv_huadong.setImageResource(R.drawable.celanshouqi);
+//                iv_huadong1.setVisibility(View.GONE);
+//            }
+//        });
     }
     boolean isHave;
     @Override
