@@ -20,7 +20,7 @@
     android:textSize="@dimen/title_size"
     android:textColor="@color/huise"
     android:id="@+id/tv"
-    android:text="添加群成员"
+    android:text="添加成员"
     android:layout_height="wrap_content" />
     </LinearLayout>
 </RelativeLayout>

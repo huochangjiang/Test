@@ -49,10 +49,10 @@ public class QunMenmberSelectorActivity extends BaseActivity {
 
         if(type.equals("join")) {
             groupId = intent.getStringExtra("groupId");
-            tv.setText("讨论组");
+            tv.setText("加入讨论组");
             groupName = intent.getStringExtra("groupName");
         }else{
-            tv.setText("讨论组");
+            tv.setText("新建讨论组");
 
         }
         drawerlayout= (DrawerLayout) findViewById(R.id.drawerlayout).findViewById(R.id.drawer);

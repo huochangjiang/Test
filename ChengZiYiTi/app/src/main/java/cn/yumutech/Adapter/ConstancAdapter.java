@@ -1,13 +1,16 @@
 package cn.yumutech.Adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
 import java.util.List;
 
@@ -22,9 +25,27 @@ public class ConstancAdapter extends BaseAdapter{
     private Context mContext;
     private List<UserAboutPerson.DataBean> mDatas;
     private boolean isShuYu=true;
+    private final DisplayImageOptions options;
+
     public ConstancAdapter(Context context,List<UserAboutPerson.DataBean> data){
         this.mContext=context;
         this.mDatas=data;
+        // .showImageOnLoading(LayoutToDrawable());
+//				.showImageOnLoading(new BitmapDrawable(convertViewToBitmap()))
+// .cacheOnDisc(true)
+// .considerExifParams(true)
+        options = new DisplayImageOptions.Builder()
+                 .showImageOnLoading(R.drawable.touxiao)
+                .showImageForEmptyUri(R.drawable.touxiao)
+                .showImageOnFail(R.drawable.touxiao)
+                // .showImageOnLoading(LayoutToDrawable());
+//				.showImageOnLoading(new BitmapDrawable(convertViewToBitmap()))
+
+                .bitmapConfig(Bitmap.Config.RGB_565).cacheOnDisk(true)
+                .cacheInMemory(true).imageScaleType(ImageScaleType.EXACTLY)
+                // .cacheOnDisc(true)
+                // .considerExifParams(true)
+                .build();
     }
     public void dataChange(List<UserAboutPerson.DataBean> data){
         this.mDatas=data;
@@ -66,7 +87,7 @@ public class ConstancAdapter extends BaseAdapter{
         }
         vh.tv_name.setText(mDatas.get(position).nickname);
 
-        ImageLoader.getInstance().displayImage(mDatas.get(position).logo_path,vh.iv);
+        ImageLoader.getInstance().displayImage(mDatas.get(position).logo_path,vh.iv,options);
         return convertView;
     }
     public class ViewHolder{
