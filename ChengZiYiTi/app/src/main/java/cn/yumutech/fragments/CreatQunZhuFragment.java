@@ -106,9 +106,9 @@ public class CreatQunZhuFragment extends BaseFragment {
         listView.setAdapter(mAdapter);
 
         if(qunMenmberSelectorActivity.type.equals("create")){
-        button.setText("创建讨论组");
+        button.setText("新建讨论组");
         }else{
-            button.setText("邀请");
+            button.setText("添加成员");
         }
         editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 

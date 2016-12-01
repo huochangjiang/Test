@@ -79,9 +79,10 @@ public class HomeFragment extends BaseFragment {
         baibaos.add(new BaiBao("政策文件", R.drawable.zhengciwenjian));
         baibaos.add(new BaiBao("工作状态", R.drawable.gongzuozhuangtai));
         baibaos.add(new BaiBao("项目工作", R.drawable.xiangmugongzuo));
-        baibaos.add(new BaiBao("友情链接", R.drawable.lianjie));
+
         baibaos.add(new BaiBao("督察督办", R.drawable.duchaduban));
         baibaos.add(new BaiBao("互动交流", R.drawable.hudongjiaoliu));
+        baibaos.add(new BaiBao("友情链接", R.drawable.lianjie));
         BaiBaoAdatper baiBaoAdatper=new BaiBaoAdatper(getActivity(), (ArrayList<BaiBao>) baibaos);
         myGridView.setAdapter(baiBaoAdatper);
         myGridView.setFocusable(false);
@@ -149,13 +150,13 @@ public class HomeFragment extends BaseFragment {
                     Intent intent=new Intent(getActivity(), ProjectMangerActivity.class);
                     startActivity(intent);
                 }else if(i==4){
-                    Intent intent=new Intent(getActivity(), FriendsUrlActivity.class);
-                    startActivity(intent);
-                }else if(i==5){
                     Intent intent=new Intent(getActivity(), InspectionTaskActivity.class);
                     startActivity(intent);
-                }else if(i==6){
+                }else if(i==5){
                     Intent intent=new Intent(getActivity(), CommunicationActivity.class);
+                    startActivity(intent);
+                }else if(i==6){
+                    Intent intent=new Intent(getActivity(), FriendsUrlActivity.class);
                     startActivity(intent);
                 }
             }
@@ -176,7 +177,7 @@ Subscription subscription;
         if(App.getContext().getLogo("logo")!=null) {
             RequestCanShu canshus = new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.nickname,
                     App.getContext().getLogo("logo").data.id),
-                    new RequestCanShu.DataBean("省级", "0", "5"));
+                    new RequestCanShu.DataBean("省级", "0", "3"));
             initDatas1(new Gson().toJson(canshus));
         }else {
             App.getContext().noLogin(getActivity());

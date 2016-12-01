@@ -44,6 +44,7 @@ import cn.yumutech.netUtil.UpdateManager;
 import cn.yumutech.weight.DataCleanManager;
 import cn.yumutech.weight.FileUtils1;
 import cn.yumutech.weight.SaveData;
+import cn.yumutech.weight.SignOutDilog;
 import cn.yumutech.weight.TiShiDilog;
 import de.greenrobot.event.EventBus;
 import rx.Observer;
@@ -181,7 +182,15 @@ public class AfterLoginActivity extends BaseActivity implements View.OnClickList
                     break;
                 case 1:
                     MissDilog();
-                    showDilog("升级中，请稍后...");
+                    SignOutDilog mDilog=new SignOutDilog(AfterLoginActivity.this,"发现新版本,是否更新?");
+                    mDilog.show();
+                    mDilog.setOnLisener(new SignOutDilog.onListern() {
+                        @Override
+                        public void send() {
+                            UpdateManager.getUpdateManager().Download(UpdateManager.getUpdateManager().mUpdate.data.url,App.getContext().downLoadPath);
+                            showDilog("升级中，请稍后...");
+                        }
+                    });
                     break;
                 case 2:
                     MissDilog();

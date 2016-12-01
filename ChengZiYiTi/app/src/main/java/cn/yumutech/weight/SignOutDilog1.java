@@ -43,9 +43,9 @@ public class SignOutDilog1 implements  OnClickListener{
 		Button queren = (Button) view.findViewById(R.id.queren);
 		Button quxiao = (Button) view.findViewById(R.id.quxiao);
 		et = (EditText) view.findViewById(R.id.et);
-
+		et.setText(message);
 		tishi = (TextView) view.findViewById(R.id.tishi);
-		tishi.setText(message);
+		tishi.setText("修改讨论组名字");
 		queren.setOnClickListener(this);
 		quxiao.setOnClickListener(this);
 		
