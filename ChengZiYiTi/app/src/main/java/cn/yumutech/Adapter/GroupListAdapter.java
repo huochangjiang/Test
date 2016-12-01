@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
 import java.util.List;
@@ -74,7 +73,7 @@ public class GroupListAdapter extends BaseAdapter{
             vh= (ViewHolder) view.getTag();
         }
         vh.tv_group.setText(data.get(i).groupName);
-        ImageLoader.getInstance().displayImage(data.get(i).create_user_logo_path,vh.iv_tou,options);
+//        ImageLoader.getInstance().displayImage(data.get(i).create_user_logo_path,vh.iv_tou,options);
         if(i==data.size()-1){
             vh.iv_xian.setVisibility(View.GONE);
         }

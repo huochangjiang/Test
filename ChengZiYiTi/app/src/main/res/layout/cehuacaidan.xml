@@ -37,7 +37,7 @@
         android:layout_centerVertical="true"
         android:id="@+id/iv_huadong1"
         android:scaleType="fitStart"
-        android:visibility="gone"
+       android:visibility="gone"
         android:layout_marginLeft="199dp"
         android:layout_height="50dp" />
     <ImageView
@@ -46,6 +46,6 @@
         android:layout_centerVertical="true"
         android:id="@+id/iv_huadong"
       android:scaleType="fitStart"
-        android:visibility="gone"
+
         android:layout_height="50dp" />
 </RelativeLayout>

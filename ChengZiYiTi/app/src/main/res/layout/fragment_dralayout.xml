@@ -57,6 +57,7 @@
         android:layout_centerVertical="true"
         android:id="@+id/iv_huadong"
         android:scaleType="fitStart"
+        android:visibility="gone"
         android:layout_height="50dp" />
 
 
