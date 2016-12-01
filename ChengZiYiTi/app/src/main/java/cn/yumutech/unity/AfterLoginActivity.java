@@ -459,8 +459,10 @@ public class AfterLoginActivity extends BaseActivity implements View.OnClickList
             case PHOTO_REQUEST_CUT:// 返回的结果
                 if (data != null)
                     try {
-                        bitmap = BitmapFactory.decodeStream(getContentResolver()
-                                .openInputStream(uritempFile));
+                        if(uritempFile!=null){
+                            bitmap = BitmapFactory.decodeStream(getContentResolver()
+                                    .openInputStream(uritempFile));
+                        }
                         setPicToView(bitmaptoString(bitmap, 100));
                         setUpdateUserPhoto(bitmap);
 

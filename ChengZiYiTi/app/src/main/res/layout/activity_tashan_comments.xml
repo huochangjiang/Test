@@ -71,16 +71,16 @@
 
     <Button
         android:id="@+id/button"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/fab"
-        android:text="评论"
-        android:textSize="18dp"
+        android:background="@drawable/addpinglun"
+
         android:textColor="@color/white" />
+
     <RelativeLayout
         android:id="@+id/shurukuang"
         android:visibility="gone"

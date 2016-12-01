@@ -60,6 +60,7 @@ public class TaskDralayoutFragment extends BaseFragment implements View.OnClickL
     private View wuquanxian;
     private static TaskDralayoutFragment fragment;
     private ImageView iv;
+//    private boolean isOpen;
 
 
     Subscription subscription;
@@ -78,7 +79,6 @@ public class TaskDralayoutFragment extends BaseFragment implements View.OnClickL
         }
         return fragment;
     }
-
 
     @Override
     protected View getContentView(LayoutInflater inflater, ViewGroup container) {
@@ -106,8 +106,9 @@ public class TaskDralayoutFragment extends BaseFragment implements View.OnClickL
         iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                drawerLayout.openDrawer(Gravity.LEFT);
-                iv.setImageResource(R.drawable.celanzhankai);
+
+                    drawerLayout.openDrawer(Gravity.LEFT);
+                  //  iv.setImageResource(R.drawable.celanzhankai);
             }
         });
     }
@@ -169,7 +170,26 @@ public class TaskDralayoutFragment extends BaseFragment implements View.OnClickL
                 }
             }
         });
-
+//        drawerLayout.setDrawerListener(new DrawerLayout.SimpleDrawerListener() {
+//            @Override
+//            public void onDrawerOpened(View drawerView) {
+//                super.onDrawerOpened(drawerView);
+//                iv.setImageResource(R.drawable.celanzhankai);
+//
+//            }
+//
+//            @Override
+//            public void onDrawerClosed(View drawerView) {
+//                super.onDrawerClosed(drawerView);
+//                iv.setImageResource(R.drawable.celanshouqi);
+//
+//            }
+//
+//            @Override
+//            public void onDrawerStateChanged(int newState) {
+//                super.onDrawerStateChanged(newState);
+//            }
+//        });
     }
 
     @Override

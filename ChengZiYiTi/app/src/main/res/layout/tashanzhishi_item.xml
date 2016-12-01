@@ -9,8 +9,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="美国总统选举活动"
-        android:textSize="20dp"
-        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textColor="@color/small_title"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"/>
     <ImageView

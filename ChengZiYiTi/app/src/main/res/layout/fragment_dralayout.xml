@@ -52,12 +52,12 @@
     </ListView>
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:src="@drawable/back_press"
+        android:layout_width="50dp"
+        android:src="@drawable/celanshouqi"
         android:layout_centerVertical="true"
         android:id="@+id/iv_huadong"
-        android:visibility="gone"
-        android:layout_height="wrap_content" />
+        android:scaleType="fitStart"
+        android:layout_height="50dp" />
 
 
 </RelativeLayout>

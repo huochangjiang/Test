@@ -58,5 +58,11 @@
         android:text="新建"
         android:textColor="#ffffff"
         android:textSize="17sp" />
-
+    <ImageView
+        android:layout_width="50dp"
+        android:src="@drawable/celanshouqi"
+        android:layout_centerVertical="true"
+        android:id="@+id/iv_huadong"
+        android:scaleType="fitStart"
+        android:layout_height="50dp" />
 </RelativeLayout>
