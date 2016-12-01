@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -12,16 +13,22 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
+import java.util.List;
 import java.util.Locale;
 
 import cn.yumutech.bean.RequestParams2;
 import cn.yumutech.bean.UserInfoDetail;
 import cn.yumutech.netUtil.Api;
+import cn.yumutech.netUtil.MyExtensionModule;
+import io.rong.imkit.DefaultExtensionModule;
+import io.rong.imkit.IExtensionModule;
+import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationFragment;
 import io.rong.imkit.userInfoCache.RongUserInfoManager;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.Message;
 import io.rong.imlib.model.UserInfo;
 import rx.Observer;
 import rx.Subscription;
@@ -31,7 +38,8 @@ import rx.schedulers.Schedulers;
 /**
  * Created by 霍长江 on 2016/11/15.
  */
-public class ConversationActivity extends FragmentActivity implements RongIMClient.ConnectionStatusListener{
+public class ConversationActivity extends FragmentActivity implements    RongIMClient.OnReceiveMessageListener,
+        RongIMClient.ConnectionStatusListener{
 
     private TextView mTitle;
     private RelativeLayout mBack;
@@ -50,6 +58,8 @@ public class ConversationActivity extends FragmentActivity implements RongIMClie
     private ImageView mTitle3;
     private String title;
     String token;
+    private ConversationFragment fragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,15 +80,24 @@ public class ConversationActivity extends FragmentActivity implements RongIMClie
             } else {
             }
         }
-
         isReconnect(intent);
+        DemoContext.getInstance().title=title;
+        RongIM.setConversationBehaviorListener(new MyConversationBehaviorListener());
+
+
+        setMyExtensionModule();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+      mTitle.setText( DemoContext.getInstance().title);
     }
 
     /**
      * 展示如何从 Intent 中得到 融云会话页面传递的 Uri
      */
     private void getIntentDate(Intent intent) {
-
         mTargetId = intent.getData().getQueryParameter("targetId");
         mTargetIds = intent.getData().getQueryParameter("targetIds");
         title = intent.getData().getQueryParameter("title");
@@ -147,14 +166,15 @@ public class ConversationActivity extends FragmentActivity implements RongIMClie
      * @param mTargetId
      */
     private void enterFragment(Conversation.ConversationType mConversationType, String mTargetId) {
+if(fragment==null) {
+    fragment = (ConversationFragment) getSupportFragmentManager().findFragmentById(R.id.conversation);
 
-        ConversationFragment fragment = (ConversationFragment) getSupportFragmentManager().findFragmentById(R.id.conversation);
+    Uri uri = Uri.parse("rong://" + getApplicationInfo().packageName).buildUpon()
+            .appendPath("conversation").appendPath(mConversationType.getName().toLowerCase())
+            .appendQueryParameter("targetId", mTargetId).build();
 
-        Uri uri = Uri.parse("rong://" + getApplicationInfo().packageName).buildUpon()
-                .appendPath("conversation").appendPath(mConversationType.getName().toLowerCase())
-                .appendQueryParameter("targetId", mTargetId).build();
-
-        fragment.setUri(uri);
+    fragment.setUri(uri);
+}
     }
 
 
@@ -263,6 +283,23 @@ public class ConversationActivity extends FragmentActivity implements RongIMClie
         }
     }
 
+    public void setMyExtensionModule() {
+        RongIM.setOnReceiveMessageListener(this);
+        List<IExtensionModule> moduleList = RongExtensionManager.getInstance().getExtensionModules();
+        IExtensionModule defaultModule = null;
+        if (moduleList != null) {
+            for (IExtensionModule module : moduleList) {
+                if (module instanceof DefaultExtensionModule) {
+                    defaultModule = module;
+                    break;
+                }
+            }
+            if (defaultModule != null) {
+                RongExtensionManager.getInstance().unregisterExtensionModule(defaultModule);
+                RongExtensionManager.getInstance().registerExtensionModule(new MyExtensionModule());
+            }
+        }
+    }
     //链接荣yun
     public void isFirstRongYun(){
         RongIM.connect(token, new RongIMClient.ConnectCallback() {
@@ -373,5 +410,12 @@ public class ConversationActivity extends FragmentActivity implements RongIMClie
             case KICKED_OFFLINE_BY_OTHER_CLIENT://用户账户在其他设备登录，本机会被踢掉线
                 break;
         }
+    }
+
+
+    @Override
+    public boolean onReceived(Message message, int i) {
+        Log.e("info",message.toString());
+        return false;
     }
 }

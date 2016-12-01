@@ -150,7 +150,7 @@ public class DralayoutFragment extends BaseFragment {
     protected void initDatas() {
         if(App.getContext().getLogo("logo")!=null&&App.getContext().getLogo("logo").data!=null&&App.getContext().getLogo("logo").data.dept_id!=null) {
             RequestParams canshus = new RequestParams(new RequestParams.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
-                    new RequestParams.DataBean("1"));
+                    new RequestParams.DataBean(App.getContext().getLogo("logo").data.dept_id));
             initDatas1(new Gson().toJson(canshus));
         }else {
             Toast.makeText(getActivity(),"您还未登陆",Toast.LENGTH_SHORT).show();
@@ -181,14 +181,11 @@ public class DralayoutFragment extends BaseFragment {
                     UserInfo info=new UserInfo(channels.data.get(i).id,channels.data.get(i).nickname, Uri.parse(channels.data.get(i).logo_path));
                     RongIM.getInstance().refreshUserInfoCache(info);
                 }
-                if(!isAllPerson) {
+
                     for (int i=0;i<channels.data.size();i++){
                         if(channels.data.get(i).id.equals(App.getContext().getLogo("logo").data.id)){
                             channels.data.remove(i);
                         }
-                    }
-//                    App.getContext().mApbutPerson = channels.data;
-                    isAllPerson=true;
                 }
 
             }

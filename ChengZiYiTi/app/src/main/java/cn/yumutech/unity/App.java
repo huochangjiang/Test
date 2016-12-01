@@ -35,8 +35,12 @@ import cn.yumutech.bean.ChaXunQunMenmber;
 import cn.yumutech.bean.DepartListNew;
 import cn.yumutech.bean.UserAboutPerson;
 import cn.yumutech.bean.UserLogin;
+import cn.yumutech.netUtil.MyExtensionModule;
 import cn.yumutech.weight.ACache;
 import cn.yumutech.weight.StringUtils1;
+import io.rong.imkit.DefaultExtensionModule;
+import io.rong.imkit.IExtensionModule;
+import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
 
 
@@ -129,6 +133,8 @@ public class App extends MultiDexApplication{
     private void initConnect(){
 
     }
+
+
     private void initImageLoader() {
         // DisplayImageOptions options = new DisplayImageOptions.Builder()
         // .showImageOnLoading(R.drawable.icon_default)
