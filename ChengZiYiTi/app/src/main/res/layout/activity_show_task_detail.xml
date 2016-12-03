@@ -46,9 +46,13 @@
         android:layout_width="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"/>
+    <ScrollView
+        android:layout_below="@+id/id_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <RelativeLayout
         android:id="@+id/all"
-        android:layout_below="@+id/id_toolbar"
+
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     <RelativeLayout
@@ -216,24 +220,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     </ScrollView>
-    <RelativeLayout
-        android:id="@+id/complete"
-        android:visibility="gone"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
-        android:background="@drawable/logo"
-        android:layout_width="match_parent"
-        android:layout_height="40dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="提交"
-            android:textSize="18sp"
-            android:layout_centerInParent="true"
-            android:textColor="@color/white"/>
-    </RelativeLayout>
+
         <RelativeLayout
             android:id="@+id/wanchen"
             android:visibility="gone"
@@ -326,15 +313,36 @@
                 android:id="@+id/gridView"
                 android:layout_below="@+id/fenge"
                 android:numColumns="4"
+                android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 >
             </GridView>
         </RelativeLayout>
+    </RelativeLayout>
+    </ScrollView>
+    <RelativeLayout
+        android:id="@+id/complete"
+        android:visibility="gone"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/logo"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="提交"
+            android:textSize="18sp"
+            android:layout_centerInParent="true"
+            android:textColor="@color/white"/>
+    </RelativeLayout>
     <RelativeLayout
         android:id="@+id/accept"
-
+        android:visibility="gone"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
@@ -358,7 +366,6 @@
             android:layout_marginLeft="20dp"
             android:background="@drawable/logo"
             android:textColor="@color/white"/>
-    </RelativeLayout>
     </RelativeLayout>
 
 </RelativeLayout>

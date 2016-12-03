@@ -97,4 +97,7 @@ public class HttpRequest {
         });
 
     }
+
+    //下载图片
+
 }

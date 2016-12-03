@@ -1,5 +1,7 @@
 package cn.yumutech.weight;
 
+import android.graphics.Bitmap;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -28,6 +30,10 @@ public class SaveData {
         }
         return instance;
     }
+    /**
+     * 保存任务完成时的图片
+     */
+    public  List<Bitmap> mybt=new ArrayList<>();
     /**
      * 保存评论回复的被回复人ID
      */

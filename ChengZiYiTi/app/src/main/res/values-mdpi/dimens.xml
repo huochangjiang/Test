@@ -23,7 +23,7 @@
     <dimen name="EditText_pwd_height">35dp</dimen>
 
      <dimen name="gm_indctor">60dp</dimen>
-     <dimen name="guanggaowei">170dp</dimen>
+     <dimen name="guanggaowei">210dp</dimen>
       <dimen name="tupian_height">60dp</dimen>
                 <dimen name="tupian_width">80dp</dimen>
                 <dimen name="fangxiangtop">5dp</dimen>

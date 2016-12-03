@@ -10,6 +10,14 @@
        android:layout_width="match_parent"
        android:id="@+id/viewpager">
    </cn.yumutech.weight.PhonoViewPager>
+    <ImageView
+        android:id="@+id/baocun"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/music_zhankai"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"/>
     <TextView 
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"

@@ -54,6 +54,7 @@ public class InspectionTaskAdapter extends BaseAdapter{
             vh.deadline= (TextView) myView.findViewById(R.id.deadline);
             vh.tv_faburen= (TextView) myView.findViewById(R.id.tv_faburen);
             vh.tv_fabushijian= (TextView) myView.findViewById(R.id.tv_fabushijian);
+            vh.fenge=myView.findViewById(R.id.fenge);
             myView.setTag(vh);
         }else {
             vh= (ViewHolder) myView.getTag();
@@ -72,18 +73,23 @@ public class InspectionTaskAdapter extends BaseAdapter{
             String time=SaveData.getInstance().getStringDateShort(mData.get(position).task_finish_date);
             vh.date.setText(time);
         }
-
-        String time1=SaveData.getInstance().getStringDateShort(mData.get(position).task_publish_date);
+        if(position==mData.size()-1){
+            vh.fenge.setVisibility(View.GONE);
+        }else {
+            vh.fenge.setVisibility(View.VISIBLE);
+        }
+        String time1=SaveData.getInstance().getStringDateShort(mData.get(position).task_assign_date);
         vh.title.setText(mData.get(position).task_title);
         vh.content.setText(mData.get(position).task_content);
         vh.status.setText(mData.get(position).task_status_name);
 //        vh.date.setText(mData.get(position).task_end_date);
-        vh.tv_faburen.setText(mData.get(position).task_publish_user_name);
+        vh.tv_faburen.setText(mData.get(position).task_assigner_user_name);
         vh.tv_fabushijian.setText(time1);
         return myView;
     }
     public class ViewHolder{
         public TextView title,content,status,date;
         private TextView tv_faburen,tv_fabushijian,deadline;
+        private View fenge;
     }
 }

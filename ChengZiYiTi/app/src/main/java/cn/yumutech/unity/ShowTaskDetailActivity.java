@@ -58,7 +58,7 @@ public class ShowTaskDetailActivity extends BaseActivity{
     private GridView gridView;
     private RelativeLayout rl_wancheng;
     private LookResultAdapter lookAdapter;
-    private View fenge;
+    private View fenge,fengexian;
     public List<String> phones=new ArrayList<>();
 //
 //    private RelativeLayout rl_zhipai,rl_zhipai2;
@@ -92,7 +92,7 @@ public class ShowTaskDetailActivity extends BaseActivity{
         all= (RelativeLayout) findViewById(R.id.all);
         myprog.setVisibility(View.VISIBLE);
         all.setVisibility(View.GONE);
-
+        fengexian=findViewById(R.id.fengexian);
 
         //查看界面的相关布局初始化
         wancheng_title= (TextView) findViewById(R.id.wancheng_title);
@@ -244,6 +244,7 @@ public class ShowTaskDetailActivity extends BaseActivity{
                     zhuangtaishijian.setText("截止时间:");
                     String time1=SaveData.getInstance().getStringDateShort(showTaskDetail.data.task_end_date);
                     date.setText(time1);
+                    fengexian.setVisibility(View.GONE);
                     accept.setVisibility(View.VISIBLE);
                     complete.setVisibility(View.GONE);
                     rl_wancheng.setVisibility(View.GONE);
@@ -252,12 +253,14 @@ public class ShowTaskDetailActivity extends BaseActivity{
                     String time1=SaveData.getInstance().getStringDateShort(showTaskDetail.data.task_accept_date);
                     date.setText(time1);
                     accept.setVisibility(View.GONE);
+                    fengexian.setVisibility(View.GONE);
                     complete.setVisibility(View.VISIBLE);
                     rl_wancheng.setVisibility(View.GONE);
                 }else if(showTaskDetail.data.task_status_name.equals("已完成")){
                     zhuangtaishijian.setText("完成时间:");
                     String time1=SaveData.getInstance().getStringDateShort(showTaskDetail.data.task_finish_date);
                     date.setText(time1);
+                    fengexian.setVisibility(View.VISIBLE);
                     accept.setVisibility(View.GONE);
                     complete.setVisibility(View.GONE);
                     rl_wancheng.setVisibility(View.VISIBLE);
