@@ -17,6 +17,7 @@ import java.util.Locale;
 import cn.yumutech.bean.RequestParams2;
 import cn.yumutech.bean.UserInfoDetail;
 import cn.yumutech.netUtil.Api;
+import io.rong.imkit.IExtensionModule;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationFragment;
 import io.rong.imkit.userInfoCache.RongUserInfoManager;
@@ -50,6 +51,9 @@ public class ConversationActivity extends FragmentActivity implements RongIMClie
     private ImageView mTitle3;
     private String title;
     String token;
+    private IExtensionModule iExtensionModule;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +74,6 @@ public class ConversationActivity extends FragmentActivity implements RongIMClie
             } else {
             }
         }
-
         isReconnect(intent);
     }
 
