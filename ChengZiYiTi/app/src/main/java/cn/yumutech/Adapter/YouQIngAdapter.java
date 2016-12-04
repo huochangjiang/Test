@@ -54,6 +54,7 @@ public class YouQIngAdapter extends BaseAdapter{
             vh= (ViewHolder) view.getTag();
         }
         vh.tv.setText(mDatas.get(i).title);
+//        ImageLoader.getInstance().displayImage(mDatas.get(i).href,vh.iv);
         return view;
     }
 

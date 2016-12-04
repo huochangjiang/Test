@@ -52,6 +52,8 @@ public class DralayoutFragment extends BaseFragment {
     public boolean isAllPerson=false;
     private static DralayoutFragment fragment;
     private View wuquanxian;
+    //区分自己部门的人和所有部门的人
+
 
     protected void unsubscribe( Subscription subscription) {
         if (subscription != null && !subscription.isUnsubscribed()) {
@@ -84,6 +86,7 @@ public class DralayoutFragment extends BaseFragment {
     @Override
     protected void initViews(View contentView) {
         EventBus.getDefault().register(this);
+        SaveData.getInstance().isContactPermissions=true;
         wuquanxian=contentView.findViewById(R.id.wuquanxian);
         listView = (ListView) contentView.findViewById(R.id.listview);
         search= (EditText) contentView.findViewById(R.id.search);
@@ -147,7 +150,8 @@ public class DralayoutFragment extends BaseFragment {
     protected void initDatas() {
         if(App.getContext().getLogo("logo")!=null&&App.getContext().getLogo("logo").data!=null&&App.getContext().getLogo("logo").data.dept_id!=null) {
             RequestParams canshus = new RequestParams(new RequestParams.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
-                    new RequestParams.DataBean(App.getContext().getLogo("logo").data.dept_id));
+                    new RequestParams.DataBean("0"));
+            SaveData.getInstance().isContactPermissions=false;
             initDatas1(new Gson().toJson(canshus));
         }else {
             Toast.makeText(getActivity(),"您还未登陆",Toast.LENGTH_SHORT).show();
@@ -172,22 +176,27 @@ public class DralayoutFragment extends BaseFragment {
         @Override
         public void onNext(UserAboutPerson channels) {
             if(channels.status.code.equals("0")){
+
                 mAdapter.dataChange(channels.data);
                 mDatas=channels.data;
-                if(!isAllPerson) {
-                    App.getContext().mApbutPerson = channels.data;
-                    isAllPerson=true;
-                }
                 for (int i=0;i<channels.data.size();i++){
                     UserInfo info=new UserInfo(channels.data.get(i).id,channels.data.get(i).nickname, Uri.parse(channels.data.get(i).logo_path));
                     RongIM.getInstance().refreshUserInfoCache(info);
                 }
+
+                    for (int i=0;i<channels.data.size();i++){
+                        if(channels.data.get(i).id.equals(App.getContext().getLogo("logo").data.id)){
+                            channels.data.remove(i);
+                        }
+                }
+
             }
         }
     };
     //点击部门按键响应事件
     public void onEventMainThread(UserAboutPerson userAboutPerson){
         if(App.getContext().getLogo("logo")!=null&&App.getContext().getLogo("logo").data!=null&&SaveData.getInstance().Dept_Id!=null) {
+            SaveData.getInstance().isContactPermissions=true;
             RequestParams canshus = new RequestParams(new RequestParams.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
                     new RequestParams.DataBean(SaveData.getInstance().Dept_Id));
             initDatas1(new Gson().toJson(canshus));
@@ -199,8 +208,16 @@ public class DralayoutFragment extends BaseFragment {
     }
     //点击部门按键响应事件
     public void onEventMainThread(UserToken userToken){
-        wuquanxian.setVisibility(View.VISIBLE);
-        listView.setVisibility(View.GONE);
+        if(App.getContext().getLogo("logo")!=null&&App.getContext().getLogo("logo").data!=null&&SaveData.getInstance().Dept_Id!=null) {
+            SaveData.getInstance().isContactPermissions=false;
+            RequestParams canshus = new RequestParams(new RequestParams.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
+                    new RequestParams.DataBean(SaveData.getInstance().Dept_Id));
+            initDatas1(new Gson().toJson(canshus));
+            wuquanxian.setVisibility(View.GONE);
+            listView.setVisibility(View.VISIBLE);
+        }else {
+            Toast.makeText(getActivity(),"您还未登陆",Toast.LENGTH_SHORT).show();
+        }
     }
     @Override
     public void onDestroy() {

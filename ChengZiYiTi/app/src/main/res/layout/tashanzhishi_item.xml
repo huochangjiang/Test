@@ -9,8 +9,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="美国总统选举活动"
-        android:textSize="20dp"
-        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textColor="@color/small_title"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"/>
     <ImageView
@@ -78,6 +78,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="总体规划"
+        android:textColor="@color/item_title"
         android:layout_toRightOf="@+id/source"
         android:layout_alignTop="@+id/source"/>
     <RelativeLayout
@@ -86,12 +87,11 @@
         android:layout_alignTop="@+id/source"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-        <TextView
+        <ImageView
             android:id="@+id/browse"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="浏览"
-            android:textColor="@color/item_title"
+            android:layout_width="20dp"
+            android:layout_height="15dp"
+            android:src="@drawable/liulanshu"
             android:layout_centerVertical="true"/>
         <TextView
             android:id="@+id/browse_num"
@@ -103,14 +103,13 @@
             android:layout_centerVertical="true"
             android:textColor="@color/item_title"
             android:layout_toRightOf="@+id/browse"/>
-        <TextView
+        <ImageView
             android:id="@+id/comments"
             android:layout_toRightOf="@+id/browse_num"
             android:layout_marginLeft="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="评论"
-            android:textColor="@color/item_title"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/pinglunshu"
             android:layout_centerVertical="true" />
         <TextView
             android:id="@+id/comments_num"

@@ -2,12 +2,16 @@ package cn.yumutech.fragments;
 
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -33,20 +37,21 @@ import de.greenrobot.event.EventBus;
  * Created by Allen on 2016/11/25.
  */
 public class TaskCommuContactFragment extends BaseFragment {
-    private static CommuContactFragment fragment;
+    private static TaskCommuContactFragment fragment;
     private View contactView;
     private ListView expandableListView;
     private DrawerLayout drawerlayout;
     public String mDept_id;
     public String user_id;
     private boolean isHave;
+    private ActionBarDrawerToggle actionBarDrawerToggle;
 
     private List<GroupClass> mData=new ArrayList<>();
     private GroupsDatasAdapter mAdapter;
     private SimpleTreeAdapter adapter;
     private List<Bean> mDatas = new ArrayList<Bean>();
     private List<FileBean> mDatas2 = new ArrayList<FileBean>();
-
+    private ImageView iv_huadong,iv_huadong1;
 
     private EditText search;
 
@@ -56,9 +61,9 @@ public class TaskCommuContactFragment extends BaseFragment {
 
     }
 
-    public static CommuContactFragment newInstance() {
+    public static TaskCommuContactFragment newInstance() {
         if(fragment==null)
-            fragment = new CommuContactFragment();
+            fragment = new TaskCommuContactFragment();
 
         return fragment;
     }
@@ -72,6 +77,44 @@ public class TaskCommuContactFragment extends BaseFragment {
         }
         contactView = inflater.inflate(R.layout.fragment_commu_contact, container, false);
         drawerlayout= (DrawerLayout) contactView.findViewById(R.id.drawerlayout).findViewById(R.id.drawer);
+        iv_huadong= (ImageView) contactView.findViewById(R.id.drawerlayout).findViewById(R.id.iv_huadong);
+        iv_huadong1= (ImageView) contactView.findViewById(R.id.drawerlayout).findViewById(R.id.iv_huadong1);
+        iv_huadong.setVisibility(View.VISIBLE);
+        iv_huadong1.setVisibility(View.GONE);
+        iv_huadong.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                drawerlayout.openDrawer(Gravity.LEFT);
+                iv_huadong1.setImageResource(R.drawable.celanzhankai);
+                iv_huadong.setVisibility(View.GONE);
+                return false;
+            }
+        });
+//        iv_huadong.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                drawerlayout.openDrawer(Gravity.LEFT);
+//                iv_huadong1.setImageResource(R.drawable.celanzhankai);
+//                iv_huadong.setVisibility(View.GONE);
+//            }
+//        });
+        iv_huadong1.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                drawerlayout.closeDrawer(Gravity.LEFT);
+                iv_huadong.setImageResource(R.drawable.celanshouqi);
+                iv_huadong1.setVisibility(View.GONE);
+                return false;
+            }
+        });
+//        iv_huadong1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                drawerlayout.closeDrawer(Gravity.LEFT);
+//                iv_huadong.setImageResource(R.drawable.celanshouqi);
+//                iv_huadong1.setVisibility(View.GONE);
+//            }
+//        });
         search= (EditText) contactView.findViewById(R.id.search);
         return contactView;
     }
@@ -83,6 +126,7 @@ public class TaskCommuContactFragment extends BaseFragment {
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.fragment_layout, TaskDralayoutFragment.newInstance()).commitAllowingStateLoss();
         initDatas1();
+        TaskDralayoutFragment.newInstance().getDrablelayout(drawerlayout);
         try
         {
             adapter = new SimpleTreeAdapter<FileBean>(expandableListView, getActivity(), mDatas2, 10);
@@ -123,6 +167,7 @@ public class TaskCommuContactFragment extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 drawerlayout.closeDrawers();
+                isHave=false;
                 if(SaveData.getInstance().shuXingData!=null){
 
                     SaveData.getInstance().Dept_Id=SaveData.getInstance().shuXingData.get(i).dept_id;
@@ -142,8 +187,29 @@ public class TaskCommuContactFragment extends BaseFragment {
                 }
             }
         });
+       drawerlayout.setDrawerListener(new DrawerLayout.SimpleDrawerListener() {
+           @Override
+           public void onDrawerOpened(View drawerView) {
+               super.onDrawerOpened(drawerView);
+               iv_huadong1.setImageResource(R.drawable.celanzhankai);
+               iv_huadong1.setVisibility(View.VISIBLE);
+               iv_huadong.setVisibility(View.GONE);
+           }
 
-    }
+           @Override
+           public void onDrawerClosed(View drawerView) {
+               super.onDrawerClosed(drawerView);
+               iv_huadong.setImageResource(R.drawable.celanshouqi);
+               iv_huadong.setVisibility(View.VISIBLE);
+               iv_huadong1.setVisibility(View.GONE);
+           }
+
+           @Override
+           public void onDrawerStateChanged(int newState) {
+               super.onDrawerStateChanged(newState);
+           }
+       });
+}
 
     @Override
     protected void initDatas() {

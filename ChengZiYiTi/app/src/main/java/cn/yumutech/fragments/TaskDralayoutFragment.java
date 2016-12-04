@@ -1,14 +1,17 @@
 package cn.yumutech.fragments;
 
+import android.support.v4.widget.DrawerLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -55,6 +58,10 @@ public class TaskDralayoutFragment extends BaseFragment implements View.OnClickL
     public List<Poeple> detailToThis;
     private View myprog;
     private View wuquanxian;
+    private static TaskDralayoutFragment fragment;
+    private ImageView iv;
+//    private boolean isOpen;
+
 
     Subscription subscription;
     protected void unsubscribe( Subscription subscription) {
@@ -67,10 +74,11 @@ public class TaskDralayoutFragment extends BaseFragment implements View.OnClickL
     }
     // TODO: Rename and change types and number of parameters
     public static TaskDralayoutFragment newInstance() {
-        TaskDralayoutFragment fragment = new TaskDralayoutFragment();
+        if(fragment==null) {
+            fragment = new TaskDralayoutFragment();
+        }
         return fragment;
     }
-
 
     @Override
     protected View getContentView(LayoutInflater inflater, ViewGroup container) {
@@ -81,6 +89,7 @@ public class TaskDralayoutFragment extends BaseFragment implements View.OnClickL
     @Override
     protected void initViews(View contentView) {
         EventBus.getDefault().register(this);
+        SaveData.getInstance().isPermissions=true;
         rl_send= (RelativeLayout) contentView.findViewById(R.id.rl_send);
         myprog=contentView.findViewById(R.id.myprog);
         myprog.setVisibility(View.VISIBLE);
@@ -93,7 +102,19 @@ public class TaskDralayoutFragment extends BaseFragment implements View.OnClickL
         search= (EditText) contentView.findViewById(R.id.search);
         mAdapter = new TaskToWhoAdapter(mActivity,mDatas);
         listView.setAdapter(mAdapter);
+        iv= (ImageView) contentView.findViewById(R.id.iv_huadong);
+        iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                    drawerLayout.openDrawer(Gravity.LEFT);
+                  //  iv.setImageResource(R.drawable.celanzhankai);
+            }
+        });
+    }
+    DrawerLayout drawerLayout;
+    public void getDrablelayout(DrawerLayout ddd){
+        this.drawerLayout=ddd;
     }
     @Override
     protected void initListeners() {
@@ -149,6 +170,26 @@ public class TaskDralayoutFragment extends BaseFragment implements View.OnClickL
                 }
             }
         });
+//        drawerLayout.setDrawerListener(new DrawerLayout.SimpleDrawerListener() {
+//            @Override
+//            public void onDrawerOpened(View drawerView) {
+//                super.onDrawerOpened(drawerView);
+//                iv.setImageResource(R.drawable.celanzhankai);
+//
+//            }
+//
+//            @Override
+//            public void onDrawerClosed(View drawerView) {
+//                super.onDrawerClosed(drawerView);
+//                iv.setImageResource(R.drawable.celanshouqi);
+//
+//            }
+//
+//            @Override
+//            public void onDrawerStateChanged(int newState) {
+//                super.onDrawerStateChanged(newState);
+//            }
+//        });
     }
 
     @Override
@@ -184,7 +225,7 @@ public class TaskDralayoutFragment extends BaseFragment implements View.OnClickL
                 mDatas=channels.data;
                 mAdapter.dataChange(mDatas);
                 myprog.setVisibility(View.GONE);
-                App.getContext().mApbutPerson=channels.data;
+//                App.getContext().mApbutPerson=channels.data;
 //                for (int i=0;i<channels.data.size();i++){
 //                    UserInfo info=new UserInfo(channels.data.get(i).id,channels.data.get(i).nickname, Uri.parse(channels.data.get(i).logo_path));
 ////                    RongIM.getInstance().refreshUserInfoCache(info);
@@ -195,6 +236,7 @@ public class TaskDralayoutFragment extends BaseFragment implements View.OnClickL
     //点击部门按键响应事件
     public void onEventMainThread(UserAboutPerson userAboutPerson){
         if(App.getContext().getLogo("logo")!=null&&App.getContext().getLogo("logo").data!=null&& SaveData.getInstance().Dept_Id!=null) {
+            SaveData.getInstance().isPermissions=true;
             RequestParams canshus = new RequestParams(new RequestParams.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
                     new RequestParams.DataBean(SaveData.getInstance().Dept_Id));
             initDatas1(new Gson().toJson(canshus));
@@ -205,10 +247,18 @@ public class TaskDralayoutFragment extends BaseFragment implements View.OnClickL
         }
 
     }
-    //点击部门按键响应事件
+    //点击部门按键响应事件无权限时
     public void onEventMainThread(UserToken userToken){
-        wuquanxian.setVisibility(View.VISIBLE);
-        listView.setVisibility(View.GONE);
+        if(App.getContext().getLogo("logo")!=null&&App.getContext().getLogo("logo").data!=null&& SaveData.getInstance().Dept_Id!=null) {
+            SaveData.getInstance().isPermissions=false;
+            RequestParams canshus = new RequestParams(new RequestParams.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
+                    new RequestParams.DataBean(SaveData.getInstance().Dept_Id));
+            initDatas1(new Gson().toJson(canshus));
+            wuquanxian.setVisibility(View.GONE);
+            listView.setVisibility(View.VISIBLE);
+        }else {
+            Toast.makeText(getActivity(),"您还未登陆",Toast.LENGTH_SHORT).show();
+        }
     }
     @Override
     public void onDestroy() {

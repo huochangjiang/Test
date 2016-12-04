@@ -19,7 +19,7 @@
                 android:scaleType="centerInside"
                 android:layout_height="match_parent"
                 android:layout_centerVertical="true"
-                android:src="@drawable/de_title_back" />
+                android:src="@drawable/gimi_back" />
 
 
             <TextView
@@ -34,7 +34,7 @@
 
             <ImageView
                 android:id="@+id/img3"
-                android:src="@drawable/iv_shoudong"
+                android:src="@drawable/qunxiangqing"
                 android:layout_width="50dp"
                 android:scaleType="centerInside"
                 android:layout_height="match_parent"

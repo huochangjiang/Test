@@ -60,5 +60,10 @@ public class ShowMyTask {
         public String task_publish_user_name;
         public String task_publish_date;
 
+        public String task_assigner_user_id;
+        public String task_assigner_user_name;
+        public String task_assigner_user_mobile;
+        public String task_assign_date;
+
     }
 }

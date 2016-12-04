@@ -221,35 +221,19 @@ if(App.getContext().getLogo("logo")!=null)
         @Override
         public void onError(Throwable e) {
             MissDilog();
-
+            unsubscribe(subscription1);
             e.printStackTrace();
         }
 
         @Override
         public void onNext(UserLogin userLogin) {
-            MissDilog();
+
             if(userLogin!=null&&userLogin.status.code.equals("0")){
                 String a=new Gson().toJson(userLogin);
-                Log.e("info",a);
                 mLogin=userLogin;
-                UserInfo userInfo=new UserInfo(userLogin.data.id,userLogin.data.nickname,
-                        Uri.parse(userLogin.data.logo_path));
-                RongIM.getInstance().refreshUserInfoCache(userInfo);
+                mHandler.sendEmptyMessage(10);
 
-                DeviceTokenUpLoad mUpLoad=new DeviceTokenUpLoad(new DeviceTokenUpLoad.UserBean(userLogin.data.id,"1222234"),new DeviceTokenUpLoad.DataBean("Android",App.getContext().mDeviceToken));
-                UserGetToken.getInstance(LogoActivity.this).getUpLoadToken(new Gson().toJson(mUpLoad));
 
-                connectRongYun(mLogin.data.token);
-                SharedPreferences.Editor edit = DemoContext.getInstance().getSharedPreferences().edit();
-                edit.putString("DEMO_TOKEN", mLogin.data.token);
-                edit.apply();
-              //  getToken(mLogin);
-                if(userLogin.status.code.equals("0")){
-                    String logoData=new Gson().toJson(userLogin);
-                    app.saveLogo("logo",logoData);
-                    //正常登录
-                    getContact.getInstance().getData();
-                }
         }else if(userLogin!=null&&userLogin.status.code.equals("-6")){
                 //手机号不存在
                 Toast.makeText(LogoActivity.this,userLogin.status.message,Toast.LENGTH_SHORT).show();
@@ -339,6 +323,30 @@ if(App.getContext().getLogo("logo")!=null)
                         tv.setText("获取验证码");
                     }
                     break;
+                case 10:
+                    UserInfo userInfo=new UserInfo(mLogin.data.id,mLogin.data.nickname,
+                            Uri.parse(mLogin.data.logo_path));
+                    RongIM.getInstance().refreshUserInfoCache(userInfo);
+
+                    DeviceTokenUpLoad mUpLoad=new DeviceTokenUpLoad(new DeviceTokenUpLoad.UserBean(mLogin.data.id,"1222234"),new DeviceTokenUpLoad.DataBean("Android",App.getContext().mDeviceToken));
+                    UserGetToken.getInstance(LogoActivity.this).getUpLoadToken(new Gson().toJson(mUpLoad));
+
+                    connectRongYun(mLogin.data.token);
+                    SharedPreferences.Editor edit = DemoContext.getInstance().getSharedPreferences().edit();
+                    edit.putString("DEMO_TOKEN", mLogin.data.token);
+                    edit.apply();
+                    //  getToken(mLogin);
+                    if(mLogin.status.code.equals("0")){
+                        String logoData=new Gson().toJson(mLogin);
+                        app.saveLogo("logo",logoData);
+                        //正常登录
+                        getContact.getInstance().getData();
+                    }
+                    MissDilog();
+                    Intent intent=new Intent(LogoActivity.this,MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                    break;
             }
         }
     };
@@ -349,7 +357,6 @@ if(App.getContext().getLogo("logo")!=null)
     }
 
     public static boolean isMobileNO(String mobiles){
-
 
         Pattern p = Pattern.compile("^((13[0-9])|(14[0-9])|(15[^4,\\D])|(18[0,5-9])|(17[0-9]))\\d{8}$");
 
@@ -379,7 +386,7 @@ if(App.getContext().getLogo("logo")!=null)
 //                    intent.putExtra("name",mLogin.data.nickname);
 //                    intent.putExtra("logo",mLogin.data.logo_path);
 //                    startActivity(intent);
-                   finish();
+
 //            Log.e("info",s+"---");
 //                if(RongIM.getInstance()!=null){
 //                    RongIM.getInstance().startPrivateChat(LogoActivity.this, "4", "title");

@@ -32,9 +32,10 @@
         android:layout_height="wrap_content">
         <ImageView
             android:id="@+id/newgroup"
-            android:layout_width="80dp"
+            android:layout_width="90dp"
             android:layout_height="80dp"
-            android:src="@drawable/iv_shoudong"/>
+            android:scaleType="centerInside"
+            android:src="@drawable/xinjianqunzu"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -58,9 +59,10 @@
             android:layout_height="wrap_content">
             <ImageView
                 android:id="@+id/tashan"
-                android:layout_width="80dp"
+                android:layout_width="90dp"
                 android:layout_height="80dp"
-                android:src="@drawable/touxiao"/>
+                android:scaleType="centerInside"
+                android:src="@drawable/tashanzhishi"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

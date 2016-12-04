@@ -16,6 +16,7 @@ import java.util.Map;
 import cn.yumutech.bean.UserAboutPerson;
 import cn.yumutech.bean.UserBean;
 import cn.yumutech.unity.R;
+import cn.yumutech.weight.SaveData;
 import cn.yumutech.weight.Yuanxing;
 
 /**
@@ -72,8 +73,16 @@ public class TaskToWhoAdapter extends BaseAdapter{
         }
         ImageLoader.getInstance().displayImage(mData.get(position).logo_path,vh.touxiang);
         vh.employees.setText(mData.get(position).nickname);
-        vh.tv_phone.setText(mData.get(position).mobile);
-        if(mData.get(index).type == UserBean.TYPE_CHECKED){
+        //如果没权限直接把可以选和部门影藏
+        if(SaveData.getInstance().isPermissions){
+            vh.tv_phone.setVisibility(View.VISIBLE);
+            vh.selecte.setVisibility(View.VISIBLE);
+            vh.tv_phone.setText(mData.get(position).mobile);
+        }else {
+            vh.tv_phone.setVisibility(View.GONE);
+            vh.selecte.setVisibility(View.GONE);
+        }
+        if(mData.get(index).type == UserBean.TYPE_CHECKED&&SaveData.getInstance().isPermissions){
             vh.selecte.setImageResource(R.drawable.story_selector);
         }else{
             vh.selecte.setImageResource(R.drawable.story_wei);
@@ -85,7 +94,7 @@ public class TaskToWhoAdapter extends BaseAdapter{
             public void onClick(View v) {
                 if(mData.get(index).type==UserBean.TYPE_CHECKED){
                     mData.get(index).type=UserBean.TYPE_NOCHECKED;
-                    if(ids!=null){
+                    if(ids!=null&&SaveData.getInstance().isPermissions){
                         if(maps!=null&&maps.size()>0) {
                             vh.selecte.setImageResource(R.drawable.story_wei);
                             maps.remove(index);
@@ -97,7 +106,7 @@ public class TaskToWhoAdapter extends BaseAdapter{
                     }
                 }else{
                     mData.get(index).type=UserBean.TYPE_CHECKED;
-                    if(ids!=null){
+                    if(ids!=null&&SaveData.getInstance().isPermissions){
                         vh.selecte.setImageResource(R.drawable.story_selector);
                         maps.put(index,mData.get(index));
                         mapsbeen.put(index,mData.get(index));

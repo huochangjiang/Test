@@ -78,5 +78,12 @@
             android:textColor="@color/white"
             android:layout_centerInParent="true"/>
     </RelativeLayout>
-
+    <ImageView
+        android:layout_width="50dp"
+        android:src="@drawable/celanshouqi"
+        android:layout_centerVertical="true"
+        android:id="@+id/iv_huadong"
+        android:scaleType="fitStart"
+        android:visibility="gone"
+        android:layout_height="50dp" />
 </RelativeLayout>

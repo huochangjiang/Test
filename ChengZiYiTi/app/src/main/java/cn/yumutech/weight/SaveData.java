@@ -1,12 +1,18 @@
 package cn.yumutech.weight;
 
+import android.graphics.Bitmap;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import cn.yumutech.bean.GroupClass;
 import cn.yumutech.bean.Poeple;
 import cn.yumutech.bean.ShowTaskDetail;
+import cn.yumutech.bean.UpdateUserPhoto;
 import cn.yumutech.bean.UserAboutPerson;
 
 /**
@@ -24,6 +30,10 @@ public class SaveData {
         }
         return instance;
     }
+    /**
+     * 保存任务完成时的图片
+     */
+    public  List<Bitmap> mybt=new ArrayList<>();
     /**
      * 保存评论回复的被回复人ID
      */
@@ -52,8 +62,32 @@ public class SaveData {
 //    public List<List<ChindClass>> chindDatas;
     //查看完成任务时的信息
     public ShowTaskDetail showTaskComplete;
+    /**
+     * 获取现在时间
+     *
+     * @return 返回短时间字符串格式yyyy-MM-dd
+     */
+    public static String getStringDateShort(String data) {
+//        String dtStart = "2010-10-15T09:27:37Z";
+        String datetime = null;
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date date1 = formatter.parse(data);
+            System.out.println(date1);
 
+            datetime = formatter.format(date1);
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+//        String dateString = formatter.format(data);
+        return datetime;
+    }
 
+    //点击部门是否有权限。、指派那儿
+    public boolean isPermissions=true;
+    //联系人那儿点击部门是否有权限
+    public boolean isContactPermissions=true;
     /**
      * 指派人哪儿的数据
      */
@@ -65,4 +99,6 @@ public class SaveData {
     public  List<GroupClass> shuXingData=new ArrayList<>();
     //保存是不是详情页接受键点击后返回的
     public Boolean isJieshou=false;
+    //暂时保存用户更换头像信息
+    public UpdateUserPhoto updataPhone;
 }

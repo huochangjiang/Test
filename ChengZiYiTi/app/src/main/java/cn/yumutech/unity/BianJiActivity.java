@@ -79,12 +79,13 @@ public class BianJiActivity extends BaseActivity {
         mXiuGai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SignOutDilog1 mDlogOutDilog1=new SignOutDilog1(BianJiActivity.this,"讨论组名称");
+                SignOutDilog1 mDlogOutDilog1=new SignOutDilog1(BianJiActivity.this,mChannels.data.groupName);
                 mDlogOutDilog1.show();
                 mDlogOutDilog1.setOnLisener(new SignOutDilog1.onListern1() {
                     @Override
                     public void send(String name) {
                         tv.setText(name);
+                        title.setText(name);
                         showDilog("修改中...");
                         ShuaXinQunXinXi xinxibean=new ShuaXinQunXinXi(new ShuaXinQunXinXi.UserBean(App.getContext().getLogo("logo").data.id,"1343434"),new ShuaXinQunXinXi.DataBean(targid,name));
                         initDatas5(new Gson().toJson(xinxibean));
@@ -295,6 +296,7 @@ public class BianJiActivity extends BaseActivity {
             if(channels.status.code.equals("0")){
                 Group group=new Group(channels.data.groupId,channels.data.groupName, Uri.parse(channels.data.create_user_logo_path));
                 RongIM.getInstance().refreshGroupInfoCache(group);
+                DemoContext.getInstance().title=channels.data.groupName;
                 Toast.makeText(BianJiActivity.this, "修改成功", Toast.LENGTH_SHORT).show();
             }
 

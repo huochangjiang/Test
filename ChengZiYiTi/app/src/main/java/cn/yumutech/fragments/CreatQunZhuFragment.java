@@ -1,8 +1,10 @@
 package cn.yumutech.fragments;
 
 import android.net.Uri;
+import android.support.v4.widget.DrawerLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -61,7 +64,10 @@ public class CreatQunZhuFragment extends BaseFragment {
     private static CreatQunZhuFragment fragment;
     private View view;
     private QunMenmberSelectorActivity qunMenmberSelectorActivity;
-
+    private boolean isFisrst=true;
+    private ImageView iv_huadong;
+    private List<UserAboutPerson.DataBean> saveUser=new ArrayList<>();
+    private List<UserAboutPerson.DataBean> currentList=new ArrayList<>();
     public CreatQunZhuFragment() {
         // Required empty public constructor
     }
@@ -87,8 +93,13 @@ public class CreatQunZhuFragment extends BaseFragment {
     }
     public List<UserAboutPerson.DataBean> searchData=new ArrayList<>();
 
+    DrawerLayout drawerLayout;
+    public void getDrablelayout(DrawerLayout ddd){
+        this.drawerLayout=ddd;
+    }
     @Override
     protected void initViews(View contentView) {
+        saveUser.clear();
         EventBus.getDefault().register(this);
         for (int k=0;k<App.getContext().mApbutPerson.size();k++){
             UserAboutPerson.DataBean bean=App.getContext().mApbutPerson.get(k);
@@ -99,12 +110,19 @@ public class CreatQunZhuFragment extends BaseFragment {
         editText = (MyEditText) contentView.findViewById(R.id.et);
         button = (Button) contentView.findViewById(R.id.denglu);
         listView = (ListView) contentView.findViewById(R.id.listview);
-        mAdapter = new MyMenmberAdapter(App.getContext().mApbutPerson, getActivity());
+        mAdapter = new MyMenmberAdapter(saveUser, getActivity(),isXianshi);
         listView.setAdapter(mAdapter);
+        iv_huadong= (ImageView) contentView.findViewById(R.id.iv_huadong);
+        iv_huadong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.openDrawer(Gravity.LEFT);
+            }
+        });
         if(qunMenmberSelectorActivity.type.equals("create")){
-        button.setText("创建讨论组");
+        button.setText("新建讨论组");
         }else{
-            button.setText("邀请");
+            button.setText("添加成员");
         }
         editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
@@ -132,7 +150,7 @@ public class CreatQunZhuFragment extends BaseFragment {
             @Override
             public void afterTextChanged(Editable s) {
                 if(editText.getText().toString().trim().length()==0){
-                    mAdapter.dataChange(App.getContext().mApbutPerson);
+                    mAdapter.dataChange(currentList,isXianshi);
                 }
             }
         });
@@ -143,12 +161,12 @@ public class CreatQunZhuFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 sb = new StringBuffer();
-                for (int i = 0; i < App.getContext().mApbutPerson.size(); i++) {
-                    if (App.getContext().mApbutPerson.get(i).getType() == 1) {
-                        if (i == App.getContext().mApbutPerson.size() - 1) {
-                            sb.append(App.getContext().mApbutPerson.get(i).id);
+                for (int i = 0; i < saveUser.size(); i++) {
+                    if (saveUser.get(i).getType() == 1) {
+                        if (i == saveUser.size() - 1) {
+                            sb.append(saveUser.get(i).id);
                         } else {
-                            sb.append(App.getContext().mApbutPerson.get(i).id + ",");
+                            sb.append(saveUser.get(i).id + ",");
                         }
                     }
                 }
@@ -180,14 +198,15 @@ public class CreatQunZhuFragment extends BaseFragment {
      * 联系人查查找
      * @param data
      */
+    private boolean isXianshi=true;
     private void getmDataSub(String data){
-        if(App.getContext().mApbutPerson!=null) {
-            for (int i = 0; i < App.getContext().mApbutPerson.size(); i++) {
-                if (App.getContext().mApbutPerson.get(i).nickname.contains(data) || App.getContext().mApbutPerson.get(i).mobile.contains(data)) {
-                    searchData.add(App.getContext().mApbutPerson.get(i));
+        if(currentList!=null) {
+            for (int i = 0; i < currentList.size(); i++) {
+                if (currentList.get(i).nickname.contains(data) || currentList.get(i).mobile.contains(data)) {
+                    searchData.add(currentList.get(i));
                 }
             }
-            mAdapter.dataChange(searchData);
+            mAdapter.dataChange(searchData,isXianshi);
         }
     }
     List<String> iids = new ArrayList<>();
@@ -218,6 +237,15 @@ public class CreatQunZhuFragment extends BaseFragment {
 
     @Override
     protected void initDatas() {
+
+        if(App.getContext().getLogo("logo")!=null&&App.getContext().getLogo("logo").data!=null&&App.getContext().getLogo("logo").data.dept_id!=null) {
+            RequestParams canshus = new RequestParams(new RequestParams.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
+                    new RequestParams.DataBean(App.getContext().getLogo("logo").data.dept_id));
+            initDatas1(new Gson().toJson(canshus));
+        }else {
+            Toast.makeText(getActivity(),"您还未登陆",Toast.LENGTH_SHORT).show();
+        }
+
         mAdapter.setLisener(new MyMenmberAdapter.getIds() {
             @Override
             public void getMenmberIds(Map<Integer, UserAboutPerson.DataBean> beans) {
@@ -242,38 +270,33 @@ public class CreatQunZhuFragment extends BaseFragment {
         EventBus.getDefault().unregister(this);
     }
 
+    private List<UserAboutPerson.DataBean> data;
 //创建临时的需要刷新的集合
     public List<UserAboutPerson.DataBean> linshiPersons=new ArrayList<>();
     public void onEventMainThread(BaiBao userAboutPerson){
         linshiPersons.clear();
-        if(App.getContext().getLogo("logo")!=null&&App.getContext().getLogo("logo").data!=null&& SaveData.getInstance().createDetpt_id!=null) {
-            for (int i=0;i<App.getContext().mApbutPerson.size();i++){
-                if(App.getContext().mApbutPerson.get(i).dept_id.equals(SaveData.getInstance().createDetpt_id)){
-                    linshiPersons.add(App.getContext().mApbutPerson.get(i));
-                }
-            }
-            mAdapter.dataChange(linshiPersons);
-//            RequestParams canshus = new RequestParams(new RequestParams.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
-//                    new RequestParams.DataBean(SaveData.getInstance().createDetpt_id));
-//            initDatas1(new Gson().toJson(canshus));
-        }else {
-            Toast.makeText(getActivity(),"您还未登陆",Toast.LENGTH_SHORT).show();
+        //SaveData.getInstance().createDetpt_id;
+        if(userAboutPerson.getId()==0) {
+            isXianshi=true;
+        }else{
+            isXianshi=false;
         }
+
+        RequestParams canshus = new RequestParams(new RequestParams.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
+                new RequestParams.DataBean(SaveData.getInstance().createDetpt_id));
+        initDatas1(new Gson().toJson(canshus));
     }
-
+    //判断是增加还是移除
     public void onEventMainThread(UserAboutPerson.DataBean userAboutPerson){
-        for (int i=0;i<App.getContext().mApbutPerson.size();i++){
-            if(userAboutPerson.id.equals(App.getContext().mApbutPerson.get(i).id)){
-                if(userAboutPerson.isCance){
-                    App.getContext().mApbutPerson.get(i).type=0;
-                }else{
-                    App.getContext().mApbutPerson.get(i).type=1;
+        if(userAboutPerson.type==0){
+        for (int i = 0; i< saveUser.size(); i++){
+            if(userAboutPerson.id.equals(saveUser.get(i).id)){
+                saveUser.remove(i);
                 }
             }
+        }else{
+            saveUser.add(userAboutPerson);
         }
-
-
-
 
     }
 
@@ -295,6 +318,7 @@ public class CreatQunZhuFragment extends BaseFragment {
             MissDilog();
             if(channels.status.code.equals("0")){
                 Group group=new Group(channels.data.groupId,channels.data.groupName, Uri.parse(channels.data.create_user_logo_path));
+
                 RongIM.getInstance().refreshGroupInfoCache(group);
                 RongIM.getInstance().startGroupChat(getActivity(), channels.data.groupId, channels.data.groupName);
                 getActivity().finish();
@@ -306,6 +330,7 @@ public class CreatQunZhuFragment extends BaseFragment {
 
 
     private void initDatas1( String canshu){
+        //获取用户相关列表
         subscription5 = Api.getMangoApi1().getUserAboutPerson(canshu)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -325,8 +350,31 @@ public class CreatQunZhuFragment extends BaseFragment {
         @Override
         public void onNext(UserAboutPerson channels) {
             if(channels.status.code.equals("0")){
-                mAdapter.dataChange(channels.data);
+                linshiPersons.clear();
+                if(qunMenmberSelectorActivity.type!=null&&qunMenmberSelectorActivity.type.equals("join")) {
+                    for (int m = 0; m < channels.data.size(); m++) {
+                        for (int n = 0; n < App.getContext().qunMember.size(); n++) {
+                            if (channels.data.get(m).id.equals(App.getContext().qunMember.get(n).userId)) {
+                                channels.data.remove(m);
+                            }
+                        }
+                    }
+                }
+                if(isFisrst) {
+                    mAdapter.dataChange(channels.data, true);
+                    isFisrst=false;
+                }else{
+                    for (int i=0;i<saveUser.size();i++){
+                        for (int j=0;j<channels.data.size();j++){
+                            if(saveUser.get(i).id.equals(channels.data.get(j).id)){
+                                channels.data.get(j).type=1;
+                            }
+                        }
+                    }
+                    mAdapter.dataChange(channels.data,isXianshi);
 
+                }
+                currentList=channels.data;
             }
         }
     };
@@ -362,4 +410,5 @@ public class CreatQunZhuFragment extends BaseFragment {
 
         }
     };
+
 }

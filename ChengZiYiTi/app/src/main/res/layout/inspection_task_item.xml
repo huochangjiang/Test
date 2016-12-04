@@ -14,13 +14,20 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
         />
+    <View
+        android:id="@+id/iv_xian"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/title"
+        android:layout_marginTop="5dp"
+        android:background="@color/jiangese"/>
     <TextView
         android:id="@+id/content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="一格一格一格一格一格一格一格一格一格一格一格一格一格一格一
         格一格一格一格一格一格一格一格一格一格一格一格一格"
-        android:layout_below="@+id/title"
+        android:layout_below="@+id/iv_xian"
         android:textSize="15sp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
@@ -38,7 +45,7 @@
             android:textSize="15sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="发布人:"/>
+            android:text="指派人:"/>
         <TextView
             android:id="@+id/tv_faburen"
             android:layout_toRightOf="@+id/faburen"
@@ -60,7 +67,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15sp"
-            android:text="发布时间:"/>
+            android:text="指派时间:"/>
     </RelativeLayout>
     <TextView
         android:id="@+id/status"
@@ -96,4 +103,11 @@
         android:layout_toRightOf="@+id/deadline"
         android:textColor="@color/juse"/>
     </RelativeLayout>
+    <View
+        android:id="@+id/fenge"
+        android:layout_below="@+id/status"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/jiangese"/>
 </RelativeLayout>

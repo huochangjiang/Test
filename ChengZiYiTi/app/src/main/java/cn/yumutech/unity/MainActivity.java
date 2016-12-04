@@ -35,7 +35,6 @@ import cn.yumutech.netUtil.DeviceUtils;
 import cn.yumutech.netUtil.FileUtils;
 import cn.yumutech.netUtil.MD5Util;
 import cn.yumutech.netUtil.ToosUtil;
-import de.greenrobot.event.EventBus;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Group;
@@ -68,7 +67,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,R
 
     @Override
     protected void initViews(Bundle savedInstanceState) {
-        EventBus.getDefault().register(this);
+//        EventBus.getDefault().register(this);
         app= App.getContext();
         savePath=getDir("update", 0).getAbsolutePath();
         apkFilePath= savePath + File.separator   + "cz.apk";
@@ -126,10 +125,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,R
 
     }
 
-    public void onEventMainThread(Update userAboutPerson){
-        Log.e("info","gengxingle ");
-        showUpdateDialog(userAboutPerson);
-    }
+//    public void onEventMainThread(Update userAboutPerson){
+//        Log.e("info","gengxingle ");
+//        showUpdateDialog(userAboutPerson);
+//    }
 
     @Override
     public void onClick(View v) {
@@ -183,7 +182,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,R
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
+//        EventBus.getDefault().unregister(this);
             FileUtils.deleteFolderFile(savePath, false);
     }
 

@@ -12,6 +12,7 @@ public class DemoContext {
     private static DemoContext mDemoContext;
     public Context mContext;
     private SharedPreferences mPreferences;
+    public String title;
 
     public static DemoContext getInstance() {
 

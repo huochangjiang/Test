@@ -33,10 +33,15 @@ import java.util.Set;
 
 import cn.yumutech.bean.ChaXunQunMenmber;
 import cn.yumutech.bean.DepartListNew;
+import cn.yumutech.bean.UpdateUserPhoto;
 import cn.yumutech.bean.UserAboutPerson;
 import cn.yumutech.bean.UserLogin;
+import cn.yumutech.netUtil.MyExtensionModule;
 import cn.yumutech.weight.ACache;
 import cn.yumutech.weight.StringUtils1;
+import io.rong.imkit.DefaultExtensionModule;
+import io.rong.imkit.IExtensionModule;
+import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
 
 
@@ -85,6 +90,20 @@ public class App extends MultiDexApplication{
         }
         initImageLoader();
         PushAgent mPushAgent = PushAgent.getInstance(this);
+        mPushAgent.register(new IUmengRegisterCallback() {
+
+            @Override
+            public void onSuccess(String deviceToken) {
+                //注册成功会返回device token
+                Log.e("deviceToken",deviceToken);
+                mDeviceToken=deviceToken;
+            }
+
+            @Override
+            public void onFailure(String s, String s1) {
+
+            }
+        });
         mPushAgent.setNotificationPlaySound(MsgConstant.NOTIFICATION_PLAY_SDK_ENABLE);
 
 
@@ -100,7 +119,7 @@ public class App extends MultiDexApplication{
                 if(msg.custom!=null){
                     Intent intent=new Intent(getApplicationContext(),LeaderActivitysActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    getApplicationContext().startActivity(intent);
+                  startActivity(intent);
 
                 }
             }
@@ -110,24 +129,13 @@ public class App extends MultiDexApplication{
         //CustomNotificationHandler notificationClickHandler = new CustomNotificationHandler();
         mPushAgent.setNotificationClickHandler(notificationClickHandler);
 
-        mPushAgent.register(new IUmengRegisterCallback() {
 
-            @Override
-            public void onSuccess(String deviceToken) {
-                //注册成功会返回device token
-                Log.e("deviceToken",deviceToken);
-                mDeviceToken=deviceToken;
-            }
-
-            @Override
-            public void onFailure(String s, String s1) {
-
-            }
-        });
     }
     private void initConnect(){
 
     }
+
+
     private void initImageLoader() {
         // DisplayImageOptions options = new DisplayImageOptions.Builder()
         // .showImageOnLoading(R.drawable.icon_default)
@@ -170,6 +178,18 @@ public class App extends MultiDexApplication{
         }else {
             Gson gson = new Gson();
             UserLogin user = gson.fromJson(readJson, UserLogin.class);
+            return user;
+        }
+    }
+    //保存跟新头像后的data
+    public UpdateUserPhoto getUpdateUserPhoto(String key){
+        String readJson =aCache.getAsString(key);
+        if(StringUtils1.isEmpty(readJson))
+        {
+            return null;
+        }else {
+            Gson gson = new Gson();
+            UpdateUserPhoto user = gson.fromJson(readJson, UpdateUserPhoto.class);
             return user;
         }
     }

@@ -255,7 +255,7 @@ public class getContact {
                  if(mData!=null&&mData.size()>0){
                      postion=mData.size();
                  }
-                 otherHandler.sendEmptyMessageDelayed(10,1000);
+                 otherHandler.sendEmptyMessageDelayed(10,500);
 //                 otherHandler.sendEmptyMessage(10);
              }
          }).start();
@@ -302,7 +302,9 @@ public class getContact {
         @Override
         public void onNext(UserAboutPerson channels) {
             if(channels.status.code.equals("0")){
-                chengyuanData.addAll(channels.data);
+                if(i!=1){
+                    chengyuanData.addAll(channels.data);
+                }
                 if(i<postion){
                     isOver=false;
                     Log.e("cishu","来的第"+i+""+"次"+"部门个数"+mData.size()+"");
@@ -314,9 +316,10 @@ public class getContact {
                 }
                 if(isOver){
                     Log.e("jiashuju",chengyuanData.size()+"");
-                    SaveData.getInstance().allEmployees.addAll(removeDuplicate(chengyuanData));
-                    for (int i=0;i<SaveData.getInstance().allEmployees.size();i++){
-                        Log.e("chengyuan","第"+i+"个员工"+SaveData.getInstance().allEmployees.get(i).nickname);
+//                    SaveData.getInstance().allEmployees.addAll(removeDuplicate(chengyuanData));
+                    App.getContext().mApbutPerson=chengyuanData;
+                    for (int i=0;i< App.getContext().mApbutPerson.size();i++){
+                        Log.e("chengyuan","第"+i+"个员工"+App.getContext().mApbutPerson.get(i).dept_id);
                     }
 
 //                    adapter.dataChange(removeDuplicate(chengyuanData));

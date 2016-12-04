@@ -12,8 +12,6 @@ import org.apache.http.Header;
 import java.io.File;
 
 import cn.yumutech.bean.Update;
-import cn.yumutech.unity.App;
-import cn.yumutech.unity.UserGetToken;
 import de.greenrobot.event.EventBus;
 import rx.Observer;
 import rx.Subscription;
@@ -36,7 +34,7 @@ public class UpdateManager {
 
 	private static Gson gson;
 
-	private Update mUpdate;
+	public Update mUpdate;
 
 	public String savePath = "";
 	private String apkFilePath = "";
@@ -65,17 +63,20 @@ public class UpdateManager {
 	 * @param savepath
 	 *            保存地址
 	 */
-	private void Download(String download, String savepath) {
+	public void Download(String download, String savepath) {
 		httpClient.get(download, new FileAsyncHttpResponseHandler(new File(savepath)) {
 			@Override
 			public void onSuccess(int arg0, Header[] arg1, File arg2) {
 				// 下载成功之后提示用户升级
+				mHandler.sendEmptyMessage(2);
 				EventBus.getDefault().post(mUpdate);
+
 			}
 			@Override
 			public void onFailure(int arg0, Header[] arg1, Throwable arg2, File arg3) {
 				// 下载失败的情况下，清除apk文件
-				FileUtils.deleteFolderFile(UserGetToken.getInstance(mContext).path, false);
+//				FileUtils.deleteFolderFile(UserGetToken.getInstance(mContext).path, false);
+				mHandler.sendEmptyMessage(3);
 			}
 		});
 	}
@@ -151,7 +152,7 @@ Handler mHandler;
 				if (mCurrentVesionCode < Integer.valueOf(mUpdate.data.bh)) {
 					mUpdate=channels;
 					mHandler.sendEmptyMessage(1);
-					Download(channels.data.url, App.getContext().downLoadPath);
+//					Download(channels.data.url, App.getContext().downLoadPath);
 				}else{
 					mHandler.sendEmptyMessage(0);
 				}
