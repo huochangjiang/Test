@@ -27,7 +27,8 @@
         android:visibility="gone"
         android:textColor="@color/colorPrimaryDark"
         android:layout_toRightOf="@+id/admin"
-        android:layout_alignTop="@+id/admin"
+        android:layout_alignBottom="@+id/admin"
+
         android:textSize="16sp"/>
     <TextView
         android:id="@+id/unity"
@@ -36,7 +37,7 @@
         android:text="unity"
         android:textColor="@color/black"
         android:layout_toRightOf="@+id/reply"
-        android:layout_alignTop="@+id/reply"/>
+        android:layout_alignBottom="@+id/reply" />
     <TextView
         android:id="@+id/details"
         android:layout_width="wrap_content"

@@ -70,14 +70,29 @@ public class MyFaBuDeAdapter extends BaseAdapter{
             vh.deadline.setText("截止时间:");
             String time= SaveData.getInstance().getStringDateShort(mData.get(position).task_end_date);
             vh.date.setText(time);
+            if(time.isEmpty()){
+                vh.deadline.setVisibility(View.GONE);
+            }else {
+                vh.deadline.setVisibility(View.VISIBLE);
+            }
         }else if(mData.get(position).task_status_name.equals("已接受")){
             vh.deadline.setText("接受时间:");
             String time= SaveData.getInstance().getStringDateShort(mData.get(position).task_accept_date);
             vh.date.setText(time);
+            if(time.isEmpty()){
+                vh.deadline.setVisibility(View.GONE);
+            }else {
+                vh.deadline.setVisibility(View.VISIBLE);
+            }
         }else if(mData.get(position).task_status_name.equals("已完成")){
             vh.deadline.setText("完成时间:");
             String time= SaveData.getInstance().getStringDateShort(mData.get(position).task_finish_date);
             vh.date.setText(time);
+            if(time.isEmpty()){
+                vh.deadline.setVisibility(View.GONE);
+            }else {
+                vh.deadline.setVisibility(View.VISIBLE);
+            }
         }
         if(position==mData.size()-1){
             vh.fenge.setVisibility(View.GONE);
@@ -92,6 +107,11 @@ public class MyFaBuDeAdapter extends BaseAdapter{
         maps.put(position,mData.get(position));
         vh.tv_faburen.setText( getMemberIds(maps));
         vh.tv_fabushijian.setText(time1);
+        if(time1.isEmpty()){
+            vh.tv_fabushijian.setVisibility(View.GONE);
+        }else {
+            vh.tv_fabushijian.setVisibility(View.VISIBLE);
+        }
         return myView;
     }
     public class ViewHolder{

@@ -38,6 +38,7 @@ public class SaveData {
      * 保存评论回复的被回复人ID
      */
     public String receiver_User_ID;
+    public String receiver_User_Name;
     /**
      * 保存联系人的部门id
      */
