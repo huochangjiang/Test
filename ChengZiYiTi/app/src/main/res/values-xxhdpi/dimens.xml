@@ -36,7 +36,7 @@
     	
              <dimen name="gm_indctor">90dp</dimen>
              
-              <dimen name="guanggaowei">228dp</dimen>
+              <dimen name="guanggaowei">208dp</dimen>
               
                 <dimen name="tupian_height">80dp</dimen>
                 <dimen name="tupian_width">110dp</dimen>

@@ -250,7 +250,10 @@ public class TaskDralayoutFragment extends BaseFragment implements View.OnClickL
     //点击部门按键响应事件无权限时
     public void onEventMainThread(UserToken userToken){
         if(App.getContext().getLogo("logo")!=null&&App.getContext().getLogo("logo").data!=null&& SaveData.getInstance().Dept_Id!=null) {
-            SaveData.getInstance().isPermissions=false;
+            //这里本来是没得权限得勒，为false就不能指派比自己部门高的人，就没得圆圈可以选择。但测试那个傻逼非要说不管有没得权限全部都要显示
+            //所有就改为true，出了问题锤子我要管，哈麻批一个
+//            SaveData.getInstance().isPermissions=false;
+            SaveData.getInstance().isPermissions=true;
             RequestParams canshus = new RequestParams(new RequestParams.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
                     new RequestParams.DataBean(SaveData.getInstance().Dept_Id));
             initDatas1(new Gson().toJson(canshus));
