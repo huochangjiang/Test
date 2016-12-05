@@ -230,6 +230,7 @@ public class App extends MultiDexApplication{
      */
     public void cleanLogoInformation() {
         aCache.remove("logo");
+        aCache.remove("upLogo");
     }
 
 

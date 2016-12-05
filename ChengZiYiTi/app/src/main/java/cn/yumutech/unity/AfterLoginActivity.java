@@ -47,6 +47,8 @@ import cn.yumutech.weight.SaveData;
 import cn.yumutech.weight.SignOutDilog;
 import cn.yumutech.weight.TiShiDilog;
 import de.greenrobot.event.EventBus;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.UserInfo;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -202,6 +204,9 @@ public class AfterLoginActivity extends BaseActivity implements View.OnClickList
                     if(App.getContext().getUpdateUserPhoto("upLogo")!=null){
                         Toast.makeText(AfterLoginActivity.this, App.getContext().getUpdateUserPhoto("upLogo").status.message,Toast.LENGTH_SHORT).show();
                         if(App.getContext().getUpdateUserPhoto("upLogo")!=null) {
+                            UserInfo userInfo=new UserInfo(App.getContext().getUpdateUserPhoto("upLogo").data.id,App.getContext().getUpdateUserPhoto("upLogo").data.nickname,
+                                    Uri.parse(App.getContext().getUpdateUserPhoto("upLogo").data.logo_path));
+                            RongIM.getInstance().refreshUserInfoCache(userInfo);
                             ImageLoader.getInstance().displayImage(App.getContext().getUpdateUserPhoto("upLogo").data.logo_path, touxiang);
                         }
                     }
