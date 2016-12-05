@@ -144,6 +144,8 @@ public class TaShanCommentsActivity extends BaseActivity  implements PullToRefre
             public void onClick(View v) {
                 if(edit.getText().toString()!=null&&edit.getText().toString().length()!=0){
                     addPinglun(receive_id);
+                }else {
+                    Toast.makeText(TaShanCommentsActivity.this,"请输入评论内容",Toast.LENGTH_SHORT).show();
                 }
             }
         });
