@@ -60,6 +60,7 @@ public class TaShanCommentsActivity extends BaseActivity  implements PullToRefre
     private PullToRefreshScrollView pullToRefresh;
     private String type;
     private String receive_id="";
+    private String receive_name="";
     @Override
     protected int getLayoutId() {
         return R.layout.activity_tashan_comments;
@@ -118,7 +119,8 @@ public class TaShanCommentsActivity extends BaseActivity  implements PullToRefre
     //评论回复按键响应事件
     public void onEventMainThread(ExchangeCommenList exchangeCommenList){
         receive_id= SaveData.getInstance().receiver_User_ID;
-        mHandler.sendEmptyMessage(2);
+        receive_name=SaveData.getInstance().receiver_User_Name;
+        mHandler.sendEmptyMessage(3);
 
     }
     @Override
@@ -142,6 +144,8 @@ public class TaShanCommentsActivity extends BaseActivity  implements PullToRefre
             public void onClick(View v) {
                 if(edit.getText().toString()!=null&&edit.getText().toString().length()!=0){
                     addPinglun(receive_id);
+                }else {
+                    Toast.makeText(TaShanCommentsActivity.this,"请输入评论内容",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -290,11 +294,25 @@ public class TaShanCommentsActivity extends BaseActivity  implements PullToRefre
                     edit.requestFocus();
                     edit.findFocus();
                     edit.setText("");
-
+                    edit.setHint("输入回复内容");
                     //弹出软键盘
                     InputMethodManager inputManager =
                             (InputMethodManager)button.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                     inputManager.toggleSoftInput(0,InputMethodManager.SHOW_FORCED);
+                    break;
+                case 3:
+                    button.setVisibility(View.GONE);
+                    shurukuang.setVisibility(View.VISIBLE);
+                    comments_list.setFocusable(false);
+                    edit.setFocusable(true);
+                    edit.requestFocus();
+                    edit.findFocus();
+                    edit.setText("");
+                    edit.setHint("回复"+receive_name+":");
+                    //弹出软键盘
+                    InputMethodManager inputManager1 =
+                            (InputMethodManager)button.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputManager1.toggleSoftInput(0,InputMethodManager.SHOW_FORCED);
                     break;
             }
         }

@@ -87,7 +87,7 @@
         android:background="@color/white"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="40dp">
+        android:layout_height="43dp">
         <cn.yumutech.weight.MyEditText
             android:imeOptions="actionSearch"
             android:inputType="text"
@@ -104,11 +104,11 @@
             android:background="@drawable/edittext_frame"
             android:layout_toLeftOf="@+id/send"
             android:layout_marginRight="10dp"
-            android:hint="请输入内容" />
+            android:hint="输入评论内容" />
         <TextView
             android:id="@+id/send"
             android:layout_width="60dp"
-            android:layout_height="30dp"
+            android:layout_height="33dp"
             android:layout_marginRight="10dp"
             android:gravity="center"
             android:background="@drawable/logo"

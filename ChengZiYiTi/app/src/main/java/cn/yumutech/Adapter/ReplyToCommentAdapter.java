@@ -82,10 +82,11 @@ public class ReplyToCommentAdapter extends BaseAdapter{
 //        if(position==mData.size()-1){
 //            vh.xian.setVisibility(View.GONE);
 //        }
-        vh.rl_reply.setOnClickListener(new View.OnClickListener() {
+        myView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 SaveData.getInstance().receiver_User_ID=mData.get(position).publish_user_id;
+                SaveData.getInstance().receiver_User_Name=mData.get(position).publish_user_name;
                 EventBus.getDefault().post(new ExchangeCommenList());
 //                vh.shurukuang.setVisibility(View.VISIBLE);
 //                //弹出软键盘
