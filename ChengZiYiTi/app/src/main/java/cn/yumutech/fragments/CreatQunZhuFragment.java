@@ -41,7 +41,12 @@ import cn.yumutech.weight.SaveData;
 import cn.yumutech.weight.SignOutDilog1;
 import de.greenrobot.event.EventBus;
 import io.rong.imkit.RongIM;
+import io.rong.imlib.IRongCallback;
+import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Group;
+import io.rong.imlib.model.Message;
+import io.rong.message.TextMessage;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -124,6 +129,10 @@ public class CreatQunZhuFragment extends BaseFragment {
         }else{
             button.setText("添加成员");
         }
+
+
+
+
         editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
             @Override
@@ -317,11 +326,35 @@ public class CreatQunZhuFragment extends BaseFragment {
         public void onNext(CreateQunZu channels) {
             MissDilog();
             if(channels.status.code.equals("0")){
+
+
+                TextMessage myTextMessage = TextMessage.obtain(channels.data.create_user_name+"创建了讨论组");
+
+                Message myMessage = Message.obtain(channels.data.groupId,Conversation.ConversationType.GROUP , myTextMessage);
+
+
+                RongIM.getInstance().sendMessage(myMessage, null, null, new IRongCallback.ISendMessageCallback() {
+                    @Override
+                    public void onAttached(Message message) {
+                        //消息本地数据库存储成功的回调
+                    }
+
+                    @Override
+                    public void onSuccess(Message message) {
+                        //消息通过网络发送成功的回调
+                    }
+
+                    @Override
+                    public void onError(Message message, RongIMClient.ErrorCode errorCode) {
+                        //消息发送失败的回调
+                    }
+                });
                 Group group=new Group(channels.data.groupId,channels.data.groupName, Uri.parse(channels.data.create_user_logo_path));
 
                 RongIM.getInstance().refreshGroupInfoCache(group);
                 RongIM.getInstance().startGroupChat(getActivity(), channels.data.groupId, channels.data.groupName);
                 getActivity().finish();
+
             }
 
         }

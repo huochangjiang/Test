@@ -177,8 +177,5 @@ public class CommunicationActivity extends BaseActivity implements View.OnClickL
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mConversationListFragment.onDestroy();
-        mConversationListFragment=null;
-
-    }
+ }
 }

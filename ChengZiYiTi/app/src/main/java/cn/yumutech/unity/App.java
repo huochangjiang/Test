@@ -43,6 +43,7 @@ import io.rong.imkit.DefaultExtensionModule;
 import io.rong.imkit.IExtensionModule;
 import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
+import io.rong.push.RongPushClient;
 
 
 /**
@@ -83,7 +84,11 @@ public class App extends MultiDexApplication{
             /**
              * IMKit SDK调用第一步 初始化
              */
+            RongPushClient.registerHWPush(this);
+            RongPushClient.registerMiPush(this, "2882303761517528959", "5821752892959");
             RongIM.init(this);
+            setMyExtensionModule();
+
             if (getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext()))) {
                 DemoContext.init(this);
             }
@@ -134,7 +139,22 @@ public class App extends MultiDexApplication{
     private void initConnect(){
 
     }
-
+    public void setMyExtensionModule() {
+        List<IExtensionModule> moduleList = RongExtensionManager.getInstance().getExtensionModules();
+        IExtensionModule defaultModule = null;
+        if (moduleList != null) {
+            for (IExtensionModule module : moduleList) {
+                if (module instanceof DefaultExtensionModule) {
+                    defaultModule = module;
+                    break;
+                }
+            }
+            if (defaultModule != null) {
+                RongExtensionManager.getInstance().unregisterExtensionModule(defaultModule);
+                RongExtensionManager.getInstance().registerExtensionModule(new MyExtensionModule());
+            }
+        }
+    }
 
     private void initImageLoader() {
         // DisplayImageOptions options = new DisplayImageOptions.Builder()
