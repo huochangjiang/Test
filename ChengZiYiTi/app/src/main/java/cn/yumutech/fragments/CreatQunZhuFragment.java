@@ -172,7 +172,7 @@ public class CreatQunZhuFragment extends BaseFragment {
                 }
                         if(qunMenmberSelectorActivity.type.equals("create")) {
 
-                            SignOutDilog1 mDlogOutDilog1=new SignOutDilog1(getActivity(),"讨论组名称");
+                            SignOutDilog1 mDlogOutDilog1=new SignOutDilog1(getActivity(),"讨论组名字");
                             mDlogOutDilog1.show();
                             mDlogOutDilog1.setOnLisener(new SignOutDilog1.onListern1() {
                                 @Override

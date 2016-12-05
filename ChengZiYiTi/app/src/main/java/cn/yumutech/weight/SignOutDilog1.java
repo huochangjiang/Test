@@ -9,6 +9,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import cn.yumutech.unity.R;
 
@@ -42,10 +43,15 @@ public class SignOutDilog1 implements  OnClickListener{
 	private void initView(View view,String message) {
 		Button queren = (Button) view.findViewById(R.id.queren);
 		Button quxiao = (Button) view.findViewById(R.id.quxiao);
-		et = (EditText) view.findViewById(R.id.et);
-		et.setText(message);
 		tishi = (TextView) view.findViewById(R.id.tishi);
-		tishi.setText("修改讨论组名字");
+		et = (EditText) view.findViewById(R.id.et);
+		if(message.equals("讨论组名字")){
+			et.setHint("请输入");
+			tishi.setText(message);
+		}else{
+			et.setText(message);
+			tishi.setText("修改讨论组名字");
+		}
 		queren.setOnClickListener(this);
 		quxiao.setOnClickListener(this);
 		
@@ -86,12 +92,13 @@ public class SignOutDilog1 implements  OnClickListener{
 		
 		switch (v.getId()) {
 		case R.id.queren:
-
+if(et.getText().toString().trim()==null||et.getText().toString().trim().equals("")){
+	Toast.makeText(mContext, "请输入讨论组名字", Toast.LENGTH_SHORT).show();
+	return;
+}
 				if(onlistern!=null)
 				onlistern.send(et.getText().toString().trim());
 				dismiss();
-
-			
 			break;
 		case R.id.quxiao:
 			dismiss();
