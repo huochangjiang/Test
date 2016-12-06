@@ -127,7 +127,7 @@
             android:textColor="@color/juse"
             android:layout_alignTop="@+id/date"
             android:layout_marginRight="5dp"
-            android:text="接受时间:"/>
+            android:text="截止时间:"/>
         <TextView
             android:id="@+id/date"
             android:layout_width="wrap_content"
@@ -278,6 +278,16 @@
                 android:textColor="@color/juse"
                 android:layout_toRightOf="@+id/wanchenzhe"
                 android:layout_alignTop="@+id/wanchenzhe"/>
+            <TextView
+                android:id="@+id/zhuangtaishijian1"
+                android:layout_toLeftOf="@+id/complete_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="@color/juse"
+                android:layout_alignTop="@+id/complete_time"
+                android:layout_marginRight="5dp"
+                android:text="接受时间:"/>
             <TextView
                 android:id="@+id/complete_time"
                 android:layout_width="wrap_content"

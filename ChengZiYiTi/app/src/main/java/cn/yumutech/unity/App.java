@@ -85,7 +85,7 @@ public class App extends MultiDexApplication{
              * IMKit SDK调用第一步 初始化
              */
             RongPushClient.registerHWPush(this);
-            RongPushClient.registerMiPush(this, "2882303761517528959", "5821752892959");
+//            RongPushClient.registerMiPush(this, "2882303761517528959", "5821752892959");
             RongIM.init(this);
             setMyExtensionModule();
 
