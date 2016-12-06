@@ -319,7 +319,8 @@ public class ShowTaskDetailActivity extends BaseActivity{
         }
         if( data!=null){
             name.setText(data.data.task_finish_user_name);
-            String time1=SaveData.getInstance().getStringDateShort(data.data.task_finish_date);
+//            String time1=SaveData.getInstance().getStringDateShort(data.data.task_finish_date);
+            String time1=data.data.task_finish_date;
             complete_time.setText(time1);
             wancheng_neirong.setText(data.data.task_comment.taskcomment_content);
             lookAdapter.dataChange(data);
