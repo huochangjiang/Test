@@ -75,13 +75,13 @@ public class HomeFragment extends BaseFragment {
         ll_dian = (LinearLayout) contentView.findViewById(R.id.ll_dian);
         scrollView = (ScrollView) contentView.findViewById(R.id.scrollview);
         myGridView = (MyGridView) contentView.findViewById(R.id.gridView);
-        baibaos.add(new BaiBao("领导活动", R.drawable.lingdaohuodong));
+        baibaos.add(new BaiBao("时政新闻", R.drawable.lingdaohuodong));
         baibaos.add(new BaiBao("政策文件", R.drawable.zhengciwenjian));
         baibaos.add(new BaiBao("工作动态", R.drawable.gongzuozhuangtai));
-        baibaos.add(new BaiBao("项目工作", R.drawable.xiangmugongzuo));
+        baibaos.add(new BaiBao("重点项目", R.drawable.xiangmugongzuo));
 
         baibaos.add(new BaiBao("督查督办", R.drawable.duchaduban));
-        baibaos.add(new BaiBao("互动交流", R.drawable.hudongjiaoliu));
+        baibaos.add(new BaiBao("热点话题", R.drawable.hudongjiaoliu));
         baibaos.add(new BaiBao("友情链接", R.drawable.lianjie));
         BaiBaoAdatper baiBaoAdatper=new BaiBaoAdatper(getActivity(), (ArrayList<BaiBao>) baibaos);
         myGridView.setAdapter(baiBaoAdatper);

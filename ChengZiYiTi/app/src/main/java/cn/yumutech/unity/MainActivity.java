@@ -307,7 +307,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,R
             Toast.makeText(MainActivity.this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
             mHandler.sendEmptyMessageDelayed(EXIT, 2000);
         } else {
-            finish();
+//            finish();
+            exit();
         }
     }
     @Override

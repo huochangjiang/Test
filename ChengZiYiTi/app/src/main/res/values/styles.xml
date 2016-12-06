@@ -65,7 +65,7 @@
     </style>
     <!-- 1、消除应用启动闪黑屏 -->
     <style name="Theme.splash" parent="@style/Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowBackground">@drawable/launch</item>
+        <item name="android:windowBackground">@drawable/huanyingye</item>
         <item name="colorPrimary">@color/color_bule</item>
         <item name="colorPrimaryDark">@color/color_bule</item>
         <item name="colorAccent">@color/color_bule</item>

@@ -76,11 +76,9 @@ public class TaskToWhoAdapter extends BaseAdapter{
         //如果没权限直接把可以选和部门影藏
         if(SaveData.getInstance().isPermissions){
             vh.tv_phone.setVisibility(View.VISIBLE);
-            vh.selecte.setVisibility(View.VISIBLE);
             vh.tv_phone.setText(mData.get(position).mobile);
         }else {
             vh.tv_phone.setVisibility(View.GONE);
-            vh.selecte.setVisibility(View.GONE);
         }
         if(mData.get(index).type == UserBean.TYPE_CHECKED&&SaveData.getInstance().isPermissions){
             vh.selecte.setImageResource(R.drawable.story_selector);
