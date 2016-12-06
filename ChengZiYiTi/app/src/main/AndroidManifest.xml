@@ -86,14 +86,18 @@
         <activity android:name=".ProjectMangerActivity" />
         <activity android:name=".FriendsUrlActivity" />
         <activity android:name=".FriendDetasActivity" />
-        <activity android:name=".LogoActivity"
+        <activity android:name=".SplashActivity"
             android:launchMode="singleTask"
             android:theme="@style/Theme.splash">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
+        <activity android:name=".LogoActivity"
+            >
+
             </activity>
         <activity android:name=".RegistActivity" />
         <activity android:name=".HuDongJIaoLIuActivity" />
