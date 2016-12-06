@@ -59,6 +59,8 @@ public class ShowTaskDetailActivity extends BaseActivity{
     private RelativeLayout rl_wancheng;
     private LookResultAdapter lookAdapter;
     private View fenge,fengexian;
+    private TextView zhuangtaishijian1;
+    private TextView wanchenzhe;
     public List<String> phones=new ArrayList<>();
 //
 //    private RelativeLayout rl_zhipai,rl_zhipai2;
@@ -71,6 +73,7 @@ public class ShowTaskDetailActivity extends BaseActivity{
     @Override
     protected void initViews(Bundle savedInstanceState) {
         initExtra();
+        wanchenzhe= (TextView) findViewById(R.id.wanchenzhe);
         title= (TextView) findViewById(R.id.title);
         status= (TextView) findViewById(R.id.status);
         date= (TextView) findViewById(R.id.date);
@@ -93,7 +96,7 @@ public class ShowTaskDetailActivity extends BaseActivity{
         myprog.setVisibility(View.VISIBLE);
         all.setVisibility(View.GONE);
         fengexian=findViewById(R.id.fengexian);
-
+        zhuangtaishijian1= (TextView) findViewById(R.id.zhuangtaishijian1);
         //查看界面的相关布局初始化
         wancheng_title= (TextView) findViewById(R.id.wancheng_title);
         name= (TextView) findViewById(R.id.name);
@@ -243,23 +246,25 @@ public class ShowTaskDetailActivity extends BaseActivity{
                 if(showTaskDetail.data.task_status_name.equals("待接受")){
                     zhuangtaishijian.setText("截止时间:");
                     String time1=SaveData.getInstance().getStringDateShort(showTaskDetail.data.task_end_date);
+//                    String time1=showTaskDetail.data.task_end_date;
                     date.setText(time1);
                     fengexian.setVisibility(View.GONE);
                     accept.setVisibility(View.VISIBLE);
                     complete.setVisibility(View.GONE);
                     rl_wancheng.setVisibility(View.GONE);
                 }else if(showTaskDetail.data.task_status_name.equals("已接受")){
-                    zhuangtaishijian.setText("接受时间:");
-                    String time1=SaveData.getInstance().getStringDateShort(showTaskDetail.data.task_accept_date);
-                    date.setText(time1);
+//                    zhuangtaishijian.setText("接受时间:");
+//                    String time1=SaveData.getInstance().getStringDateShort(showTaskDetail.data.task_accept_date);
+//                    date.setText(time1);
                     accept.setVisibility(View.GONE);
                     fengexian.setVisibility(View.GONE);
                     complete.setVisibility(View.VISIBLE);
                     rl_wancheng.setVisibility(View.GONE);
+                    jieshou(mData);
                 }else if(showTaskDetail.data.task_status_name.equals("已完成")){
-                    zhuangtaishijian.setText("完成时间:");
-                    String time1=SaveData.getInstance().getStringDateShort(showTaskDetail.data.task_finish_date);
-                    date.setText(time1);
+//                    zhuangtaishijian.setText("完成时间:");
+//                    String time1=SaveData.getInstance().getStringDateShort(showTaskDetail.data.task_finish_date);
+//                    date.setText(time1);
                     fengexian.setVisibility(View.VISIBLE);
                     accept.setVisibility(View.GONE);
                     complete.setVisibility(View.GONE);
@@ -277,7 +282,8 @@ public class ShowTaskDetailActivity extends BaseActivity{
       status.setText(data.data.task_status_name);
 
       neirong.setText(data.data.task_content);
-      String time=SaveData.getInstance().getStringDateShort(data.data.task_publish_date);
+      String time=data.data.task_publish_date;
+//      String time=SaveData.getInstance().getStringDateShort(data.data.task_publish_date);
       tv_fabushijian.setText(time);
       tv_faburen.setText(data.data.task_publish_user_name);
       if(data.data.assign!=null&&data.data.assign.size()>0){
@@ -302,8 +308,12 @@ public class ShowTaskDetailActivity extends BaseActivity{
             initData1(new Gson().toJson(been));
         }
     }
+    //查看详情
     private void lookResult(ShowTaskDetail data){
         lookAdapter.dataChange(data);
+        wancheng_title.setText("任务已完成");
+        zhuangtaishijian1.setText("完成时间:");
+        wanchenzhe.setText("完成者:");
         for (int i=0;i<mData.data.task_comment.photos.size();i++){
             phones.add(mData.data.task_comment.photos.get(i).photo_path);
         }
@@ -320,6 +330,26 @@ public class ShowTaskDetailActivity extends BaseActivity{
             }else {
                 fenge.setVisibility(View.GONE);
             }
+        }
+    }
+    //任务已经jieshou
+    private  void  jieshou(ShowTaskDetail data){
+        if( data!=null){
+            zhuangtaishijian1.setText("接受时间:");
+            wancheng_title.setText("任务已接收");
+            wanchenzhe.setText("接受者:");
+            name.setText(data.data.task_accept_user_name);
+            String time1=data.data.task_accept_date;
+            complete_time.setText(time1);
+//            wancheng_neirong.setText(data.data.task_comment.taskcomment_content);
+//            lookAdapter.dataChange(data);
+//            if(data.data.task_comment!=null&&
+//                    data.data.task_comment.photos!=null&&
+//                    data.data.task_comment.photos.size()>0){
+//                fenge.setVisibility(View.VISIBLE);
+//            }else {
+                fenge.setVisibility(View.GONE);
+//            }
         }
     }
 }

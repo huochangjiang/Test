@@ -59,7 +59,7 @@ public class InspectionTaskAdapter extends BaseAdapter{
         }else {
             vh= (ViewHolder) myView.getTag();
         }
-        if(mData.get(position).task_status_name.equals("待接受")){
+//        if(mData.get(position).task_status_name.equals("待接受")){
             vh.deadline.setText("截止时间:");
             String time=SaveData.getInstance().getStringDateShort(mData.get(position).task_end_date);
 //            vh.date.setText(mData.get(position).task_end_date);
@@ -69,31 +69,33 @@ public class InspectionTaskAdapter extends BaseAdapter{
             }else {
                 vh.deadline.setVisibility(View.VISIBLE);
             }
-        }else if(mData.get(position).task_status_name.equals("已接受")){
-            vh.deadline.setText("接受时间:");
-            String time=SaveData.getInstance().getStringDateShort(mData.get(position).task_accept_date);
-            vh.date.setText(time);
-            if(time.isEmpty()){
-                vh.deadline.setVisibility(View.GONE);
-            }else {
-                vh.deadline.setVisibility(View.VISIBLE);
-            }
-        }else if(mData.get(position).task_status_name.equals("已完成")){
-            vh.deadline.setText("完成时间:");
-            String time=SaveData.getInstance().getStringDateShort(mData.get(position).task_finish_date);
-            vh.date.setText(time);
-            if(time.isEmpty()){
-                vh.deadline.setVisibility(View.GONE);
-            }else {
-                vh.deadline.setVisibility(View.VISIBLE);
-            }
-        }
+//        }else if(mData.get(position).task_status_name.equals("已接受")){
+//            vh.deadline.setText("接受时间:");
+//            String time=SaveData.getInstance().getStringDateShort(mData.get(position).task_accept_date);
+//            vh.date.setText(time);
+//            if(time.isEmpty()){
+//                vh.deadline.setVisibility(View.GONE);
+//            }else {
+//                vh.deadline.setVisibility(View.VISIBLE);
+//            }
+//        }else if(mData.get(position).task_status_name.equals("已完成")){
+//            vh.deadline.setText("完成时间:");
+//            String time=SaveData.getInstance().getStringDateShort(mData.get(position).task_finish_date);
+//            vh.date.setText(time);
+//            if(time.isEmpty()){
+//                vh.deadline.setVisibility(View.GONE);
+//            }else {
+//                vh.deadline.setVisibility(View.VISIBLE);
+//            }
+//        }
         if(position==mData.size()-1){
             vh.fenge.setVisibility(View.GONE);
         }else {
             vh.fenge.setVisibility(View.VISIBLE);
         }
-        String time1=SaveData.getInstance().getStringDateShort(mData.get(position).task_assign_date);
+        //这一句是去点时分秒操作
+//        String time1=SaveData.getInstance().getStringDateShort(mData.get(position).task_assign_date);
+        String time1=mData.get(position).task_assign_date;
         vh.title.setText(mData.get(position).task_title);
         vh.content.setText(mData.get(position).task_content);
         vh.status.setText(mData.get(position).task_status_name);
