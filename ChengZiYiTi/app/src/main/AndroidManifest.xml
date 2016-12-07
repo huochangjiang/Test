@@ -54,11 +54,17 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE">
 
     </uses-permission>
-    <!-- ⼩米 配置开始 < -->
+    <!--&lt;!&ndash; ⼩米 配置开始 < &ndash;&gt;-->
+<!--<<<<<<< HEAD-->
     <!--<permission-->
         <!--android:name="cn.yumutech.unity.permission.MIPUSH_RECEIVE"-->
         <!--android:protectionLevel="signature" />-->
-    <!--<uses-permission android:name="cn.rongcloud.im.permission.MIPUSH_RECEIVE" />-->
+<!--=======-->
+    <!--&lt;!&ndash;<permission&ndash;&gt;-->
+        <!--&lt;!&ndash;android:name="cn.yumutech.unity.permission.MIPUSH_RECEIVE"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:protectionLevel="signature" />&ndash;&gt;-->
+    <!--&lt;!&ndash;<uses-permission android:name="cn.rongcloud.im.permission.MIPUSH_RECEIVE" />&ndash;&gt;-->
+<!--&gt;>>>>>> d9a0e53d5c2f31880df6bcb0f3bef04a35b1e40d-->
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -67,7 +73,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity"
-            android:launchMode="singleTask">
+            >
 
         </activity>
         <activity android:name=".CommunicationActivity" />
@@ -77,7 +83,10 @@
             android:name=".TaShanCommentsActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".ReplyToCommentActivity" />
-        <activity android:name=".AfterLoginActivity" />
+        <activity android:name=".AfterLoginActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden|keyboard|"
+            android:screenOrientation="portrait"
+            />
         <activity android:name=".LeaderActivitysActivity" />
         <activity android:name=".LeadersDetaislActivity" />
         <activity android:name=".PolicyFileActivity" />
@@ -87,7 +96,7 @@
         <activity android:name=".FriendsUrlActivity" />
         <activity android:name=".FriendDetasActivity" />
         <activity android:name=".SplashActivity"
-            android:launchMode="singleTask"
+
             android:theme="@style/Theme.splash">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
