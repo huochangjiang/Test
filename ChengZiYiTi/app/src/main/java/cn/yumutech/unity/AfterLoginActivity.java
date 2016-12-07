@@ -138,18 +138,26 @@ public class AfterLoginActivity extends BaseActivity implements View.OnClickList
         unlogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                app.cleanLogoInformation();
-                SaveData.getInstance().taskToChildGroups.clear();
+
+                SignOutDilog msinDilog=new SignOutDilog(AfterLoginActivity.this,"确认退出？");
+                msinDilog.show();
+                msinDilog.setOnLisener(new SignOutDilog.onListern() {
+                    @Override
+                    public void send() {
+                        app.cleanLogoInformation();
+                        SaveData.getInstance().taskToChildGroups.clear();
 //                if(SaveData.getInstance().chindDatas!=null){
 //                    SaveData.getInstance().chindDatas.clear();
 //                }
-                if(App.getContext().getContactGroup("Contact")!=null){
-                    App.getContext().cleanContactGroup();
-                }
-                Intent intent=new Intent(AfterLoginActivity.this,LogoActivity.class);
-                startActivity(intent);
+                        if(App.getContext().getContactGroup("Contact")!=null){
+                            App.getContext().cleanContactGroup();
+                        }
+                        Intent intent=new Intent(AfterLoginActivity.this,SplashActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
 
-                finish();
 //                if(RongIM.getInstance()!=null){
 //                    RongIM.getInstance().startPrivateChat(AfterLoginActivity.this, "4", "title");
 //

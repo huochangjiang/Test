@@ -152,18 +152,15 @@ if(App.getContext().getLogo("logo")!=null)
                 }
                 if(TextUtils.isEmpty(phone.getText().toString().trim())){
                     Toast.makeText(LogoActivity.this, "请输入电话号码", Toast.LENGTH_SHORT).show();
+                    MissDilog();
                     return ;
                 }
                 if(!(phone.getText().toString().trim().length()==11)){
                     Toast.makeText(LogoActivity.this, "请输入正确的电话号码", Toast.LENGTH_SHORT).show();
+                    MissDilog();
                     return;
                 }
-                if(!checkPhone(phone.getText().toString().trim())){
-                    if(!isMobileNO(phone.getText().toString().trim())) {
-                        Toast.makeText(LogoActivity.this, "请输入正确的电话号码", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                }
+
 //                Intent intent=new Intent(LogoActivity.this,RegistActivity.class);
 //                startActivity(intent);
                 break;
@@ -185,6 +182,7 @@ if(App.getContext().getLogo("logo")!=null)
         }
         if(TextUtils.isEmpty(password.getText().toString().trim())){
             Toast.makeText(LogoActivity.this, "请输入验证码", Toast.LENGTH_SHORT).show();
+
             return ;
         }
         if(!(password.getText().toString().trim().length()==4)){

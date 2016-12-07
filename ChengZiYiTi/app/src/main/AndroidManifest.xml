@@ -73,7 +73,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity"
-            android:launchMode="singleTask">
+            >
 
         </activity>
         <activity android:name=".CommunicationActivity" />
@@ -96,7 +96,7 @@
         <activity android:name=".FriendsUrlActivity" />
         <activity android:name=".FriendDetasActivity" />
         <activity android:name=".SplashActivity"
-            android:launchMode="singleTask"
+
             android:theme="@style/Theme.splash">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />

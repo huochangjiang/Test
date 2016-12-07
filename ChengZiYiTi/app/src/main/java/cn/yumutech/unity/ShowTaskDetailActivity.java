@@ -321,6 +321,7 @@ public class ShowTaskDetailActivity extends BaseActivity{
             name.setText(data.data.task_finish_user_name);
 //            String time1=SaveData.getInstance().getStringDateShort(data.data.task_finish_date);
             String time1=data.data.task_finish_date;
+            wancheng_neirong.setVisibility(View.VISIBLE);
             complete_time.setText(time1);
             wancheng_neirong.setText(data.data.task_comment.taskcomment_content);
             lookAdapter.dataChange(data);
@@ -337,11 +338,12 @@ public class ShowTaskDetailActivity extends BaseActivity{
     private  void  jieshou(ShowTaskDetail data){
         if( data!=null){
             zhuangtaishijian1.setText("接受时间:");
-            wancheng_title.setText("任务已接收");
+            wancheng_title.setText("任务已接受");
             wanchenzhe.setText("接受者:");
             name.setText(data.data.task_accept_user_name);
             String time1=data.data.task_accept_date;
             complete_time.setText(time1);
+            wancheng_neirong.setVisibility(View.GONE);
 //            wancheng_neirong.setText(data.data.task_comment.taskcomment_content);
 //            lookAdapter.dataChange(data);
 //            if(data.data.task_comment!=null&&

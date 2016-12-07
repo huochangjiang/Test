@@ -63,6 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
+            android:id="@+id/zhipaishijian"
             android:layout_toLeftOf="@+id/tv_fabushijian"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
