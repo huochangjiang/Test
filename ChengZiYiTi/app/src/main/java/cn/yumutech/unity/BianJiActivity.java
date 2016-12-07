@@ -25,7 +25,6 @@ import cn.yumutech.bean.ShuaXinQunXinXi;
 import cn.yumutech.bean.TuiChuQun;
 import cn.yumutech.netUtil.Api;
 import cn.yumutech.weight.MyGridView;
-import cn.yumutech.weight.SignOutDilog;
 import cn.yumutech.weight.SignOutDilog1;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Group;
@@ -137,17 +136,20 @@ public class BianJiActivity extends BaseActivity {
                 }else{
                     if(postion!=0){
                     if(mChannels.data.create_user_id.equals(App.getContext().getLogo("logo").data.id)) {
-                        SignOutDilog dilog = new SignOutDilog(BianJiActivity.this, "确认移除" + beans.user_name);
-                        dilog.show();
-                        dilog.setOnLisener(new SignOutDilog.onListern() {
-                            @Override
-                            public void send() {
-                                mPosition = postion;
-                                RequestCanshu2 canshus = new RequestCanshu2(new RequestCanshu2.UserBean("3", "134669"),
-                                        new RequestCanshu2.DataBean(targid, beans.userId));
-                                initDatas2(new Gson().toJson(canshus));
-                            }
-                        });
+
+                        RongIM.getInstance().startPrivateChat(BianJiActivity.this, mAdapter.getItem(postion).userId, mAdapter.getItem(postion).user_name);
+
+//                        SignOutDilog dilog = new SignOutDilog(BianJiActivity.this, "确认移除" + beans.user_name);
+//                        dilog.show();
+//                        dilog.setOnLisener(new SignOutDilog.onListern() {
+//                            @Override
+//                            public void send() {
+//                                mPosition = postion;
+//                                RequestCanshu2 canshus = new RequestCanshu2(new RequestCanshu2.UserBean("3", "134669"),
+//                                        new RequestCanshu2.DataBean(targid, beans.userId));
+//                                initDatas2(new Gson().toJson(canshus));
+//                            }
+//                        });
                     }
                     }
                 }

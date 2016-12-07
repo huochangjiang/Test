@@ -27,10 +27,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
+                android:textSize="16sp"
+
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="12dp"
-                android:textColor="#e4e4e4" />
+                android:textColor="#ffffff" />
 
             <ImageView
                 android:id="@+id/img3"
