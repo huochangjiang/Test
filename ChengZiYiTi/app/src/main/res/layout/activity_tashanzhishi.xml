@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/id_toolbar"
@@ -65,11 +66,13 @@
         android:scrollbars="none"
         android:overScrollMode="never"
         app:ptrShowIndicator="false"
+        android:background="@color/white"
         android:layout_below="@+id/id_toolbar"
         android:layout_height="match_parent">
     <cn.yumutech.weight.MyListview
         android:id="@+id/listview"
         android:scrollbars="none"
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </cn.yumutech.weight.MyListview>

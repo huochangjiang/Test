@@ -27,7 +27,7 @@
                 android:scaleType="centerInside"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
-                android:src="@android:drawable/ic_menu_add"
+                android:src="@drawable/tianjia"
                 android:layout_alignParentRight="true"/>
             <LinearLayout
                 android:layout_toLeftOf="@+id/add"
