@@ -50,15 +50,13 @@
             android:layout_width="wrap_content"
             android:text="规划"
             android:id="@+id/guihua"
-            android:textColor="@color/item_title"
-
+            android:textColor="@color/juse"
             android:layout_height="wrap_content" />
         <TextView
             android:layout_width="wrap_content"
             android:text="0元"
-            android:textColor="@color/item_title"
+            android:textColor="@color/red"
             android:id="@+id/money"
-
             android:layout_alignParentRight="true"
             android:layout_height="wrap_content" />
 

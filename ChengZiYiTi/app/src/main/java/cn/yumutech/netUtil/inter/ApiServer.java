@@ -4,6 +4,8 @@ import cn.yumutech.bean.AcceptTask;
 import cn.yumutech.bean.AddErrorPinglun;
 import cn.yumutech.bean.AddPingLun;
 import cn.yumutech.bean.AssignTask;
+import cn.yumutech.bean.BumenStatusItem;
+import cn.yumutech.bean.BumenStatusList;
 import cn.yumutech.bean.ChaXunQunMenmber;
 import cn.yumutech.bean.CompleteBean;
 import cn.yumutech.bean.CreateQunZu;
@@ -40,6 +42,8 @@ import cn.yumutech.bean.UserXiangGuanQun;
 import cn.yumutech.bean.WorkDetails;
 import cn.yumutech.bean.WorkListManger;
 import cn.yumutech.bean.XianShiRenWuXiangQing;
+import cn.yumutech.bean.XianStatusItem;
+import cn.yumutech.bean.XianStatusList;
 import cn.yumutech.bean.YanZhenMessageBean;
 import cn.yumutech.bean.YouQIngLianJie;
 import cn.yumutech.bean.ZhengCeFile;
@@ -140,6 +144,18 @@ Observable<WorkDetails> getWorkDetais(@Query("req") String policy);
     //退出群
     @POST("GroupQuit")
     Observable<TuiChuQun> getTuiChuQun(@Query("req") String item);
+    //获取区县动态数据
+    @POST("XianStatusList")
+    Observable<XianStatusList> getXianStatusList(@Query("req") String item);
+    //获取区县动态数据详情
+    @POST("XianStatusItem")
+    Observable<XianStatusItem> getXianStatusItem(@Query("req") String item);
+    //获取部门动态数据
+    @POST("BumenStatusList")
+    Observable<BumenStatusList> getBumenStatusList(@Query("req") String item);
+    //获取部门动态数据详情
+    @POST("BumenStatusItem")
+    Observable<BumenStatusItem> getBumenStatusItem(@Query("req") String item);
 
     //查看群成员
 //    @POST("GroupQueryUser")

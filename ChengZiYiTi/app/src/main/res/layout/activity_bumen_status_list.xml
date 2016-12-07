@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:background="@color/f0f0f0"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="cn.yumutech.unity.LeaderActivitysActivity">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/id_toolbar"
+        app:contentInsetStart="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <ImageView
+                android:scaleType="centerInside"
+                android:layout_width="50dp"
+                android:id="@+id/back"
+                android:src="@drawable/gimi_back"
+                android:layout_height="match_parent" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="部门动态"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:id="@+id/tv_home"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
+    <include
+        android:layout_below="@+id/id_toolbar"
+        android:layout_centerVertical="true"
+        android:visibility="gone"
+        android:id="@+id/netconnect"
+        android:layout_height="match_parent"
+        layout="@layout/net_connect"
+        android:layout_width="match_parent"/>
+    <RelativeLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/ll_feilei">
+        <include
+            layout="@layout/progressbar"
+            android:id="@+id/myprog"
+            android:visibility="gone"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content" />
+    </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/ll_feilei"
+        android:layout_below="@+id/id_toolbar"
+        android:background="@color/white"
+        android:padding="10dp"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:focusable="true">
+        <HorizontalScrollView
+            android:id="@+id/horscroll_one"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:background="#ffffff"
+            android:scrollbars="none" >
+        </HorizontalScrollView>
+    </LinearLayout>
+    <include
+        android:id="@+id/tishi"
+        layout="@layout/nodata_item"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_feilei"/>
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:id="@+id/pull_to_refresh"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/ll_feilei"
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/recyleview" />
+    </android.support.v4.widget.SwipeRefreshLayout>
+</RelativeLayout>

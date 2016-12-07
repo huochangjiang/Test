@@ -246,9 +246,11 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
         }
         if(leaderActivitys.isEmpty()){
             tishi.setVisibility(View.VISIBLE);
+            pullToRefresh.setVisibility(View.GONE);
             recyclerView.setVisibility(View.GONE);
         }else {
             tishi.setVisibility(View.GONE);
+            pullToRefresh.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.VISIBLE);
         }
         mAdapter.dataChange(leaderActivitys,isHave);

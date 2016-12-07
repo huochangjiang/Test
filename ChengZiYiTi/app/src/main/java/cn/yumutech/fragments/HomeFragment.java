@@ -22,6 +22,7 @@ import cn.yumutech.bean.RequestCanShu;
 import cn.yumutech.netUtil.Api;
 import cn.yumutech.unity.App;
 import cn.yumutech.unity.BaseFragment;
+import cn.yumutech.unity.BumenStatusListActivity;
 import cn.yumutech.unity.CommunicationActivity;
 import cn.yumutech.unity.FriendsUrlActivity;
 import cn.yumutech.unity.InspectionTaskActivity;
@@ -30,6 +31,7 @@ import cn.yumutech.unity.PolicyFileActivity;
 import cn.yumutech.unity.ProjectMangerActivity;
 import cn.yumutech.unity.R;
 import cn.yumutech.unity.WorkDongTaiActivity;
+import cn.yumutech.unity.XianStatusListActivity;
 import cn.yumutech.weight.ImagePagerAdapterApply;
 import cn.yumutech.weight.MyGridView;
 import cn.yumutech.weight.StringUtils1;
@@ -83,6 +85,8 @@ public class HomeFragment extends BaseFragment {
         baibaos.add(new BaiBao("督查督办", R.drawable.duchaduban));
         baibaos.add(new BaiBao("热点话题", R.drawable.hudongjiaoliu));
         baibaos.add(new BaiBao("友情链接", R.drawable.lianjie));
+        baibaos.add(new BaiBao("区县动态", R.drawable.lianjie));
+        baibaos.add(new BaiBao("部门动态", R.drawable.lianjie));
         BaiBaoAdatper baiBaoAdatper=new BaiBaoAdatper(getActivity(), (ArrayList<BaiBao>) baibaos);
         myGridView.setAdapter(baiBaoAdatper);
         myGridView.setFocusable(false);
@@ -157,6 +161,12 @@ public class HomeFragment extends BaseFragment {
                     startActivity(intent);
                 }else if(i==6){
                     Intent intent=new Intent(getActivity(), FriendsUrlActivity.class);
+                    startActivity(intent);
+                }else if(i==7){
+                    Intent intent=new Intent(getActivity(), XianStatusListActivity.class);
+                    startActivity(intent);
+                }else if(i==8){
+                    Intent intent=new Intent(getActivity(), BumenStatusListActivity.class);
                     startActivity(intent);
                 }
             }

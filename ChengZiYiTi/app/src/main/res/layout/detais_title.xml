@@ -22,7 +22,7 @@
             android:layout_height="wrap_content" />
         <RelativeLayout
             android:visibility="gone"
-            android:paddingLeft="10dp"
+            android:paddingLeft="5dp"
             android:paddingRight="10dp"
             android:layout_marginTop="10dp"
             android:layout_below="@+id/tv1"
@@ -33,12 +33,12 @@
                 android:layout_width="wrap_content"
                 android:text="规划"
                 android:id="@+id/guihua"
-                    android:textColor="@color/other"
+                    android:textColor="@color/juse"
                 android:layout_height="wrap_content" />
             <TextView
                 android:layout_width="wrap_content"
                 android:text="0元"
-                android:textColor="@color/other"
+                android:textColor="@color/red"
                 android:id="@+id/money"
                 android:layout_alignParentRight="true"
                 android:layout_height="wrap_content" />
