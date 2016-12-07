@@ -108,18 +108,18 @@
     <LinearLayout
         android:id="@+id/ll_feilei"
         android:layout_below="@+id/id_toolbar"
-        android:background="@color/white"
-        android:padding="10dp"
+        android:background="@color/fengexianone"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:orientation="horizontal"
         android:focusable="true">
         <HorizontalScrollView
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center_vertical"
             android:id="@+id/horscroll_one"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
-            android:background="#ffffff"
             android:scrollbars="none" >
         </HorizontalScrollView>
     </LinearLayout>
@@ -133,7 +133,6 @@
     <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:id="@+id/pull_to_refresh"
-        android:layout_marginTop="10dp"
         android:background="@color/white"
         android:layout_below="@+id/ll_feilei"
         android:layout_height="wrap_content">

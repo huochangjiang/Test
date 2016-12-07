@@ -422,10 +422,10 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
         for (int i = 0; i < bts.size(); i++) {
             TextView bt = bts.get(i);
             if (i == postion) {
-                bt.setBackgroundResource(R.drawable.logo);
-                bt.setTextColor(Color.parseColor("#ffffff"));
+//                bt.setBackgroundResource(R.drawable.logo);
+                bt.setTextColor(Color.parseColor("#388AEF"));
             } else {
-                bt.setBackgroundResource(R.drawable.logo_no);
+//                bt.setBackgroundResource(R.drawable.logo_no);
                 bt.setTextColor(Color.parseColor("#7F000000"));
             }
         }
@@ -488,10 +488,10 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
             bts.add(tv);
             linears.get(0).addView(tv);
             if (j == 0 ) {
-                tv.setBackgroundResource(R.drawable.logo);
-                tv.setTextColor(Color.parseColor("#ffffff"));
+//                tv.setBackgroundResource(R.drawable.logo);
+                tv.setTextColor(Color.parseColor("#388AEF"));
             } else {
-                tv.setBackgroundResource(R.drawable.logo_no);
+//                tv.setBackgroundResource(R.drawable.logo_no);
                 tv.setTextColor(Color.parseColor("#7F000000"));
             }
             tv.setLayoutParams(layoutParams);

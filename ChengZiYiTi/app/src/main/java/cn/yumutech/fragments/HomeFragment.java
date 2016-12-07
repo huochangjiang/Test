@@ -80,13 +80,14 @@ public class HomeFragment extends BaseFragment {
         baibaos.add(new BaiBao("时政新闻", R.drawable.lingdaohuodong));
         baibaos.add(new BaiBao("政策文件", R.drawable.zhengciwenjian));
         baibaos.add(new BaiBao("工作动态", R.drawable.gongzuozhuangtai));
+        baibaos.add(new BaiBao("区县动态", R.drawable.quxiandongtai));
+        baibaos.add(new BaiBao("部门动态", R.drawable.bumendongtai));
         baibaos.add(new BaiBao("重点项目", R.drawable.xiangmugongzuo));
 
         baibaos.add(new BaiBao("督查督办", R.drawable.duchaduban));
         baibaos.add(new BaiBao("热点话题", R.drawable.hudongjiaoliu));
         baibaos.add(new BaiBao("友情链接", R.drawable.lianjie));
-        baibaos.add(new BaiBao("区县动态", R.drawable.lianjie));
-        baibaos.add(new BaiBao("部门动态", R.drawable.lianjie));
+
         BaiBaoAdatper baiBaoAdatper=new BaiBaoAdatper(getActivity(), (ArrayList<BaiBao>) baibaos);
         myGridView.setAdapter(baiBaoAdatper);
         myGridView.setFocusable(false);
@@ -150,22 +151,22 @@ public class HomeFragment extends BaseFragment {
                 }else if(i==2){
                     Intent intent=new Intent(getActivity(), WorkDongTaiActivity.class);
                     startActivity(intent);
-                }else if(i==3){
+                }else if(i==5){
                     Intent intent=new Intent(getActivity(), ProjectMangerActivity.class);
                     startActivity(intent);
-                }else if(i==4){
+                }else if(i==6){
                     Intent intent=new Intent(getActivity(), InspectionTaskActivity.class);
                     startActivity(intent);
-                }else if(i==5){
+                }else if(i==7){
                     Intent intent=new Intent(getActivity(), CommunicationActivity.class);
                     startActivity(intent);
-                }else if(i==6){
+                }else if(i==8){
                     Intent intent=new Intent(getActivity(), FriendsUrlActivity.class);
                     startActivity(intent);
-                }else if(i==7){
+                }else if(i==3){
                     Intent intent=new Intent(getActivity(), XianStatusListActivity.class);
                     startActivity(intent);
-                }else if(i==8){
+                }else if(i==4){
                     Intent intent=new Intent(getActivity(), BumenStatusListActivity.class);
                     startActivity(intent);
                 }
