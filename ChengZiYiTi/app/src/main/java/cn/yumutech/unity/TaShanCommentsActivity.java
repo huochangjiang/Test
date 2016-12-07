@@ -308,7 +308,7 @@ public class TaShanCommentsActivity extends BaseActivity  implements PullToRefre
                     edit.requestFocus();
                     edit.findFocus();
                     edit.setText("");
-                    edit.setHint("回复"+receive_name+":");
+                    edit.setHint("回复:"+receive_name);
                     //弹出软键盘
                     InputMethodManager inputManager1 =
                             (InputMethodManager)button.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);

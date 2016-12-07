@@ -419,7 +419,7 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
             }
             tv.setLayoutParams(layoutParams);
             if (!(j == 0)) {
-                layoutParams.leftMargin = 30;
+                layoutParams.leftMargin = 60;
                 tv.setGravity(Gravity.CENTER);
             }
             tv.setOnClickListener(new View.OnClickListener() {

@@ -96,7 +96,6 @@
         <activity android:name=".FriendsUrlActivity" />
         <activity android:name=".FriendDetasActivity" />
         <activity android:name=".SplashActivity"
-
             android:theme="@style/Theme.splash">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
