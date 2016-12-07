@@ -72,6 +72,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,R
         savePath=getDir("update", 0).getAbsolutePath();
         apkFilePath= savePath + File.separator   + "cz.apk";
         App.getContext().downLoadPath=apkFilePath;
+        Log.e("info","xxxxxxxxxxxxxx");
         addFragement(HomeFragment.newInstance());
         addFragement(SuperviseFragment.newInstance());
         addFragement(MailListFragment.newInstance());
@@ -82,10 +83,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,R
         if (DemoContext.getInstance() != null) {
             token = DemoContext.getInstance().getSharedPreferences().getString("DEMO_TOKEN", "default");
         }
-        if(token.equals("default")){
-            Intent intent=new Intent(this,LogoActivity.class);
-            startActivity(intent);
-        }else{
+        if(!token.equals("default")){
             connectRongYun(token);
         }
         RongIM.setConnectionStatusListener(this);
@@ -114,10 +112,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,R
     @Override
     protected void onResume() {
         super.onResume();
-        if(App.getContext().getLogo("logo")==null){
-            Intent intent=new Intent(MainActivity.this,LogoActivity.class);
-            startActivity(intent);
-        }
+
     }
 
     @Override
@@ -225,8 +220,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,R
 
                 break;
             case DISCONNECTED://断开连接。
-                Intent intent=new Intent(MainActivity.this,LogoActivity.class);
-                startActivity(intent);
+
                 break;
             case CONNECTING://连接中。
 
@@ -244,11 +238,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,R
         RongIM.connect(token, new RongIMClient.ConnectCallback() {
             @Override
             public void onTokenIncorrect() {
-                if(!(App.getContext().getLogo("logo").data==null)) {
+                if(!(App.getContext().getLogo("logo")==null)) {
                     UserGetToken.getInstance(MainActivity.this).getToken(App.getContext().getLogo("logo").data.id);
-                }else{
-                    Intent intent=new Intent(MainActivity.this,LogoActivity.class);
-                    startActivity(intent);
                 }
             }
             @Override
@@ -258,8 +249,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,R
 
             @Override
             public void onError(RongIMClient.ErrorCode errorCode) {
-                Intent intent=new Intent(MainActivity.this,LogoActivity.class);
-                startActivity(intent);
+//                Intent intent=new Intent(MainActivity.this,LogoActivity.class);
+//                startActivity(intent);
             }
         });
     }
@@ -307,8 +298,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,R
             Toast.makeText(MainActivity.this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
             mHandler.sendEmptyMessageDelayed(EXIT, 2000);
         } else {
-//            finish();
-            exit();
+            finish();
+
         }
     }
     @Override
