@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 import java.util.List;
 
@@ -45,6 +46,8 @@ public class ConstancAdapter extends BaseAdapter{
                 .cacheInMemory(true).imageScaleType(ImageScaleType.EXACTLY)
                 // .cacheOnDisc(true)
                 // .considerExifParams(true)
+                .displayer(new RoundedBitmapDisplayer(10))
+
                 .build();
     }
     public void dataChange(List<UserAboutPerson.DataBean> data){

@@ -90,14 +90,14 @@ public class TaskCommuContactFragment extends BaseFragment {
                 return false;
             }
         });
-//        iv_huadong.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                drawerlayout.openDrawer(Gravity.LEFT);
-//                iv_huadong1.setImageResource(R.drawable.celanzhankai);
-//                iv_huadong.setVisibility(View.GONE);
-//            }
-//        });
+        iv_huadong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerlayout.openDrawer(Gravity.LEFT);
+                iv_huadong1.setImageResource(R.drawable.celanzhankai);
+                iv_huadong.setVisibility(View.GONE);
+            }
+        });
         iv_huadong1.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {

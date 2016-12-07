@@ -7,6 +7,7 @@ package cn.yumutech.weight;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,6 +20,8 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 import cn.yumutech.bean.LeaderActivitys;
 import cn.yumutech.unity.LeadersDetaislActivity;
@@ -36,6 +39,8 @@ public class ImagePagerAdapterApply extends BaseAdapter {
 	private DisplayImageOptions options;
 	private LeaderActivitys film;
    private ScrollView scrool;
+	private final DisplayImageOptions options1;
+
 	public ImagePagerAdapterApply(Context context, LeaderActivitys film, ScrollView myscro) {
 		this.scrool=myscro;
 		this.context = context;
@@ -44,7 +49,23 @@ public class ImagePagerAdapterApply extends BaseAdapter {
 			this.size = film.data.size();
 		}
 		isInfiniteLoop = false;
-
+		// .showImageOnLoading(R.drawable.icon_default)
+// .showImageOnLoading(LayoutToDrawable());
+//				.showImageOnLoading(new BitmapDrawable(convertViewToBitmap()))
+// .cacheOnDisc(true)
+// .considerExifParams(true)
+		options1 = new DisplayImageOptions.Builder()
+				// .showImageOnLoading(R.drawable.icon_default)
+				.showImageOnLoading(R.drawable.jiazaizhong)
+				.showImageForEmptyUri(R.drawable.jiazaizhong).showImageOnFail(R.drawable.jiazaizhong)
+				// .showImageOnLoading(LayoutToDrawable());
+//				.showImageOnLoading(new BitmapDrawable(convertViewToBitmap()))
+				.bitmapConfig(Bitmap.Config.RGB_565).cacheOnDisk(true)
+				.cacheInMemory(true).imageScaleType(ImageScaleType.EXACTLY)
+				// .cacheOnDisc(true)
+				// .considerExifParams(true)
+				.displayer(new RoundedBitmapDisplayer(10))
+				.build();
 	}
 
 	@Override
@@ -82,7 +103,7 @@ public class ImagePagerAdapterApply extends BaseAdapter {
 		}
 		ImageLoader.getInstance().displayImage(
 				film.data.get(getPosition(position)).logo_path,
-				holder.imageView);
+				holder.imageView,options1);
 		holder.tv.setText(film.data.get(getPosition(position)).title);
 		holder.imageView.setOnTouchListener(new OnTouchListener() {
 			

@@ -112,7 +112,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,R
     @Override
     protected void onResume() {
         super.onResume();
-
     }
 
     @Override
@@ -160,6 +159,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,R
             case R.id.login:
                 if(app.getLogo("logo")!=null){
                     Intent intent=new Intent();
+                    App.getContext().addDestoryActivity(this,"mainactivity");
                     intent.setClass(MainActivity.this,AfterLoginActivity.class);
                     intent.putExtra("name",app.getLogo("logo").data.nickname);
                     intent.putExtra("logo",app.getLogo("logo").data.logo_path);

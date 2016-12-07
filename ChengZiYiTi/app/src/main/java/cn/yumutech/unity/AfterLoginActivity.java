@@ -149,6 +149,7 @@ public class AfterLoginActivity extends BaseActivity implements View.OnClickList
 //                if(SaveData.getInstance().chindDatas!=null){
 //                    SaveData.getInstance().chindDatas.clear();
 //                }
+                        App.getContext().destoryActivity("mainactivity");
                         if(App.getContext().getContactGroup("Contact")!=null){
                             App.getContext().cleanContactGroup();
                         }

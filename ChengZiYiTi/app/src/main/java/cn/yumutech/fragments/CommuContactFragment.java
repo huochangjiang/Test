@@ -123,6 +123,14 @@ public class CommuContactFragment extends BaseFragment{
                 return false;
             }
         });
+        iv_huadong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerlayout.openDrawer(Gravity.LEFT);
+                iv_huadong1.setImageResource(R.drawable.celanzhankai);
+                iv_huadong.setVisibility(View.GONE);
+            }
+        });
 //        iv_huadong.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -137,7 +145,7 @@ public class CommuContactFragment extends BaseFragment{
                 drawerlayout.closeDrawer(Gravity.LEFT);
                 iv_huadong.setImageResource(R.drawable.celanshouqi);
                 iv_huadong1.setVisibility(View.GONE);
-                return false;
+                return true;
             }
         });
 //        iv_huadong1.setOnClickListener(new View.OnClickListener() {

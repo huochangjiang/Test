@@ -37,6 +37,8 @@
             <!--</RelativeLayout>-->
         <!--</android.support.v7.widget.Toolbar>-->
     <RelativeLayout
+        android:background="@color/fengexianone"
+
         android:layout_width="match_parent"
         android:layout_height="@dimen/guanggaowei" >
         <cn.yumutech.weight.ViewFlow
