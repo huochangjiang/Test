@@ -14,7 +14,16 @@ public class SplashActivity extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        mHandler.sendEmptyMessageDelayed(1,3500);
+        if(App.getContext().getLogo("logo")==null) {
+            mHandler.sendEmptyMessageDelayed(1, 3500);
+        }else{
+            Intent intent = new Intent();
+            intent.setClass(SplashActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
+
     }
 
 

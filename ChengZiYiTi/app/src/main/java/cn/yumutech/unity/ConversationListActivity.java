@@ -37,8 +37,8 @@ public class ConversationListActivity extends FragmentActivity{
             if (RongIM.getInstance().getCurrentConnectionStatus().equals(RongIMClient.ConnectionStatusListener.ConnectionStatus.DISCONNECTED)) {
                 enterActivity();
             } else {
-                startActivity(new Intent(ConversationListActivity.this, MainActivity.class));
-                finish();
+//                startActivity(new Intent(ConversationListActivity.this, MainActivity.class));
+//                finish();
             }
         }
     }
@@ -76,8 +76,8 @@ public class ConversationListActivity extends FragmentActivity{
             public void onSuccess(String s) {
                 Log.i(TAG, "---onSuccess--" + s);
 
-                startActivity(new Intent(ConversationListActivity.this, MainActivity.class));
-                finish();
+//                startActivity(new Intent(ConversationListActivity.this, MainActivity.class));
+//                finish();
             }
 
             @Override

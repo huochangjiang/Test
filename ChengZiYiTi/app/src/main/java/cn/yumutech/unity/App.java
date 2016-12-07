@@ -164,8 +164,8 @@ public class App extends MultiDexApplication{
         @SuppressWarnings("deprecation")
         DisplayImageOptions options = new DisplayImageOptions.Builder()
                 // .showImageOnLoading(R.drawable.icon_default)
-                .showImageOnLoading(R.drawable.zhanweitu)
-                .showImageForEmptyUri(R.drawable.zhanweitu).showImageOnFail(R.drawable.zhanweitu)
+                .showImageOnLoading(R.drawable.jiazaizhong)
+                .showImageForEmptyUri(R.drawable.jiazaizhong).showImageOnFail(R.drawable.jiazaizhong)
                 // .showImageOnLoading(LayoutToDrawable());
 //				.showImageOnLoading(new BitmapDrawable(convertViewToBitmap()))
 

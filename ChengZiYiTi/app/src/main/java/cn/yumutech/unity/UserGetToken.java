@@ -1,7 +1,6 @@
 package cn.yumutech.unity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 
 import com.google.gson.Gson;
@@ -93,8 +92,8 @@ public class UserGetToken {
                     connectRongYun(token);
 
                 }else if(userToken.status.code.equals("-9")){
-                    Intent intent=new Intent(mContext,LogoActivity.class);
-                    mContext.startActivity(intent);
+//                    Intent intent=new Intent(mContext,LogoActivity.class);
+//                    mContext.startActivity(intent);
                 }
             }
         }
