@@ -80,7 +80,7 @@ public class HomeFragment extends BaseFragment {
         baibaos.add(new BaiBao("时政新闻", R.drawable.lingdaohuodong));
         baibaos.add(new BaiBao("政策文件", R.drawable.zhengciwenjian));
         baibaos.add(new BaiBao("工作动态", R.drawable.gongzuozhuangtai));
-        baibaos.add(new BaiBao("区县动态", R.drawable.quxiandongtai));
+        baibaos.add(new BaiBao("县区动态", R.drawable.quxiandongtai));
         baibaos.add(new BaiBao("部门动态", R.drawable.bumendongtai));
         baibaos.add(new BaiBao("重点项目", R.drawable.xiangmugongzuo));
 

@@ -182,6 +182,16 @@ public class DatePickActivity extends Activity {
 	// 比较时间
 	private boolean compare(Date dt1) {
 		Date curDate = new Date(System.currentTimeMillis());
+		String datetime = null;
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		datetime = formatter.format(curDate);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			Date date = sdf.parse(datetime);
+			curDate=date;
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		if (dt1.getTime() > curDate.getTime()) {
 			System.out.println("截止时间大于现在的时间");
 			return true;
@@ -190,7 +200,7 @@ public class DatePickActivity extends Activity {
 			return false;
 		} else {// 相等
 			System.out.println("相等");
-			return false;
+			return true;
 		}
 	}
 

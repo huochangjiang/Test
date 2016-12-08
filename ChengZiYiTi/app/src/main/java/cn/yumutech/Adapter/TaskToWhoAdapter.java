@@ -99,7 +99,7 @@ public class TaskToWhoAdapter extends BaseAdapter{
         }else {
             vh.tv_phone.setVisibility(View.GONE);
         }
-        if(mData.get(index).type == UserBean.TYPE_CHECKED&&SaveData.getInstance().isPermissions){
+        if(mData.get(index).type == UserBean.TYPE_CHECKED){
             vh.selecte.setImageResource(R.drawable.story_selector);
         }else{
             vh.selecte.setImageResource(R.drawable.story_wei);
@@ -111,7 +111,7 @@ public class TaskToWhoAdapter extends BaseAdapter{
             public void onClick(View v) {
                 if(mData.get(index).type==UserBean.TYPE_CHECKED){
                     mData.get(index).type=UserBean.TYPE_NOCHECKED;
-                    if(ids!=null&&SaveData.getInstance().isPermissions){
+                    if(ids!=null){
                         if(maps!=null&&maps.size()>0) {
                             vh.selecte.setImageResource(R.drawable.story_wei);
                             maps.remove(index);
@@ -123,7 +123,7 @@ public class TaskToWhoAdapter extends BaseAdapter{
                     }
                 }else{
                     mData.get(index).type=UserBean.TYPE_CHECKED;
-                    if(ids!=null&&SaveData.getInstance().isPermissions){
+                    if(ids!=null){
                         vh.selecte.setImageResource(R.drawable.story_selector);
                         maps.put(index,mData.get(index));
                         mapsbeen.put(index,mData.get(index));

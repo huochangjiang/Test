@@ -1,6 +1,8 @@
 package cn.yumutech.unity;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -40,21 +42,40 @@ public class PolyDetasActivity extends BaseActivity {
         scrollView= (ScrollView) findViewById(R.id.scrollview);
         myprog.setVisibility(View.VISIBLE);
         scrollView.setVisibility(View.GONE);
+//        webView.getSettings().setJavaScriptEnabled(true);
+//// 设置可以支持缩放
+//        webView.getSettings().setSupportZoom(true);
+//// 设置出现缩放工具
+//        webView.getSettings().setBuiltInZoomControls(false);
+////扩大比例的缩放
+//        webView.getSettings().setUseWideViewPort(true);
+////自适应屏幕
+//        webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+//        webView.getSettings().setLoadWithOverviewMode(true);
+//        webView.getSettings().setDefaultFontSize(18);
         webView.getSettings().setJavaScriptEnabled(true);
-// 设置可以支持缩放
         webView.getSettings().setSupportZoom(true);
-// 设置出现缩放工具
         webView.getSettings().setBuiltInZoomControls(false);
-//扩大比例的缩放
         webView.getSettings().setUseWideViewPort(true);
-//自适应屏幕
         webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         webView.getSettings().setLoadWithOverviewMode(true);
-//        webView.getSettings().setDefaultFontSize(18);
         controlTitle(findViewById(R.id.back));
         title1 = (CenterTextView) findViewById(R.id.tv1);
         laiyan = (TextView) findViewById(R.id.laiyuan);
         tv_time = (TextView) findViewById(R.id.tv_time);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING);
+        } else {
+            webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
+        }
+        // disable scroll on touch
+        webView.setScrollContainer(false);
+        webView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return (event.getAction() == MotionEvent.ACTION_MOVE);
+            }
+        });
     }
 
     @Override
