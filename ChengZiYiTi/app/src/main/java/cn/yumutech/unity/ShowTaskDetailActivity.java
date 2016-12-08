@@ -234,6 +234,7 @@ public class ShowTaskDetailActivity extends BaseActivity{
         @Override
         public void onError(Throwable e) {
             e.printStackTrace();
+            myprog.setVisibility(View.GONE);
         }
 
         @Override
@@ -300,8 +301,8 @@ public class ShowTaskDetailActivity extends BaseActivity{
     }
 
     @Override
-    protected void onRestart() {
-        super.onRestart();
+    protected void onResume() {
+        super.onResume();
         if(App.getContext().getLogo("logo")!=null&&task_id!=null){
             ShowTaskDetailBeen been=new ShowTaskDetailBeen(new ShowTaskDetailBeen.UserBean(App.getContext().getLogo("logo").data.id,""),
                     new ShowTaskDetailBeen.DataBean(task_id));
@@ -310,13 +311,16 @@ public class ShowTaskDetailActivity extends BaseActivity{
     }
     //查看详情
     private void lookResult(ShowTaskDetail data){
-        lookAdapter.dataChange(data);
+        if(data!=null&&data.data!=null&&data.data.task_comment!=null&&data.data.task_comment.photos!=null){
+            lookAdapter.dataChange(data);
+            for (int i=0;i<mData.data.task_comment.photos.size();i++){
+                phones.add(mData.data.task_comment.photos.get(i).photo_path);
+            }
+        }
         wancheng_title.setText("任务已完成");
         zhuangtaishijian1.setText("完成时间:");
         wanchenzhe.setText("完成者:");
-        for (int i=0;i<mData.data.task_comment.photos.size();i++){
-            phones.add(mData.data.task_comment.photos.get(i).photo_path);
-        }
+
         if( data!=null){
             name.setText(data.data.task_finish_user_name);
 //            String time1=SaveData.getInstance().getStringDateShort(data.data.task_finish_date);

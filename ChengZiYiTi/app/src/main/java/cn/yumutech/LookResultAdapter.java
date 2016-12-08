@@ -53,9 +53,9 @@ public class LookResultAdapter extends BaseAdapter{
         }else {
             vh= (ViewHolder) view.getTag();
         }
-
-        ImageLoader.getInstance().displayImage(data.data.task_comment.photos.get(i).photo_path,vh.image);
-
+        if(data!=null&&data.data!=null&&data.data.task_comment!=null&&data.data.task_comment.photos!=null){
+            ImageLoader.getInstance().displayImage(data.data.task_comment.photos.get(i).photo_path,vh.image);
+        }
         return myView;
     }
     public class ViewHolder{
