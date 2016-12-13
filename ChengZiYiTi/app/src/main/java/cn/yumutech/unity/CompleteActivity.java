@@ -374,13 +374,16 @@ public class CompleteActivity extends BaseActivity implements View.OnClickListen
                 finish();
                 break;
             case R.id.denglu:
+                if(editText.getText().toString().trim().toString()==null||editText.getText().toString().trim().toString().equals("")){
+                    Toast.makeText(CompleteActivity.this, "请添加文字描述", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 showDilog("提交中...");
                 dataBean.setTask_comment(editText.getText().toString().trim());
                 dataBean.setTask_id(taskId);
                 dataBean.setPhotos(mPhoneBeans);
                 HttpRequest.getInstance(this).upLoadTouXiang(new Gson().toJson(new TiJiaoCanShu(new TiJiaoCanShu.UserBean(App.getContext().getLogo("logo").data.id,"1234345"),
                         dataBean)),mHandler);
-
                 break;
         }
     }

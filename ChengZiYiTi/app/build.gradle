@@ -8,12 +8,14 @@ android {
         applicationId "cn.yumutech.unity"
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 8
+        versionCode 10
         versionName "1.0"
     }
     lintOptions {
         abortOnError false
         checkReleaseBuilds false
+        aaptOptions.cruncherEnabled = false
+        aaptOptions.useNewCruncher = false
         // 防止在发布的时候出现因MissingTranslation导致Build Failed!
         disable 'MissingTranslation'
 

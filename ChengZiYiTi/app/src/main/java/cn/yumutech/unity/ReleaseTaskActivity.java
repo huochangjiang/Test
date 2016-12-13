@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -51,6 +52,8 @@ public class ReleaseTaskActivity extends BaseActivity implements View.OnClickLis
     protected int getLayoutId() {
         return R.layout.activity_release_task;
     }
+    private Calendar c = Calendar.getInstance();
+
 
     @Override
     protected void initViews(Bundle savedInstanceState) {

@@ -12,7 +12,7 @@
         >
         <RelativeLayout
             android:id="@+id/rl"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             >
             <ImageView
@@ -23,14 +23,15 @@
                 android:src="@drawable/gimi_back"
                 android:layout_height="match_parent" />
             <TextView
+
+                android:layout_centerHorizontal="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="提交"
-                android:visibility="gone"
-                android:textSize="18sp"
+                android:text="提交任务"
+                android:textSize="16sp"
                 android:textColor="@color/white"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/back"/>
+                />
 
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>

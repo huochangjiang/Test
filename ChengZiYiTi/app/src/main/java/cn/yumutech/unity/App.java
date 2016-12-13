@@ -43,7 +43,6 @@ import io.rong.imkit.DefaultExtensionModule;
 import io.rong.imkit.IExtensionModule;
 import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
-import io.rong.push.RongPushClient;
 
 
 /**
@@ -84,7 +83,7 @@ public class App extends MultiDexApplication{
             /**
              * IMKit SDK调用第一步 初始化
              */
-            RongPushClient.registerHWPush(this);
+           // RongPushClient.registerHWPush(this);
 //            RongPushClient.registerMiPush(this, "2882303761517528959", "5821752892959");
             RongIM.init(this);
             setMyExtensionModule();
