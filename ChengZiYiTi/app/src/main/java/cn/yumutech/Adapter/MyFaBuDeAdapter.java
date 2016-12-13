@@ -67,7 +67,7 @@ public class MyFaBuDeAdapter extends BaseAdapter{
             vh= (ViewHolder) myView.getTag();
         }
         maps.clear();
-        //注释的这一大段是根据任务的状态来改变显示为什么时间，但测试那傻逼说改成这样的统一为截止时间
+        //注释的这一大段是根据任务的状态来改变显示为什么时间，但测试说改成这样的统一为截止时间
 //        if(mData.get(position).task_status_name.equals("待接受")){
             vh.deadline.setText("截止时间:");
             String time= SaveData.getInstance().getStringDateShort(mData.get(position).task_end_date);
