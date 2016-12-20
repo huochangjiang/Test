@@ -1,6 +1,5 @@
 package cn.yumutech.fragments;
 
-import android.net.Uri;
 import android.support.v4.widget.DrawerLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -349,7 +348,8 @@ public class CreatQunZhuFragment extends BaseFragment {
                         //消息发送失败的回调
                     }
                 });
-                Group group=new Group(channels.data.groupId,channels.data.groupName, Uri.parse(channels.data.create_user_logo_path));
+//                Group group=new Group(channels.data.groupId,channels.data.groupName, Uri.parse(channels.data.create_user_logo_path));
+                Group group=new Group(channels.data.groupId,channels.data.groupName, null);
 
                 RongIM.getInstance().refreshGroupInfoCache(group);
                 RongIM.getInstance().startGroupChat(getActivity(), channels.data.groupId, channels.data.groupName);

@@ -1,7 +1,6 @@
 package cn.yumutech.fragments;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -140,7 +139,7 @@ public class CommuGroupFragment extends BaseFragment implements View.OnClickList
             if(channels.status.code.equals("0")){
                 adapter.dataChange(channels.data);
                 for (int i=0;i<channels.data.size();i++) {
-                    Group group = new Group(channels.data.get(i).groupId, channels.data.get(i).groupName, Uri.parse(channels.data.get(i).create_user_logo_path));
+                    Group group = new Group(channels.data.get(i).groupId, channels.data.get(i).groupName, null);
                     RongIM.getInstance().refreshGroupInfoCache(group);
                 }
 

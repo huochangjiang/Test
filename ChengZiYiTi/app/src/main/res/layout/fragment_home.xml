@@ -63,12 +63,15 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
         </RelativeLayout>
+<RelativeLayout
+    android:background="@drawable/homebackground"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
         <cn.yumutech.weight.MyGridView
 
             android:clickable="true"
             android:paddingTop="10dp"
-            android:background="#ffffff"
-            android:listSelector="@drawable/listview_selector"
+           android:background="@android:color/transparent"
             android:layout_height="match_parent"
             android:layout_width="match_parent"
             android:scrollbars="none"
@@ -76,6 +79,7 @@
             android:numColumns="3">
              >
         </cn.yumutech.weight.MyGridView>
+</RelativeLayout>
     </LinearLayout>
     </ScrollView>
         <include

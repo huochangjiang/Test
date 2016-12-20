@@ -133,8 +133,8 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
     @Override
     protected void initData() {
         if(App.getContext().getLogo("logo")!=null) {
-            RequestCanShu canshus = new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.nickname, App.getContext().getLogo("logo").data.id),
-                    new RequestCanShu.DataBean(fenlei, "0", mPageSize + ""));
+            RequestCanShu canshus = new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.id, ""),
+                    new RequestCanShu.DataBean("", "0",mPageSize + ""));
             initDatas1(new Gson().toJson(canshus));
         }else {
             App.getContext().noLogin(WorkDongTaiActivity.this);
@@ -358,8 +358,8 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
     int xiabiao = 0;
     public void initClassData(){
         if(App.getContext().getLogo("logo")!=null) {
-            ModuleClassifyListBeen canshus=new ModuleClassifyListBeen(new ModuleClassifyListBeen.UserBeen(App.getContext().getLogo("logo").data.nickname,App.getContext().getLogo("logo").data.id),
-                    new ModuleClassifyListBeen.DataBeen("WorkStatus"));
+            ModuleClassifyListBeen canshus=new ModuleClassifyListBeen(new ModuleClassifyListBeen.UserBeen(App.getContext().getLogo("logo").data.id,""),
+                    new ModuleClassifyListBeen.DataBeen(""));
             initClassDatas1(new Gson().toJson(canshus));
         }else {
 //            Toast.makeText(this,"您还未登陆",Toast.LENGTH_SHORT).show();

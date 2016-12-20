@@ -247,9 +247,11 @@ Subscription subscription;
         }
         @Override
         public void onNext(LeaderActivitys channels) {
-            if(channels.status.code.equals("0")){
-                app.savaHomeJson("LeaderActivitys",new Gson().toJson(channels));
-                loadHome(channels);
+            if(channels.status.code.equals("0")) {
+                if (channels.data != null && channels.data.size() > 0) {
+                    app.savaHomeJson("LeaderActivitys", new Gson().toJson(channels));
+                    loadHome(channels);
+                }
             }
 
         }

@@ -23,10 +23,12 @@
     <dimen name="EditText_pwd_height">35dp</dimen>
 
      <dimen name="gm_indctor">60dp</dimen>
-     <dimen name="guanggaowei">190dp</dimen>
+     <dimen name="guanggaowei">185dp</dimen>
       <dimen name="tupian_height">60dp</dimen>
                 <dimen name="tupian_width">80dp</dimen>
                 <dimen name="fangxiangtop">5dp</dimen>
                   <dimen name="tv_size">14sp</dimen>
                  <dimen name="yaokongheight">250dp</dimen>
+    <dimen name="home_item">50dp</dimen>
+
 </resources>

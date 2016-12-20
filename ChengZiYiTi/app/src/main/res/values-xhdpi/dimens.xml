@@ -39,14 +39,15 @@
     	<dimen name="fangxiangtopone">20dp</dimen>
     	
     	  <dimen name="tv_size">17sp</dimen>
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
+    <dimen name="home_item">60dp</dimen>
+
+
+
+
+
+
+
+
     <!-- 左侧边栏比例 -->
     <dimen name="slidingmenu_offset">120dp</dimen>
 
