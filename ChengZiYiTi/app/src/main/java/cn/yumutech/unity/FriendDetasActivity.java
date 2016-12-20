@@ -3,6 +3,7 @@ package cn.yumutech.unity;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
@@ -30,8 +31,21 @@ public class FriendDetasActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-String url=getIntent().getStringExtra("url");
-String intTYpe=getIntent().getStringExtra("title");
+
+        String url=getIntent().getStringExtra("url");
+
+        String intTYpe=getIntent().getStringExtra("title");
+        webView.setVerticalScrollbarOverlay(true); //指定的垂直滚动条有叠加样式
+
+        WebSettings settings = webView.getSettings();
+
+        settings.setUseWideViewPort(true);//设定支持viewport
+
+        settings.setLoadWithOverviewMode(true);
+
+        settings.setBuiltInZoomControls(true);
+
+        settings.setSupportZoom(true);//设定支持缩放
         title.setText(intTYpe);
         webView.loadUrl(url);
         //覆盖WebView默认使用第三方或系统默认浏览器打开网页的行为，使网页用WebView打开
