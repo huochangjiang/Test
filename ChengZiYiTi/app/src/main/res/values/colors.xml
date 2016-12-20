@@ -6,7 +6,7 @@
     <color name="igray">#ffF2F2F2</color><!-- 用于页面背景 -->
     <color name="darkblue">#ff7CA0CE</color><!-- actionbar背景 ,即是所有标题栏背景 主题色 -->
 
-    <color name="red">#ffff0000</color><!-- 红色 -->
+    <color name="red">#CC0000</color><!-- 红色 -->
     <color name="igray_et">#ff999999</color><!-- 辅助文字-->
     <color name="Orange">#F5A100</color><!-- 橙色 -->
     <color name="dark_grey">#D2D2D2</color><!-- 深灰 -->
