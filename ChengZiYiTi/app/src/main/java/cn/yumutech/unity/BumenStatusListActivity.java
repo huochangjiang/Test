@@ -197,7 +197,7 @@ public class BumenStatusListActivity extends BaseActivity implements SwipeRefres
                         isRefresh=true;
                         mPage=mdatas.size();
                         if(App.getContext().getLogo("logo")!=null){
-                            BumenStatusListBeen canshus=new BumenStatusListBeen(new BumenStatusListBeen.UserBean(App.getContext().getLogo("logo").data.nickname,App.getContext().getLogo("logo").data.id),
+                            BumenStatusListBeen canshus=new BumenStatusListBeen(new BumenStatusListBeen.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
                                     new BumenStatusListBeen.DataBean(mPage+"",mPageSize+""));
                             initDatas1(new Gson().toJson(canshus));
                         }else {
@@ -228,7 +228,7 @@ public class BumenStatusListActivity extends BaseActivity implements SwipeRefres
                     mPage=0;
                     isRefresh=false;
                     if(App.getContext().getLogo("logo")!=null){
-                        BumenStatusListBeen canshus=new BumenStatusListBeen(new BumenStatusListBeen.UserBean(App.getContext().getLogo("logo").data.nickname,App.getContext().getLogo("logo").data.id),
+                        BumenStatusListBeen canshus=new BumenStatusListBeen(new BumenStatusListBeen.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
                                 new BumenStatusListBeen.DataBean(mPage+"",mPageSize+""));
                         initDatas1(new Gson().toJson(canshus));
                     }else {

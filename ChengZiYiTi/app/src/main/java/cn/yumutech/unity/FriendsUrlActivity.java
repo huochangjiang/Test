@@ -91,8 +91,7 @@ public class FriendsUrlActivity extends BaseActivity {
     @Override
     protected void initData() {
         if(App.getContext().getLogo("logo")!=null){
-            RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.nickname,
-                    App.getContext().getLogo("logo").data.id),
+            RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
                     null);
             initDatas1(new Gson().toJson(canshus));
         }else {

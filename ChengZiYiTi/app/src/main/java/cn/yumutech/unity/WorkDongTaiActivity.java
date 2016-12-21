@@ -171,7 +171,7 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
                         isRefresh=true;
                         mPage=leaderActivitys.size();
                         if(App.getContext().getLogo("logo")!=null) {
-                            RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.nickname,App.getContext().getLogo("logo").data.id),
+                            RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
                                     new RequestCanShu.DataBean(fenlei,mPage+"",mPageSize+""));
                             initDatas1(new Gson().toJson(canshus));
                         }else {
@@ -329,7 +329,7 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
                     mPage=0;
                     isRefresh=false;
                     if(App.getContext().getLogo("logo")!=null){
-                        RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.nickname,App.getContext().getLogo("logo").data.id),
+                        RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
                                 new RequestCanShu.DataBean(fenlei,"0",mPageSize+""));
                         initDatas1(new Gson().toJson(canshus));
                     }else {
@@ -345,7 +345,7 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
             TextView bt = bts.get(i);
             if (i == postion) {
 //                bt.setBackgroundResource(R.drawable.logo);
-                bt.setTextColor(Color.parseColor("#388AEF"));
+                bt.setTextColor(Color.parseColor("#DD3237"));
             } else {
 //                bt.setBackgroundResource(R.drawable.logo_no);
                 bt.setTextColor(Color.parseColor("#7F000000"));
@@ -412,7 +412,7 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
             linears.get(0).addView(tv);
             if (j == 0 ) {
 //                tv.setBackgroundResource(R.drawable.logo);
-                tv.setTextColor(Color.parseColor("#388AEF"));
+                tv.setTextColor(Color.parseColor("#DD3237"));
             } else {
 //                tv.setBackgroundResource(R.drawable.logo_no);
                 tv.setTextColor(Color.parseColor("#7F000000"));

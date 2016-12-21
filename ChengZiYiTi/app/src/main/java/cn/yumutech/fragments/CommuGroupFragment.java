@@ -118,7 +118,7 @@ public class CommuGroupFragment extends BaseFragment implements View.OnClickList
     public void onResume() {
         super.onResume();
         if(App.getContext().getLogo("logo")!=null) {
-            RequestCanShu1 canshus = new RequestCanShu1(new RequestCanShu1.UserBean(App.getContext().getLogo("logo").data.nickname, App.getContext().getLogo("logo").data.id),
+            RequestCanShu1 canshus = new RequestCanShu1(new RequestCanShu1.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
                     new RequestCanShu1.DataBean(App.getContext().getLogo("logo").data.id));
             initDatas1(new Gson().toJson(canshus));
         }

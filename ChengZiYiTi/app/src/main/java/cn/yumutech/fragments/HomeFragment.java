@@ -18,7 +18,7 @@ import java.util.List;
 import cn.yumutech.Adapter.BaiBaoAdatper;
 import cn.yumutech.bean.BaiBao;
 import cn.yumutech.bean.LeaderActivitys;
-import cn.yumutech.bean.RequestCanShu;
+import cn.yumutech.bean.RequestCanShuNew;
 import cn.yumutech.netUtil.Api;
 import cn.yumutech.unity.App;
 import cn.yumutech.unity.BaseFragment;
@@ -110,7 +110,8 @@ public class HomeFragment extends BaseFragment {
             }
         });
         net_connect = contentView.findViewById(R.id.netconnect);
-        initLocal();
+        initDatas();
+//        initLocal();
        //正常登录
         getContact.getInstance().getData();
     }
@@ -186,9 +187,8 @@ Subscription subscription;
     @Override
     protected void initDatas() {
         if(App.getContext().getLogo("logo")!=null) {
-            RequestCanShu canshus = new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.nickname,
-                    App.getContext().getLogo("logo").data.id),
-                    new RequestCanShu.DataBean("省级", "0", "3"));
+            RequestCanShuNew canshus = new RequestCanShuNew(new RequestCanShuNew.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
+                    new RequestCanShuNew.DataBean("0", "5"));
             initDatas1(new Gson().toJson(canshus));
         }else {
             App.getContext().noLogin(getActivity());
@@ -249,7 +249,7 @@ Subscription subscription;
         public void onNext(LeaderActivitys channels) {
             if(channels.status.code.equals("0")) {
                 if (channels.data != null && channels.data.size() > 0) {
-                    app.savaHomeJson("LeaderActivitys", new Gson().toJson(channels));
+//                    app.savaHomeJson("LeaderActivitys", new Gson().toJson(channels));
                     loadHome(channels);
                 }
             }

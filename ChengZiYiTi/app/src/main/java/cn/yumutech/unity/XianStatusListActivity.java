@@ -168,7 +168,7 @@ public class XianStatusListActivity extends BaseActivity implements SwipeRefresh
                         isRefresh=true;
                         mPage=mdatas.size();
                         if(App.getContext().getLogo("logo")!=null){
-                            XianStatusListBeen canshus=new XianStatusListBeen(new XianStatusListBeen.UserBean(App.getContext().getLogo("logo").data.nickname,App.getContext().getLogo("logo").data.id),
+                            XianStatusListBeen canshus=new XianStatusListBeen(new XianStatusListBeen.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
                                     new XianStatusListBeen.DataBean(mPage+"",mPageSize+""));
                             initDatas1(new Gson().toJson(canshus));
                         }else {
@@ -231,7 +231,7 @@ public class XianStatusListActivity extends BaseActivity implements SwipeRefresh
                     mPage=0;
                     isRefresh=false;
                     if(App.getContext().getLogo("logo")!=null){
-                        XianStatusListBeen canshus=new XianStatusListBeen(new XianStatusListBeen.UserBean(App.getContext().getLogo("logo").data.nickname,App.getContext().getLogo("logo").data.id),
+                        XianStatusListBeen canshus=new XianStatusListBeen(new XianStatusListBeen.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
                                 new XianStatusListBeen.DataBean(mPage+"",mPageSize+""));
                         initDatas1(new Gson().toJson(canshus));
                     }else {

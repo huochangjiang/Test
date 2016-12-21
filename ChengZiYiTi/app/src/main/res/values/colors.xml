@@ -6,19 +6,19 @@
     <color name="igray">#ffF2F2F2</color><!-- 用于页面背景 -->
     <color name="darkblue">#ff7CA0CE</color><!-- actionbar背景 ,即是所有标题栏背景 主题色 -->
 
-    <color name="red">#CC0000</color><!-- 红色 -->
+    <color name="red">#DD3237</color><!-- 红色 -->
     <color name="igray_et">#ff999999</color><!-- 辅助文字-->
     <color name="Orange">#F5A100</color><!-- 橙色 -->
     <color name="dark_grey">#D2D2D2</color><!-- 深灰 -->
     <color name="wxnavpage">#FFE1E8EB</color>
-    <color name="colorPrimary">#4392F3</color>
-    <color name="colorPrimaryDark">#4392F3</color>
+    <color name="colorPrimary">#DD3237</color>
+    <color name="colorPrimaryDark">#DD3237</color>
     <color name="colorAccent">#FF4081</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
     <color name="small_title">#323334</color>
     <color name="welcometext">#4c4c4c</color>
-    <color name="shanchujilu">#4392f3</color>
+    <color name="shanchujilu">#DD3237</color>
     <color name="item_title">#848484</color>
     <color name="list">#0f000000</color>
     <color name="huise">#848484</color>
@@ -32,11 +32,11 @@
     <color name="f5f5f5">#f5f5f5</color>
     <color name="beijingse">#fafafa</color>
     <color name="ADADAD">#ADADAD</color>
-    <color name="blue">#007aff</color>
+    <color name="blue">#DD3237</color>
     <color name="EBEBEB">#ebebeb</color>
     <color name="f2f2f2">#f2f2f2</color>
     <color name="f0f0f0">#f0f0f0</color>
     <color name="titlespace">#eeb2b2b2</color>
-    <color name="color_bule">#4392F3</color>
+    <color name="color_bule">#DD3237</color>
 
 </resources>
