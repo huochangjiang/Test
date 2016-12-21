@@ -65,8 +65,16 @@ public class ProjectMangerAdpater extends RecyclerView.Adapter {
                 }else{
                     ((ProjectItemViewHolder) holder).money.setText("项目金额:"+mDatas.get(position).amount+"元");
                 }
+
+                if(mDatas.get(position).logo_path==null||mDatas.get(position).logo_path.equals("")){
+                    ((ProjectItemViewHolder) holder).iv.setVisibility(View.GONE);
+                }else {
+                    ((ProjectItemViewHolder) holder).iv.setVisibility(View.VISIBLE);
+
+                    ImageLoader.getInstance().displayImage(mDatas.get(position).logo_path,((ProjectItemViewHolder) holder).iv);
+                }
                 ((ProjectItemViewHolder) holder).guifua.setText("类型:"+mDatas.get(position).type);
-                ImageLoader.getInstance().displayImage(mDatas.get(position).logo_path, ((ProjectItemViewHolder) holder).iv);
+                //ImageLoader.getInstance().displayImage(mDatas.get(position).logo_path, ((ProjectItemViewHolder) holder).iv);
                 ((ProjectItemViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

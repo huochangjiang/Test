@@ -129,7 +129,12 @@ public class PolicyAdapter extends RecyclerView.Adapter {
                 ((AppPolicyViewHolder)holder).textView.setText(mDatas.get(position).title);
                 ((AppPolicyViewHolder)holder).summary.setText(mDatas.get(position).summary);
                 ((AppPolicyViewHolder)holder).time.setText(mDatas.get(position).publish_date);
-                ImageLoader.getInstance().displayImage(mDatas.get(position).logo_path, ((AppPolicyViewHolder)holder).iv);
+                if(mDatas.get(position).logo_path==null||mDatas.get(position).logo_path.equals("")){
+                    ((AppPolicyViewHolder)holder).iv.setVisibility(View.GONE);
+                }else{
+                    ((AppPolicyViewHolder)holder).iv.setVisibility(View.VISIBLE);
+                    ImageLoader.getInstance().displayImage(mDatas.get(position).logo_path, ((AppPolicyViewHolder)holder).iv);
+                }
                 ((AppPolicyViewHolder)holder).itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

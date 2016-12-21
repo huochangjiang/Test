@@ -64,7 +64,12 @@ public class LeaderActivityAdapter extends RecyclerView.Adapter {
                 ((ItemViewHolder) holder).textView.setText(mDatas.get(position).title);
                 ((ItemViewHolder) holder).summary.setText(mDatas.get(position).summary);
                 ((ItemViewHolder) holder).time.setText(mDatas.get(position).publish_date);
-                ImageLoader.getInstance().displayImage(mDatas.get(position).logo_path, ((ItemViewHolder) holder).iv);
+                if(mDatas.get(position).logo_path==null||mDatas.get(position).logo_path.equals("")){
+                    ((ItemViewHolder) holder).iv.setVisibility(View.GONE);
+                }else {
+                    ImageLoader.getInstance().displayImage(mDatas.get(position).logo_path, ((ItemViewHolder) holder).iv);
+                }
+//                ImageLoader.getInstance().displayImage(mDatas.get(position).logo_path, ((ItemViewHolder) holder).iv);
                 ((ItemViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

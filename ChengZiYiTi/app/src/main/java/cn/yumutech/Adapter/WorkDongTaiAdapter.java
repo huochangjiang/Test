@@ -61,7 +61,14 @@ public class WorkDongTaiAdapter extends RecyclerView.Adapter {
                 ((AppWorkDongTaiViewHoldewr)holder).textView.setText(mDatas.get(position).title);
                 ((AppWorkDongTaiViewHoldewr)holder).summary.setText(mDatas.get(position).summary);
                 ((AppWorkDongTaiViewHoldewr)holder).time.setText(mDatas.get(position).publish_date);
-                ImageLoader.getInstance().displayImage(mDatas.get(position).logo_path, ((AppWorkDongTaiViewHoldewr)holder).iv);
+                if(mDatas.get(position).logo_path==null||mDatas.get(position).logo_path.equals("")){
+                    ((AppWorkDongTaiViewHoldewr)holder).iv.setVisibility(View.GONE);
+                }else {
+                    ((AppWorkDongTaiViewHoldewr)holder).iv.setVisibility(View.VISIBLE);
+
+                    ImageLoader.getInstance().displayImage(mDatas.get(position).logo_path,((AppWorkDongTaiViewHoldewr)holder).iv);
+                }
+//                ImageLoader.getInstance().displayImage(mDatas.get(position).logo_path, ((AppWorkDongTaiViewHoldewr)holder).iv);
                 ((AppWorkDongTaiViewHoldewr)holder).itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
