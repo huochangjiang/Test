@@ -320,7 +320,7 @@ public class LeaderActivitysActivity extends BaseActivity implements SwipeRefres
                 case 1:
                     mPage=0;
                     isRefresh=false;
-                    RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean("unity","1234567890"),
+                    RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.id,"1234567890"),
                             new RequestCanShu.DataBean(fenlei,mPage+"",mPageSize+""));
                     initDatas1(new Gson().toJson(canshus));
                     break;

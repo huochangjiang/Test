@@ -147,7 +147,7 @@ public class TaShanDetailActivity extends BaseActivity{
      * 获取他山之石详情数据
      */
     private void getData() {
-        ExchangeItemBeen exchangeItemBeen = new ExchangeItemBeen(new ExchangeItemBeen.UserBean("unity", "1234567890"),
+        ExchangeItemBeen exchangeItemBeen = new ExchangeItemBeen(new ExchangeItemBeen.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
                 new ExchangeItemBeen.DataBean(myId));
         getData1(new Gson().toJson(exchangeItemBeen));
     }

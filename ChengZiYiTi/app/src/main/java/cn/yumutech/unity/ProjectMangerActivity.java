@@ -324,7 +324,7 @@ public class ProjectMangerActivity extends BaseActivity implements SwipeRefreshL
                     isRefresh=false;
                     mPage=0;
                     if(App.getContext().getLogo("logo")!=null){
-                        RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean("unity","1234567890"),
+                        RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.id,"1234567890"),
                                 new RequestCanShu.DataBean(fenlei,mPage+"",mPageSize+""));
                         initDatas1(new Gson().toJson(canshus));
                     }else {
