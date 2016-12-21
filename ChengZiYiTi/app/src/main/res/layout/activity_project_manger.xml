@@ -113,7 +113,7 @@
 
         <LinearLayout
             android:id="@+id/ll_feilei"
-            android:background="@color/fengexianone"
+            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:orientation="horizontal"
