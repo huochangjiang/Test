@@ -196,11 +196,10 @@ Subscription subscription;
 
     }
     private void initDatas1( String canshu){
-        subscription = Api.getMangoApi1().getLeaderActiviys(canshu)
+        subscription = Api.getMangoApi1().getHomeLunBo(canshu)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
-
     }
     /**
      * 动态创建

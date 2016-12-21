@@ -100,9 +100,14 @@ public interface ApiServer {
     //影视推荐
     @GET("rest/VideoSourceService/getVideoIndex?u_=1&v_=1&t_=1&p_=2348")
     Observable<MovieRecommend> getMovieRecmmend();
-    //获取领导活动列表
-    @GET("HomeSliderList")
+    //获取首页
+    @GET("LeaderActivityList")
     Observable<LeaderActivitys> getLeaderActiviys(@Query("req") String list);
+    //获取领导活动
+    //获取首页
+    @GET("HomeSliderList")
+    Observable<LeaderActivitys> getHomeLunBo(@Query("req") String list);
+
     //获取领导活动详情页面
     @POST("LeaderActivityItem")
     Observable<LeaderActivitsDetails> getLeaderActivitsDetails(@Query("req") String item);

@@ -67,6 +67,7 @@ public class LeaderActivityAdapter extends RecyclerView.Adapter {
                 if(mDatas.get(position).logo_path==null||mDatas.get(position).logo_path.equals("")){
                     ((ItemViewHolder) holder).iv.setVisibility(View.GONE);
                 }else {
+                    ((ItemViewHolder) holder).iv.setVisibility(View.VISIBLE);
                     ImageLoader.getInstance().displayImage(mDatas.get(position).logo_path, ((ItemViewHolder) holder).iv);
                 }
 //                ImageLoader.getInstance().displayImage(mDatas.get(position).logo_path, ((ItemViewHolder) holder).iv);
