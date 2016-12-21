@@ -85,7 +85,7 @@ public class LeadersDetaislActivity extends BaseActivity {
     protected void initData() {
         String id=getIntent().getStringExtra("id");
         type = getIntent().getStringExtra("type");
-            RequestCanShu canshus = new RequestCanShu(new RequestCanShu.UserBean("unity", "1234567890"), new RequestCanShu.DataBean(id));
+            RequestCanShu canshus = new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"), new RequestCanShu.DataBean(id));
             initDatas1(new Gson().toJson(canshus));
 
     }

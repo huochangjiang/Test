@@ -115,7 +115,7 @@ public class TaShanZhiShiActivity extends BaseActivity implements PullToRefreshB
      * 获取他山之石列表数据
      */
     public void getData() {
-        ExchangeListBeen exchangeItemBeen = new ExchangeListBeen(new ExchangeListBeen.UserBean("unity", "1234567890"),
+        ExchangeListBeen exchangeItemBeen = new ExchangeListBeen(new ExchangeListBeen.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
                 new ExchangeListBeen.DataBean("国内","0","5"));
         getData1(new Gson().toJson(exchangeItemBeen));
     }
@@ -194,7 +194,7 @@ public class TaShanZhiShiActivity extends BaseActivity implements PullToRefreshB
     public void onPullDownToRefresh(PullToRefreshBase<ScrollView> refreshView) {
         isShangla=false;
         page=0;
-        ExchangeListBeen exchangeItemBeen = new ExchangeListBeen(new ExchangeListBeen.UserBean("unity", "1234567890"),
+        ExchangeListBeen exchangeItemBeen = new ExchangeListBeen(new ExchangeListBeen.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
                 new ExchangeListBeen.DataBean("国内",page+"","5"));
         getData1(new Gson().toJson(exchangeItemBeen));
     }
@@ -203,7 +203,7 @@ public class TaShanZhiShiActivity extends BaseActivity implements PullToRefreshB
     public void onPullUpToRefresh(PullToRefreshBase<ScrollView> refreshView) {
         page=mData.size();
         isShangla=true;
-        ExchangeListBeen exchangeItemBeen = new ExchangeListBeen(new ExchangeListBeen.UserBean("unity", "1234567890"),
+        ExchangeListBeen exchangeItemBeen = new ExchangeListBeen(new ExchangeListBeen.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
                 new ExchangeListBeen.DataBean("国内",page+"","5"));
         getData1(new Gson().toJson(exchangeItemBeen));
     }
