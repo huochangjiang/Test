@@ -135,6 +135,9 @@ public class PolicyAdapter extends RecyclerView.Adapter {
                     ((AppPolicyViewHolder)holder).iv.setVisibility(View.VISIBLE);
                     ImageLoader.getInstance().displayImage(mDatas.get(position).logo_path, ((AppPolicyViewHolder)holder).iv);
                 }
+                if((mDatas.get(position).summary==null||mDatas.get(position).summary.equals(""))&&(mDatas.get(position).logo_path==null||mDatas.get(position).logo_path.equals(""))){
+                    ((AppPolicyViewHolder)holder).ll.setVisibility(View.GONE);
+                }
                 ((AppPolicyViewHolder)holder).itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

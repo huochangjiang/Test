@@ -38,7 +38,7 @@
                 <dimen name="tupian_width">50dp</dimen>
     
       <dimen name="tv_size">15sp</dimen>
-    <dimen name="home_item">55dp</dimen>
+    <dimen name="home_item">50dp</dimen>
 
 
 

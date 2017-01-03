@@ -1,1 +1,1 @@
-include ':app', ':PulltorefreshDemo', ':library'
+include ':app', ':PulltorefreshDemo', ':library', ':IMLib_v2_8_0', ':IMKit_v2_8_0', ':PushSDK', ':CallLib', ':CallKit'

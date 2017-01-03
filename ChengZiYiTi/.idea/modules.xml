@@ -2,8 +2,13 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/CallKit/CallKit.iml" filepath="$PROJECT_DIR$/CallKit/CallKit.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CallLib/CallLib.iml" filepath="$PROJECT_DIR$/CallLib/CallLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/ChengZiYiTi.iml" filepath="$PROJECT_DIR$/ChengZiYiTi.iml" />
+      <module fileurl="file://$PROJECT_DIR$/IMKit_v2_8_0/IMKit_v2_8_0.iml" filepath="$PROJECT_DIR$/IMKit_v2_8_0/IMKit_v2_8_0.iml" />
+      <module fileurl="file://$PROJECT_DIR$/IMLib_v2_8_0/IMLib_v2_8_0.iml" filepath="$PROJECT_DIR$/IMLib_v2_8_0/IMLib_v2_8_0.iml" />
       <module fileurl="file://$PROJECT_DIR$/PulltorefreshDemo/PulltorefreshDemo.iml" filepath="$PROJECT_DIR$/PulltorefreshDemo/PulltorefreshDemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PushSDK/PushSDK.iml" filepath="$PROJECT_DIR$/PushSDK/PushSDK.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
     </modules>

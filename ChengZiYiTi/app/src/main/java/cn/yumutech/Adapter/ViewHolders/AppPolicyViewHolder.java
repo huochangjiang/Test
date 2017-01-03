@@ -3,6 +3,7 @@ package cn.yumutech.Adapter.ViewHolders;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import cn.yumutech.unity.R;
@@ -16,6 +17,8 @@ public class AppPolicyViewHolder extends RecyclerView.ViewHolder{
     public  TextView laiyuan;
     public  TextView time;
     public ImageView iv;
+    public  LinearLayout ll;
+
     public AppPolicyViewHolder(View itemView) {
         super(itemView);
         textView = (TextView) itemView.findViewById(R.id.tv1);
@@ -23,5 +26,6 @@ public class AppPolicyViewHolder extends RecyclerView.ViewHolder{
         laiyuan = (TextView) itemView.findViewById(R.id.laiyuan);
         time = (TextView) itemView.findViewById(R.id.tv_time);
         iv = (ImageView) itemView.findViewById(R.id.iv);
+        ll = (LinearLayout) itemView.findViewById(R.id.ll);
     }
 }

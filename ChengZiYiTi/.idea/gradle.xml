@@ -3,13 +3,17 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <option name="distributionType" value="LOCAL" />
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleHome" value="E:\Android Studio\gradle\gradle-2.10" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/CallKit" />
+            <option value="$PROJECT_DIR$/CallLib" />
+            <option value="$PROJECT_DIR$/IMKit_v2_8_0" />
+            <option value="$PROJECT_DIR$/IMLib_v2_8_0" />
             <option value="$PROJECT_DIR$/PulltorefreshDemo" />
+            <option value="$PROJECT_DIR$/PushSDK" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/library" />
           </set>
@@ -17,7 +21,12 @@
         <option name="myModules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/CallKit" />
+            <option value="$PROJECT_DIR$/CallLib" />
+            <option value="$PROJECT_DIR$/IMKit_v2_8_0" />
+            <option value="$PROJECT_DIR$/IMLib_v2_8_0" />
             <option value="$PROJECT_DIR$/PulltorefreshDemo" />
+            <option value="$PROJECT_DIR$/PushSDK" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/library" />
           </set>
