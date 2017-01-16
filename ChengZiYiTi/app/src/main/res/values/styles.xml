@@ -64,7 +64,7 @@
         <!--<item name="android:windowExitAnimation">@anim/push_bottom_out</item>-->
     </style>
     <!-- 1、消除应用启动闪黑屏 -->
-    <style name="Theme.splash" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Theme.splash" parent="@android:style/Theme.NoTitleBar.Fullscreen">
         <item name="android:windowBackground">@drawable/huanyingye</item>
     </style>
 </resources>

@@ -6,8 +6,8 @@
     >
 <ImageView
     android:id="@+id/iv_adver"
+    android:background="@drawable/huanyingye"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:scaleType="fitXY"
     />
 </RelativeLayout>

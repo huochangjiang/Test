@@ -22,16 +22,8 @@ public class SplashActivity extends Activity{
             startActivity(intent);
             finish();
         }
-
-
     }
-
-
-
-
-
     protected void initData() {
-
     }
 
     protected void initListeners() {
