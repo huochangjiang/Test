@@ -70,7 +70,7 @@
         <cn.yumutech.weight.MyGridView
 
             android:clickable="true"
-            android:paddingTop="10dp"
+            android:paddingTop="40dp"
            android:background="@android:color/transparent"
             android:layout_height="match_parent"
             android:layout_width="match_parent"

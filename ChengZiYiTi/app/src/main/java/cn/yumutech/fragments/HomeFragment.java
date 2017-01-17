@@ -22,7 +22,6 @@ import cn.yumutech.bean.RequestCanShuNew;
 import cn.yumutech.netUtil.Api;
 import cn.yumutech.unity.App;
 import cn.yumutech.unity.BaseFragment;
-import cn.yumutech.unity.BumenStatusListActivity;
 import cn.yumutech.unity.CommunicationActivity;
 import cn.yumutech.unity.FriendsUrlActivity;
 import cn.yumutech.unity.InspectionTaskActivity;
@@ -31,7 +30,6 @@ import cn.yumutech.unity.PolicyFileActivity;
 import cn.yumutech.unity.ProjectMangerActivity;
 import cn.yumutech.unity.R;
 import cn.yumutech.unity.WorkDongTaiActivity;
-import cn.yumutech.unity.XianStatusListActivity;
 import cn.yumutech.weight.ImagePagerAdapterApply;
 import cn.yumutech.weight.MyGridView;
 import cn.yumutech.weight.StringUtils1;
@@ -78,16 +76,11 @@ public class HomeFragment extends BaseFragment {
         scrollView = (ScrollView) contentView.findViewById(R.id.scrollview);
         myGridView = (MyGridView) contentView.findViewById(R.id.gridView);
         baibaos.add(new BaiBao("时政新闻", R.drawable.lingdaohuodong));
-        baibaos.add(new BaiBao("政策文件", R.drawable.zhengciwenjian));
-       // baibaos.add(new BaiBao("工作动态", R.drawable.gongzuozhuangtai));
-        baibaos.add(new BaiBao("县区动态", R.drawable.quxiandongtai));
-        baibaos.add(new BaiBao("部门动态", R.drawable.bumendongtai));
+        baibaos.add(new BaiBao("动态消息", R.drawable.gongzuozhuangtai));
         baibaos.add(new BaiBao("重点项目", R.drawable.xiangmugongzuo));
-        baibaos.add(new BaiBao("临空新区", R.drawable.gongzuozhuangtai));
+        baibaos.add(new BaiBao("政策文件", R.drawable.zhengciwenjian));
         baibaos.add(new BaiBao("督查督办", R.drawable.duchaduban));
-        baibaos.add(new BaiBao("热点话题", R.drawable.hudongjiaoliu));
         baibaos.add(new BaiBao("友情链接", R.drawable.lianjie));
-
         BaiBaoAdatper baiBaoAdatper=new BaiBaoAdatper(getActivity(), (ArrayList<BaiBao>) baibaos);
         myGridView.setAdapter(baiBaoAdatper);
         myGridView.setFocusable(false);
@@ -147,10 +140,10 @@ public class HomeFragment extends BaseFragment {
                     Intent intent=new Intent(getActivity(), LeaderActivitysActivity.class);
                     startActivity(intent);
                 }else if(i==1){
-                    Intent intent=new Intent(getActivity(), PolicyFileActivity.class);
+                    Intent intent=new Intent(getActivity(), WorkDongTaiActivity.class);
                     startActivity(intent);
                 }else if(i==5){
-                    Intent intent=new Intent(getActivity(), WorkDongTaiActivity.class);
+                    Intent intent=new Intent(getActivity(), FriendsUrlActivity.class);
                     startActivity(intent);
                 }else if(i==4){
                     Intent intent=new Intent(getActivity(), ProjectMangerActivity.class);
@@ -165,10 +158,10 @@ public class HomeFragment extends BaseFragment {
                     Intent intent=new Intent(getActivity(), FriendsUrlActivity.class);
                     startActivity(intent);
                 }else if(i==2){
-                    Intent intent=new Intent(getActivity(), XianStatusListActivity.class);
+                    Intent intent=new Intent(getActivity(), ProjectMangerActivity.class);
                     startActivity(intent);
                 }else if(i==3){
-                    Intent intent=new Intent(getActivity(), BumenStatusListActivity.class);
+                    Intent intent=new Intent(getActivity(), PolicyFileActivity.class);
                     startActivity(intent);
                 }
             }
