@@ -42,6 +42,7 @@ import cn.yumutech.bean.TiJiaoCanShu;
 import cn.yumutech.netUtil.Api;
 import cn.yumutech.netUtil.FileUtils;
 import cn.yumutech.netUtil.HttpRequest;
+import cn.yumutech.netUtil.StringUtils;
 import cn.yumutech.weight.MyGridView;
 import rx.Observer;
 import rx.Subscription;
@@ -61,6 +62,7 @@ public class CompleteActivity extends BaseActivity implements View.OnClickListen
     private static final int PHOTO_REQUEST_TAKEPHOTO = 1;// 拍照
     private static final int PHOTO_REQUEST_GALLERY = 2;// 从相册中选择
     private static final int PHOTO_REQUEST_CUT = 3;// 结果
+    private static final int FILE_SELECT_CODE = 4;// 文件选择结果
     public static final int MODIFYAVATARING = 99; // 修改头像请求开始
     public static final int MODIFYAVATAROK = 100; // 修改成功
     public static final int MODIFYAVATARFAIL = 101; // 修改失败
@@ -197,10 +199,16 @@ public class CompleteActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-
+            case FILE_SELECT_CODE:
+                if (resultCode == RESULT_OK) {
+                    // Get the Uri of the selected file
+                    Uri uri = data.getData();
+                    String path = StringUtils.getPath(this, uri);
+                    Log.e("info",path+"文件路径");
+                }
+                break;
             case PHOTO_REQUEST_TAKEPHOTO:// 当选择拍照时调用
                 if (resultCode == RESULT_OK) {
-
                         Uri uri = data.getData();
                         if(uri == null){
                             //use bundle to get data
@@ -422,4 +430,19 @@ public class CompleteActivity extends BaseActivity implements View.OnClickListen
 
         }
     };
+
+
+   // 打开文件选择器
+
+    private void showFileChooser() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("*/*");
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+
+        try {
+            startActivityForResult( Intent.createChooser(intent, "Select a File to Upload"), FILE_SELECT_CODE);
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(this, "Please install a File Manager.",  Toast.LENGTH_SHORT).show();
+        }
+    }
 }
