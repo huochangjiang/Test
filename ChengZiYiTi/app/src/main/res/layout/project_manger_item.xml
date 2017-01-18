@@ -44,6 +44,7 @@
         android:layout_marginTop="10dp"
         android:layout_below="@+id/ll"
         android:id="@+id/rlll"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
