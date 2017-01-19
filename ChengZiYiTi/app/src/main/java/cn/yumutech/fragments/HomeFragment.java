@@ -24,7 +24,7 @@ import cn.yumutech.unity.App;
 import cn.yumutech.unity.BaseFragment;
 import cn.yumutech.unity.CommunicationActivity;
 import cn.yumutech.unity.FriendsUrlActivity;
-import cn.yumutech.unity.InspectionTaskActivity;
+import cn.yumutech.unity.InspectionTaskNewActivity;
 import cn.yumutech.unity.LeaderActivitysActivity;
 import cn.yumutech.unity.PolicyFileActivity;
 import cn.yumutech.unity.ProjectMangerActivity;
@@ -145,11 +145,11 @@ public class HomeFragment extends BaseFragment {
                 }else if(i==5){
                     Intent intent=new Intent(getActivity(), FriendsUrlActivity.class);
                     startActivity(intent);
-                }else if(i==4){
+                }else if(i==6){
                     Intent intent=new Intent(getActivity(), ProjectMangerActivity.class);
                     startActivity(intent);
-                }else if(i==6){
-                    Intent intent=new Intent(getActivity(), InspectionTaskActivity.class);
+                }else if(i==4){
+                    Intent intent=new Intent(getActivity(), InspectionTaskNewActivity.class);
                     startActivity(intent);
                 }else if(i==7){
                     Intent intent=new Intent(getActivity(), CommunicationActivity.class);

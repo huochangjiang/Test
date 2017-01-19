@@ -8,6 +8,7 @@ import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.HorizontalScrollView;
@@ -198,6 +199,7 @@ public class ProjectMangerActivity extends BaseActivity implements SwipeRefreshL
                         if(App.getContext().getLogo("logo")!=null){
                             RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
                                     new RequestCanShu.DataBean(fenlei,mPage+"",mPageSize+""));
+                            Log.e("fenlei",fenlei);
                             initDatas1(new Gson().toJson(canshus));
                         }else {
                             App.getContext().noLogin(ProjectMangerActivity.this);
@@ -248,6 +250,7 @@ public class ProjectMangerActivity extends BaseActivity implements SwipeRefreshL
                 }
                 loadHome(channels.data);
             }
+
             isMoreLoading = false;
         pullToRefresh.setRefreshing(false);
         }

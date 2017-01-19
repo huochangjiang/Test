@@ -56,16 +56,15 @@ public class ProjectMangerAdpater extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if(holder instanceof ProjectItemViewHolder) {
             if (mDatas != null && mDatas != null && mDatas.size() > 0) {
-                ((ProjectItemViewHolder) holder).laiyuan.setText(mDatas.get(position).original);
+                ((ProjectItemViewHolder) holder).laiyuan.setText(mDatas.get(position).classify);
                 ((ProjectItemViewHolder) holder).textView.setText(mDatas.get(position).title);
                 ((ProjectItemViewHolder) holder).summary.setText(mDatas.get(position).summary);
                 ((ProjectItemViewHolder) holder).time.setText(mDatas.get(position).publish_date);
-                if(mDatas.get(position).amount.equals("")) {
-                    ((ProjectItemViewHolder) holder).money.setText("项目金额:"+"0元");
-                }else{
-                    ((ProjectItemViewHolder) holder).money.setText("项目金额:"+mDatas.get(position).amount+"元");
-                }
-
+//                if(!mDatas.get(position).progress.equals("")&&mDatas.get(position).progress!=null) {
+//                    ((ProjectItemViewHolder) holder).money.setText("项目进度:"+mDatas.get(position).progress+"%");
+//                }else{
+//                    ((ProjectItemViewHolder) holder).money.setText("项目金额:"+"0元");
+//                }
                 if(mDatas.get(position).logo_path==null||mDatas.get(position).logo_path.equals("")){
                     ((ProjectItemViewHolder) holder).iv.setVisibility(View.GONE);
                 }else {
@@ -73,7 +72,7 @@ public class ProjectMangerAdpater extends RecyclerView.Adapter {
 
                     ImageLoader.getInstance().displayImage(mDatas.get(position).logo_path,((ProjectItemViewHolder) holder).iv);
                 }
-                ((ProjectItemViewHolder) holder).guifua.setText("类型:"+mDatas.get(position).type);
+                ((ProjectItemViewHolder) holder).guifua.setText("类型:"+mDatas.get(position).classify);
                 //ImageLoader.getInstance().displayImage(mDatas.get(position).logo_path, ((ProjectItemViewHolder) holder).iv);
                 ((ProjectItemViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
                     @Override

@@ -194,6 +194,9 @@ Observable<WorkDetails> getWorkDetais(@Query("req") String policy);
 //提交完成的任務
     @POST("FinishTask")
     Observable<CompleteBean> getComplete(@Query("req") String item);
+    //通知通报
+    @POST("TaskNotificationList")
+    Observable<CompleteBean> getTaskNotifiList(@Query("req") String item);
 
 
     //显示任务详情

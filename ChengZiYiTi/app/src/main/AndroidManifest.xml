@@ -189,6 +189,11 @@
         <activity android:name=".BumenStatusListActivity"/>
         <activity android:name=".BumenStatusListDetailActivity"/>
 
+        <activity android:name=".InspectionTaskNewActivity"/>
+        <activity android:name=".TaskNotifiListActivity"/>
+        <activity android:name=".MyTaskActivity"/>
+        <activity android:name=".MyFaBuDeActivity"/>
+
         <!-- 友盟推送集成 -->
         <meta-data
             android:name="UMENG_APPKEY"

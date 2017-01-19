@@ -8,6 +8,7 @@ import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.HorizontalScrollView;
@@ -220,7 +221,9 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
                 if(mPage==0){
                     app.savaHomeJson("WorkListManger",new Gson().toJson(channels));
                 }
-
+                for(int i=0;i<channels.data.size();i++){
+                    Log.e("fenlei",fenlei+"第"+i+""+"个"+channels.data.get(i).title);
+                }
                     loadHome(channels.data);
 
 
@@ -331,6 +334,7 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
                     if(App.getContext().getLogo("logo")!=null){
                         RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
                                 new RequestCanShu.DataBean(fenlei,"0",mPageSize+""));
+                        Log.e("feilei",fenlei);
                         initDatas1(new Gson().toJson(canshus));
                     }else {
                         App.getContext().noLogin(WorkDongTaiActivity.this);
@@ -359,7 +363,7 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
     public void initClassData(){
         if(App.getContext().getLogo("logo")!=null) {
             ModuleClassifyListBeen canshus=new ModuleClassifyListBeen(new ModuleClassifyListBeen.UserBeen(App.getContext().getLogo("logo").data.id,""),
-                    new ModuleClassifyListBeen.DataBeen(""));
+                    new ModuleClassifyListBeen.DataBeen("WorkStatus"));
             initClassDatas1(new Gson().toJson(canshus));
         }else {
 //            Toast.makeText(this,"您还未登陆",Toast.LENGTH_SHORT).show();

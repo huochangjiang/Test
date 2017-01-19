@@ -27,7 +27,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="临空新区"
+                android:text="工作动态"
                 android:textSize="16sp"
                 android:textColor="@color/white"
                 android:id="@+id/tv_home"
@@ -39,7 +39,7 @@
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/ll_feilei">
+        android:layout_below="@+id/rl_feilei">
         <include
             layout="@layout/progressbar"
             android:id="@+id/myprog"
@@ -105,37 +105,54 @@
             <!--android:text="市级部门"-->
             <!--android:textSize="18sp"-->
             <!--android:textColor="@color/rc_location_text"/>-->
-    <LinearLayout
-        android:visibility="gone"
-        android:id="@+id/ll_feilei"
+    <RelativeLayout
+        android:id="@+id/rl_feilei"
         android:layout_below="@+id/id_toolbar"
-        android:background="@color/fengexianone"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:orientation="horizontal"
-        android:focusable="true">
-        <HorizontalScrollView
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_gravity="center_vertical"
-            android:id="@+id/horscroll_one"
+        android:layout_height="45dp">
+
+        <LinearLayout
+            android:id="@+id/ll_feilei"
+            android:background="@color/white"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scrollbars="none" >
-        </HorizontalScrollView>
-    </LinearLayout>
+            android:layout_height="45dp"
+            android:orientation="horizontal"
+            android:focusable="true">
+            <HorizontalScrollView
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/horscroll_one"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none" >
+            </HorizontalScrollView>
+        </LinearLayout>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/zuomengceng"
+            android:scaleType="fitXY"
+            android:layout_alignParentLeft="true"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/youmengceng"
+            android:scaleType="fitXY"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
     <include
         android:id="@+id/tishi"
         layout="@layout/nodata_item"
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ll_feilei"/>
+        android:layout_below="@+id/rl_feilei"/>
     <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:id="@+id/pull_to_refresh"
         android:background="@color/white"
-        android:layout_below="@+id/ll_feilei"
+        android:layout_below="@+id/rl_feilei"
         android:layout_height="wrap_content">
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"

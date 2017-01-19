@@ -3,28 +3,15 @@ package cn.yumutech.bean;
 import java.util.List;
 
 /**
- * Created by huo on 2016/11/10.
+ * Created by Administrator on 2017/1/18.
  */
-public class ProjectManger {
-
+public class TaskNotifiList {
     /**
-     * message : 成功获取数据
-     * code : 0
+     * status : {"message":"成功获取数据","code":"0"}
+     * data : [{"summary":"习近平指出新准则新条例","id":"3","classify":"督查通报","title":"习近平指出新准则新条例的最鲜明特点2","publish_date":"2016-11-07 18:10:56","original":"环球网2"},{"summary":"<p>\r\n\t231231<\/p>\r\n...","id":"2","classify":"督查通报","title":"12312","publish_date":"2016-11-07 17:30:35","original":"23213"}]
      */
 
     public StatusBean status;
-    /**
-     * amount : 111
-     * summary : 12312
-     * id : 2
-     * classify : 资阳
-     * title : 项目工作2
-     * publish_date : 2016-11-08  14:14:37
-     * logo_path : http://localhost:8080/unity/userfiles/images/03e6cebe-6245-4ca8-a975-e275fd13fe8b.jpg
-     * original : 112
-     * type : 总体规划
-     */
-
     public List<DataBean> data;
 
     public StatusBean getStatus() {
@@ -44,6 +31,11 @@ public class ProjectManger {
     }
 
     public static class StatusBean {
+        /**
+         * message : 成功获取数据
+         * code : 0
+         */
+
         public String message;
         public String code;
 
@@ -65,21 +57,21 @@ public class ProjectManger {
     }
 
     public static class DataBean {
-//        public String amount;
+        /**
+         * summary : 习近平指出新准则新条例
+         * id : 3
+         * classify : 督查通报
+         * title : 习近平指出新准则新条例的最鲜明特点2
+         * publish_date : 2016-11-07 18:10:56
+         * original : 环球网2
+         */
+
         public String summary;
         public String id;
         public String classify;
         public String title;
         public String publish_date;
-        public String logo_path;
-//        public String original;
-//        public String type;
-        public String progress;
-        public String basic;
-        public String requirement;
-        public String promotion;
-        public String problem;
-
+        public String original;
 
         public String getSummary() {
             return summary;
@@ -121,6 +113,12 @@ public class ProjectManger {
             this.publish_date = publish_date;
         }
 
+        public String getOriginal() {
+            return original;
+        }
 
+        public void setOriginal(String original) {
+            this.original = original;
+        }
     }
 }
