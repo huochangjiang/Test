@@ -32,6 +32,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
@@ -205,6 +206,11 @@ public class CompleteActivity extends BaseActivity implements View.OnClickListen
                     Uri uri = data.getData();
                     String path = StringUtils.getPath(this, uri);
                     Log.e("info",path+"文件路径");
+                    try {
+                        encodeBase64File(path);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
                 break;
             case PHOTO_REQUEST_TAKEPHOTO:// 当选择拍照时调用
@@ -444,5 +450,13 @@ public class CompleteActivity extends BaseActivity implements View.OnClickListen
         } catch (android.content.ActivityNotFoundException ex) {
             Toast.makeText(this, "Please install a File Manager.",  Toast.LENGTH_SHORT).show();
         }
+    }
+    public static String encodeBase64File(String path) throws Exception {
+        File file = new File(path);
+        FileInputStream inputFile = new FileInputStream(file);
+        byte[] buffer = new byte[(int)file.length()];
+        inputFile.read(buffer);
+        inputFile.close();
+        return Base64.encodeToString(buffer,Base64.DEFAULT);
     }
 }
