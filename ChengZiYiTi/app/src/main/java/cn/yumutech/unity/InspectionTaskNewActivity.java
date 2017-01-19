@@ -6,8 +6,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import cn.yumutech.Adapter.MyFaBuDeAdapter;
-
 /**
  * Created by Administrator on 2017/1/18.
  */
@@ -65,7 +63,7 @@ public class InspectionTaskNewActivity extends BaseActivity implements View.OnCl
                 break;
             case R.id.rl_item_two:
                 Intent intent2=new Intent();
-                intent2.setClass(InspectionTaskNewActivity.this,MyFaBuDeAdapter.class);
+                intent2.setClass(InspectionTaskNewActivity.this,MyFaBuDeActivity.class);
                 startActivity(intent2);
                 break;
             case R.id.rl_item_three:
