@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +18,7 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.yumutech.Adapter.ShowTaskDetaisAdapter;
 import cn.yumutech.Adapter.XiangqingZhipaiAdaper;
 import cn.yumutech.LookResultAdapter;
 import cn.yumutech.bean.AcceptTask;
@@ -62,9 +64,14 @@ public class ShowTaskDetailActivity extends BaseActivity{
     private TextView zhuangtaishijian1;
     private TextView wanchenzhe;
     public List<String> phones=new ArrayList<>();
-//
+    private List<ShowTaskDetail.DataBean.TaskCommentBean.FilesBean> mDatas=new ArrayList<>();
+
+    //
 //    private RelativeLayout rl_zhipai,rl_zhipai2;
     private View xian;
+    private ListView mFilelistView;
+    private ShowTaskDetaisAdapter showAdapter;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_show_task_detail;
@@ -106,6 +113,10 @@ public class ShowTaskDetailActivity extends BaseActivity{
         gridView= (GridView) findViewById(R.id.gridView);
         rl_wancheng= (RelativeLayout) findViewById(R.id.rl_wancheng);
         gridView= (GridView) findViewById(R.id.gridView);
+        mFilelistView = (ListView) findViewById(R.id.listView);
+        showAdapter = new ShowTaskDetaisAdapter(this,mDatas);
+        mFilelistView.setAdapter(showAdapter);
+
 //        if(SaveData.getInstance().showTaskComplete!=null){
 //            mData=SaveData.getInstance().showTaskComplete;
             lookAdapter=new LookResultAdapter(ShowTaskDetailActivity.this,mData);
@@ -270,6 +281,9 @@ public class ShowTaskDetailActivity extends BaseActivity{
                     accept.setVisibility(View.GONE);
                     complete.setVisibility(View.GONE);
                     rl_wancheng.setVisibility(View.VISIBLE);
+                    if(showTaskDetail.data.task_comment.getFiles()!=null&&showTaskDetail.data.task_comment.getFiles().size()>0){
+                        showAdapter.dataChange(showTaskDetail.data.task_comment.getFiles());
+                    }
                     lookResult(mData);
                 }
                 myprog.setVisibility(View.GONE);
