@@ -87,12 +87,20 @@
             android:configChanges="orientation|screenSize|keyboardHidden|keyboard|"
             android:screenOrientation="portrait"
             />
-        <activity android:name=".LeaderActivitysActivity" />
+        <activity android:name=".LeaderActivitysActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".LeadersDetaislActivity" />
-        <activity android:name=".PolicyFileActivity" />
+        <activity android:name=".PolicyFileActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".PolyDetasActivity" />
-        <activity android:name=".WorkDongTaiActivity" />
-        <activity android:name=".ProjectMangerActivity" />
+        <activity android:name=".WorkDongTaiActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".ProjectMangerActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".FriendsUrlActivity" />
         <activity android:name=".FriendDetasActivity" />
         <activity android:name=".SplashActivity"
@@ -193,6 +201,11 @@
         <activity android:name=".TaskNotifiListActivity"/>
         <activity android:name=".MyTaskActivity"/>
         <activity android:name=".MyFaBuDeActivity"/>
+        <activity android:name=".CommuContactActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".CommuGroupActivity"/>
+        <activity android:name=".CommunicationNewActivity"/>
 
         <!-- 友盟推送集成 -->
         <meta-data

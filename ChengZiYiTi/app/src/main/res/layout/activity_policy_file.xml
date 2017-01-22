@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent"
-    android:background="@color/f0f0f0"
+    android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="cn.yumutech.unity.LeaderActivitysActivity">
     <android.support.v7.widget.Toolbar
@@ -147,13 +147,42 @@
             <!--android:text="部门"-->
             <!--android:textSize="18sp"-->
             <!--android:textColor="@color/rc_location_text"/>-->
+    <cn.yumutech.weight.MyEditText
+        android:layout_below="@+id/id_toolbar"
+        android:paddingRight="5dp"
+        android:id="@+id/search"
+        android:layout_gravity="center_vertical"
+        android:imeOptions="actionSearch"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:inputType="text"
+        android:paddingLeft="5dp"
+        android:layout_marginRight="10dp"
+        android:drawableLeft="@drawable/search"
+        android:layout_centerVertical="true"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:textColor="@color/item_title"
+        android:textSize="15sp"
+        android:textColorHint="@color/zitiyanse"
+        android:background="@drawable/edittext_frame"
+        android:layout_marginLeft="10dp"
+        android:drawablePadding="5dp"
+        android:focusableInTouchMode="true"
+        android:hint="搜索">
+    </cn.yumutech.weight.MyEditText>
     <RelativeLayout
         android:id="@+id/rl_feilei"
-        android:layout_below="@+id/id_toolbar"
+        android:layout_below="@+id/search"
         android:layout_width="match_parent"
         android:layout_height="45dp">
-
+        <View
+            android:id="@+id/xian"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/fengexianone"/>
     <LinearLayout
+        android:layout_below="@+id/xian"
         android:id="@+id/ll_feilei"
         android:background="@color/white"
         android:layout_width="match_parent"

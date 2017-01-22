@@ -1,22 +1,20 @@
 package cn.yumutech.bean;
 
 /**
- * Created by Administrator on 2017/1/18.
+ * Created by Administrator on 2017/1/19.
  */
-public class TaskNotifiListBeen {
+public class WorkStatusSearchBeen {
     /**
      * user : {"account":"unity","session":"1234567890"}
-     * data : {"classify":"督查通报","offset":"0","row_count":"5"}
+     * data : {"offset":"0","key":"一体化","row_count":"5"}
      */
 
     public UserBean user;
     public DataBean data;
-
-    public TaskNotifiListBeen(UserBean user,DataBean data){
+    public WorkStatusSearchBeen(UserBean user,DataBean data){
         this.user=user;
         this.data=data;
     }
-
     public UserBean getUser() {
         return user;
     }
@@ -64,33 +62,33 @@ public class TaskNotifiListBeen {
 
     public static class DataBean {
         /**
-         * classify : 督查通报
          * offset : 0
+         * key : 一体化
          * row_count : 5
          */
 
-        public String classify;
         public String offset;
+        public String key;
         public String row_count;
-        public DataBean(String classify,String offset,String row_count){
-            this.classify=classify;
+        public DataBean(String offset,String key,String row_count){
             this.offset=offset;
+            this.key=key;
             this.row_count=row_count;
         }
-        public String getClassify() {
-            return classify;
-        }
-
-        public void setClassify(String classify) {
-            this.classify = classify;
-        }
-
         public String getOffset() {
             return offset;
         }
 
         public void setOffset(String offset) {
             this.offset = offset;
+        }
+
+        public String getKey() {
+            return key;
+        }
+
+        public void setKey(String key) {
+            this.key = key;
         }
 
         public String getRow_count() {

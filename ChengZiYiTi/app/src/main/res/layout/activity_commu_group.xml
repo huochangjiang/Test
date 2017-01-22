@@ -4,6 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/id_toolbar"
         app:contentInsetStart="0dp"
@@ -17,33 +18,24 @@
             >
             <ImageView
                 android:scaleType="centerInside"
-                android:layout_width="40dp"
+                android:layout_width="50dp"
                 android:id="@+id/back"
                 android:src="@drawable/gimi_back"
                 android:layout_height="match_parent" />
             <TextView
-                android:layout_toRightOf="@+id/back"
-                android:layout_centerVertical="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="群组"
-                android:textSize="18sp"
-                android:visibility="gone"
-                android:textColor="@color/white"/>
-            <TextView
                 android:layout_width="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="督查通知"
-                android:textSize="18sp"
+                android:text="讨论组"
+                android:textSize="16sp"
                 android:textColor="@color/white"
-                android:id="@+id/tv_message"
+                android:id="@+id/tv_home"
                 android:layout_height="wrap_content" />
-
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
-    <TextView
-        android:id="@+id/text"
-        android:text="1234"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_below="@+id/id_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </android.support.v4.view.ViewPager>
 </LinearLayout>

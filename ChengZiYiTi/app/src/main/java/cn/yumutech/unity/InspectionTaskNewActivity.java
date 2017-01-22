@@ -77,10 +77,19 @@ public class InspectionTaskNewActivity extends BaseActivity implements View.OnCl
                 startActivity(intent4);
                 break;
             case R.id.rl_item_five:
+                Intent intent5=new Intent();
+                intent5.setClass(InspectionTaskNewActivity.this,CommunicationNewActivity.class);
+                startActivity(intent5);
                 break;
             case R.id.rl_item_six:
+                Intent intent6=new Intent();
+                intent6.setClass(InspectionTaskNewActivity.this,CommuContactActivity.class);
+                startActivity(intent6);
                 break;
             case R.id.rl_item_seven:
+                Intent intent7=new Intent();
+                intent7.setClass(InspectionTaskNewActivity.this,CommuGroupActivity.class);
+                startActivity(intent7);
                 break;
             case R.id.rl_item_eitht:
                 Intent intent8=new Intent();

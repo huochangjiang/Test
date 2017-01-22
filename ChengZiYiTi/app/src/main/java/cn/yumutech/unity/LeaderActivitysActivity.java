@@ -26,6 +26,7 @@ import cn.yumutech.bean.ModuleClassifyList;
 import cn.yumutech.bean.ModuleClassifyListBeen;
 import cn.yumutech.bean.RequestCanShu;
 import cn.yumutech.netUtil.Api;
+import cn.yumutech.weight.MyEditText;
 import cn.yumutech.weight.StringUtils1;
 import rx.Observer;
 import rx.Subscription;
@@ -62,6 +63,7 @@ public class LeaderActivitysActivity extends BaseActivity implements SwipeRefres
     List<LinearLayout> linears = new ArrayList<LinearLayout>();
     private List<HorizontalScrollView> hors = new ArrayList<>();
     private View tishi;
+    private MyEditText search;
     protected void unsubscribe( Subscription subscription) {
         if (subscription != null && !subscription.isUnsubscribed()) {
             subscription.unsubscribe();
@@ -104,6 +106,7 @@ public class LeaderActivitysActivity extends BaseActivity implements SwipeRefres
         net_connect = findViewById(R.id.netconnect);
         initLocal();
         initClassData();
+        search= (MyEditText) findViewById(R.id.search);
     }
     //加载缓存
     private void initLocal() {
@@ -249,6 +252,12 @@ public class LeaderActivitysActivity extends BaseActivity implements SwipeRefres
                     recyclerView.setVisibility(View.GONE);
                     initData();
                 }
+            }
+        });
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
     }
