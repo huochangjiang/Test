@@ -329,6 +329,13 @@
                 android:layout_marginRight="10dp"
                 >
             </GridView>
+            <ListView
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/gridView"
+                android:id="@+id/listView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </ListView>
         </RelativeLayout>
     </RelativeLayout>
     </ScrollView>

@@ -54,10 +54,10 @@ public class XiangqingZhipaiAdaper extends BaseAdapter{
         }
         if(data.data.assign!=null&&data.data.assign.size()>0){
 //            String time1= SaveData.getInstance().getStringDateShort(data.data.assign.get(i).assign_date);
-            String time1= data.data.assign.get(i).assign_date;
-            vh.zhu_zhipaishijian.setText(time1);
-            vh.tv_zhipairen1.setText(data.data.assign.get(i).assigner_user_name);
-            vh.zhu_banren.setText(data.data.assign.get(i).assignee_user_name);
+//            String time1= data.data.assign.get(i).assign_date;
+//            vh.zhu_zhipaishijian.setText(time1);
+//            vh.tv_zhipairen1.setText(data.data.assign.get(i).assigner_user_name);
+//            vh.zhu_banren.setText(data.data.assign.get(i).assignee_user_name);
         }
         return myView;
     }

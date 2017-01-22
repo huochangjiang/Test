@@ -32,17 +32,22 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.yumutech.Adapter.CompleteAdapter;
+import cn.yumutech.Adapter.FilesUploadAdapter;
 import cn.yumutech.bean.CompleteBean;
 import cn.yumutech.bean.TiJiaoCanShu;
 import cn.yumutech.netUtil.Api;
 import cn.yumutech.netUtil.FileUtils;
 import cn.yumutech.netUtil.HttpRequest;
+import cn.yumutech.netUtil.StringUtils;
 import cn.yumutech.weight.MyGridView;
+import cn.yumutech.weight.MyListview;
+import de.greenrobot.event.EventBus;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -61,6 +66,7 @@ public class CompleteActivity extends BaseActivity implements View.OnClickListen
     private static final int PHOTO_REQUEST_TAKEPHOTO = 1;// 拍照
     private static final int PHOTO_REQUEST_GALLERY = 2;// 从相册中选择
     private static final int PHOTO_REQUEST_CUT = 3;// 结果
+    private static final int FILE_SELECT_CODE = 4;// 文件选择结果
     public static final int MODIFYAVATARING = 99; // 修改头像请求开始
     public static final int MODIFYAVATAROK = 100; // 修改成功
     public static final int MODIFYAVATARFAIL = 101; // 修改失败
@@ -69,6 +75,8 @@ public class CompleteActivity extends BaseActivity implements View.OnClickListen
     private Uri uritempFile;
     private EditText editText;
     private String taskId;
+    List<String> mDatas=new ArrayList<>();
+    private FilesUploadAdapter mFileAdapter;
 
     @Override
     protected int getLayoutId() {
@@ -77,6 +85,7 @@ public class CompleteActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     protected void initViews(Bundle savedInstanceState) {
+        EventBus.getDefault().register(this);
         Intent intent=getIntent();
         if(intent!=null){
             taskId = intent.getStringExtra("tastid");
@@ -88,6 +97,9 @@ public class CompleteActivity extends BaseActivity implements View.OnClickListen
         mButton.setOnClickListener(this);
         mAdapter=new CompleteAdapter(this,bitmapBeen);
         MyGridView myGridView= (MyGridView) findViewById(R.id.gridView);
+        MyListview listView= (MyListview) findViewById(R.id.listview);
+        mFileAdapter = new FilesUploadAdapter(this,mDatas);
+        listView.setAdapter(mFileAdapter);
         myGridView.setAdapter(mAdapter);
         myGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -194,13 +206,30 @@ public class CompleteActivity extends BaseActivity implements View.OnClickListen
 
 
 
+
+
+List<String> mFilePath=new ArrayList<>();
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-
+            case FILE_SELECT_CODE:
+                if (resultCode == RESULT_OK) {
+                    // Get the Uri of the selected file
+                    Uri uri = data.getData();
+                    String path = StringUtils.getPath(this, uri);
+                    if(path!=null){
+                        mFilePath.add(path);
+                    }
+                    try {
+                        mFileBeans.add(new TiJiaoCanShu.DataBean.FileBean(getFileName(path),getMimeType(path), encodeBase64File(path)));
+                        mFileAdapter.dataChange(mFilePath);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                break;
             case PHOTO_REQUEST_TAKEPHOTO:// 当选择拍照时调用
                 if (resultCode == RESULT_OK) {
-
                         Uri uri = data.getData();
                         if(uri == null){
                             //use bundle to get data
@@ -367,6 +396,7 @@ public class CompleteActivity extends BaseActivity implements View.OnClickListen
     }
 
     List<TiJiaoCanShu.DataBean.PhotosBean> mPhoneBeans=new ArrayList<>();
+    List<TiJiaoCanShu.DataBean.FileBean> mFileBeans=new ArrayList<>();
     @Override
     public void onClick(View view) {
         switch (view.getId()){
@@ -382,11 +412,23 @@ public class CompleteActivity extends BaseActivity implements View.OnClickListen
                 dataBean.setTask_comment(editText.getText().toString().trim());
                 dataBean.setTask_id(taskId);
                 dataBean.setPhotos(mPhoneBeans);
+                dataBean.setFiles(mFileBeans);
                 HttpRequest.getInstance(this).upLoadTouXiang(new Gson().toJson(new TiJiaoCanShu(new TiJiaoCanShu.UserBean(App.getContext().getLogo("logo").data.id,"1234345"),
                         dataBean)),mHandler);
                 break;
         }
     }
+
+    public void onEventMainThread(String info) {
+        if(info.equals("bb")){
+            showFileChooser();
+        }else {
+            mFilePath.remove(Integer.valueOf(info).intValue());
+            mFileBeans.remove(Integer.valueOf(info).intValue());
+            mFileAdapter.dataChange(mFilePath);
+        }
+    }
+
 
     Handler mHandler=new Handler(){
         @Override
@@ -422,4 +464,49 @@ public class CompleteActivity extends BaseActivity implements View.OnClickListen
 
         }
     };
+
+
+   // 打开文件选择器
+
+    private void showFileChooser() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("*/*");
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+
+        try {
+            startActivityForResult( Intent.createChooser(intent, "Select a File to Upload"), FILE_SELECT_CODE);
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(this, "Please install a File Manager.",  Toast.LENGTH_SHORT).show();
+        }
+    }
+    public static String encodeBase64File(String path) throws Exception {
+        File file = new File(path);
+        FileInputStream inputFile = new FileInputStream(file);
+        byte[] buffer = new byte[(int)file.length()];
+        inputFile.read(buffer);
+        inputFile.close();
+        return Base64.encodeToString(buffer,Base64.DEFAULT);
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+    //获取文件类型
+    public static String getMimeType(String fileName) {
+        String prefix = fileName.substring(fileName.lastIndexOf(".") + 1);
+        return prefix;
+    }
+    //获取文件名称
+    public String getFileName(String pathandname) {
+
+        int start = pathandname.lastIndexOf("/");
+        int end = pathandname.lastIndexOf(".");
+        if (start != -1 && end != -1) {
+            return pathandname.substring(start + 1, end);
+        } else {
+            return null;
+        }
+
+    }
 }
