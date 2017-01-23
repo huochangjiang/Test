@@ -44,7 +44,7 @@ public class TaskNotifiListAdapter extends RecyclerView.Adapter{
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == ITEM_VIEW) {
-            View view = mLayoutInflater.inflate(R.layout.leader_activity_adapter, parent, false);
+            View view = mLayoutInflater.inflate(R.layout.project_manger_item, parent, false);
             return new ItemViewHolder(view);
         }else if (viewType == FOOT_VIEW) {
             View view = mLayoutInflater.inflate(R.layout.instance_load_more_layout, parent, false);

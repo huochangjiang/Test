@@ -23,11 +23,7 @@ import cn.yumutech.bean.LeaderActivitsDetails;
 import cn.yumutech.bean.LeaderActivitys;
 import cn.yumutech.bean.ModuleClassifyList;
 import cn.yumutech.bean.MovieRecommend;
-import cn.yumutech.bean.PrijectDetaisl;
 import cn.yumutech.bean.ProjectManger;
-import cn.yumutech.bean.PolicyFileSearch;
-import cn.yumutech.bean.ProjectManger;
-import cn.yumutech.bean.ProjectWorkSearch;
 import cn.yumutech.bean.ProjectialsXiangqing;
 import cn.yumutech.bean.PublishTask;
 import cn.yumutech.bean.RefreshBean;
@@ -36,6 +32,7 @@ import cn.yumutech.bean.ShowMyTask;
 import cn.yumutech.bean.ShowTaskDetail;
 import cn.yumutech.bean.ShuaXinQunZhu;
 import cn.yumutech.bean.TaskNotifiList;
+import cn.yumutech.bean.TaskNotificationItem;
 import cn.yumutech.bean.TuiChuQun;
 import cn.yumutech.bean.Update;
 import cn.yumutech.bean.UpdateUserPhoto;
@@ -219,6 +216,10 @@ Observable<WorkDetails> getWorkDetais(@Query("req") String policy);
     //通知通报查询接口
     @POST("TaskNotificationSearch")
     Observable<TaskNotifiList> getTaskNotificationSearch(@Query("req") String item);
+    //通知通报详情接口
+    @POST("TaskNotificationItem")
+    Observable<TaskNotificationItem> getTaskNotificationItem(@Query("req") String item);
+
 
 
     //显示任务详情

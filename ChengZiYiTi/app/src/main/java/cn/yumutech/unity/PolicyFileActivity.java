@@ -27,7 +27,6 @@ import java.util.List;
 import cn.yumutech.Adapter.PolicyAdapter;
 import cn.yumutech.bean.ModuleClassifyList;
 import cn.yumutech.bean.ModuleClassifyListBeen;
-import cn.yumutech.bean.PolicyFileSearchBeen;
 import cn.yumutech.bean.RequestCanShu;
 import cn.yumutech.bean.ZhengCeFile;
 import cn.yumutech.netUtil.Api;
@@ -72,6 +71,7 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
     private HorizontalScrollView diqu;
     private MyEditText search;
     private boolean isSearch;
+    private String searchKey="";
     protected void unsubscribe( Subscription subscription) {
         if (subscription != null && !subscription.isUnsubscribed()) {
             subscription.unsubscribe();
@@ -126,15 +126,18 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
     //搜索到的内容的结果
     private void initSearch(String key) {
         if(App.getContext().getLogo("logo")!=null) {
-            PolicyFileSearchBeen canshus=new PolicyFileSearchBeen(new PolicyFileSearchBeen.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
-                    new PolicyFileSearchBeen.DataBean(key,mPageSearch+"",mPageSize+""));
+            searchKey=key;
+            RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
+                    new RequestCanShu.DataBean(fenlei,searchKey,mPageSearch+"",mPageSize+""));
+//            PolicyFileSearchBeen canshus=new PolicyFileSearchBeen(new PolicyFileSearchBeen.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
+//                    new PolicyFileSearchBeen.DataBean(key,mPageSearch+"",mPageSize+""));
             initSearch1(new Gson().toJson(canshus));
         }else {
 //            Toast.makeText(this,"您还未登陆",Toast.LENGTH_SHORT).show();
         }
     }
     private void initSearch1(String canshu) {
-        subscription = Api.getMangoApi1().getPolicyFileSearch(canshu)
+        subscription = Api.getMangoApi1().getPolicy(canshu)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer2);
@@ -216,7 +219,7 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
     protected void initData() {
         if(App.getContext().getLogo("logo")!=null){
             RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
-                    new RequestCanShu.DataBean(fenlei,mPage+"",mPageSize+""));
+                    new RequestCanShu.DataBean(fenlei,searchKey,mPage+"",mPageSize+""));
             initDatas1(new Gson().toJson(canshus));
         }else {
            App.getContext().noLogin(PolicyFileActivity.this);
@@ -394,8 +397,10 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
                         isRefresh=true;
                         mPageSearch=mdatas.size();
                         if(App.getContext().getLogo("logo")!=null) {
-                            PolicyFileSearchBeen canshus=new PolicyFileSearchBeen(new PolicyFileSearchBeen.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
-                                    new PolicyFileSearchBeen.DataBean(search.getText().toString().trim(),mPageSearch+"",mPageSize+""));
+                            RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
+                                    new RequestCanShu.DataBean(fenlei,search.getText().toString().trim(),mPageSearch+"",mPageSize+""));
+//                            PolicyFileSearchBeen canshus=new PolicyFileSearchBeen(new PolicyFileSearchBeen.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
+//                                    new PolicyFileSearchBeen.DataBean(search.getText().toString().trim(),mPageSearch+"",mPageSize+""));
                             initSearch1(new Gson().toJson(canshus));
                         }
                     }else {
@@ -405,7 +410,7 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
                             mPage=mdatas.size();
                             if(App.getContext().getLogo("logo")!=null){
                                 RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
-                                        new RequestCanShu.DataBean(fenlei,mPage+"",mPageSize+""));
+                                        new RequestCanShu.DataBean(fenlei,searchKey,mPage+"",mPageSize+""));
                                 initDatas1(new Gson().toJson(canshus));
                             }else {
                                 App.getContext().noLogin(PolicyFileActivity.this);
@@ -435,6 +440,7 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
                     }
                     if(search.getText().toString().length()>0){
                         isSearch=true;
+                        mPageSearch=0;
                         initSearch(search.getText().toString().trim());
                     }else {
                         isSearch=false;
@@ -509,13 +515,18 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
                 case 1:
                     if(isSearch){
                         isSearch=true;
+                        isRefresh=false;
+                        mPageSearch=0;
+                        isMoreLoading=true;
                         initSearch(search.getText().toString().trim());
                     }else {
                         mPage=0;
                         isRefresh=false;
+                        searchKey="";
+                        isMoreLoading=true;
                         if(App.getContext().getLogo("logo")!=null){
                             RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
-                                    new RequestCanShu.DataBean(fenlei,mPage+"",mPageSize+""));
+                                    new RequestCanShu.DataBean(fenlei,searchKey,mPage+"",mPageSize+""));
                             initDatas1(new Gson().toJson(canshus));
                         }else {
                             App.getContext().noLogin(PolicyFileActivity.this);
@@ -615,6 +626,7 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
 //                    setAnimation();
                     isSearch=false;
                     search.setText("");
+                    searchKey="";
                     tishi.setVisibility(View.GONE);
                     getIndex(tv);
                     if(xiabiao==0){

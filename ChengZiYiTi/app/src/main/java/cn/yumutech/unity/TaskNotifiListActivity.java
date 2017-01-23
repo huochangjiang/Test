@@ -31,7 +31,6 @@ import cn.yumutech.bean.ModuleClassifyList;
 import cn.yumutech.bean.ModuleClassifyListBeen;
 import cn.yumutech.bean.TaskNotifiList;
 import cn.yumutech.bean.TaskNotifiListBeen;
-import cn.yumutech.bean.TaskNotificationSearchBeen;
 import cn.yumutech.netUtil.Api;
 import cn.yumutech.weight.MyEditText;
 import cn.yumutech.weight.StringUtils1;
@@ -74,6 +73,7 @@ public class TaskNotifiListActivity extends BaseActivity implements SwipeRefresh
     private View tishi;
     private MyEditText search;
     private boolean isSearch;
+    private String searchKey="";
     protected void unsubscribe( Subscription subscription) {
         if (subscription != null && !subscription.isUnsubscribed()) {
             subscription.unsubscribe();
@@ -174,7 +174,7 @@ public class TaskNotifiListActivity extends BaseActivity implements SwipeRefresh
     @Override
     protected void initData() {
         TaskNotifiListBeen taskNotifiItemBeen = new TaskNotifiListBeen(new TaskNotifiListBeen.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
-                new TaskNotifiListBeen.DataBean(fenlei,"0","5"));
+                new TaskNotifiListBeen.DataBean(fenlei,searchKey,mPage+"",mPageSize+""));
         getData1(new Gson().toJson(taskNotifiItemBeen));
     }
 
@@ -227,9 +227,8 @@ public class TaskNotifiListActivity extends BaseActivity implements SwipeRefresh
         mAdapter.setLisener(new TaskNotifiListAdapter.OnitemClick() {
             @Override
             public void onitemClice(TaskNotifiList.DataBean data) {
-                Intent intent=new Intent(TaskNotifiListActivity.this,LeadersDetaislActivity.class);
+                Intent intent=new Intent(TaskNotifiListActivity.this,TaskNotifiListDetailActivity.class);
                 intent.putExtra("id",data.id);
-                intent.putExtra("type","1");
                 startActivity(intent);
             }
         });
@@ -244,8 +243,10 @@ public class TaskNotifiListActivity extends BaseActivity implements SwipeRefresh
                         isRefresh=true;
                         mPageSearch=leaderActivitys.size();
                         if(App.getContext().getLogo("logo")!=null) {
-                            TaskNotificationSearchBeen canshus=new TaskNotificationSearchBeen(new TaskNotificationSearchBeen.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
-                                    new TaskNotificationSearchBeen.DataBean(search.getText().toString().trim(),mPageSearch+"",mPageSize+""));
+                            TaskNotifiListBeen canshus = new TaskNotifiListBeen(new TaskNotifiListBeen.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
+                                    new TaskNotifiListBeen.DataBean(fenlei,search.getText().toString().trim(),mPageSearch+"",mPageSize+""));
+//                            TaskNotificationSearchBeen canshus=new TaskNotificationSearchBeen(new TaskNotificationSearchBeen.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
+//                                    new TaskNotificationSearchBeen.DataBean(search.getText().toString().trim(),mPageSearch+"",mPageSize+""));
                             initSearch1(new Gson().toJson(canshus));
                         }
                     }else {
@@ -254,7 +255,7 @@ public class TaskNotifiListActivity extends BaseActivity implements SwipeRefresh
                             isRefresh=true;
                             mPage=leaderActivitys.size();
                             TaskNotifiListBeen taskNotifiItemBeen = new TaskNotifiListBeen(new TaskNotifiListBeen.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
-                                    new TaskNotifiListBeen.DataBean(fenlei,mPage+"",mPageSize+""));
+                                    new TaskNotifiListBeen.DataBean(fenlei,searchKey,mPage+"",mPageSize+""));
                             getData1(new Gson().toJson(taskNotifiItemBeen));
                         }
                     }
@@ -292,6 +293,7 @@ public class TaskNotifiListActivity extends BaseActivity implements SwipeRefresh
                     }
                     if(search.getText().toString().length()>0){
                         isSearch=true;
+                        mPageSearch=0;
                         initSearch(search.getText().toString().trim());
                     }else {
                         isSearch=false;
@@ -339,8 +341,11 @@ public class TaskNotifiListActivity extends BaseActivity implements SwipeRefresh
     //搜索到的内容的结果
     private void initSearch(String key) {
         if(App.getContext().getLogo("logo")!=null) {
-            TaskNotificationSearchBeen canshus=new TaskNotificationSearchBeen(new TaskNotificationSearchBeen.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
-                    new TaskNotificationSearchBeen.DataBean(key,mPageSearch+"",mPageSize+""));
+            searchKey=key;
+            TaskNotifiListBeen canshus = new TaskNotifiListBeen(new TaskNotifiListBeen.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
+                    new TaskNotifiListBeen.DataBean(fenlei,searchKey,mPageSearch+"",mPageSize+""));
+//            TaskNotificationSearchBeen canshus=new TaskNotificationSearchBeen(new TaskNotificationSearchBeen.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
+//                    new TaskNotificationSearchBeen.DataBean(key,mPageSearch+"",mPageSize+""));
             initSearch1(new Gson().toJson(canshus));
         }else {
 //            Toast.makeText(this,"您还未登陆",Toast.LENGTH_SHORT).show();
@@ -348,7 +353,7 @@ public class TaskNotifiListActivity extends BaseActivity implements SwipeRefresh
     }
 
     private void initSearch1(String canshu) {
-        subscription = Api.getMangoApi1().getTaskNotificationSearch(canshu)
+        subscription = Api.getMangoApi1().getTaskNotifiList(canshu)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer2);
@@ -459,6 +464,7 @@ public class TaskNotifiListActivity extends BaseActivity implements SwipeRefresh
 //                    setAnimation();
                     isSearch=false;
                     search.setText("");
+                    searchKey="";
                     tishi.setVisibility(View.GONE);
                     getIndex(tv);
                     if(xiabiao==0){
@@ -492,12 +498,14 @@ public class TaskNotifiListActivity extends BaseActivity implements SwipeRefresh
                     if(isSearch){
                         isSearch=true;
                         mPageSearch=0;
+                        isMoreLoading=true;
                         initSearch(search.getText().toString().trim());
                     }else {
                         mPage=0;
                         isRefresh=false;
+                        isMoreLoading=true;
                         TaskNotifiListBeen taskNotifiItemBeen = new TaskNotifiListBeen(new TaskNotifiListBeen.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
-                                new TaskNotifiListBeen.DataBean(fenlei,mPage+"",mPageSize+""));
+                                new TaskNotifiListBeen.DataBean(fenlei,searchKey,mPage+"",mPageSize+""));
                         getData1(new Gson().toJson(taskNotifiItemBeen));
                     }
 

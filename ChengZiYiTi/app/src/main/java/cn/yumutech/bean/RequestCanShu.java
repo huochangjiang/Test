@@ -63,6 +63,7 @@ public class RequestCanShu {
         public String offset;
         public String row_count;
         public String id;
+        public String key;
         public String userIds;
         public String groupName;
         public String userId;
@@ -77,8 +78,9 @@ public class RequestCanShu {
             this.id = id;
         }
 
-        public DataBean(String classify, String offset, String row_count) {
+        public DataBean(String classify,String key, String offset, String row_count) {
             this.classify = classify;
+            this.key=key;
             this.offset = offset;
             this.row_count = row_count;
         }

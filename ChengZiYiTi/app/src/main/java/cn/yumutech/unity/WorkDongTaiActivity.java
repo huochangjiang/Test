@@ -30,7 +30,6 @@ import cn.yumutech.bean.ModuleClassifyList;
 import cn.yumutech.bean.ModuleClassifyListBeen;
 import cn.yumutech.bean.RequestCanShu;
 import cn.yumutech.bean.WorkListManger;
-import cn.yumutech.bean.WorkStatusSearchBeen;
 import cn.yumutech.netUtil.Api;
 import cn.yumutech.weight.MyEditText;
 import cn.yumutech.weight.StringUtils1;
@@ -74,6 +73,7 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
     private HorizontalScrollView diqu;
     private MyEditText search;
     private boolean isSearch;
+    private String searchKey="";
     protected void unsubscribe( Subscription subscription) {
         if (subscription != null && !subscription.isUnsubscribed()) {
             subscription.unsubscribe();
@@ -125,15 +125,18 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
     //搜索到的内容的结果
     private void initSearch(String key) {
         if(App.getContext().getLogo("logo")!=null) {
-            WorkStatusSearchBeen canshus=new WorkStatusSearchBeen(new WorkStatusSearchBeen.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
-                    new WorkStatusSearchBeen.DataBean(mPageSearch+"",key,mPageSize+""));
+            searchKey=key;
+            RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
+                    new RequestCanShu.DataBean(fenlei,searchKey,mPageSearch+"",mPageSize+""));
+//            WorkStatusSearchBeen canshus=new WorkStatusSearchBeen(new WorkStatusSearchBeen.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
+//                    new WorkStatusSearchBeen.DataBean(mPageSearch+"",key,mPageSize+""));
             initSearch1(new Gson().toJson(canshus));
         }else {
 //            Toast.makeText(this,"您还未登陆",Toast.LENGTH_SHORT).show();
         }
     }
     private void initSearch1(String canshu) {
-        subscription = Api.getMangoApi1().getWorkStatusSearch(canshu)
+        subscription = Api.getMangoApi1().getWorkStatus(canshu)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer2);
@@ -189,7 +192,7 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
     protected void initData() {
         if(App.getContext().getLogo("logo")!=null) {
             RequestCanShu canshus = new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.id, ""),
-                    new RequestCanShu.DataBean("", "0",mPageSize + ""));
+                    new RequestCanShu.DataBean("",searchKey,"0",mPageSize + ""));
             initDatas1(new Gson().toJson(canshus));
         }else {
             App.getContext().noLogin(WorkDongTaiActivity.this);
@@ -226,8 +229,10 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
                         isRefresh=true;
                         mPageSearch=leaderActivitys.size();
                         if(App.getContext().getLogo("logo")!=null) {
-                            WorkStatusSearchBeen canshus=new WorkStatusSearchBeen(new WorkStatusSearchBeen.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
-                                    new WorkStatusSearchBeen.DataBean(mPageSearch+"",search.getText().toString().trim(),mPageSize+""));
+                            RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
+                                    new RequestCanShu.DataBean(fenlei,search.getText().toString().trim(),mPageSearch+"",mPageSize+""));
+//                            WorkStatusSearchBeen canshus=new WorkStatusSearchBeen(new WorkStatusSearchBeen.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
+//                                    new WorkStatusSearchBeen.DataBean(mPageSearch+"",search.getText().toString().trim(),mPageSize+""));
                             initSearch1(new Gson().toJson(canshus));
                         }
                     }else {
@@ -237,7 +242,7 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
                             mPage=leaderActivitys.size();
                             if(App.getContext().getLogo("logo")!=null) {
                                 RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
-                                        new RequestCanShu.DataBean(fenlei,mPage+"",mPageSize+""));
+                                        new RequestCanShu.DataBean(fenlei,searchKey,mPage+"",mPageSize+""));
                                 initDatas1(new Gson().toJson(canshus));
                             }else {
                                 App.getContext().noLogin(WorkDongTaiActivity.this);
@@ -277,6 +282,7 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
                     }
                     if(search.getText().toString().length()>0){
                         isSearch=true;
+                        mPageSearch=0;
                         initSearch(search.getText().toString().trim());
                     }else {
                         isSearch=false;
@@ -434,13 +440,18 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
                 case 1:
                     if(isSearch){
                         isSearch=true;
+                        isRefresh=false;
+                        mPageSearch=0;
+                        isMoreLoading=true;
                         initSearch(search.getText().toString().trim());
                     }else {
                         mPage=0;
                         isRefresh=false;
+                        searchKey="";
+                        isMoreLoading=true;
                         if(App.getContext().getLogo("logo")!=null){
                             RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
-                                    new RequestCanShu.DataBean(fenlei,"0",mPageSize+""));
+                                    new RequestCanShu.DataBean(fenlei,searchKey,mPage+"",mPageSize+""));
                             Log.e("feilei",fenlei);
                             initDatas1(new Gson().toJson(canshus));
                         }else {
@@ -542,6 +553,7 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
 //                    setAnimation();
                     isSearch=false;
                     search.setText("");
+                    searchKey="";
                     tishi.setVisibility(View.GONE);
                     getIndex(tv);
                     if(xiabiao==0){

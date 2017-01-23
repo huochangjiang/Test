@@ -39,6 +39,7 @@ public class TaShanZhiShiActivity extends BaseActivity implements PullToRefreshB
     private ImageView back;
     private ListView listview;
     Subscription subscription;
+    Subscription subscription1;
     private TaShanZhiShiAdapter adapter;
     private List<HuDongJIaoLiu.DataBean> mData;
     private App app;
@@ -98,7 +99,7 @@ public class TaShanZhiShiActivity extends BaseActivity implements PullToRefreshB
     }
 
     private void initSearch1(String canshu) {
-        subscription = Api.getMangoApi1().getExchangeSearch(canshu)
+        subscription1 = Api.getMangoApi1().getExchangeSearch(canshu)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer2);
@@ -106,7 +107,7 @@ public class TaShanZhiShiActivity extends BaseActivity implements PullToRefreshB
     Observer<HuDongJIaoLiu> observer2=new Observer<HuDongJIaoLiu>() {
         @Override
         public void onCompleted() {
-            unsubscribe(subscription);
+            unsubscribe(subscription1);
             pullToRefresh.setRefreshing(false);
             net_connect.setVisibility(View.GONE);
         }

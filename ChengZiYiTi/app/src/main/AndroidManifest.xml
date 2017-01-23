@@ -209,6 +209,7 @@
             android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".CommuGroupActivity"/>
         <activity android:name=".CommunicationNewActivity"/>
+        <activity android:name=".TaskNotifiListDetailActivity"/>
 
 
         <!-- 友盟推送集成 -->
