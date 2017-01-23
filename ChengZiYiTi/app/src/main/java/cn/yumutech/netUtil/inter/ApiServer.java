@@ -25,9 +25,9 @@ import cn.yumutech.bean.LeaderActivitys;
 import cn.yumutech.bean.ModuleClassifyList;
 import cn.yumutech.bean.MovieRecommend;
 import cn.yumutech.bean.PolicyFileSearch;
-import cn.yumutech.bean.PrijectDetaisl;
 import cn.yumutech.bean.ProjectManger;
 import cn.yumutech.bean.ProjectWorkSearch;
+import cn.yumutech.bean.ProjectialsXiangqing;
 import cn.yumutech.bean.PublishTask;
 import cn.yumutech.bean.RefreshBean;
 import cn.yumutech.bean.ShowMyPublishedTask;
@@ -136,7 +136,7 @@ Observable<WorkDetails> getWorkDetais(@Query("req") String policy);
     Observable<ProjectManger>  getProject(@Query("req") String prject);
     //获取项目管理详情
     @POST("ProjectWorkItem")
-    Observable<PrijectDetaisl> getProjectDetais(@Query("req") String projectdetais);
+    Observable<ProjectialsXiangqing> getProjectDetais(@Query("req") String projectdetais);
 //获取友情链接
     @POST("LinkList")
     Observable<YouQIngLianJie> getFrindeUrl(@Query("req") String projectdetais);

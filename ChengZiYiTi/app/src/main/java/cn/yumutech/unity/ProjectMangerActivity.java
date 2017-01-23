@@ -182,7 +182,7 @@ public class ProjectMangerActivity extends BaseActivity implements SwipeRefreshL
         mAdapter.setLisener(new ProjectMangerAdpater.OnitemClick() {
             @Override
             public void onitemClice(ProjectManger.DataBean data) {
-                Intent intent=new Intent(ProjectMangerActivity.this,LeadersDetaislActivity.class);
+                Intent intent=new Intent(ProjectMangerActivity.this,ProjectDetaisActivity.class);
                 intent.putExtra("id",data.id);
                 intent.putExtra("type","3");
                 startActivity(intent);
