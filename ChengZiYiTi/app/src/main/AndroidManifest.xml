@@ -193,20 +193,24 @@
         <activity android:name=".QunMenmberSelectorActivity" />
         <activity android:name=".CreateQunZhuActivity" />
         <activity android:name=".BianJiActivity" />
-        <activity android:name=".XianStatusListActivity" />
-        <activity android:name=".XianStatusListDetailActivity" />
-        <activity android:name=".BumenStatusListActivity" />
-        <activity android:name=".BumenStatusListDetailActivity" />
-        <activity android:name=".InspectionTaskNewActivity" />
-        <activity android:name=".TaskNotifiListActivity" />
-        <activity android:name=".MyTaskActivity" />
-        <activity android:name=".MyFaBuDeActivity" />
-        <activity
-            android:name=".CommuContactActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity android:name=".CommuGroupActivity" />
-        <activity android:name=".CommunicationNewActivity" />
+        <activity android:name=".XianStatusListActivity"/>
+        <activity android:name=".XianStatusListDetailActivity"/>
+        <activity android:name=".BumenStatusListActivity"/>
+        <activity android:name=".BumenStatusListDetailActivity"/>
+
+        <activity android:name=".InspectionTaskNewActivity"/>
+        <activity android:name=".TaskNotifiListActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".MyTaskActivity"/>
+        <activity android:name=".MyFaBuDeActivity"/>
+        <activity android:name=".CommuContactActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".CommuGroupActivity"/>
+        <activity android:name=".CommunicationNewActivity"/>
+        <activity android:name=".TaskNotifiListDetailActivity"/>
+
 
         <!-- 友盟推送集成 -->
         <meta-data

@@ -1,21 +1,21 @@
 package cn.yumutech.bean;
 
 /**
- * Created by huo on 2016/11/8.
+ * Created by Administrator on 2017/1/22.
  */
-public class RequestCanShu {
-
-    public RequestCanShu(UserBean user, DataBean data) {
-        this.user = user;
-        this.data = data;
-    }
-
+public class LeaderActivitySearchBeen {
+    /**
+     * user : {"account":"unity","session":"1234567890"}
+     * data : {"key":"省级","offset":"0","row_count":"5"}
+     */
 
     public UserBean user;
-   
-
     public DataBean data;
 
+    public LeaderActivitySearchBeen(UserBean user,DataBean data){
+        this.user=user;
+        this.data=data;
+    }
     public UserBean getUser() {
         return user;
     }
@@ -33,14 +33,17 @@ public class RequestCanShu {
     }
 
     public static class UserBean {
+        /**
+         * account : unity
+         * session : 1234567890
+         */
+
         public String account;
         public String session;
-
-        public UserBean(String account, String session) {
-            this.account = account;
-            this.session = session;
+        public UserBean(String account,String session){
+            this.account=account;
+            this.session=session;
         }
-
         public String getAccount() {
             return account;
         }
@@ -59,40 +62,27 @@ public class RequestCanShu {
     }
 
     public static class DataBean {
-        public String classify;
+        /**
+         * key : 省级
+         * offset : 0
+         * row_count : 5
+         */
+
+        public String key;
         public String offset;
         public String row_count;
-        public String id;
-        public String key;
-        public String userIds;
-        public String groupName;
-        public String userId;
 
-
-        public DataBean(String userIds, String groupName) {
-            this.userIds = userIds;
-            this.groupName = groupName;
-        }
-
-        public DataBean(String id) {
-            this.id = id;
-        }
-
-        public DataBean(String classify,String key, String offset, String row_count) {
-            this.classify = classify;
+        public DataBean(String key,String offset,String row_count){
             this.key=key;
-            this.offset = offset;
-            this.row_count = row_count;
+            this.offset=offset;
+            this.row_count=row_count;
+        }
+        public String getKey() {
+            return key;
         }
 
-
-
-        public String getClassify() {
-            return classify;
-        }
-
-        public void setClassify(String classify) {
-            this.classify = classify;
+        public void setKey(String key) {
+            this.key = key;
         }
 
         public String getOffset() {
