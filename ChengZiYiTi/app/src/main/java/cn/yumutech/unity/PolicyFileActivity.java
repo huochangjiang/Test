@@ -1,5 +1,6 @@
 package cn.yumutech.unity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -8,8 +9,12 @@ import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -22,6 +27,7 @@ import java.util.List;
 import cn.yumutech.Adapter.PolicyAdapter;
 import cn.yumutech.bean.ModuleClassifyList;
 import cn.yumutech.bean.ModuleClassifyListBeen;
+import cn.yumutech.bean.PolicyFileSearchBeen;
 import cn.yumutech.bean.RequestCanShu;
 import cn.yumutech.bean.ZhengCeFile;
 import cn.yumutech.netUtil.Api;
@@ -41,6 +47,7 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
     private PolicyAdapter mAdapter;
     private int mPage=0;
     private int mPageSize = 10;
+    private int mPageSearch=0;
     private View net_connect;
     private App app;
     private int lastVisibleItem;
@@ -64,6 +71,7 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
     private List<HorizontalScrollView> hors = new ArrayList<>();
     private HorizontalScrollView diqu;
     private MyEditText search;
+    private boolean isSearch;
     protected void unsubscribe( Subscription subscription) {
         if (subscription != null && !subscription.isUnsubscribed()) {
             subscription.unsubscribe();
@@ -115,6 +123,47 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
         initClassData();
         search= (MyEditText) findViewById(R.id.search);
     }
+    //搜索到的内容的结果
+    private void initSearch(String key) {
+        if(App.getContext().getLogo("logo")!=null) {
+            PolicyFileSearchBeen canshus=new PolicyFileSearchBeen(new PolicyFileSearchBeen.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
+                    new PolicyFileSearchBeen.DataBean(key,mPageSearch+"",mPageSize+""));
+            initSearch1(new Gson().toJson(canshus));
+        }else {
+//            Toast.makeText(this,"您还未登陆",Toast.LENGTH_SHORT).show();
+        }
+    }
+    private void initSearch1(String canshu) {
+        subscription = Api.getMangoApi1().getPolicyFileSearch(canshu)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer2);
+    }
+    Observer<ZhengCeFile> observer2=new Observer<ZhengCeFile>() {
+        @Override
+        public void onCompleted() {
+            unsubscribe(subscription);
+            pullToRefresh.setRefreshing(false);
+            isMoreLoading = false;
+            net_connect.setVisibility(View.GONE);
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            pullToRefresh.setRefreshing(false);
+            e.printStackTrace();
+            isMoreLoading = false;
+        }
+
+        @Override
+        public void onNext(ZhengCeFile channels) {
+            if(channels.status.code.equals("0")){
+                loadHome(channels.data);
+            }
+            isMoreLoading = false;
+            pullToRefresh.setRefreshing(false);
+        }
+    };
     //加载缓存
     private void initLocal() {
         String readHomeJson = app.readHomeJson("ZhengCeFile");// 首页内容
@@ -340,19 +389,31 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
                 super.onScrollStateChanged(recyclerView, newState);
 
                 if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItem + 1 == mAdapter.getItemCount()) {
-                    if (!isMoreLoading) {
+                    if(isSearch){
                         isMoreLoading = true;
                         isRefresh=true;
-                        mPage=mdatas.size();
-                        if(App.getContext().getLogo("logo")!=null){
-                            RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
-                                    new RequestCanShu.DataBean(fenlei,mPage+"",mPageSize+""));
-                            initDatas1(new Gson().toJson(canshus));
-                        }else {
-                            App.getContext().noLogin(PolicyFileActivity.this);
+                        mPageSearch=mdatas.size();
+                        if(App.getContext().getLogo("logo")!=null) {
+                            PolicyFileSearchBeen canshus=new PolicyFileSearchBeen(new PolicyFileSearchBeen.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
+                                    new PolicyFileSearchBeen.DataBean(search.getText().toString().trim(),mPageSearch+"",mPageSize+""));
+                            initSearch1(new Gson().toJson(canshus));
                         }
+                    }else {
+                        if (!isMoreLoading) {
+                            isMoreLoading = true;
+                            isRefresh=true;
+                            mPage=mdatas.size();
+                            if(App.getContext().getLogo("logo")!=null){
+                                RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
+                                        new RequestCanShu.DataBean(fenlei,mPage+"",mPageSize+""));
+                                initDatas1(new Gson().toJson(canshus));
+                            }else {
+                                App.getContext().noLogin(PolicyFileActivity.this);
+                            }
 
+                        }
                     }
+
                 }
             }
             @Override
@@ -361,10 +422,43 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
                 lastVisibleItem = mLayoutManager.findLastVisibleItemPosition();
             }
         });
-        search.setOnClickListener(new View.OnClickListener() {
+        search.setOnKeyListener(new View.OnKeyListener() {
             @Override
-            public void onClick(View v) {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(event.getAction()==KeyEvent.ACTION_UP){
+                    if(keyCode == KeyEvent.KEYCODE_ENTER){
+                        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        if (inputMethodManager.isActive()) {
+                            inputMethodManager.hideSoftInputFromWindow(
+                                    v.getApplicationWindowToken(), 0);
+                        }
+                    }
+                    if(search.getText().toString().length()>0){
+                        isSearch=true;
+                        initSearch(search.getText().toString().trim());
+                    }else {
+                        isSearch=false;
+                    }
 
+                }
+                return false;
+            }
+        });
+
+        search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(search.getText().toString().trim().length()==0){
+                    mHandler.sendEmptyMessage(1);
+                }
             }
         });
     }
@@ -413,15 +507,21 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
             super.handleMessage(msg);
             switch (msg.what){
                 case 1:
-                    mPage=0;
-                    isRefresh=false;
-                    if(App.getContext().getLogo("logo")!=null){
-                        RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
-                                new RequestCanShu.DataBean(fenlei,mPage+"",mPageSize+""));
-                        initDatas1(new Gson().toJson(canshus));
+                    if(isSearch){
+                        isSearch=true;
+                        initSearch(search.getText().toString().trim());
                     }else {
-                        App.getContext().noLogin(PolicyFileActivity.this);
+                        mPage=0;
+                        isRefresh=false;
+                        if(App.getContext().getLogo("logo")!=null){
+                            RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
+                                    new RequestCanShu.DataBean(fenlei,mPage+"",mPageSize+""));
+                            initDatas1(new Gson().toJson(canshus));
+                        }else {
+                            App.getContext().noLogin(PolicyFileActivity.this);
+                        }
                     }
+
                     break;
             }
         }
@@ -513,6 +613,8 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
                 public void onClick(View v) {
                     // TODO Auto-generated method stub
 //                    setAnimation();
+                    isSearch=false;
+                    search.setText("");
                     tishi.setVisibility(View.GONE);
                     getIndex(tv);
                     if(xiabiao==0){

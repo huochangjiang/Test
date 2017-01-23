@@ -1,5 +1,6 @@
 package cn.yumutech.unity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -8,9 +9,13 @@ import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,6 +30,7 @@ import cn.yumutech.bean.ModuleClassifyList;
 import cn.yumutech.bean.ModuleClassifyListBeen;
 import cn.yumutech.bean.RequestCanShu;
 import cn.yumutech.bean.WorkListManger;
+import cn.yumutech.bean.WorkStatusSearchBeen;
 import cn.yumutech.netUtil.Api;
 import cn.yumutech.weight.MyEditText;
 import cn.yumutech.weight.StringUtils1;
@@ -49,6 +55,7 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
     private boolean isRefresh=false;
     private int mPage=0;
     private int mPageSize=10;
+    private int mPageSearch=0;
     //是否还有数据
     private boolean isHave;
     private View myprog;
@@ -66,6 +73,7 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
     private List<HorizontalScrollView> hors = new ArrayList<>();
     private HorizontalScrollView diqu;
     private MyEditText search;
+    private boolean isSearch;
     protected void unsubscribe( Subscription subscription) {
         if (subscription != null && !subscription.isUnsubscribed()) {
             subscription.unsubscribe();
@@ -114,6 +122,48 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
         initClassData();
         search= (MyEditText) findViewById(R.id.search);
     }
+    //搜索到的内容的结果
+    private void initSearch(String key) {
+        if(App.getContext().getLogo("logo")!=null) {
+            WorkStatusSearchBeen canshus=new WorkStatusSearchBeen(new WorkStatusSearchBeen.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
+                    new WorkStatusSearchBeen.DataBean(mPageSearch+"",key,mPageSize+""));
+            initSearch1(new Gson().toJson(canshus));
+        }else {
+//            Toast.makeText(this,"您还未登陆",Toast.LENGTH_SHORT).show();
+        }
+    }
+    private void initSearch1(String canshu) {
+        subscription = Api.getMangoApi1().getWorkStatusSearch(canshu)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer2);
+    }
+    Observer<WorkListManger> observer2=new Observer<WorkListManger>() {
+        @Override
+        public void onCompleted() {
+            unsubscribe(subscription);
+            pullToRefresh.setRefreshing(false);
+            isMoreLoading = false;
+            net_connect.setVisibility(View.GONE);
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            pullToRefresh.setRefreshing(false);
+            e.printStackTrace();
+            isMoreLoading = false;
+        }
+
+        @Override
+        public void onNext(WorkListManger channels) {
+            if(channels.status.code.equals("0")){
+//                if(channels.data.size()>0){
+                loadHome(channels.data);
+//                }
+
+            }
+        }
+    };
     //加载缓存
     private void initLocal() {
         String readHomeJson = app.readHomeJson("WorkListManger");// 首页内容
@@ -134,6 +184,7 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
             initData();
         }
     }
+
     @Override
     protected void initData() {
         if(App.getContext().getLogo("logo")!=null) {
@@ -170,18 +221,28 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
                 super.onScrollStateChanged(recyclerView, newState);
 
                 if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItem + 1 == mAdapter.getItemCount()) {
-                    if (!isMoreLoading) {
+                    if(isSearch){
                         isMoreLoading = true;
                         isRefresh=true;
-                        mPage=leaderActivitys.size();
+                        mPageSearch=leaderActivitys.size();
                         if(App.getContext().getLogo("logo")!=null) {
-                            RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
-                                    new RequestCanShu.DataBean(fenlei,mPage+"",mPageSize+""));
-                            initDatas1(new Gson().toJson(canshus));
-                        }else {
-                           App.getContext().noLogin(WorkDongTaiActivity.this);
+                            WorkStatusSearchBeen canshus=new WorkStatusSearchBeen(new WorkStatusSearchBeen.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
+                                    new WorkStatusSearchBeen.DataBean(mPageSearch+"",search.getText().toString().trim(),mPageSize+""));
+                            initSearch1(new Gson().toJson(canshus));
                         }
-
+                    }else {
+                        if (!isMoreLoading) {
+                            isMoreLoading = true;
+                            isRefresh=true;
+                            mPage=leaderActivitys.size();
+                            if(App.getContext().getLogo("logo")!=null) {
+                                RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
+                                        new RequestCanShu.DataBean(fenlei,mPage+"",mPageSize+""));
+                                initDatas1(new Gson().toJson(canshus));
+                            }else {
+                                App.getContext().noLogin(WorkDongTaiActivity.this);
+                            }
+                        }
                     }
                 }
             }
@@ -203,10 +264,43 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
                 }
             }
         });
-        search.setOnClickListener(new View.OnClickListener() {
+        search.setOnKeyListener(new View.OnKeyListener() {
             @Override
-            public void onClick(View v) {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(event.getAction()==KeyEvent.ACTION_UP){
+                    if(keyCode == KeyEvent.KEYCODE_ENTER){
+                        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        if (inputMethodManager.isActive()) {
+                            inputMethodManager.hideSoftInputFromWindow(
+                                    v.getApplicationWindowToken(), 0);
+                        }
+                    }
+                    if(search.getText().toString().length()>0){
+                        isSearch=true;
+                        initSearch(search.getText().toString().trim());
+                    }else {
+                        isSearch=false;
+                    }
 
+                }
+                return false;
+            }
+        });
+
+        search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(search.getText().toString().trim().length()==0){
+                    mHandler.sendEmptyMessage(1);
+                }
             }
         });
     }
@@ -338,16 +432,22 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
             super.handleMessage(msg);
             switch (msg.what){
                 case 1:
-                    mPage=0;
-                    isRefresh=false;
-                    if(App.getContext().getLogo("logo")!=null){
-                        RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
-                                new RequestCanShu.DataBean(fenlei,"0",mPageSize+""));
-                        Log.e("feilei",fenlei);
-                        initDatas1(new Gson().toJson(canshus));
+                    if(isSearch){
+                        isSearch=true;
+                        initSearch(search.getText().toString().trim());
                     }else {
-                        App.getContext().noLogin(WorkDongTaiActivity.this);
+                        mPage=0;
+                        isRefresh=false;
+                        if(App.getContext().getLogo("logo")!=null){
+                            RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
+                                    new RequestCanShu.DataBean(fenlei,"0",mPageSize+""));
+                            Log.e("feilei",fenlei);
+                            initDatas1(new Gson().toJson(canshus));
+                        }else {
+                            App.getContext().noLogin(WorkDongTaiActivity.this);
+                        }
                     }
+
                     break;
             }
         }
@@ -440,6 +540,8 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
                 public void onClick(View v) {
                     // TODO Auto-generated method stub
 //                    setAnimation();
+                    isSearch=false;
+                    search.setText("");
                     tishi.setVisibility(View.GONE);
                     getIndex(tv);
                     if(xiabiao==0){

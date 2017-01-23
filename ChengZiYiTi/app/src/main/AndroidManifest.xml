@@ -198,7 +198,9 @@
         <activity android:name=".BumenStatusListDetailActivity"/>
 
         <activity android:name=".InspectionTaskNewActivity"/>
-        <activity android:name=".TaskNotifiListActivity"/>
+        <activity android:name=".TaskNotifiListActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".MyTaskActivity"/>
         <activity android:name=".MyFaBuDeActivity"/>
         <activity android:name=".CommuContactActivity"

@@ -12,7 +12,6 @@ import cn.yumutech.bean.CreateQunZu;
 import cn.yumutech.bean.DepartListNew;
 import cn.yumutech.bean.DeviceTokenBean;
 import cn.yumutech.bean.ExchangeCommenList;
-import cn.yumutech.bean.ExchangeSearch;
 import cn.yumutech.bean.FinishTask;
 import cn.yumutech.bean.GetTaShanPingLunLieBIao;
 import cn.yumutech.bean.GroupDetais;
@@ -24,10 +23,8 @@ import cn.yumutech.bean.LeaderActivitsDetails;
 import cn.yumutech.bean.LeaderActivitys;
 import cn.yumutech.bean.ModuleClassifyList;
 import cn.yumutech.bean.MovieRecommend;
-import cn.yumutech.bean.PolicyFileSearch;
 import cn.yumutech.bean.PrijectDetaisl;
 import cn.yumutech.bean.ProjectManger;
-import cn.yumutech.bean.ProjectWorkSearch;
 import cn.yumutech.bean.PublishTask;
 import cn.yumutech.bean.RefreshBean;
 import cn.yumutech.bean.ShowMyPublishedTask;
@@ -35,7 +32,6 @@ import cn.yumutech.bean.ShowMyTask;
 import cn.yumutech.bean.ShowTaskDetail;
 import cn.yumutech.bean.ShuaXinQunZhu;
 import cn.yumutech.bean.TaskNotifiList;
-import cn.yumutech.bean.TaskNotificationSearch;
 import cn.yumutech.bean.TuiChuQun;
 import cn.yumutech.bean.Update;
 import cn.yumutech.bean.UpdateUserPhoto;
@@ -46,7 +42,6 @@ import cn.yumutech.bean.UserToken;
 import cn.yumutech.bean.UserXiangGuanQun;
 import cn.yumutech.bean.WorkDetails;
 import cn.yumutech.bean.WorkListManger;
-import cn.yumutech.bean.WorkStatusSearch;
 import cn.yumutech.bean.XianShiRenWuXiangQing;
 import cn.yumutech.bean.XianStatusItem;
 import cn.yumutech.bean.XianStatusList;
@@ -202,21 +197,24 @@ Observable<WorkDetails> getWorkDetais(@Query("req") String policy);
     //通知通报
     @POST("TaskNotificationList")
     Observable<TaskNotifiList> getTaskNotifiList(@Query("req") String item);
+    //时政新闻搜索
+    @POST("LeaderActivitySearch")
+    Observable<LeaderActivitys> getLeaderActivitySearch(@Query("req") String item);
     //政策文件搜索
     @POST("PolicyFileSearch")
-    Observable<PolicyFileSearch> getPolicyFileSearch(@Query("req") String item);
+    Observable<ZhengCeFile> getPolicyFileSearch(@Query("req") String item);
     //动态消息搜索
     @POST("WorkStatusSearch")
-    Observable<WorkStatusSearch> getWorkStatusSearch(@Query("req") String item);
+    Observable<WorkListManger> getWorkStatusSearch(@Query("req") String item);
     //重点项目搜索
     @POST("ProjectWorkSearch")
-    Observable<ProjectWorkSearch> getProjectWorkSearch(@Query("req") String item);
+    Observable<ProjectManger> getProjectWorkSearch(@Query("req") String item);
     //他山之石搜索
     @POST("ExchangeSearch")
-    Observable<ExchangeSearch> getExchangeSearch(@Query("req") String item);
+    Observable<HuDongJIaoLiu> getExchangeSearch(@Query("req") String item);
     //通知通报查询接口
     @POST("TaskNotificationSearch")
-    Observable<TaskNotificationSearch> getTaskNotificationSearch(@Query("req") String item);
+    Observable<TaskNotifiList> getTaskNotificationSearch(@Query("req") String item);
 
 
     //显示任务详情

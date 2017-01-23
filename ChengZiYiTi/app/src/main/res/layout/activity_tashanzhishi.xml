@@ -43,6 +43,7 @@
 
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
+
      <include
          android:layout_below="@+id/id_toolbar"
     android:layout_centerVertical="true"
@@ -51,6 +52,7 @@
     android:layout_height="match_parent"
     layout="@layout/net_connect"
     android:layout_width="match_parent"/>
+
     <include
         layout="@layout/progressbar"
         android:layout_marginTop="100dp"
@@ -60,6 +62,36 @@
         android:layout_width="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"/>
+    <cn.yumutech.weight.MyEditText
+        android:layout_below="@+id/id_toolbar"
+        android:paddingRight="5dp"
+        android:id="@+id/search"
+        android:layout_gravity="center_vertical"
+        android:imeOptions="actionSearch"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:inputType="text"
+        android:paddingLeft="5dp"
+        android:layout_marginRight="10dp"
+        android:drawableLeft="@drawable/search"
+        android:layout_centerVertical="true"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:textColor="@color/item_title"
+        android:textSize="15sp"
+        android:textColorHint="@color/item_title"
+        android:background="@drawable/edittext_frame"
+        android:layout_marginLeft="10dp"
+        android:drawablePadding="5dp"
+        android:focusableInTouchMode="true"
+        android:hint="搜索">
+    </cn.yumutech.weight.MyEditText>
+    <View
+        android:id="@+id/xian"
+        android:layout_below="@+id/search"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/fengexianone"/>
     <com.handmark.pulltorefresh.library.PullToRefreshScrollView
         android:layout_width="match_parent"
         android:id="@+id/pull_to_refresh"
@@ -67,7 +99,7 @@
         android:overScrollMode="never"
         app:ptrShowIndicator="false"
         android:background="@color/white"
-        android:layout_below="@+id/id_toolbar"
+        android:layout_below="@+id/xian"
         android:layout_height="match_parent">
     <cn.yumutech.weight.MyListview
         android:id="@+id/listview"
