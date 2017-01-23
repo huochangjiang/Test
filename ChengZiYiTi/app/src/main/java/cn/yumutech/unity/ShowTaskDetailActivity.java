@@ -1,7 +1,10 @@
 package cn.yumutech.unity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,6 +18,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,8 +30,10 @@ import cn.yumutech.bean.AcceptTaskBeen;
 import cn.yumutech.bean.ShowTaskDetail;
 import cn.yumutech.bean.ShowTaskDetailBeen;
 import cn.yumutech.netUtil.Api;
+import cn.yumutech.netUtil.HttpRequest;
 import cn.yumutech.weight.MyListview;
 import cn.yumutech.weight.SaveData;
+import cn.yumutech.weight.SignOutDilog;
 import cn.yumutech.weight.ViewPagerDilog;
 import rx.Observer;
 import rx.Subscription;
@@ -121,6 +127,22 @@ public class ShowTaskDetailActivity extends BaseActivity{
 //            mData=SaveData.getInstance().showTaskComplete;
             lookAdapter=new LookResultAdapter(ShowTaskDetailActivity.this,mData);
             gridView.setAdapter(lookAdapter);
+        mFilelistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+               final  ShowTaskDetail.DataBean.TaskCommentBean.FilesBean item=showAdapter.getItem(position);
+                SignOutDilog msinDilog=new SignOutDilog(ShowTaskDetailActivity.this,"确认下载？");
+                msinDilog.show();
+                msinDilog.setOnLisener(new SignOutDilog.onListern() {
+                    @Override
+                    public void send() {
+                        showDilog("下载中...");
+                        HttpRequest.getInstance(ShowTaskDetailActivity.this).downLoadFile(mHandler,item.file_path,item.file_name);
+                    }
+                });
+
+            }
+        });
 //        }
     }
 
@@ -372,5 +394,73 @@ public class ShowTaskDetailActivity extends BaseActivity{
                 fenge.setVisibility(View.GONE);
 //            }
         }
+    }
+    //下载文件
+    Handler mHandler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case 101:
+                    MissDilog();
+                    String path= (String) msg.obj;
+                    Toast.makeText(ShowTaskDetailActivity.this, "保存在"+path+"目录中", Toast.LENGTH_SHORT).show();
+                    openFile(path);
+                    break;
+                case 102:
+                    MissDilog();
+                    Toast.makeText(ShowTaskDetailActivity.this, "下载失败", Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }
+    };
+    private void openFile(String path) {
+        File apkfile = new File(path);
+        if (!apkfile.exists()) {
+            return;
+        }
+
+        try {
+            Intent intent = new Intent();
+            intent.setAction(android.content.Intent.ACTION_VIEW);
+            intent.setDataAndType(Uri.fromFile(apkfile), getMIMEType(apkfile));
+            startActivity(intent);
+        } catch (Exception e) {
+// TODO: handle exception
+            Toast.makeText(ShowTaskDetailActivity.this, "请安装相关插件", Toast.LENGTH_LONG).show();
+        }
+
+    }
+
+    private static String getMIMEType(File f) {
+        String type = "";
+        String fName = f.getName();
+        String end = fName.substring(fName.lastIndexOf(".") + 1, fName.length()).toLowerCase();
+        if (end.equals("m4a") || end.equals("mp3") || end.equals("mid") || end.equals("xmf") || end.equals("ogg") || end.equals("wav")) {
+            type = "audio";
+        } else if (end.equals("3gp") || end.equals("mp4")) {
+            type = "video";
+        } else if (end.equals("jpg") || end.equals("gif") || end.equals("png") || end.equals("jpeg") || end.equals("bmp")) {
+            type = "image/*";
+        } else if (end.equals("doc") || end.equals("docx")) {
+            type = "application/msword";
+        } else if (end.equals("ppt") || end.equals("pot") || end.equals("pps")) {
+            type = "application/vnd.ms-powerpoint";
+        } else if (end.equals("xla") || end.equals("xlc") || end.equals("xlm") || end.equals("xls") || end.equals("xlt") || end.equals("xlw") || end.equalsIgnoreCase("xlsx")) {
+            type = "application/vnd.ms-excel";
+        } else if (end.equals("xll")) {
+            type = "application/x-excel";
+        } else if (end.equals("pdf")) {
+            type = "application/pdf";
+        } else if (end.equals("zip")) {
+            type = "application/zip";
+        } else if (end.equals("rar")) {
+            type = "application/x-rar-compressed";
+        } else if (end.equals("apk")) {
+            type = "application/vnd.android.package-archive";
+        } else {
+            type = "/*";
+        }
+        return type;
     }
 }

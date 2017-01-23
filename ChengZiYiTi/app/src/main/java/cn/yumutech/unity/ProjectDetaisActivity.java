@@ -27,7 +27,7 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class ProjectDetaisActivity extends BaseActivity implements View.OnClickListener{
+public class ProjectDetaisActivity extends BaseActivity implements View.OnClickListener {
 
     LeaderActivitsDetails data;
     WorkDetails data1;
@@ -58,8 +58,8 @@ public class ProjectDetaisActivity extends BaseActivity implements View.OnClickL
     @Override
     protected void initViews(Bundle savedInstanceState) {
         webView = (WebView) findViewById(R.id.webview);
-        scrollview= (ScrollView) findViewById(R.id.scrollview);
-        myprog=findViewById(R.id.myprog);
+        scrollview = (ScrollView) findViewById(R.id.scrollview);
+        myprog = findViewById(R.id.myprog);
         myprog.setVisibility(View.VISIBLE);
         scrollview.setVisibility(View.GONE);
         webView.getSettings().setJavaScriptEnabled(true);
@@ -85,7 +85,7 @@ public class ProjectDetaisActivity extends BaseActivity implements View.OnClickL
         tv_progress = (TextView) findViewById(R.id.tv_progress);
         tv_leixing = (TextView) findViewById(R.id.laiyuan);
         tv_time1 = (TextView) findViewById(R.id.tv_time);
-        title1= (CenterTextView) findViewById(R.id.tv1);
+        title1 = (CenterTextView) findViewById(R.id.tv1);
 //        webView.getSettings().setDefaultFontSize(18);
         controlTitle(findViewById(R.id.back));
 
@@ -107,7 +107,7 @@ public class ProjectDetaisActivity extends BaseActivity implements View.OnClickL
 
     @Override
     protected void initData() {
-        String id=getIntent().getStringExtra("id");
+        String id = getIntent().getStringExtra("id");
         type = getIntent().getStringExtra("type");
         RequestCanShu canshus = new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"), new RequestCanShu.DataBean(id));
         initDatas1(new Gson().toJson(canshus));
@@ -118,24 +118,27 @@ public class ProjectDetaisActivity extends BaseActivity implements View.OnClickL
     protected void initListeners() {
 
     }
+
     Subscription subscription;
-    protected void unsubscribe( Subscription subscription) {
+
+    protected void unsubscribe(Subscription subscription) {
         if (subscription != null && !subscription.isUnsubscribed()) {
             subscription.unsubscribe();
         }
     }
-    private void initDatas1( String canshu){
-        if(type.equals("1")) {
+
+    private void initDatas1(String canshu) {
+        if (type.equals("1")) {
             subscription = Api.getMangoApi1().getLeaderActivitsDetails(canshu)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(observer1);
-        }else if(type.equals("2")){
+        } else if (type.equals("2")) {
             subscription = Api.getMangoApi1().getWorkDetais(canshu)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(observer2);
-        }else if(type.equals("3")){
+        } else if (type.equals("3")) {
             subscription = Api.getMangoApi1().getProjectDetais(canshu)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -143,20 +146,23 @@ public class ProjectDetaisActivity extends BaseActivity implements View.OnClickL
         }
 
     }
+
     Observer<LeaderActivitsDetails> observer1 = new Observer<LeaderActivitsDetails>() {
         @Override
         public void onCompleted() {
             unsubscribe(subscription);
         }
+
         @Override
         public void onError(Throwable e) {
             e.printStackTrace();
 
         }
+
         @Override
         public void onNext(LeaderActivitsDetails channels) {
-            if(channels.status.code.equals("0")){
-                data=channels;
+            if (channels.status.code.equals("0")) {
+                data = channels;
                 webView.loadDataWithBaseURL(null, channels.data.content, "text/html", "utf-8", null);
                 webView.getSettings().setJavaScriptEnabled(true);
                 webView.setWebChromeClient(new WebChromeClient());
@@ -174,15 +180,17 @@ public class ProjectDetaisActivity extends BaseActivity implements View.OnClickL
         public void onCompleted() {
             unsubscribe(subscription);
         }
+
         @Override
         public void onError(Throwable e) {
             e.printStackTrace();
 
         }
+
         @Override
         public void onNext(WorkDetails channels) {
-            if(channels.status.code.equals("0")){
-                data1=channels;
+            if (channels.status.code.equals("0")) {
+                data1 = channels;
                 webView.loadDataWithBaseURL(null, channels.data.content, "text/html", "utf-8", null);
                 webView.getSettings().setJavaScriptEnabled(true);
                 webView.setWebChromeClient(new WebChromeClient());
@@ -199,15 +207,17 @@ public class ProjectDetaisActivity extends BaseActivity implements View.OnClickL
         public void onCompleted() {
             unsubscribe(subscription);
         }
+
         @Override
         public void onError(Throwable e) {
             e.printStackTrace();
 
         }
+
         @Override
         public void onNext(ProjectialsXiangqing channels) {
-            if(channels.status.code.equals("0")){
-                data2=channels;
+            if (channels.status.code.equals("0")) {
+                data2 = channels;
 //                webView.loadDataWithBaseURL(null, channels.data.progress, "text/html", "utf-8", null);
 //                webView.getSettings().setJavaScriptEnabled(true);
 //                webView.setWebChromeClient(new WebChromeClient());
@@ -223,7 +233,7 @@ public class ProjectDetaisActivity extends BaseActivity implements View.OnClickL
                 tv_leixing.setText(channels.data.classify);
                 title1.setText(channels.data.title);
                 tv_time1.setText(channels.data.publish_date);
-                tv_progress.setText("已完成:  "+channels.data.progress+"%");
+                tv_progress.setText("已完成:  " + channels.data.progress + "%");
                 progressBar.setProgress(Integer.valueOf(channels.data.progress).intValue());
                 initLoadWebView(channels.data.basic);
                 myprog.setVisibility(View.GONE);
@@ -232,7 +242,8 @@ public class ProjectDetaisActivity extends BaseActivity implements View.OnClickL
 
         }
     };
-    private void initLoadWebView(String url){
+
+    private void initLoadWebView(String url) {
         webView.loadDataWithBaseURL(null, url, "text/html", "utf-8", null);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebChromeClient(new WebChromeClient());
@@ -240,7 +251,7 @@ public class ProjectDetaisActivity extends BaseActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.tv_jiben:
                 changeColor(0);
                 initLoadWebView(data2.data.basic);
@@ -260,13 +271,14 @@ public class ProjectDetaisActivity extends BaseActivity implements View.OnClickL
         }
     }
 
-    List<TextView> tvs=new ArrayList<>();
-    private void changeColor(int position){
-        for(int i=0;i<tvs.size();i++){
-            if(position==i){
+    List<TextView> tvs = new ArrayList<>();
+
+    private void changeColor(int position) {
+        for (int i = 0; i < tvs.size(); i++) {
+            if (position == i) {
                 tvs.get(i).setBackgroundColor(getResources().getColor(R.color.white));
-            }else{
-                tvs.get(i).setBackgroundColor(getResources().getColor(R.color.item_title));
+            } else {
+                tvs.get(i).setBackgroundColor(getResources().getColor(R.color.fengexianone));
 
             }
         }

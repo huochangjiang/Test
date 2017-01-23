@@ -51,7 +51,7 @@ import io.rong.imkit.RongIM;
 public class App extends MultiDexApplication{
     public ACache aCache;
     private static App INSTANCE;
-    public static final String ExternalImageDir = "zhushou";
+    public static final String ExternalImageDir = "czyt";
 
     public String avatarpath = "useravatar";
     public String music = "music";
