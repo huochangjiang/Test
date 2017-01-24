@@ -2,13 +2,17 @@ package cn.yumutech.netUtil;
 
 import android.content.Context;
 import android.os.Handler;
+import android.os.Message;
 
 import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.FileAsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import org.apache.http.Header;
+
+import java.io.File;
 
 import cn.yumutech.bean.CompleteBean;
 import cn.yumutech.bean.UpdateUserPhoto;
@@ -86,18 +90,34 @@ public class HttpRequest {
                 } catch (Exception e) {
                     // TODO: handle exception
                 }
-
             }
-
             @Override
             public void onFailure(int arg0, Header[] arg1, byte[] arg2,
                                   Throwable arg3) {
                 // TODO Auto-generated method stub
             }
         });
-
     }
+    //下载文件
+    public void downLoadFile(final Handler mHandler,String url,String save_path){
 
-    //下载图片
+        final File localfile = FileUtils.createFile(App.getContext().ExternalImageDir,
+                save_path);
+        httpclient.setTimeout(1000 * 15);
+        httpclient.get(url, new FileAsyncHttpResponseHandler(localfile) {
+            @Override
+            public void onSuccess(int arg0, Header[] arg1, File arg2) {
+                Message message = mHandler.obtainMessage(101);
+                message.obj = localfile.getAbsolutePath();
+                mHandler.sendMessage(message);
+            }
+            @Override
+            public void onFailure(int arg0, Header[] arg1, Throwable arg2,
+                                  File arg3) {
+                Message message = mHandler.obtainMessage(102);
+                mHandler.sendMessage(message);
+            }
+        });
+    }
 
 }
