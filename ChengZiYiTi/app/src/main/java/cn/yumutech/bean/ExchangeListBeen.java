@@ -62,11 +62,13 @@ public class ExchangeListBeen {
 
     public static class DataBean {
         public String classify;
+        public String key;
         public String offset;
         public String row_count;
 
-        public DataBean(String classify,String offset,String row_count){
+        public DataBean(String classify,String key,String offset,String row_count){
             this.classify=classify;
+            this.key=key;
             this.offset=offset;
             this.row_count=row_count;
         }

@@ -2,28 +2,37 @@ package cn.yumutech.unity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.yumutech.Adapter.TaShanZhiShiAdapter;
 import cn.yumutech.bean.ExchangeListBeen;
-import cn.yumutech.bean.ExchangeSearchBeen;
 import cn.yumutech.bean.HuDongJIaoLiu;
+import cn.yumutech.bean.ModuleClassifyList;
+import cn.yumutech.bean.ModuleClassifyListBeen;
 import cn.yumutech.netUtil.Api;
 import cn.yumutech.weight.MyEditText;
 import cn.yumutech.weight.StringUtils1;
@@ -50,7 +59,17 @@ public class TaShanZhiShiActivity extends BaseActivity implements PullToRefreshB
     private int mPageSize = 10;
     private int mPageSearch=0;
     private MyEditText search;
-    private boolean isSearch;
+    private boolean isSearch=false;
+    private View tishi;
+    private List<TextView> bts = new ArrayList<>();
+    private String searchKey="";
+    private String fenlei="";
+    private List<HorizontalScrollView> hors = new ArrayList<>();
+    List<LinearLayout> linears = new ArrayList<LinearLayout>();
+    private LinearLayout linearLayout1;
+    private HorizontalScrollView diqu;
+    private List<HuDongJIaoLiu.DataBean> leaderActivitys=new ArrayList<>();
+    private boolean isRefresh=false;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_tashanzhishi;
@@ -68,6 +87,21 @@ public class TaShanZhiShiActivity extends BaseActivity implements PullToRefreshB
         myprog.setVisibility(View.VISIBLE);
         listview.setVisibility(View.GONE);
         search= (MyEditText) findViewById(R.id.search);
+        tishi=findViewById(R.id.tishi);
+        tishi.setVisibility(View.GONE);
+
+        diqu=(HorizontalScrollView) findViewById(R.id.horscroll_one);
+//        bt1= (TextView) findViewById(R.id.bt1);
+//        bt2= (TextView) findViewById(R.id.bt2);
+//        bt3= (TextView) findViewById(R.id.bt3);
+//        bts.add(bt1);
+//        bts.add(bt2);
+//        bts.add(bt3);
+        linearLayout1 = new LinearLayout(this);
+        linearLayout1.setOrientation(LinearLayout.HORIZONTAL);
+        linears.add(linearLayout1);
+        hors.add(diqu);
+
 
         pullToRefresh = (PullToRefreshScrollView) findViewById(R.id.pull_to_refresh);
         pullToRefresh.setMode(PullToRefreshBase.Mode.BOTH);
@@ -85,14 +119,135 @@ public class TaShanZhiShiActivity extends BaseActivity implements PullToRefreshB
         endLabels.setPullLabel("上拉加载...");// 刚下拉时，显示的提示
         endLabels.setRefreshingLabel("正在载入...");// 刷新时
         endLabels.setReleaseLabel("放开刷新...");// 下来达到一定距离时，显示的提示
+        initClassData();
         initLocal();
     }
+    /**
+     * 获取分类信息
+     */
+    int shangbiao = 0;
+    int xiabiao = 0;
+    public void initClassData(){
+        if(App.getContext().getLogo("logo")!=null) {
+            ModuleClassifyListBeen canshus=new ModuleClassifyListBeen(new ModuleClassifyListBeen.UserBeen(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
+                    new ModuleClassifyListBeen.DataBeen("Exchange"));
+            initClassDatas1(new Gson().toJson(canshus));
+        }else {
+//            Toast.makeText(this,"您还未登陆",Toast.LENGTH_SHORT).show();
+        }
+    }
+    public void initClassDatas1(String canshu){
+        subscription1 = Api.getMangoApi1().getModuleClassifyList(canshu)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer1);
+    }
+    Observer<ModuleClassifyList> observer1=new Observer<ModuleClassifyList>() {
+        @Override
+        public void onCompleted() {
+            unsubscribe(subscription1);
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            e.printStackTrace();
+        }
+
+        @Override
+        public void onNext(ModuleClassifyList moduleClassifyList) {
+            if(moduleClassifyList!=null&&moduleClassifyList.data.size()>0){
+                addView(moduleClassifyList.data);
+//                for(int i=0;i<moduleClassifyList.data.size();i++){
+//                    bts.get(i).setText(moduleClassifyList.data.get(i).value);
+//                }
+            }
+        }
+    };
+    private void addView(final List<ModuleClassifyList.data> a) {
+        hors.get(0).removeAllViews();
+        for (int j = 0; j < a.size()+1; j++) {
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.FILL_PARENT,
+                    LinearLayout.LayoutParams.FILL_PARENT);
+            final TextView tv = new TextView(this);
+            if(j==0){
+                tv.setText("全部");
+            }else {
+                tv.setText(a.get(j-1).value);
+            }
+
+            tv.setTextSize(18);
+            bts.add(tv);
+            linears.get(0).addView(tv);
+            if (j == 0 ) {
+//                tv.setBackgroundResource(R.drawable.logo);
+                tv.setTextColor(Color.parseColor("#DD3237"));
+            } else {
+//                tv.setBackgroundResource(R.drawable.logo_no);
+                tv.setTextColor(Color.parseColor("#7F000000"));
+            }
+            tv.setLayoutParams(layoutParams);
+            if (!(j == 0)) {
+                layoutParams.leftMargin = 60;
+                tv.setGravity(Gravity.CENTER);
+            }
+            tv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // TODO Auto-generated method stub
+//                    setAnimation();
+                    isSearch=false;
+                    search.setText("");
+                    searchKey="";
+                    tishi.setVisibility(View.GONE);
+                    getIndex(tv);
+                    if(xiabiao==0){
+                        fenlei="";
+                    }else {
+                        fenlei=a.get(xiabiao-1).key;
+                    }
+                    mData.clear();
+                    chanColor(xiabiao);
+                    mhandler.sendEmptyMessage(0);
+                }
+            });
+        }
+        hors.get(0).addView(linears.get(0));
+    }
+    private void getIndex(TextView tv) {
+        for (int i = 0; i < linears.size(); i++) {
+            for (int j = 0; j < linears.get(i).getChildCount(); j++) {
+                TextView tv1 = (TextView) linears.get(i).getChildAt(j);
+                if (tv.equals(tv1)) {
+                    xiabiao = j;
+                }
+            }
+        }
+    }
+    //判断那个button变背景
+    private void chanColor(int postion) {
+        for (int i = 0; i < bts.size(); i++) {
+            TextView bt = bts.get(i);
+            if (i == postion) {
+//                bt.setBackgroundResource(R.drawable.logo);
+                bt.setTextColor(Color.parseColor("#DD3237"));
+            } else {
+//                bt.setBackgroundResource(R.drawable.logo_no);
+                bt.setTextColor(Color.parseColor("#7F000000"));
+            }
+        }
+    }
+
     //搜索到的内容的结果
     private void initSearch(String key) {
         if(App.getContext().getLogo("logo")!=null) {
-            ExchangeSearchBeen canshus=new ExchangeSearchBeen(new ExchangeSearchBeen.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
-                    new ExchangeSearchBeen.DataBean(key,mPageSearch+"",mPageSize+""));
-            initSearch1(new Gson().toJson(canshus));
+            searchKey=key;
+            ExchangeListBeen exchangeItemBeen = new ExchangeListBeen(new ExchangeListBeen.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
+                    new ExchangeListBeen.DataBean(fenlei,searchKey,mPageSearch+"",mPageSize+""));
+            getData1(new Gson().toJson(exchangeItemBeen));
+//            ExchangeSearchBeen canshus=new ExchangeSearchBeen(new ExchangeSearchBeen.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
+//                    new ExchangeSearchBeen.DataBean(key,mPageSearch+"",mPageSize+""));
+//            initSearch1(new Gson().toJson(canshus));
         }else {
 //            Toast.makeText(this,"您还未登陆",Toast.LENGTH_SHORT).show();
         }
@@ -128,6 +283,11 @@ public class TaShanZhiShiActivity extends BaseActivity implements PullToRefreshB
                 }
                 app.savaHomeJson("tslist",new Gson().toJson(huDongItem));
                 loadHome(mData);
+            }else {
+                tishi.setVisibility(View.VISIBLE);
+                myprog.setVisibility(View.GONE);
+                net_connect.setVisibility(View.GONE);
+                listview.setVisibility(View.VISIBLE);
             }
             pullToRefresh.onRefreshComplete();
         }
@@ -179,6 +339,7 @@ public class TaShanZhiShiActivity extends BaseActivity implements PullToRefreshB
                     }
                     if(search.getText().toString().length()>0){
                         isSearch=true;
+                        mData.clear();
                         initSearch(search.getText().toString().trim());
                     }else {
                         isSearch=false;
@@ -201,7 +362,7 @@ public class TaShanZhiShiActivity extends BaseActivity implements PullToRefreshB
             public void afterTextChanged(Editable s) {
                 if(search.getText().toString().trim().length()==0){
                     isSearch=false;
-                    getData();
+                    mhandler.sendEmptyMessage(0);
                 }
             }
         });
@@ -212,7 +373,7 @@ public class TaShanZhiShiActivity extends BaseActivity implements PullToRefreshB
      */
     public void getData() {
         ExchangeListBeen exchangeItemBeen = new ExchangeListBeen(new ExchangeListBeen.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
-                new ExchangeListBeen.DataBean("国内","0","5"));
+                new ExchangeListBeen.DataBean(fenlei,searchKey,mPage+"",mPageSize+""));
         getData1(new Gson().toJson(exchangeItemBeen));
     }
 
@@ -239,13 +400,21 @@ public class TaShanZhiShiActivity extends BaseActivity implements PullToRefreshB
 
         @Override
         public void onNext(HuDongJIaoLiu huDongItem) {
-            if(huDongItem!=null&&huDongItem.status.code.equals("0")){
+            if(huDongItem!=null&&huDongItem.data!=null&&huDongItem.data.size()>0&&huDongItem.status.code.equals("0")){
                 if(isShangla){
                     mData.addAll(huDongItem.data);
                 }else {
                     mData=huDongItem.data;
                 }
                loadHome(mData);
+            }else if(mData!=null&&mData.size()>0){
+                loadHome(mData);
+            }else {
+                tishi.setVisibility(View.VISIBLE);
+                myprog.setVisibility(View.GONE);
+                net_connect.setVisibility(View.GONE);
+                listview.setVisibility(View.GONE);
+                pullToRefresh.setVisibility(View.GONE);
             }
             pullToRefresh.onRefreshComplete();
         }
@@ -263,8 +432,10 @@ public class TaShanZhiShiActivity extends BaseActivity implements PullToRefreshB
     private void loadHome(List<HuDongJIaoLiu.DataBean> data){
         adapter.dataChange(data);
         myprog.setVisibility(View.GONE);
+        tishi.setVisibility(View.GONE);
         net_connect.setVisibility(View.GONE);
         listview.setVisibility(View.VISIBLE);
+        pullToRefresh.setVisibility(View.VISIBLE);
     }
     private void initLocal() {
         String readHomeJson = app.readHomeJson("tslist");// 首页内容
@@ -275,6 +446,7 @@ public class TaShanZhiShiActivity extends BaseActivity implements PullToRefreshB
         }else{
             if(!app.isNetworkConnected(this)){
                 net_connect.setVisibility(View.VISIBLE);
+                tishi.setVisibility(View.GONE);
                 listview.setVisibility(View.GONE);
                 myprog.setVisibility(View.GONE);
             }
@@ -283,25 +455,30 @@ public class TaShanZhiShiActivity extends BaseActivity implements PullToRefreshB
             initData();
         }
     }
-    private int page=0;
+
     private boolean isShangla=false;
     @Override
     public void onPullDownToRefresh(PullToRefreshBase<ScrollView> refreshView) {
         if(isSearch){
             isSearch=true;
             isShangla=false;
+            isRefresh=false;
             mPageSearch=0;
             if(App.getContext().getLogo("logo")!=null) {
-                ExchangeSearchBeen canshus=new ExchangeSearchBeen(new ExchangeSearchBeen.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
-                        new ExchangeSearchBeen.DataBean(search.getText().toString().trim(),mPageSearch+"",mPageSize+""));
-                initSearch1(new Gson().toJson(canshus));
+                ExchangeListBeen exchangeItemBeen = new ExchangeListBeen(new ExchangeListBeen.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
+                        new ExchangeListBeen.DataBean(fenlei,searchKey,mPageSearch+"",mPageSize+""));
+                getData1(new Gson().toJson(exchangeItemBeen));
+//                ExchangeSearchBeen canshus=new ExchangeSearchBeen(new ExchangeSearchBeen.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
+//                        new ExchangeSearchBeen.DataBean(search.getText().toString().trim(),mPageSearch+"",mPageSize+""));
+//                initSearch1(new Gson().toJson(canshus));
             }
         }else {
             isShangla=false;
             isSearch=false;
-            page=0;
+            isRefresh=false;
+            mPage=0;
             ExchangeListBeen exchangeItemBeen = new ExchangeListBeen(new ExchangeListBeen.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
-                    new ExchangeListBeen.DataBean("国内",page+"","5"));
+                    new ExchangeListBeen.DataBean(fenlei,searchKey,mPage+"",mPageSize+""));
             getData1(new Gson().toJson(exchangeItemBeen));
         }
 
@@ -313,19 +490,71 @@ public class TaShanZhiShiActivity extends BaseActivity implements PullToRefreshB
             mPageSearch=mData.size();
             isShangla=true;
             isSearch=true;
+            isRefresh=true;
             if(App.getContext().getLogo("logo")!=null) {
-                ExchangeSearchBeen canshus=new ExchangeSearchBeen(new ExchangeSearchBeen.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
-                        new ExchangeSearchBeen.DataBean(search.getText().toString().trim(),mPageSearch+"",mPageSize+""));
-                initSearch1(new Gson().toJson(canshus));
+                ExchangeListBeen exchangeItemBeen = new ExchangeListBeen(new ExchangeListBeen.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
+                        new ExchangeListBeen.DataBean(fenlei,searchKey,mPageSearch+"",mPageSize+""));
+                getData1(new Gson().toJson(exchangeItemBeen));
+//                ExchangeSearchBeen canshus=new ExchangeSearchBeen(new ExchangeSearchBeen.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
+//                        new ExchangeSearchBeen.DataBean(search.getText().toString().trim(),mPageSearch+"",mPageSize+""));
+//                initSearch1(new Gson().toJson(canshus));
             }
         }else {
             isSearch=false;
-            page=mData.size();
+            mPage=mData.size();
             isShangla=true;
+            isRefresh=true;
             ExchangeListBeen exchangeItemBeen = new ExchangeListBeen(new ExchangeListBeen.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
-                    new ExchangeListBeen.DataBean("国内",page+"","5"));
+                    new ExchangeListBeen.DataBean(fenlei,searchKey,mPage+"",mPageSize+""));
             getData1(new Gson().toJson(exchangeItemBeen));
         }
-
     }
+    Handler mhandler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case 0:
+                    if(isSearch){
+                        isSearch=true;
+                        mPageSearch=0;
+                        initSearch(search.getText().toString().trim());
+                    }else {
+                        mPage=0;
+                        searchKey="";
+                        ExchangeListBeen exchangeItemBeen = new ExchangeListBeen(new ExchangeListBeen.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
+                                new ExchangeListBeen.DataBean(fenlei,searchKey,mPage+"",mPageSize+""));
+                        getData1(new Gson().toJson(exchangeItemBeen));
+//                        RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.id,"1234567890"),
+//                                new RequestCanShu.DataBean(fenlei,searchKey,mPage+"",mPageSize+""));
+//                        initDatas1(new Gson().toJson(canshus));
+                    }
+                    break;
+            }
+        }
+    };
+//    Handler mHandler=new Handler(){
+//        @Override
+//        public void handleMessage(Message msg) {
+//            super.handleMessage(msg);
+//            switch (msg.what){
+//                case 0:
+//                    if(isSearch){
+//                        isSearch=true;
+//                        mPageSearch=0;
+//                        initSearch(search.getText().toString().trim());
+//                    }else {
+//                        mPage=0;
+//                        searchKey="";
+//                        ExchangeListBeen exchangeItemBeen = new ExchangeListBeen(new ExchangeListBeen.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
+//                                new ExchangeListBeen.DataBean(fenlei,searchKey,mPage+"",mPageSize+""));
+//                        getData1(new Gson().toJson(exchangeItemBeen));
+////                        RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.id,"1234567890"),
+////                                new RequestCanShu.DataBean(fenlei,searchKey,mPage+"",mPageSize+""));
+////                        initDatas1(new Gson().toJson(canshus));
+//                    }
+//                    break;
+//            }
+//        }
+//    };
 }
