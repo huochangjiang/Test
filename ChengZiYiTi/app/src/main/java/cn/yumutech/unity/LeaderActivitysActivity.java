@@ -482,7 +482,7 @@ public class LeaderActivitysActivity extends BaseActivity implements SwipeRefres
         }
     }
     public void initClassDatas1(String canshu){
-        subscription = Api.getMangoApi1().getModuleClassifyList(canshu)
+        subscription1 = Api.getMangoApi1().getModuleClassifyList(canshu)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer1);
