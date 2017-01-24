@@ -1,22 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:padding="10dp"
+
     android:layout_height="match_parent">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:id="@+id/view"
+        android:background="@color/fengexianone"
+        ></View>
+    <RelativeLayout
+        android:layout_marginLeft="10dp"
+        android:layout_below="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
     <TextView
+
+        android:layout_centerVertical="true"
         android:id="@+id/tv"
         android:textSize="16sp"
         android:layout_marginRight="100dp"
         android:singleLine="true"
         android:layout_width="wrap_content"
-        android:text="上传附件"
+        android:text="添加附件"
         android:textColor="#6699FF"
         android:layout_height="wrap_content" />
     <ImageView
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="10dp"
         android:id="@+id/iv"
         android:layout_alignParentRight="true"
         android:layout_width="wrap_content"
         android:src="@drawable/rc_btn_download_cancel"
         android:layout_height="wrap_content" />
-
+    </RelativeLayout>
 </RelativeLayout>

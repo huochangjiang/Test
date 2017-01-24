@@ -244,7 +244,19 @@ public class ProjectDetaisActivity extends BaseActivity implements View.OnClickL
     };
 
     private void initLoadWebView(String url) {
+        webView.setVerticalScrollbarOverlay(true); //指定的垂直滚动条有叠加样式
+
+        WebSettings settings = webView.getSettings();
+
+        settings.setUseWideViewPort(true);//设定支持viewport
+
+        settings.setLoadWithOverviewMode(true);
+
+        settings.setBuiltInZoomControls(true);
+
+        settings.setSupportZoom(true);//设定支持缩放
         webView.loadDataWithBaseURL(null, url, "text/html", "utf-8", null);
+
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebChromeClient(new WebChromeClient());
     }

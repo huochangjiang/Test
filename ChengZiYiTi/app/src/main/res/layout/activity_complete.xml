@@ -82,6 +82,7 @@
                 >
             </cn.yumutech.weight.MyGridView>
             <cn.yumutech.weight.MyListview
+                android:layout_marginTop="10dp"
                 android:layout_below="@+id/gridView"
                 android:layout_width="match_parent"
                 android:id="@+id/listview"

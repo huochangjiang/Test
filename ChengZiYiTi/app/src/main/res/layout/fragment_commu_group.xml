@@ -18,16 +18,17 @@
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:weightSum="2"
         android:orientation="horizontal">
         <RelativeLayout
+            android:gravity="center_horizontal"
             android:id="@+id/one"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:layout_weight="1">
+            >
         <RelativeLayout
-            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <ImageView
@@ -54,6 +55,7 @@
             android:layout_toRightOf="@+id/one"
             android:layout_marginBottom="20dp">
         <RelativeLayout
+            android:visibility="gone"
             android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">

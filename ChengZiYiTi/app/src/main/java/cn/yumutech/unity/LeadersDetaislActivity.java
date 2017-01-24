@@ -51,13 +51,15 @@ public class LeadersDetaislActivity extends BaseActivity {
         myprog=findViewById(R.id.myprog);
         myprog.setVisibility(View.VISIBLE);
         scrollview.setVisibility(View.GONE);
+
+        scrollview.requestDisallowInterceptTouchEvent(false);
+
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setSupportZoom(true);
         webView.getSettings().setBuiltInZoomControls(false);
         webView.getSettings().setUseWideViewPort(true);
         webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         webView.getSettings().setLoadWithOverviewMode(true);
-//        webView.getSettings().setDefaultFontSize(18);
         controlTitle(findViewById(R.id.back));
         title1 = (CenterTextView) findViewById(R.id.tv1);
         laiyan = (TextView) findViewById(R.id.laiyuan);
@@ -72,11 +74,19 @@ public class LeadersDetaislActivity extends BaseActivity {
             webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
         }
         // disable scroll on touch
-        webView.setScrollContainer(false);
+        webView.setScrollContainer(true);
+        scrollview.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                webView.requestDisallowInterceptTouchEvent(true);
+                return false;
+            }
+        });
         webView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                return (event.getAction() == MotionEvent.ACTION_MOVE);
+                scrollview.requestDisallowInterceptTouchEvent(false);
+                return false;
             }
         });
     }
