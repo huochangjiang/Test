@@ -276,6 +276,12 @@
         <!-- </receiver> -->
         <!-- 小米 配置结束 < -->
         <activity android:name=".ProjectDetaisActivity"></activity>
+        <supports-screens
+            android:anyDensity="true"
+            android:largeScreens="true"
+            android:normalScreens="true"
+            android:resizeable="true"
+            android:smallScreens="true" />
     </application>
 
 </manifest>

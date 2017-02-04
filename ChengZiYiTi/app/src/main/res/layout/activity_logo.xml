@@ -63,7 +63,7 @@
         android:layout_width="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_height="wrap_content"
-        android:text="成资一体化"/>
+        android:text="成资合作"/>
     <RelativeLayout
         android:id="@+id/rl_shoujihao"
         android:layout_width="match_parent"

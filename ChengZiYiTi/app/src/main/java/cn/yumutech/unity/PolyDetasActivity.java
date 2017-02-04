@@ -2,12 +2,10 @@ package cn.yumutech.unity;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -29,7 +27,7 @@ public class PolyDetasActivity extends BaseActivity {
     private TextView laiyan;
     private TextView tv_time;
     private View myprog;
-    private ScrollView scrollView;
+//    private ScrollView scrollView;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_poly_detas;
@@ -39,9 +37,9 @@ public class PolyDetasActivity extends BaseActivity {
     protected void initViews(Bundle savedInstanceState) {
         webView = (WebView) findViewById(R.id.webview);
         myprog=findViewById(R.id.myprog);
-        scrollView= (ScrollView) findViewById(R.id.scrollview);
+//        scrollView= (ScrollView) findViewById(R.id.scrollview);
         myprog.setVisibility(View.VISIBLE);
-        scrollView.setVisibility(View.GONE);
+//        scrollView.setVisibility(View.GONE);
 //        webView.getSettings().setJavaScriptEnabled(true);
 //// 设置可以支持缩放
 //        webView.getSettings().setSupportZoom(true);
@@ -55,10 +53,13 @@ public class PolyDetasActivity extends BaseActivity {
 //        webView.getSettings().setDefaultFontSize(18);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setSupportZoom(true);
-        webView.getSettings().setBuiltInZoomControls(false);
+        webView.getSettings().setBuiltInZoomControls(true);
         webView.getSettings().setUseWideViewPort(true);
         webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         webView.getSettings().setLoadWithOverviewMode(true);
+
+        //影藏缩放按钮
+        webView.getSettings().setDisplayZoomControls(false);
         controlTitle(findViewById(R.id.back));
         title1 = (CenterTextView) findViewById(R.id.tv1);
         laiyan = (TextView) findViewById(R.id.laiyuan);
@@ -69,13 +70,13 @@ public class PolyDetasActivity extends BaseActivity {
             webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
         }
         // disable scroll on touch
-        webView.setScrollContainer(false);
-        webView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return (event.getAction() == MotionEvent.ACTION_MOVE);
-            }
-        });
+//        webView.setScrollContainer(false);
+//        webView.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                return (event.getAction() == MotionEvent.ACTION_MOVE);
+//            }
+//        });
     }
 
     @Override
@@ -120,7 +121,7 @@ public class PolyDetasActivity extends BaseActivity {
                 laiyan.setText(channels.data.original);
                 tv_time.setText(channels.data.publish_date);
                 myprog.setVisibility(View.GONE);
-                scrollView.setVisibility(View.VISIBLE);
+//                scrollView.setVisibility(View.VISIBLE);
             }
         }
     };

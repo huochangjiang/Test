@@ -93,9 +93,7 @@ public class LogoActivity extends BaseActivity implements View.OnClickListener{
         @Override
         public void onError(Throwable e) {
             MissDilog();
-
             e.printStackTrace();
-
         }
         @Override
         public void onNext(YanZhenMessageBean channels) {

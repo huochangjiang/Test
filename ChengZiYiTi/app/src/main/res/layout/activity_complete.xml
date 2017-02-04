@@ -30,9 +30,7 @@
                 android:text="提交任务"
                 android:textSize="16sp"
                 android:textColor="@color/white"
-                android:layout_centerVertical="true"
-                />
-
+                android:layout_centerVertical="true" />
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
 <ScrollView

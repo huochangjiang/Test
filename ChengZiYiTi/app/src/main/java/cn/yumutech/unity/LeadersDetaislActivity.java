@@ -2,13 +2,11 @@ package cn.yumutech.unity;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -38,7 +36,7 @@ public class LeadersDetaislActivity extends BaseActivity {
     private TextView money;
     private RelativeLayout relativeLayout;
     private View myprog;
-    private ScrollView scrollview;
+//    private ScrollView scrollview;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_leaders_detaisl;
@@ -47,16 +45,32 @@ public class LeadersDetaislActivity extends BaseActivity {
     @Override
     protected void initViews(Bundle savedInstanceState) {
         webView = (WebView) findViewById(R.id.webview);
-        scrollview= (ScrollView) findViewById(R.id.scrollview);
+//        scrollview= (ScrollView) findViewById(R.id.scrollview);
         myprog=findViewById(R.id.myprog);
         myprog.setVisibility(View.VISIBLE);
-        scrollview.setVisibility(View.GONE);
+//        scrollview.setVisibility(View.GONE);
+//        WebSettings settings = webView.getSettings();
+//        settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+//        settings.setUseWideViewPort(true);//设定支持viewport
+//
+//        settings.setLoadWithOverviewMode(true);
+//
+//        settings.setBuiltInZoomControls(true);
+//
+//        settings.setSupportZoom(true);//设定支持缩放
+
+//        settings.setDisplayZoomControls(false);
+
+//        settings.setLoadWithOverviewMode(true);
+
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setSupportZoom(true);
-        webView.getSettings().setBuiltInZoomControls(false);
+        webView.getSettings().setBuiltInZoomControls(true);
         webView.getSettings().setUseWideViewPort(true);
         webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         webView.getSettings().setLoadWithOverviewMode(true);
+        //影藏缩放按钮
+        webView.getSettings().setDisplayZoomControls(false);
 //        webView.getSettings().setDefaultFontSize(18);
         controlTitle(findViewById(R.id.back));
         title1 = (CenterTextView) findViewById(R.id.tv1);
@@ -71,14 +85,14 @@ public class LeadersDetaislActivity extends BaseActivity {
         } else {
             webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
         }
-        // disable scroll on touch
-        webView.setScrollContainer(false);
-        webView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return (event.getAction() == MotionEvent.ACTION_MOVE);
-            }
-        });
+//         disable scroll on touch
+//        webView.setScrollContainer(false);
+//        webView.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                return (event.getAction() == MotionEvent.ACTION_MOVE);
+//            }
+//        });
     }
 
     @Override
@@ -141,7 +155,7 @@ public class LeadersDetaislActivity extends BaseActivity {
                 laiyan.setText(channels.data.original);
                 tv_time.setText(channels.data.publish_date);
                 myprog.setVisibility(View.GONE);
-                scrollview.setVisibility(View.VISIBLE);
+//                scrollview.setVisibility(View.VISIBLE);
             }
 
         }
@@ -167,7 +181,7 @@ public class LeadersDetaislActivity extends BaseActivity {
                 laiyan.setText(channels.data.original);
                 tv_time.setText(channels.data.publish_date);
                 myprog.setVisibility(View.GONE);
-                scrollview.setVisibility(View.VISIBLE);
+//                scrollview.setVisibility(View.VISIBLE);
             }
         }
     };

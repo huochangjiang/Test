@@ -55,7 +55,6 @@ public class QunMenmberSelectorActivity extends BaseActivity {
             groupName = intent.getStringExtra("groupName");
         }else{
             tv.setText("新建讨论组");
-
         }
         drawerlayout= (DrawerLayout) findViewById(R.id.drawerlayout).findViewById(R.id.drawer);
         expandableListView = (ListView) findViewById(R.id.expandlistview);
