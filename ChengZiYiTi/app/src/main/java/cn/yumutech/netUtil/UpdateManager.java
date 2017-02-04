@@ -31,6 +31,7 @@ public class UpdateManager {
 	private static UpdateManager updateManager;
 
 	private static AsyncHttpClient httpClient;
+	public static Update mInstanceUpdate;
 
 	private static Gson gson;
 
@@ -69,6 +70,7 @@ public class UpdateManager {
 			public void onSuccess(int arg0, Header[] arg1, File arg2) {
 				// 下载成功之后提示用户升级
 				mHandler.sendEmptyMessage(2);
+				mInstanceUpdate=mUpdate;
 				EventBus.getDefault().post(mUpdate);
 
 			}
@@ -159,5 +161,7 @@ Handler mHandler;
 			}
 		}
 	};
+
+
 
 }

@@ -3,6 +3,7 @@ package cn.yumutech.unity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -30,6 +31,7 @@ import cn.yumutech.bean.AcceptTaskBeen;
 import cn.yumutech.bean.ShowTaskDetail;
 import cn.yumutech.bean.ShowTaskDetailBeen;
 import cn.yumutech.netUtil.Api;
+import cn.yumutech.netUtil.FileUtils;
 import cn.yumutech.netUtil.HttpRequest;
 import cn.yumutech.weight.MyListview;
 import cn.yumutech.weight.SaveData;
@@ -70,6 +72,7 @@ public class ShowTaskDetailActivity extends BaseActivity{
     private TextView zhuangtaishijian1;
     private TextView wanchenzhe;
     public List<String> phones=new ArrayList<>();
+    private boolean isDownLoad=false;
     private List<ShowTaskDetail.DataBean.TaskCommentBean.FilesBean> mDatas=new ArrayList<>();
 
     //
@@ -77,6 +80,7 @@ public class ShowTaskDetailActivity extends BaseActivity{
     private View xian;
     private ListView mFilelistView;
     private ShowTaskDetaisAdapter showAdapter;
+    private List<File> mFileList;
 
     @Override
     protected int getLayoutId() {
@@ -122,25 +126,37 @@ public class ShowTaskDetailActivity extends BaseActivity{
         mFilelistView = (ListView) findViewById(R.id.listView);
         showAdapter = new ShowTaskDetaisAdapter(this,mDatas);
         mFilelistView.setAdapter(showAdapter);
-
 //        if(SaveData.getInstance().showTaskComplete!=null){
 //            mData=SaveData.getInstance().showTaskComplete;
             lookAdapter=new LookResultAdapter(ShowTaskDetailActivity.this,mData);
             gridView.setAdapter(lookAdapter);
-        mFilelistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+           mFilelistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-               final  ShowTaskDetail.DataBean.TaskCommentBean.FilesBean item=showAdapter.getItem(position);
-                SignOutDilog msinDilog=new SignOutDilog(ShowTaskDetailActivity.this,"确认下载？");
-                msinDilog.show();
-                msinDilog.setOnLisener(new SignOutDilog.onListern() {
-                    @Override
-                    public void send() {
-                        showDilog("下载中...");
-                        HttpRequest.getInstance(ShowTaskDetailActivity.this).downLoadFile(mHandler,item.file_path,item.file_name);
-                    }
-                });
-
+                isDownLoad=false;
+                    final  ShowTaskDetail.DataBean.TaskCommentBean.FilesBean item=showAdapter.getItem(position);
+                List<File> mfies=FileUtils.listPathFiles(Environment.getExternalStorageDirectory() + File.separator + App.getContext().ExternalImageDir);
+                File loadFile;
+                for (int i=0;i<mfies.size();i++){
+                   if(item.file_name.equals(mfies.get(i).getName())){
+                       isDownLoad=true;
+                      openFile(mfies.get(i).getAbsolutePath());
+                   }
+                }
+                if(isDownLoad){
+//                    Toast.makeText(ShowTaskDetailActivity.this, "文件已经下载了", Toast.LENGTH_SHORT).show();
+                }
+                if(!isDownLoad) {
+                    SignOutDilog msinDilog = new SignOutDilog(ShowTaskDetailActivity.this, "确认下载？");
+                    msinDilog.show();
+                    msinDilog.setOnLisener(new SignOutDilog.onListern() {
+                        @Override
+                        public void send() {
+                            showDilog("下载中...");
+                            HttpRequest.getInstance(ShowTaskDetailActivity.this).downLoadFile(mHandler, item.file_path, item.file_name);
+                        }
+                    });
+                }
             }
         });
 //        }
@@ -463,4 +479,6 @@ public class ShowTaskDetailActivity extends BaseActivity{
         }
         return type;
     }
+
+
 }

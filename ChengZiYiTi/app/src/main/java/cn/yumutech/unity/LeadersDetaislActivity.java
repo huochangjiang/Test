@@ -2,11 +2,11 @@ package cn.yumutech.unity;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -58,6 +58,12 @@ public class LeadersDetaislActivity extends BaseActivity {
         webView.getSettings().setSupportZoom(true);
         webView.getSettings().setBuiltInZoomControls(false);
         webView.getSettings().setUseWideViewPort(true);
+        webView.setWebViewClient(new WebViewClient(){
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return false;
+            }
+        });
         webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         webView.getSettings().setLoadWithOverviewMode(true);
         controlTitle(findViewById(R.id.back));
@@ -75,22 +81,21 @@ public class LeadersDetaislActivity extends BaseActivity {
         }
         // disable scroll on touch
         webView.setScrollContainer(true);
-        scrollview.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                webView.requestDisallowInterceptTouchEvent(true);
-                return false;
-            }
-        });
-        webView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                scrollview.requestDisallowInterceptTouchEvent(false);
-                return false;
-            }
-        });
+//        scrollview.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                webView.requestDisallowInterceptTouchEvent(true);
+//                return false;
+//            }
+//        });
+//        webView.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                scrollview.requestDisallowInterceptTouchEvent(false);
+//                return false;
+//            }
+//        });
     }
-
     @Override
     protected void initData() {
         String id=getIntent().getStringExtra("id");
@@ -170,9 +175,8 @@ public class LeadersDetaislActivity extends BaseActivity {
         public void onNext(WorkDetails channels) {
             if(channels.status.code.equals("0")){
                 data1=channels;
+//                webView.loadUrl(channels.data.content);
                 webView.loadDataWithBaseURL(null, channels.data.content, "text/html", "utf-8", null);
-                webView.getSettings().setJavaScriptEnabled(true);
-                webView.setWebChromeClient(new WebChromeClient());
                 title1.setText(channels.data.title);
                 laiyan.setText(channels.data.original);
                 tv_time.setText(channels.data.publish_date);

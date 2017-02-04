@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -21,11 +22,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.yumutech.bean.ShengJiRequest;
 import cn.yumutech.bean.Update;
 import cn.yumutech.fragments.HomeFragment;
 import cn.yumutech.fragments.MailListFragment;
@@ -35,6 +39,7 @@ import cn.yumutech.netUtil.DeviceUtils;
 import cn.yumutech.netUtil.FileUtils;
 import cn.yumutech.netUtil.MD5Util;
 import cn.yumutech.netUtil.ToosUtil;
+import cn.yumutech.netUtil.UpdateManager;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Group;
@@ -67,12 +72,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,R
 
     @Override
     protected void initViews(Bundle savedInstanceState) {
-//        EventBus.getDefault().register(this);
         app= App.getContext();
         savePath=getDir("update", 0).getAbsolutePath();
         apkFilePath= savePath + File.separator   + "cz.apk";
         App.getContext().downLoadPath=apkFilePath;
-        Log.e("info","xxxxxxxxxxxxxx");
         addFragement(HomeFragment.newInstance());
         addFragement(SuperviseFragment.newInstance());
         addFragement(MailListFragment.newInstance());
@@ -103,8 +106,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,R
         ll_applction.setOnClickListener(this);
         ll_shop.setOnClickListener(this);
 //        ll_animation.performClick();
+        if(App.getContext().getLogo("logo")!=null){
+            ShengJiRequest sheng=new ShengJiRequest(new ShengJiRequest.UserBean(App.getContext().getLogo("logo").data.id,"1233454"),new ShengJiRequest.DataBean("Android"));
+            UpdateManager.getUpdateManager().initDatas1(new Gson().toJson(sheng),this, DeviceUtils.getAPPVersionCodeFromAPP(this),mHandler1);
+        }
     }
-
     @Override
     protected void initData() {
     }
@@ -290,6 +296,90 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,R
             }
         }
     };
+    Handler mHandler1=new Handler(){
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+//                case 0:
+//                    MissDilog();
+//                    TiShiDilog tiShiDilog=new TiShiDilog(MainActivity.this);
+//                    tiShiDilog.show();
+//                    break;
+                case 1:
+                    MissDilog();
+                    UpdateManager.getUpdateManager().Download(UpdateManager.getUpdateManager().mUpdate.data.url,App.getContext().downLoadPath);
+
+//                    SignOutDilog mDilog=new SignOutDilog(MainActivity.this,"发现新版本,是否更新?");
+//                    mDilog.show();
+//                    mDilog.setOnLisener(new SignOutDilog.onListern() {
+//                        @Override
+//                        public void send() {
+//                            UpdateManager.getUpdateManager().Download(UpdateManager.getUpdateManager().mUpdate.data.url,App.getContext().downLoadPath);
+//                            showDilog("升级中，请稍后...");
+//                        }
+//                    });
+                    break;
+                case 2:
+                    MissDilog();
+                    showUpdateDialog(UpdateManager.mInstanceUpdate);
+                    break;
+                case 3:
+                    Toast.makeText(MainActivity.this, "网络出错，请清新下载", Toast.LENGTH_SHORT).show();
+                    break;
+                case 4:
+
+                    break;
+            }
+        }
+    };
+    /**
+     * 安装提示对话框
+     */
+    private void showUpdateDialog(Update mUpdate) {
+        View view = LayoutInflater.from(this).inflate(R.layout.welcomedilog, null);
+
+        final Dialog dialog = new Dialog(this, R.style.transparentFrameWindowStyle);
+        dialog.setContentView(view);
+
+
+        TextView textView_version = (TextView) view.findViewById(R.id.bh);
+        TextView shaohou = (TextView) view.findViewById(R.id.text1);
+        TextView newNow = (TextView) view.findViewById(R.id.text2);
+        TextView textView_log = (TextView) view.findViewById(R.id.tv);
+        textView_log.setText(mUpdate.data.getRemarks());
+        newNow.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                installApk( App.getContext().downLoadPath);
+                dialog.dismiss();
+            }
+        });
+        shaohou.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        // 获取屏幕分辨率来控制宽度
+        int width = ToosUtil.getInstance().getScreenWidth(this);
+
+        Window window = dialog.getWindow();
+        WindowManager.LayoutParams wl = window.getAttributes();
+        wl.width = width * 8 / 10;
+        wl.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+
+        // 设置显示位置
+        dialog.onWindowAttributesChanged(wl);
+
+        dialog.setCanceledOnTouchOutside(false);
+
+        dialog.show();
+    }
     public static final int EXIT = 1005;
     public  boolean isExit = false;
     public void exit() {
@@ -307,9 +397,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,R
 
         return null;
     }
-
-
-
     /**
      * 安装apk
      *
@@ -344,53 +431,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,R
         }
         return new String(c);
     }
-    /**
-     * 安装提示对话框
-     */
-    private void showUpdateDialog(Update mUpdate) {
-        View view = LayoutInflater.from(this).inflate(R.layout.welcomedilog, null);
-
-        final Dialog dialog = new Dialog(this, R.style.transparentFrameWindowStyle);
-        dialog.setContentView(view);
-
-
-        TextView textView_version = (TextView) view.findViewById(R.id.bh);
-        TextView shaohou = (TextView) view.findViewById(R.id.text1);
-        TextView newNow = (TextView) view.findViewById(R.id.text2);
-        TextView textView_log = (TextView) view.findViewById(R.id.tv);
-        textView_log.setText(mUpdate.data.getRemarks());
-        newNow.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                installApk(apkFilePath);
-                dialog.dismiss();
-            }
-        });
-        shaohou.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-
-        // 获取屏幕分辨率来控制宽度
-        int width = ToosUtil.getInstance().getScreenWidth(this);
-
-        Window window = dialog.getWindow();
-        WindowManager.LayoutParams wl = window.getAttributes();
-        wl.width = width * 8 / 10;
-        wl.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-
-        // 设置显示位置
-        dialog.onWindowAttributesChanged(wl);
-
-        dialog.setCanceledOnTouchOutside(false);
-
-        dialog.show();
-
-    }
 
     /**
      * 校验下载的apk文件的md5值
@@ -410,5 +450,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,R
 
         return b;
     }
+
+
 
 }

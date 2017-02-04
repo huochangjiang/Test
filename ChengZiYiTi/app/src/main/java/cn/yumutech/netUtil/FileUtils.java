@@ -536,13 +536,15 @@ public class FileUtils {
 		List<File> allDir = new ArrayList<File>();
 		SecurityManager checker = new SecurityManager();
 		File path = new File(root);
-		checker.checkRead(root);
-		File[] files = path.listFiles();
-		for (File f : files) {
-			if (f.isFile())
-				allDir.add(f);
-			else
-				listPath(f.getAbsolutePath());
+		if(path.exists()) {
+			checker.checkRead(root);
+			File[] files = path.listFiles();
+			for (File f : files) {
+				if (f.isFile())
+					allDir.add(f);
+				else
+					listPath(f.getAbsolutePath());
+			}
 		}
 		return allDir;
 	}
