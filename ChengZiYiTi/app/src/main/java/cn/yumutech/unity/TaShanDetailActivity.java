@@ -3,7 +3,6 @@ package cn.yumutech.unity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -11,7 +10,6 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -35,7 +33,7 @@ public class TaShanDetailActivity extends BaseActivity{
     private RelativeLayout comments;
     private WebView webView;
     private String myId;
-    private ScrollView scrollView;
+//    private ScrollView scrollView;
     Subscription subscription;
     private ImageView back;
     private HuDongItem detail;
@@ -62,15 +60,15 @@ public class TaShanDetailActivity extends BaseActivity{
         button= (Button) findViewById(R.id.button);
         webView = (WebView) findViewById(R.id.webview);
         back= (ImageView) findViewById(R.id.back);
-        scrollView= (ScrollView) findViewById(R.id.scrollView);
+//        scrollView= (ScrollView) findViewById(R.id.scrollView);
         myprog=findViewById(R.id.myprog);
         myprog.setVisibility(View.VISIBLE);
-        scrollView.setVisibility(View.GONE);
+//        scrollView.setVisibility(View.GONE);
         button.setVisibility(View.GONE);
         net_connect = findViewById(R.id.netconnect);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setSupportZoom(true);
-        webView.getSettings().setBuiltInZoomControls(false);
+        webView.getSettings().setBuiltInZoomControls(true);
         webView.getSettings().setUseWideViewPort(true);
         webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         webView.getSettings().setLoadWithOverviewMode(true);
@@ -81,13 +79,13 @@ public class TaShanDetailActivity extends BaseActivity{
             webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
         }
         // disable scroll on touch
-        webView.setScrollContainer(false);
-        webView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return (event.getAction() == MotionEvent.ACTION_MOVE);
-            }
-        });
+//        webView.setScrollContainer(false);
+//        webView.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                return (event.getAction() == MotionEvent.ACTION_MOVE);
+//            }
+//        });
         initLocal();
     }
 
@@ -193,7 +191,7 @@ public class TaShanDetailActivity extends BaseActivity{
         }else{
             if(!app.isNetworkConnected(this)){
                 net_connect.setVisibility(View.VISIBLE);
-                scrollView.setVisibility(View.GONE);
+//                scrollView.setVisibility(View.GONE);
                 button.setVisibility(View.GONE);
             }
         }
@@ -212,10 +210,10 @@ public class TaShanDetailActivity extends BaseActivity{
         time.setText(huDongItem.data.publish_date);
         pinglun.setText(huDongItem.data.comment_count+"条回复");
         net_connect.setVisibility(View.GONE);
-        scrollView.setVisibility(View.VISIBLE);
+//        scrollView.setVisibility(View.VISIBLE);
         button.setVisibility(View.VISIBLE);
         myprog.setVisibility(View.GONE);
-        scrollView.setVisibility(View.VISIBLE);
+//        scrollView.setVisibility(View.VISIBLE);
         button.setVisibility(View.VISIBLE);
     }
 }
