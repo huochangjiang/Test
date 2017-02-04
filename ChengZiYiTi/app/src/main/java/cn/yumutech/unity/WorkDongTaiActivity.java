@@ -283,6 +283,7 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
                     if(search.getText().toString().length()>0){
                         isSearch=true;
                         mPageSearch=0;
+                        isRefresh=false;
                         initSearch(search.getText().toString().trim());
                     }else {
                         isSearch=false;

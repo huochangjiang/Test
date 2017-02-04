@@ -342,6 +342,7 @@ public class LeaderActivitysActivity extends BaseActivity implements SwipeRefres
                     if(search.getText().toString().length()>0){
                         isSearch=true;
                         mPageSearch=0;
+                        isRefresh=false;
                         initSearch(search.getText().toString().trim());
                     }else {
                         isSearch=false;
