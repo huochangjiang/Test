@@ -2,9 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     tools:context="cn.yumutech.fragments.HomeFragment">
-
     <!-- TODO: Update blank fragment layout -->
     <ScrollView
         android:id="@+id/scrollview"
@@ -38,7 +36,6 @@
         <!--</android.support.v7.widget.Toolbar>-->
     <RelativeLayout
         android:background="@color/fengexianone"
-
         android:layout_width="match_parent"
         android:layout_height="@dimen/guanggaowei" >
         <cn.yumutech.weight.ViewFlow
@@ -68,7 +65,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
         <cn.yumutech.weight.MyGridView
-
             android:clickable="true"
             android:paddingTop="40dp"
            android:background="@android:color/transparent"
@@ -89,5 +85,4 @@
             android:layout_height="match_parent"
             layout="@layout/net_connect"
             android:layout_width="match_parent"/>
-
 </RelativeLayout>

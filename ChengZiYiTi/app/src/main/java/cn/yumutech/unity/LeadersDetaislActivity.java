@@ -6,6 +6,7 @@ import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -63,10 +64,17 @@ public class LeadersDetaislActivity extends BaseActivity {
 
 //        settings.setLoadWithOverviewMode(true);
 
+
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setSupportZoom(true);
         webView.getSettings().setBuiltInZoomControls(true);
         webView.getSettings().setUseWideViewPort(true);
+        webView.setWebViewClient(new WebViewClient(){
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return false;
+            }
+        });
         webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         webView.getSettings().setLoadWithOverviewMode(true);
         //影藏缩放按钮
@@ -91,10 +99,21 @@ public class LeadersDetaislActivity extends BaseActivity {
 //            @Override
 //            public boolean onTouch(View v, MotionEvent event) {
 //                return (event.getAction() == MotionEvent.ACTION_MOVE);
+//        scrollview.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                webView.requestDisallowInterceptTouchEvent(true);
+//                return false;
+//            }
+//        });
+//        webView.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                scrollview.requestDisallowInterceptTouchEvent(false);
+//                return false;
 //            }
 //        });
     }
-
     @Override
     protected void initData() {
         String id=getIntent().getStringExtra("id");
@@ -174,9 +193,8 @@ public class LeadersDetaislActivity extends BaseActivity {
         public void onNext(WorkDetails channels) {
             if(channels.status.code.equals("0")){
                 data1=channels;
+//                webView.loadUrl(channels.data.content);
                 webView.loadDataWithBaseURL(null, channels.data.content, "text/html", "utf-8", null);
-                webView.getSettings().setJavaScriptEnabled(true);
-                webView.setWebChromeClient(new WebChromeClient());
                 title1.setText(channels.data.title);
                 laiyan.setText(channels.data.original);
                 tv_time.setText(channels.data.publish_date);

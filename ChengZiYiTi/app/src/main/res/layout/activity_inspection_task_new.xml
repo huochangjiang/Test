@@ -83,7 +83,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_width="@dimen/home_item"
                         android:layout_height="@dimen/home_item"
-                        android:src="@drawable/hudongjiaoliu"/>
+                        android:src="@drawable/onecheng"/>
                     <TextView
                         android:layout_centerHorizontal="true"
                         android:layout_below="@+id/image_one"
@@ -105,7 +105,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_width="@dimen/home_item"
                         android:layout_height="@dimen/home_item"
-                        android:src="@drawable/hudongjiaoliu"/>
+                        android:src="@drawable/sixcheng"/>
                     <TextView
                         android:layout_centerHorizontal="true"
                         android:layout_below="@+id/image_two"
@@ -127,7 +127,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_width="@dimen/home_item"
                         android:layout_height="@dimen/home_item"
-                        android:src="@drawable/hudongjiaoliu"/>
+                        android:src="@drawable/eightcheng"/>
                     <TextView
                         android:layout_centerHorizontal="true"
                         android:layout_below="@+id/image_three"
@@ -156,13 +156,13 @@
                     android:layout_centerHorizontal="true"
                     android:layout_width="@dimen/home_item"
                     android:layout_height="@dimen/home_item"
-                    android:src="@drawable/hudongjiaoliu"/>
+                    android:src="@drawable/sevencheng"/>
                 <TextView
                     android:layout_centerHorizontal="true"
                     android:layout_below="@+id/image_four"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="督查通知"
+                    android:text="通知通报"
                     android:layout_marginTop="5dp"
                     android:textSize="14sp"
                     android:textColor="@color/huise"/>
@@ -255,7 +255,7 @@
                             android:layout_centerHorizontal="true"
                             android:layout_width="@dimen/home_item"
                             android:layout_height="@dimen/home_item"
-                            android:src="@drawable/hudongjiaoliu"/>
+                            android:src="@drawable/twocheng"/>
                         <TextView
                             android:layout_centerHorizontal="true"
                             android:layout_below="@+id/image_under_two"
@@ -277,7 +277,7 @@
                             android:layout_centerHorizontal="true"
                             android:layout_width="@dimen/home_item"
                             android:layout_height="@dimen/home_item"
-                            android:src="@drawable/hudongjiaoliu"/>
+                            android:src="@drawable/fourcheng"/>
                         <TextView
                             android:layout_centerHorizontal="true"
                             android:layout_below="@+id/image_under_three"
@@ -306,7 +306,7 @@
                             android:layout_centerHorizontal="true"
                             android:layout_width="@dimen/home_item"
                             android:layout_height="@dimen/home_item"
-                            android:src="@drawable/hudongjiaoliu"/>
+                            android:src="@drawable/threecheng"/>
                         <TextView
                             android:layout_centerHorizontal="true"
                             android:layout_below="@+id/image_under_four"

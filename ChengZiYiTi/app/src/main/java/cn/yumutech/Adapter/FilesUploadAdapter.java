@@ -57,7 +57,7 @@ public class FilesUploadAdapter extends BaseAdapter{
 
         if(position==mDatas.size()){
             vh.iv.setVisibility(View.GONE);
-            vh.tv.setText("上传文件");
+            vh.tv.setText("添加文件");
         }else{
             vh.tv.setText(getFileName(mDatas.get(position))+"."+getMimeType(mDatas.get(position)));
             vh.iv.setVisibility(View.VISIBLE);
