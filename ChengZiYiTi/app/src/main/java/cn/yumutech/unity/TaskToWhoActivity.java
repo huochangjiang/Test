@@ -169,12 +169,16 @@ public class TaskToWhoActivity extends BaseActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.rl_send:
-                if(shijiPoeples!=null&&shijiPoeples.size()>2){
-                    Toast.makeText(TaskToWhoActivity.this,"您最多可指派两人",Toast.LENGTH_SHORT).show();
-                }else if(shijiPoeples!=null&&shijiPoeples.size()>0&&shijiPoeples.size()<3&&type.equals("1")) {
+//                if(shijiPoeples!=null&&shijiPoeples.size()>2){
+//                    Toast.makeText(TaskToWhoActivity.this,"您最多可指派两人",Toast.LENGTH_SHORT).show();
+//                }else
+//                if(shijiPoeples!=null&&shijiPoeples.size()>0&&shijiPoeples.size()<3&&type.equals("1")) {
+                    if(shijiPoeples!=null&&shijiPoeples.size()>0&&type.equals("1")) {
                     EventBus.getDefault().post(new PublishTask());
                     finish();
-                }else if(shijiPoeples!=null&&shijiPoeples.size()>0&&shijiPoeples.size()<3&&type.equals("2")){
+                }
+//                    else if(shijiPoeples!=null&&shijiPoeples.size()>0&&shijiPoeples.size()<3&&type.equals("2")){
+                        else if(shijiPoeples!=null&&shijiPoeples.size()>0&&type.equals("2")){
                     mGetAssignTask();
                 }else {
                     finish();

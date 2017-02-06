@@ -72,14 +72,16 @@ public class PublishTaskBeen {
         private String task_title;
         private String task_content;
         private String task_end_date;
-        private String director;
-        private String supporter;
-        public DataBean(String task_title,String task_content,String task_end_date,String director,String supporter){
+//        private String director;
+//        private String supporter;
+        private String assigns;
+        public DataBean(String task_title,String task_content,String task_end_date,String assigns){
             this.task_title=task_title;
             this.task_content=task_content;
             this.task_end_date=task_end_date;
-            this.director=director;
-            this.supporter=supporter;
+            this.assigns=assigns;
+//            this.director=director;
+//            this.supporter=supporter;
         }
         public String getTask_title() {
             return task_title;
@@ -105,20 +107,20 @@ public class PublishTaskBeen {
             this.task_end_date = task_end_date;
         }
 
-        public String getDirector() {
-            return director;
-        }
-
-        public void setDirector(String director) {
-            this.director = director;
-        }
-
-        public String getSupporter() {
-            return supporter;
-        }
-
-        public void setSupporter(String supporter) {
-            this.supporter = supporter;
-        }
+//        public String getDirector() {
+//            return director;
+//        }
+//
+//        public void setDirector(String director) {
+//            this.director = director;
+//        }
+//
+//        public String getSupporter() {
+//            return supporter;
+//        }
+//
+//        public void setSupporter(String supporter) {
+//            this.supporter = supporter;
+//        }
     }
 }

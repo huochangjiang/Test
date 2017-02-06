@@ -45,7 +45,7 @@
             android:textSize="15sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="发布给:"/>
+            android:text="指派给:"/>
         <TextView
             android:id="@+id/tv_faburen"
             android:layout_toRightOf="@+id/faburen"

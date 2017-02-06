@@ -17,6 +17,8 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -48,6 +50,7 @@ public class ReleaseTaskActivity extends BaseActivity implements View.OnClickLis
     private TextView who_zhu,who_xie;
     private LinearLayout rl_zhipairen;
     public Map<Integer, UserAboutPerson.DataBean> zhipaiPeople;
+    private TextView zhubanren;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_release_task;
@@ -58,6 +61,8 @@ public class ReleaseTaskActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected void initViews(Bundle savedInstanceState) {
         EventBus.getDefault().register(this);
+        maps1.clear();
+        maps.clear();
         edit_title= (EditText) findViewById(R.id.edit_title);
         edit_neirong= (EditText) findViewById(R.id.edit_neirong);
         rl_who= (RelativeLayout) findViewById(R.id.rl_who);
@@ -69,6 +74,7 @@ public class ReleaseTaskActivity extends BaseActivity implements View.OnClickLis
         who_xie= (TextView) findViewById(R.id.who_xie);
         rl_zhipairen= (LinearLayout) findViewById(R.id.rl_zhipairen);
         rl_zhipairen.setVisibility(View.GONE);
+        zhubanren= (TextView) findViewById(R.id.zhubanren);
         back.setOnClickListener(this);
         rl_who.setOnClickListener(this);
         rl_end_time.setOnClickListener(this);
@@ -92,14 +98,72 @@ public class ReleaseTaskActivity extends BaseActivity implements View.OnClickLis
             }
         });
     }
+    public static Map<Integer,Poeple> maps=new HashMap<>();
+    public static Map<Integer,Poeple> maps1=new HashMap<>();
     //将指派人
     public void onEventMainThread(PublishTask task){
+
         if( SaveData.getInstance().twoPeople!=null&&SaveData.getInstance().twoPeople.size()>1){
             zhuPoeples=SaveData.getInstance().twoPeople;
-            who_zhu.setText(zhuPoeples.get(0).name);
-            who_xie.setText(zhuPoeples.get(1).name);
+            for(int i=0;i<zhuPoeples.size();i++){
+                maps.put(i,zhuPoeples.get(i));
+            }
+            maps.clear();
+            zhubanren.setText(getMemberIds(maps));
+//            who_zhu.setText(zhuPoeples.get(0).name);
+//            who_xie.setText(zhuPoeples.get(1).name);
             rl_zhipairen.setVisibility(View.VISIBLE);
         }
+    }
+    List<String> iids = new ArrayList<>();
+    List<String> iids1 = new ArrayList<>();
+    //传入数据，将名字用空格隔开
+    private String getMemberIds(Map<Integer,Poeple> beans) {
+        StringBuffer sb = new StringBuffer();
+        iids.clear();
+        Iterator iter = beans.entrySet().iterator();
+        while (iter.hasNext()) {
+            Map.Entry entry = (Map.Entry) iter.next();
+            int key = (int) entry.getKey();
+            Poeple val = (Poeple) entry.getValue();
+            for(int j=0;j<zhuPoeples.size();j++){
+                iids.add(zhuPoeples.get(j).name);
+            }
+
+        }
+        for (int i = 0; i < iids.size(); i++) {
+
+            if (i == iids.size() - 1) {
+                sb.append(iids.get(i));
+            } else {
+                sb.append(iids.get(i) + " ");
+            }
+        }
+        return sb.toString();
+    }
+    //传入数据，将名字用空格隔开
+    private String getMemberIds1(Map<Integer,Poeple> beans) {
+        StringBuffer sb = new StringBuffer();
+        iids1.clear();
+        Iterator iter = beans.entrySet().iterator();
+        while (iter.hasNext()) {
+            Map.Entry entry = (Map.Entry) iter.next();
+            int key = (int) entry.getKey();
+            Poeple val = (Poeple) entry.getValue();
+            for(int j=0;j<zhuPoeples.size();j++){
+                iids1.add(zhuPoeples.get(j).id);
+            }
+
+        }
+        for (int i = 0; i < iids1.size(); i++) {
+
+            if (i == iids1.size() - 1) {
+                sb.append(iids1.get(i));
+            } else {
+                sb.append(iids1.get(i) + ",");
+            }
+        }
+        return sb.toString();
     }
     //遍历map集合，。取出其中的人名和id
     private List<Poeple> zhuPoeples=new ArrayList<>();
@@ -141,11 +205,14 @@ public class ReleaseTaskActivity extends BaseActivity implements View.OnClickLis
                     }else if(zhuPoeples.isEmpty()||zhuPoeples.size()<2){
                         Toast.makeText(ReleaseTaskActivity.this,"您还未指派，请完善",Toast.LENGTH_SHORT).show();
                     }else {
+                        maps1.clear();
+                        for(int i=0;i<zhuPoeples.size();i++){
+                            maps1.put(i,zhuPoeples.get(i));
+                        }
                         showDilog("发布中...");
                         PublishTaskBeen been=new PublishTaskBeen(new PublishTaskBeen.UserBean(App.getContext().getLogo("logo").data.id,"")
                                 ,new PublishTaskBeen.DataBean(edit_title.getText().toString().trim(),edit_neirong.getText().toString().trim(),
-                                choose_time.getText().toString(),zhuPoeples.get(0).id,
-                                zhuPoeples.get(1).id));
+                                choose_time.getText().toString(),getMemberIds1(maps1)));
                         initSend(new Gson().toJson(been));
                     }
                     break;

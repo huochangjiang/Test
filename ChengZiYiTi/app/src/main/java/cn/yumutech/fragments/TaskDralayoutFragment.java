@@ -316,12 +316,16 @@ public class TaskDralayoutFragment extends BaseFragment implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.rl_send:
-                if(shijiPoeples!=null&&shijiPoeples.size()>2){
-                    Toast.makeText(getActivity(),"您最多可指派两人",Toast.LENGTH_SHORT).show();
-                }else if(shijiPoeples!=null&&shijiPoeples.size()>0&&shijiPoeples.size()<3&&SaveData.getInstance().type.equals("1")) {
+//                if(shijiPoeples!=null&&shijiPoeples.size()>2){
+//                    Toast.makeText(getActivity(),"您最多可指派两人",Toast.LENGTH_SHORT).show();
+//                }else
+//                if(shijiPoeples!=null&&shijiPoeples.size()>0&&shijiPoeples.size()<3&&SaveData.getInstance().type.equals("1")) {
+                    if(shijiPoeples!=null&&shijiPoeples.size()>0&&SaveData.getInstance().type.equals("1")) {
                     EventBus.getDefault().post(new PublishTask());
                     EventBus.getDefault().post(new AssignTask());
-                }else if(shijiPoeples!=null&&shijiPoeples.size()>0&&shijiPoeples.size()<3&&SaveData.getInstance().type.equals("2")){
+                }
+//                    else if(shijiPoeples!=null&&shijiPoeples.size()>0&&shijiPoeples.size()<3&&SaveData.getInstance().type.equals("2")){
+                    else if(shijiPoeples!=null&&shijiPoeples.size()>0&&SaveData.getInstance().type.equals("2")){
                     mGetAssignTask();
                     EventBus.getDefault().post(new AssignTask());
                 }else {

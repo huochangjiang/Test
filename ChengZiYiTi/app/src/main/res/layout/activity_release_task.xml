@@ -138,10 +138,14 @@
             android:layout_width="wrap_content"
             android:layout_centerVertical="true"
             android:orientation="horizontal"
+            android:layout_toRightOf="@+id/text_who"
+            android:layout_marginLeft="10dp"
             android:layout_toLeftOf="@+id/image_who"
+            android:layout_marginRight="10dp"
             android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/zhubanren"
+                android:singleLine="true"
                 android:layout_toLeftOf="@+id/who_zhu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -150,7 +154,7 @@
                 android:text="主办人:"/>
         <TextView
             android:id="@+id/who_zhu"
-
+            android:visibility="gone"
           android:layout_toLeftOf="@+id/xiebanren"
             android:layout_marginRight="10dp"
             android:layout_width="wrap_content"
@@ -160,6 +164,7 @@
             android:singleLine="true" />
             <TextView
                 android:id="@+id/xiebanren"
+                android:visibility="gone"
                android:layout_toLeftOf="@+id/who_xie"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -169,6 +174,7 @@
                 android:text="协办人:"/>
             <TextView
                 android:id="@+id/who_xie"
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="李四"
