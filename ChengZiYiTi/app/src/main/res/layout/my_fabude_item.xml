@@ -42,23 +42,23 @@
 
         <TextView
             android:id="@+id/faburen"
-            android:textSize="15sp"
+            android:textSize="13sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="发布给:"/>
+            android:text="指派给:"/>
         <TextView
             android:id="@+id/tv_faburen"
             android:layout_toRightOf="@+id/faburen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="陈"
-            android:textSize="15sp"
+            android:textSize="13sp"
             android:layout_marginLeft="5dp"/>
         <TextView
             android:id="@+id/tv_fabushijian"
             android:layout_marginRight="10dp"
             android:text="2016-12-10"
-            android:textSize="15sp"
+            android:textSize="13sp"
             android:layout_alignParentRight="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -67,7 +67,7 @@
             android:layout_toLeftOf="@+id/tv_fabushijian"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
+            android:textSize="13sp"
             android:text="指派时间:"/>
     </RelativeLayout>
     <TextView

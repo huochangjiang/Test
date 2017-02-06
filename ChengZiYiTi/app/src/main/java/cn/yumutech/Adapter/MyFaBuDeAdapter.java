@@ -138,16 +138,20 @@ public class MyFaBuDeAdapter extends BaseAdapter{
             for(int j=0;j<val.assignees.size();j++){
                 iids.add(val.assignees.get(j).assignee_user_name);
             }
-
         }
-        for (int i = 0; i < iids.size(); i++) {
-
-            if (i == iids.size() - 1) {
-                sb.append(iids.get(i));
-            } else {
-                sb.append(iids.get(i) + ",");
-            }
+        if(iids.size()==1){
+            sb.append(iids.get(0));
+        }else{
+            sb.append(iids.get(0)+" "+"等"+iids.size()+"人");
         }
+//        for (int i = 0; i < iids.size(); i++) {
+//
+//            if (i == iids.size() - 1) {
+//                sb.append(iids.get(i));
+//            } else {
+//                sb.append(iids.get(i) + ",");
+//            }
+//        }
         return sb.toString();
     }
 }
