@@ -131,7 +131,7 @@
             android:id="@+id/text_who"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="指派给"
+            android:text="指派给:"
             android:textColor="@color/black" />
         <LinearLayout
             android:id="@+id/rl_zhipairen"

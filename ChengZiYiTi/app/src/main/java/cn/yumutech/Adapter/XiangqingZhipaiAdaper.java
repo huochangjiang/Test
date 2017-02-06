@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import cn.yumutech.bean.ShowTaskDetail;
 import cn.yumutech.unity.R;
+import cn.yumutech.weight.SaveData;
 
 /**
  * Created by Allen on 2016/11/27.
@@ -53,11 +54,11 @@ public class XiangqingZhipaiAdaper extends BaseAdapter{
             vh= (ViewHolder) view.getTag();
         }
         if(data.data.assign!=null&&data.data.assign.size()>0){
-//            String time1= SaveData.getInstance().getStringDateShort(data.data.assign.get(i).assign_date);
+            String time1= SaveData.getInstance().getStringDateShort(data.data.assign.get(i).assign_date);
 //            String time1= data.data.assign.get(i).assign_date;
-//            vh.zhu_zhipaishijian.setText(time1);
-//            vh.tv_zhipairen1.setText(data.data.assign.get(i).assigner_user_name);
-//            vh.zhu_banren.setText(data.data.assign.get(i).assignee_user_name);
+            vh.zhu_zhipaishijian.setText(time1);
+            vh.tv_zhipairen1.setText(data.data.assign.get(i).assigner_user_name);
+            vh.zhu_banren.setText(data.data.assign.get(i).assignee_user_name);
         }
         return myView;
     }

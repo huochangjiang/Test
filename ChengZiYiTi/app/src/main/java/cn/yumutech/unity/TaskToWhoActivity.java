@@ -9,8 +9,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -18,7 +16,6 @@ import java.util.Map;
 
 import cn.yumutech.Adapter.TaskToWhoAdapter;
 import cn.yumutech.bean.AssignTask;
-import cn.yumutech.bean.AssignTaskBeen;
 import cn.yumutech.bean.GroupClass;
 import cn.yumutech.bean.Poeple;
 import cn.yumutech.bean.PublishTask;
@@ -217,9 +214,9 @@ List<String> iids = new ArrayList<>();
     private void mGetAssignTask(){
         if(App.getContext().getLogo("logo")!=null&&detailToThis.size()==2){
             Log.e("ZHU","主办人"+detailToThis.get(0).name+"协办人"+detailToThis.get(1).name);
-            AssignTaskBeen assignTaskBeen = new AssignTaskBeen(new AssignTaskBeen.UserBeen(App.getContext().getLogo("logo").data.id,
-                    "1234567890"),new AssignTaskBeen.DataBeen(task_id,detailToThis.get(0).id,detailToThis.get(1).id));
-            mGetAssignTask1(new Gson().toJson(assignTaskBeen));
+//            AssignTaskBeen assignTaskBeen = new AssignTaskBeen(new AssignTaskBeen.UserBeen(App.getContext().getLogo("logo").data.id,
+//                    "1234567890"),new AssignTaskBeen.DataBeen(task_id,detailToThis.get(0).id,detailToThis.get(1).id));
+//            mGetAssignTask1(new Gson().toJson(assignTaskBeen));
         }
     }
 

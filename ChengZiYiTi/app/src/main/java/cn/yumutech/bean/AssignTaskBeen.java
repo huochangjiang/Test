@@ -20,12 +20,12 @@ public class AssignTaskBeen {
     }
     public static class DataBeen{
         public String task_id;
-        public String director;
-        public String supporter;
-        public DataBeen(String task_id,String director,String supporter){
+        public String assigns;
+//        public String director;
+//        public String supporter;
+        public DataBeen(String task_id,String assigns){
             this.task_id=task_id;
-            this.director=director;
-            this.supporter=supporter;
+            this.assigns=assigns;
         }
     }
 }

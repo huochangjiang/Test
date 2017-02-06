@@ -103,12 +103,13 @@ public class ReleaseTaskActivity extends BaseActivity implements View.OnClickLis
     //将指派人
     public void onEventMainThread(PublishTask task){
 
-        if( SaveData.getInstance().twoPeople!=null&&SaveData.getInstance().twoPeople.size()>1){
+        if( SaveData.getInstance().twoPeople!=null&&SaveData.getInstance().twoPeople.size()>0){
             zhuPoeples=SaveData.getInstance().twoPeople;
+            maps.clear();
             for(int i=0;i<zhuPoeples.size();i++){
                 maps.put(i,zhuPoeples.get(i));
             }
-            maps.clear();
+
             zhubanren.setText(getMemberIds(maps));
 //            who_zhu.setText(zhuPoeples.get(0).name);
 //            who_xie.setText(zhuPoeples.get(1).name);
@@ -126,9 +127,9 @@ public class ReleaseTaskActivity extends BaseActivity implements View.OnClickLis
             Map.Entry entry = (Map.Entry) iter.next();
             int key = (int) entry.getKey();
             Poeple val = (Poeple) entry.getValue();
-            for(int j=0;j<zhuPoeples.size();j++){
-                iids.add(zhuPoeples.get(j).name);
-            }
+//            for(int j=0;j<zhuPoeples.size();j++){
+                iids.add(val.name);
+//            }
 
         }
         for (int i = 0; i < iids.size(); i++) {
@@ -150,9 +151,9 @@ public class ReleaseTaskActivity extends BaseActivity implements View.OnClickLis
             Map.Entry entry = (Map.Entry) iter.next();
             int key = (int) entry.getKey();
             Poeple val = (Poeple) entry.getValue();
-            for(int j=0;j<zhuPoeples.size();j++){
-                iids1.add(zhuPoeples.get(j).id);
-            }
+//            for(int j=0;j<zhuPoeples.size();j++){
+                iids1.add(val.id);
+//            }
 
         }
         for (int i = 0; i < iids1.size(); i++) {

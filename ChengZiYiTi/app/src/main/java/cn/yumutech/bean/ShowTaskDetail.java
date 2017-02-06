@@ -366,6 +366,15 @@ public class ShowTaskDetail {
         }
 
         public static class AssignBean {
+            public String assignee_user_mobile;
+            public String assigner_user_mobile;
+            public String assignee_user_name;
+            public String assign_date;
+            public String assigner_user_name;
+            public String assigner_user_id;
+            public String assignee_user_id;
+            public String assignee_user_type;
+
         }
     }
 }

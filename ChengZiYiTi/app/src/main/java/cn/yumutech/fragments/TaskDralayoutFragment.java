@@ -3,7 +3,6 @@ package cn.yumutech.fragments;
 import android.support.v4.widget.DrawerLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -20,6 +19,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -60,6 +60,7 @@ public class TaskDralayoutFragment extends BaseFragment implements View.OnClickL
     private View wuquanxian;
     private static TaskDralayoutFragment fragment;
     private ImageView iv;
+    public static Map<Integer,Poeple> maps1=new HashMap<>();
 //    private boolean isOpen;
 
 
@@ -89,6 +90,7 @@ public class TaskDralayoutFragment extends BaseFragment implements View.OnClickL
     @Override
     protected void initViews(View contentView) {
         EventBus.getDefault().register(this);
+        maps1.clear();
         SaveData.getInstance().isPermissions=true;
         rl_send= (RelativeLayout) contentView.findViewById(R.id.rl_send);
         myprog=contentView.findViewById(R.id.myprog);
@@ -334,16 +336,45 @@ public class TaskDralayoutFragment extends BaseFragment implements View.OnClickL
                 break;
         }
     }
+    List<String> iids1 = new ArrayList<>();
+    //传入数据，将名字用空格隔开
+    private String getMemberIds1(Map<Integer,Poeple> beans) {
+        StringBuffer sb = new StringBuffer();
+        iids1.clear();
+        Iterator iter = beans.entrySet().iterator();
+        while (iter.hasNext()) {
+            Map.Entry entry = (Map.Entry) iter.next();
+            int key = (int) entry.getKey();
+            Poeple val = (Poeple) entry.getValue();
+//            for(int j=0;j<zhuPoeples.size();j++){
+            iids1.add(val.id);
+//            }
+
+        }
+        for (int i = 0; i < iids1.size(); i++) {
+
+            if (i == iids1.size() - 1) {
+                sb.append(iids1.get(i));
+            } else {
+                sb.append(iids1.get(i) + ",");
+            }
+        }
+        return sb.toString();
+    }
     /**
      * 任务详情那边跳转过来的指派人
      */
     Subscription subscription1;
     private void mGetAssignTask(){
-        if(App.getContext().getLogo("logo")!=null&&detailToThis.size()==2){
+        if(App.getContext().getLogo("logo")!=null&&detailToThis.size()>0){
             showDilog("指派中...");
-            Log.e("ZHU","主办人"+detailToThis.get(0).name+"协办人"+detailToThis.get(1).name);
+            maps1.clear();
+            for(int i=0;i<detailToThis.size();i++){
+                maps1.put(i,detailToThis.get(i));
+            }
+//            Log.e("ZHU","主办人"+detailToThis.get(0).name+"协办人"+detailToThis.get(1).name);
             AssignTaskBeen assignTaskBeen = new AssignTaskBeen(new AssignTaskBeen.UserBeen(App.getContext().getLogo("logo").data.id,
-                    "1234567890"),new AssignTaskBeen.DataBeen(SaveData.getInstance().task_id,detailToThis.get(0).id,detailToThis.get(1).id));
+                    "1234567890"),new AssignTaskBeen.DataBeen(SaveData.getInstance().task_id,getMemberIds1(maps1)));
             mGetAssignTask1(new Gson().toJson(assignTaskBeen));
         }
     }
