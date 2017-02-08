@@ -127,7 +127,6 @@ public class MyFaBuDeFragment extends BaseFragment implements PullToRefreshBase.
                 }else {
                     mData=showMyPublishedTask.data;
                 }
-
                 adapter.dataChange(mData);
                 listView.setVisibility(View.VISIBLE);
                 myprog.setVisibility(View.GONE);

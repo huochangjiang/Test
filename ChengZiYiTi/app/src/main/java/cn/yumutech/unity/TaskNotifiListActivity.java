@@ -427,8 +427,6 @@ public class TaskNotifiListActivity extends BaseActivity implements SwipeRefresh
             }
         }
     };
-
-
     private void addView(final List<ModuleClassifyList.data> a) {
         hors.get(0).removeAllViews();
         for (int j = 0; j < a.size()+1; j++) {
@@ -508,7 +506,6 @@ public class TaskNotifiListActivity extends BaseActivity implements SwipeRefresh
                                 new TaskNotifiListBeen.DataBean(fenlei,searchKey,mPage+"",mPageSize+""));
                         getData1(new Gson().toJson(taskNotifiItemBeen));
                     }
-
                     break;
             }
         }

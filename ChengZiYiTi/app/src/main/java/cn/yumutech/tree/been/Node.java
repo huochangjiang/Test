@@ -173,7 +173,6 @@ public class Node
 		this.isExpand = isExpand;
 		if (!isExpand)
 		{
-
 			for (Node node : children)
 			{
 				node.setExpand(isExpand);

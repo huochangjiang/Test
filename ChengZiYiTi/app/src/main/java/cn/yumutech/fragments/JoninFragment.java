@@ -132,6 +132,7 @@ public class JoninFragment extends BaseFragment {
         while (iter.hasNext()) {
             Map.Entry entry = (Map.Entry) iter.next();
             int key = (int) entry.getKey();
+            String value= (String) entry.getValue();
             UserAboutPerson.DataBean val = (UserAboutPerson.DataBean) entry.getValue();
             iids.add(val.id);
         }

@@ -33,12 +33,10 @@ public class PersonFragment extends BaseFragment {
     @Override
     protected void initViews(View contentView) {
         textView = (TextView) contentView.findViewById(R.id.four);
-
     }
 
     @Override
     protected void initListeners() {
-
     }
 
     @Override

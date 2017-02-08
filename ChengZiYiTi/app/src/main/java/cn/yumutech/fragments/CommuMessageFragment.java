@@ -1,5 +1,6 @@
 package cn.yumutech.fragments;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,6 @@ public class CommuMessageFragment extends BaseFragment{
     public static CommuMessageFragment newInstance() {
         if(fragment==null)
             fragment = new CommuMessageFragment();
-
         return fragment;
     }
     @Override
@@ -35,7 +35,6 @@ public class CommuMessageFragment extends BaseFragment{
 
     @Override
     protected void initListeners() {
-
     }
 
     @Override

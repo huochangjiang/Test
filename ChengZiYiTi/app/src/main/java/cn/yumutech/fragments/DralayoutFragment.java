@@ -47,6 +47,7 @@ public class DralayoutFragment extends BaseFragment {
     private ConstancAdapter mAdapter;
     private EditText search;
     public List<UserAboutPerson.DataBean> searchData=new ArrayList<>();
+    private View myprog;
 
     Subscription subscription;
     public boolean isAllPerson=false;
@@ -90,6 +91,10 @@ public class DralayoutFragment extends BaseFragment {
         wuquanxian=contentView.findViewById(R.id.wuquanxian);
         listView = (ListView) contentView.findViewById(R.id.listview);
         search= (EditText) contentView.findViewById(R.id.search);
+        myprog= contentView.findViewById(R.id.myprog);
+        myprog.setVisibility(View.VISIBLE);
+        listView.setVisibility(View.GONE);
+        mDatas.clear();
         mAdapter = new ConstancAdapter(mActivity,mDatas);
         listView.setAdapter(mAdapter);
         ImageView iv= (ImageView) contentView.findViewById(R.id.iv_huadong);
@@ -138,7 +143,8 @@ public class DralayoutFragment extends BaseFragment {
             @Override
             public void afterTextChanged(Editable s) {
                 if(search.getText().toString().trim().length()==0){
-
+                    myprog.setVisibility(View.GONE);
+                    listView.setVisibility(View.VISIBLE);
                     mAdapter.dataChange(mDatas);
                     listView.setFocusable(false);
                 }
@@ -176,7 +182,8 @@ public class DralayoutFragment extends BaseFragment {
         @Override
         public void onNext(UserAboutPerson channels) {
             if(channels.status.code.equals("0")){
-
+                myprog.setVisibility(View.GONE);
+                listView.setVisibility(View.VISIBLE);
                 mAdapter.dataChange(channels.data);
                 mDatas=channels.data;
                 for (int i=0;i<channels.data.size();i++){
