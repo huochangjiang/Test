@@ -48,7 +48,7 @@
         android:descendantFocusability="blocksDescendants"
         android:layout_below="@+id/id_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="vertical"
@@ -76,7 +76,7 @@
                 <TextView
                     android:layout_marginTop="10dp"
                     android:layout_width="wrap_content"
-                    android:text="来源    "
+                    android:text="分类    "
                     android:textColor="@color/item_title"
                     android:textSize="@dimen/title_size_smaller"
                     android:layout_height="wrap_content" />
@@ -120,7 +120,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_width="wrap_content"
                     android:text="已完成:  50.0%"
-                    android:textSize="16sp"
+                    android:textSize="13sp"
                     android:layout_height="wrap_content" />
             </RelativeLayout>
             <View
@@ -170,12 +170,13 @@
         android:text="存在问题"
         android:layout_height="match_parent" />
 </LinearLayout>
-            <WebView
-                android:layout_below="@+id/title"
-                android:scrollbars="none"
-                android:layout_width="match_parent"
-                android:id="@+id/webview"
-                android:layout_height="match_parent"></WebView>
+
         </LinearLayout>
     </ScrollView>
+    <WebView
+        android:layout_below="@+id/scrollview"
+        android:scrollbars="none"
+        android:layout_width="match_parent"
+        android:id="@+id/webview"
+        android:layout_height="match_parent"></WebView>
 </RelativeLayout>

@@ -2,11 +2,11 @@ package cn.yumutech.unity;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -62,12 +62,21 @@ public class ProjectDetaisActivity extends BaseActivity implements View.OnClickL
         myprog = findViewById(R.id.myprog);
         myprog.setVisibility(View.VISIBLE);
         scrollview.setVisibility(View.GONE);
+
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setSupportZoom(true);
-        webView.getSettings().setBuiltInZoomControls(false);
+        webView.getSettings().setBuiltInZoomControls(true);
         webView.getSettings().setUseWideViewPort(true);
+        webView.setWebViewClient(new WebViewClient(){
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return false;
+            }
+        });
         webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         webView.getSettings().setLoadWithOverviewMode(true);
+        //隐藏缩放按钮
+        webView.getSettings().setDisplayZoomControls(false);
 
         tv_jiben = (TextView) findViewById(R.id.tv_jiben);
         tv_work = (TextView) findViewById(R.id.tv_work);
@@ -96,13 +105,13 @@ public class ProjectDetaisActivity extends BaseActivity implements View.OnClickL
             webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
         }
         // disable scroll on touch
-        webView.setScrollContainer(false);
-        webView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return (event.getAction() == MotionEvent.ACTION_MOVE);
-            }
-        });
+//        webView.setScrollContainer(false);
+//        webView.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                return (event.getAction() == MotionEvent.ACTION_MOVE);
+//            }
+//        });
     }
 
     @Override
