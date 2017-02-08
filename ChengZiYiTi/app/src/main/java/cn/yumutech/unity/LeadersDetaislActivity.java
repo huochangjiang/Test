@@ -77,7 +77,7 @@ public class LeadersDetaislActivity extends BaseActivity {
         });
         webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         webView.getSettings().setLoadWithOverviewMode(true);
-        //影藏缩放按钮
+        //隐藏缩放按钮
         webView.getSettings().setDisplayZoomControls(false);
 //        webView.getSettings().setDefaultFontSize(18);
         controlTitle(findViewById(R.id.back));
