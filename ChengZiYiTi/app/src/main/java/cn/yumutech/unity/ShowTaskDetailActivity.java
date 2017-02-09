@@ -73,6 +73,7 @@ public class ShowTaskDetailActivity extends BaseActivity{
     private TextView wanchenzhe;
     public List<String> phones=new ArrayList<>();
     private boolean isDownLoad=false;
+    private RelativeLayout rl_zong;
     private List<ShowTaskDetail.DataBean.TaskCommentBean.FilesBean> mDatas=new ArrayList<>();
 
     //
@@ -90,6 +91,7 @@ public class ShowTaskDetailActivity extends BaseActivity{
     @Override
     protected void initViews(Bundle savedInstanceState) {
         initExtra();
+
         wanchenzhe= (TextView) findViewById(R.id.wanchenzhe);
         title= (TextView) findViewById(R.id.title);
         status= (TextView) findViewById(R.id.status);
@@ -126,6 +128,7 @@ public class ShowTaskDetailActivity extends BaseActivity{
         mFilelistView = (ListView) findViewById(R.id.listView);
         showAdapter = new ShowTaskDetaisAdapter(this,mDatas);
         mFilelistView.setAdapter(showAdapter);
+        rl_zong= (RelativeLayout) findViewById(R.id.rl_zong);
 //        if(SaveData.getInstance().showTaskComplete!=null){
 //            mData=SaveData.getInstance().showTaskComplete;
             lookAdapter=new LookResultAdapter(ShowTaskDetailActivity.this,mData);
@@ -301,12 +304,14 @@ public class ShowTaskDetailActivity extends BaseActivity{
                     fengexian.setVisibility(View.GONE);
                     accept.setVisibility(View.VISIBLE);
                     complete.setVisibility(View.GONE);
+                    rl_zong.setVisibility(View.VISIBLE);
                     rl_wancheng.setVisibility(View.GONE);
                 }else if(showTaskDetail.data.task_status_name.equals("已接受")){
 //                    zhuangtaishijian.setText("接受时间:");
 //                    String time1=SaveData.getInstance().getStringDateShort(showTaskDetail.data.task_accept_date);
 //                    date.setText(time1);
                     accept.setVisibility(View.GONE);
+                    rl_zong.setVisibility(View.VISIBLE);
                     fengexian.setVisibility(View.VISIBLE);
                     complete.setVisibility(View.VISIBLE);
                     rl_wancheng.setVisibility(View.VISIBLE);
@@ -315,6 +320,7 @@ public class ShowTaskDetailActivity extends BaseActivity{
 //                    zhuangtaishijian.setText("完成时间:");
 //                    String time1=SaveData.getInstance().getStringDateShort(showTaskDetail.data.task_finish_date);
 //                    date.setText(time1);
+                    rl_zong.setVisibility(View.GONE);
                     fengexian.setVisibility(View.VISIBLE);
                     accept.setVisibility(View.GONE);
                     complete.setVisibility(View.GONE);
