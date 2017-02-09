@@ -22,7 +22,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_width="wrap_content"
                 android:text="会话"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 android:textColor="@color/white"
                 android:id="@+id/tv_home"
                 android:layout_height="wrap_content" />
@@ -30,7 +30,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_width="wrap_content"
                 android:text="联系人"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 android:textColor="@color/white"
                 android:id="@+id/danwei"
                 android:layout_height="wrap_content" />
@@ -39,7 +39,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_width="wrap_content"
                 android:text="群组"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 android:textColor="@color/white"
                 android:id="@+id/mingpian"
                 android:layout_height="wrap_content" />

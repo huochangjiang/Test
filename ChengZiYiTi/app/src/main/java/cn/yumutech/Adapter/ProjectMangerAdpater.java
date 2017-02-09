@@ -43,7 +43,7 @@ public class ProjectMangerAdpater extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == ITEM_VIEW) {
-            View view = mLayoutInflater.inflate(R.layout.project_manger_item, parent, false);
+            View view = mLayoutInflater.inflate(R.layout.project_manger_item1, parent, false);
             return new ProjectItemViewHolder(view);
         }else if (viewType == FOOT_VIEW) {
             View view = mLayoutInflater.inflate(R.layout.instance_load_more_layout, parent, false);

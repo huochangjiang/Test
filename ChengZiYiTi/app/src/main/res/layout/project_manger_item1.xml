@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:paddingTop="10dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:background="@color/white"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/tv1"
+        android:layout_width="wrap_content"
+        android:maxLines="2"
+        android:text="男职工关爱行动"
+        android:textColor="@color/small_title"
+        android:textSize="@dimen/title_size"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:id="@+id/ll"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/tv1"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/iv"
+            android:src="@drawable/tou_bei"
+            android:layout_width="140dp"
+            android:scaleType="fitXY"
+            android:paddingRight="5dp"
+            android:layout_height="90dp" />
+        <TextView
+            android:id="@+id/sumary"
+            android:text="aa"
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:textSize="@dimen/title_size_small"
+            android:textColor="@color/item_title"
+            android:maxLines="4"
+            android:ellipsize="end"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/ll"
+        android:id="@+id/rlll"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="规划"
+            android:id="@+id/guihua"
+            android:textColor="@color/juse"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="0元"
+            android:textColor="@color/red"
+            android:id="@+id/money"
+            android:layout_alignParentRight="true"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/ll2"
+        android:layout_below="@+id/rlll"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <TextView
+
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:text="分类    "
+            android:textColor="@color/item_title"
+            android:textSize="@dimen/title_size_smaller"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/laiyuan"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:text="四川新闻网"
+            android:textSize="@dimen/title_size_smaller"
+            android:textColor="@color/item_title"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_marginTop="10dp"
+            android:gravity="right"
+            android:layout_width="match_parent"
+            android:text="2016-11-08-12  11:09"
+            android:layout_marginRight="5dp"
+            android:textColor="@color/item_title"
+            android:textSize="@dimen/title_size_smaller"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <View
+        android:layout_below="@+id/ll2"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:background="@color/fengexianone"
+        android:layout_height="0.5dp"></View>
+
+</RelativeLayout>
