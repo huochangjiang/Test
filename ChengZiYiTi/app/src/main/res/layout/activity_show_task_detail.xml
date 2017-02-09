@@ -49,7 +49,8 @@
     <ScrollView
         android:layout_below="@+id/id_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_above="@+id/rl_zong">
     <RelativeLayout
         android:id="@+id/all"
 
@@ -57,6 +58,7 @@
         android:layout_height="match_parent">
     <RelativeLayout
         android:id="@+id/rl_head"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     <TextView
@@ -340,12 +342,19 @@
     </RelativeLayout>
     </ScrollView>
     <RelativeLayout
+        android:id="@+id/rl_zong"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp">
+    <RelativeLayout
         android:id="@+id/complete"
         android:visibility="gone"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
+
         android:background="@drawable/logo"
         android:layout_width="match_parent"
         android:layout_height="40dp">
@@ -362,9 +371,7 @@
         android:visibility="gone"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+
         android:layout_width="wrap_content"
         android:layout_height="40dp">
         <Button
@@ -384,5 +391,5 @@
             android:background="@drawable/logo"
             android:textColor="@color/white"/>
     </RelativeLayout>
-
+    </RelativeLayout>
 </RelativeLayout>
