@@ -60,7 +60,7 @@
         android:id="@+id/search"
         android:layout_gravity="center_vertical"
         android:imeOptions="actionSearch"
-        android:layout_marginTop="10dp"
+
         android:layout_marginBottom="10dp"
         android:inputType="text"
         android:paddingLeft="5dp"
