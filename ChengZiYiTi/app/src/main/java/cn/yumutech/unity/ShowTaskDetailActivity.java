@@ -82,6 +82,9 @@ public class ShowTaskDetailActivity extends BaseActivity{
     private ListView mFilelistView;
     private ShowTaskDetaisAdapter showAdapter;
     private List<File> mFileList;
+    private String tv_poeple;
+    private String type="0";
+    private TextView faburen;
 
     @Override
     protected int getLayoutId() {
@@ -129,6 +132,16 @@ public class ShowTaskDetailActivity extends BaseActivity{
         showAdapter = new ShowTaskDetaisAdapter(this,mDatas);
         mFilelistView.setAdapter(showAdapter);
         rl_zong= (RelativeLayout) findViewById(R.id.rl_zong);
+        faburen= (TextView) findViewById(R.id.faburen);
+        if(type.equals("1")){
+            faburen.setText("指派给:");
+            listview.setVisibility(View.VISIBLE);
+            xian.setVisibility(View.VISIBLE);
+        }else {
+            faburen.setText("发布人:");
+            listview.setVisibility(View.GONE);
+            xian.setVisibility(View.GONE);
+        }
 //        if(SaveData.getInstance().showTaskComplete!=null){
 //            mData=SaveData.getInstance().showTaskComplete;
             lookAdapter=new LookResultAdapter(ShowTaskDetailActivity.this,mData);
@@ -168,6 +181,8 @@ public class ShowTaskDetailActivity extends BaseActivity{
     private void initExtra() {
         if(getIntent()!=null){
             task_id=getIntent().getStringExtra("task_id");
+            tv_poeple=getIntent().getStringExtra("task_poeple");
+            type=getIntent().getStringExtra("type");
         }
     }
 
@@ -344,10 +359,18 @@ public class ShowTaskDetailActivity extends BaseActivity{
       String time=data.data.task_publish_date;
 //      String time=SaveData.getInstance().getStringDateShort(data.data.task_publish_date);
       tv_fabushijian.setText(time);
-      tv_faburen.setText(data.data.task_publish_user_name);
+      if(type.equals("1")){
+          tv_faburen.setText(tv_poeple);
+      }else if(type.equals("2")){
+          tv_faburen.setText(data.data.task_publish_user_name);
+      }
       if(data.data.assign!=null&&data.data.assign.size()>0){
           adaper.dataChange(data);
-          xian.setVisibility(View.VISIBLE);
+          if(type.equals("1")){
+              xian.setVisibility(View.VISIBLE);
+          }else if(type.equals("2")){
+              xian.setVisibility(View.GONE);
+          }
       }else {
           xian.setVisibility(View.GONE);
       }

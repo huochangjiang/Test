@@ -46,7 +46,7 @@
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/rl_feilei">
+        android:layout_below="@+id/search">
         <include
             layout="@layout/progressbar"
             android:id="@+id/myprog"
@@ -148,12 +148,12 @@
             <!--android:textSize="18sp"-->
             <!--android:textColor="@color/rc_location_text"/>-->
     <cn.yumutech.weight.MyEditText
-        android:layout_below="@+id/id_toolbar"
+        android:layout_below="@+id/rl_feilei"
         android:paddingRight="5dp"
         android:id="@+id/search"
         android:layout_gravity="center_vertical"
         android:imeOptions="actionSearch"
-        android:layout_marginTop="10dp"
+
         android:layout_marginBottom="10dp"
         android:inputType="text"
         android:paddingLeft="5dp"
@@ -173,7 +173,7 @@
     </cn.yumutech.weight.MyEditText>
     <RelativeLayout
         android:id="@+id/rl_feilei"
-        android:layout_below="@+id/search"
+        android:layout_below="@+id/id_toolbar"
         android:layout_width="match_parent"
         android:layout_height="45dp">
         <View
@@ -218,11 +218,11 @@
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rl_feilei"/>
+        android:layout_below="@+id/search"/>
     <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:id="@+id/pull_to_refresh"
-        android:layout_below="@+id/rl_feilei"
+        android:layout_below="@+id/search"
         android:layout_height="wrap_content">
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"

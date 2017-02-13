@@ -521,7 +521,7 @@ public class LeaderActivitysActivity extends BaseActivity implements SwipeRefres
                     LinearLayout.LayoutParams.FILL_PARENT);
             final TextView tv = new TextView(this);
             if(j==0){
-                tv.setText("全部");
+                tv.setText("推荐");
             }else {
                 tv.setText(a.get(j-1).value);
             }

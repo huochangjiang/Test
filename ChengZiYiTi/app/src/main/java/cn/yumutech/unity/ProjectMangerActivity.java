@@ -17,6 +17,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -31,6 +32,7 @@ import cn.yumutech.bean.ModuleClassifyListBeen;
 import cn.yumutech.bean.ProjectManger;
 import cn.yumutech.bean.RequestCanShu;
 import cn.yumutech.netUtil.Api;
+import cn.yumutech.netUtil.ToosUtil;
 import cn.yumutech.weight.MyEditText;
 import cn.yumutech.weight.StringUtils1;
 import rx.Observer;
@@ -73,6 +75,7 @@ public class ProjectMangerActivity extends BaseActivity implements SwipeRefreshL
     private MyEditText search;
     private boolean isSearch;
     private String searchKey="";
+    private ImageView next;
     protected void unsubscribe( Subscription subscription) {
         if (subscription != null && !subscription.isUnsubscribed()) {
             subscription.unsubscribe();
@@ -104,6 +107,7 @@ public class ProjectMangerActivity extends BaseActivity implements SwipeRefreshL
         linearLayout1.setOrientation(LinearLayout.HORIZONTAL);
         linears.add(linearLayout1);
         hors.add(diqu);
+
         tishi=findViewById(R.id.tishi);
         tishi.setVisibility(View.GONE);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
@@ -117,9 +121,10 @@ public class ProjectMangerActivity extends BaseActivity implements SwipeRefreshL
         myprog=findViewById(R.id.myprog);
         myprog.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.GONE);
-        initLocal();
         initClassData();
+        initLocal();
         search= (MyEditText) findViewById(R.id.search);
+        next= (ImageView) findViewById(R.id.next);
     }
     //搜索到的内容的结果
     private void initSearch(String key) {
@@ -345,6 +350,12 @@ public class ProjectMangerActivity extends BaseActivity implements SwipeRefreshL
                 }
             }
         });
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mHandler.sendEmptyMessage(2);
+            }
+        });
     }
     Observer<ProjectManger> observer = new Observer<ProjectManger>() {
         @Override
@@ -461,7 +472,9 @@ public class ProjectMangerActivity extends BaseActivity implements SwipeRefreshL
                             App.getContext().noLogin(ProjectMangerActivity.this);
                         }
                     }
-
+                    break;
+                case 2:
+                    diqu.scrollBy(ToosUtil.getInstance().getScreenWidth(ProjectMangerActivity.this)/4,0);
                     break;
             }
         }
@@ -514,6 +527,7 @@ public class ProjectMangerActivity extends BaseActivity implements SwipeRefreshL
             if(moduleClassifyList!=null&&moduleClassifyList.data.size()>0){
 
                 mKey=moduleClassifyList;
+                fenlei=moduleClassifyList.data.get(0).value;
                 addView(moduleClassifyList.data);
 //                for(int i=0;i<moduleClassifyList.data.size();i++){
 //                    bts.get(i).setText(moduleClassifyList.data.get(i).value);
@@ -528,8 +542,10 @@ public class ProjectMangerActivity extends BaseActivity implements SwipeRefreshL
                     LinearLayout.LayoutParams.FILL_PARENT,
                     LinearLayout.LayoutParams.FILL_PARENT);
             final TextView tv = new TextView(this);
+
             if(j==0){
-                tv.setText("全部");
+                tv.setText("推荐");
+                tv.setVisibility(View.GONE);
             }else {
                 tv.setText(a.get(j-1).value);
             }
@@ -537,7 +553,7 @@ public class ProjectMangerActivity extends BaseActivity implements SwipeRefreshL
             tv.setTextSize(18);
             bts.add(tv);
             linears.get(0).addView(tv);
-            if (j == 0 ) {
+            if (j == 1 ) {
 //                tv.setBackgroundResource(R.drawable.logo);
                 tv.setTextColor(Color.parseColor("#DD3237"));
             } else {
@@ -545,7 +561,7 @@ public class ProjectMangerActivity extends BaseActivity implements SwipeRefreshL
                 tv.setTextColor(Color.parseColor("#7F000000"));
             }
             tv.setLayoutParams(layoutParams);
-            if (!(j == 0)) {
+            if (!(j==1)) {
                 layoutParams.leftMargin = 60;
                 tv.setGravity(Gravity.CENTER);
             }

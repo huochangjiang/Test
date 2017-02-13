@@ -170,8 +170,10 @@ public class TaShanZhiShiActivity extends BaseActivity implements PullToRefreshB
                     LinearLayout.LayoutParams.FILL_PARENT,
                     LinearLayout.LayoutParams.FILL_PARENT);
             final TextView tv = new TextView(this);
+
             if(j==0){
-                tv.setText("全部");
+                tv.setText("推荐");
+                tv.setVisibility(View.GONE);
             }else {
                 tv.setText(a.get(j-1).value);
             }
@@ -179,7 +181,7 @@ public class TaShanZhiShiActivity extends BaseActivity implements PullToRefreshB
             tv.setTextSize(18);
             bts.add(tv);
             linears.get(0).addView(tv);
-            if (j == 0 ) {
+            if (j == 1 ) {
 //                tv.setBackgroundResource(R.drawable.logo);
                 tv.setTextColor(Color.parseColor("#DD3237"));
             } else {
@@ -187,7 +189,7 @@ public class TaShanZhiShiActivity extends BaseActivity implements PullToRefreshB
                 tv.setTextColor(Color.parseColor("#7F000000"));
             }
             tv.setLayoutParams(layoutParams);
-            if (!(j == 0)) {
+            if (!(j==1)) {
                 layoutParams.leftMargin = 60;
                 tv.setGravity(Gravity.CENTER);
             }

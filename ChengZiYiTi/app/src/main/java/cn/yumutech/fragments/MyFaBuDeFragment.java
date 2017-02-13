@@ -13,7 +13,10 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import cn.yumutech.Adapter.MyFaBuDeAdapter;
 import cn.yumutech.bean.ShowMyPublishedTask;
@@ -44,6 +47,7 @@ public class MyFaBuDeFragment extends BaseFragment implements PullToRefreshBase.
     private PullToRefreshScrollView pullToRefresh;
     private boolean isShangla=false;
     private List<ShowMyPublishedTask.DataBean> mData=new ArrayList<>();
+    public static Map<Integer,ShowMyPublishedTask.DataBean> maps=new HashMap<>();
     @Override
     protected View getContentView(LayoutInflater inflater, ViewGroup container) {
         view =inflater.inflate(R.layout.my_fa_bu_de_fragemnt,container,false);
@@ -52,6 +56,7 @@ public class MyFaBuDeFragment extends BaseFragment implements PullToRefreshBase.
 
     @Override
     protected void initViews(View contentView) {
+        maps.clear();
         listView= (MyListview) view.findViewById(R.id.listview);
         myprog=view.findViewById(R.id.myprog);
         adapter=new MyFaBuDeAdapter(getActivity(),mData);
@@ -62,6 +67,7 @@ public class MyFaBuDeFragment extends BaseFragment implements PullToRefreshBase.
         pullToRefresh.setMode(PullToRefreshBase.Mode.BOTH);
         pullToRefresh.setOnRefreshListener(this);
         SaveData.getInstance().isJieshou=false;
+
         //下拉刷新设置
         ILoadingLayout startLabels = pullToRefresh
                 .getLoadingLayoutProxy(true, false);
@@ -75,17 +81,50 @@ public class MyFaBuDeFragment extends BaseFragment implements PullToRefreshBase.
         endLabels.setPullLabel("上拉加载...");// 刚下拉时，显示的提示
         endLabels.setRefreshingLabel("正在载入...");// 刷新时
         endLabels.setReleaseLabel("放开刷新...");// 下来达到一定距离时，显示的提示
-    }
 
+    }
+    List<String> iids = new ArrayList<>();
+    //传入数据，将名字用，隔开
+    private String getMemberIds(Map<Integer, ShowMyPublishedTask.DataBean> beans) {
+        StringBuffer sb = new StringBuffer();
+        iids.clear();
+        Iterator iter = beans.entrySet().iterator();
+        while (iter.hasNext()) {
+            Map.Entry entry = (Map.Entry) iter.next();
+            int key = (int) entry.getKey();
+            ShowMyPublishedTask.DataBean val = (ShowMyPublishedTask.DataBean) entry.getValue();
+            for(int j=0;j<val.assignees.size();j++){
+                iids.add(val.assignees.get(j).assignee_user_name);
+            }
+        }
+        if(iids.size()==1){
+            sb.append(iids.get(0));
+        }else{
+            sb.append(iids.get(0)+" "+"等"+iids.size()+"人");
+        }
+//        for (int i = 0; i < iids.size(); i++) {
+//
+//            if (i == iids.size() - 1) {
+//                sb.append(iids.get(i));
+//            } else {
+//                sb.append(iids.get(i) + ",");
+//            }
+//        }
+        return sb.toString();
+    }
     @Override
     protected void initListeners() {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                maps.clear();
+                maps.put(position,mData.get(position));
                 SaveData.getInstance().isJieshou=false;
                 Intent intent=new Intent();
                 intent.setClass(getActivity(),ShowTaskDetailActivity.class);
                 intent.putExtra("task_id",mData.get(position).task_id);
+                intent.putExtra("task_poeple",getMemberIds(maps));
+                intent.putExtra("type","1");
                 startActivity(intent);
             }
         });
@@ -128,6 +167,7 @@ public class MyFaBuDeFragment extends BaseFragment implements PullToRefreshBase.
                     mData=showMyPublishedTask.data;
                 }
                 adapter.dataChange(mData);
+
                 listView.setVisibility(View.VISIBLE);
                 myprog.setVisibility(View.GONE);
                 pullToRefresh.onRefreshComplete();

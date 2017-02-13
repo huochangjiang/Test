@@ -109,7 +109,7 @@ public class MyFaBuDeAdapter extends BaseAdapter{
         vh.status.setText(mData.get(position).task_status_name);
 //        vh.date.setText(mData.get(position).task_end_date);
         maps.put(position,mData.get(position));
-        vh.tv_faburen.setText( getMemberIds(maps));
+        vh.tv_faburen.setText(getMemberIds(maps));
         vh.tv_fabushijian.setText(time1);
         if(time1.isEmpty()||mData.get(position).task_publish_date==null){
             vh.tv_fabushijian.setVisibility(View.GONE);

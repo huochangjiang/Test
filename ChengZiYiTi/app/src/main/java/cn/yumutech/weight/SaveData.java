@@ -102,4 +102,6 @@ public class SaveData {
     public Boolean isJieshou=false;
     //暂时保存用户更换头像信息
     public UpdateUserPhoto updataPhone;
+    //我的发布那儿传过去的有好多人
+    public String peopleNum;
 }

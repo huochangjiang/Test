@@ -47,12 +47,12 @@
             android:layout_width="wrap_content" />
     </RelativeLayout>
     <cn.yumutech.weight.MyEditText
-        android:layout_below="@+id/id_toolbar"
+        android:layout_below="@+id/rl_feilei"
         android:paddingRight="5dp"
         android:id="@+id/search"
         android:layout_gravity="center_vertical"
         android:imeOptions="actionSearch"
-        android:layout_marginTop="10dp"
+
         android:layout_marginBottom="10dp"
         android:inputType="text"
         android:paddingLeft="5dp"
@@ -130,7 +130,7 @@
             <!--android:textColor="@color/rc_location_text"/>-->
     <RelativeLayout
         android:id="@+id/rl_feilei"
-        android:layout_below="@+id/search"
+        android:layout_below="@+id/id_toolbar"
         android:layout_width="match_parent"
         android:layout_height="45dp">
         <View
@@ -175,12 +175,12 @@
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rl_feilei"/>
+        android:layout_below="@+id/search"/>
     <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:id="@+id/pull_to_refresh"
         android:background="@color/white"
-        android:layout_below="@+id/rl_feilei"
+        android:layout_below="@+id/search"
         android:layout_height="wrap_content">
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"

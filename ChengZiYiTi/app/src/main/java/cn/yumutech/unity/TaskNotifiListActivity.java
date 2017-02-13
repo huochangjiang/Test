@@ -20,6 +20,7 @@ import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -62,7 +63,7 @@ public class TaskNotifiListActivity extends BaseActivity implements SwipeRefresh
     private boolean isRefresh=false;
     private boolean isHave;
     private View myprog;
-    private String fenlei="";
+    private String fenlei="督查通知";
     private LinearLayout ll_feilei;
     private HorizontalScrollView diqu;
     private List<TextView> bts = new ArrayList<>();
@@ -101,6 +102,7 @@ public class TaskNotifiListActivity extends BaseActivity implements SwipeRefresh
         linearLayout1.setOrientation(LinearLayout.HORIZONTAL);
         linears.add(linearLayout1);
         hors.add(diqu);
+        initClassData();
         tishi=findViewById(R.id.tishi);
         myprog=  findViewById(R.id.myprog);
         myprog.setVisibility(View.VISIBLE);
@@ -116,9 +118,8 @@ public class TaskNotifiListActivity extends BaseActivity implements SwipeRefresh
         pullToRefresh.setOnRefreshListener(this);
         controlTitle(findViewById(R.id.back));
         net_connect = findViewById(R.id.netconnect);
-        initLocal();
-        initClassData();
 
+        initLocal();
         search= (MyEditText) findViewById(R.id.search);
     }
     //加载缓存
@@ -418,6 +419,7 @@ public class TaskNotifiListActivity extends BaseActivity implements SwipeRefresh
         @Override
         public void onNext(ModuleClassifyList moduleClassifyList) {
             if(moduleClassifyList!=null&&moduleClassifyList.data.size()>0){
+                fenlei=moduleClassifyList.data.get(0).value;
                 mKey=moduleClassifyList;
                 addView(moduleClassifyList.data);
 
@@ -435,7 +437,8 @@ public class TaskNotifiListActivity extends BaseActivity implements SwipeRefresh
                     LinearLayout.LayoutParams.FILL_PARENT);
             final TextView tv = new TextView(this);
             if(j==0){
-                tv.setText("全部");
+                tv.setText("推荐");
+                tv.setVisibility(View.GONE);
             }else {
                 tv.setText(a.get(j-1).value);
             }
@@ -443,7 +446,7 @@ public class TaskNotifiListActivity extends BaseActivity implements SwipeRefresh
             tv.setTextSize(18);
             bts.add(tv);
             linears.get(0).addView(tv);
-            if (j == 0 ) {
+            if (j == 1 ) {
 //                tv.setBackgroundResource(R.drawable.logo);
                 tv.setTextColor(Color.parseColor("#DD3237"));
             } else {
@@ -451,7 +454,7 @@ public class TaskNotifiListActivity extends BaseActivity implements SwipeRefresh
                 tv.setTextColor(Color.parseColor("#7F000000"));
             }
             tv.setLayoutParams(layoutParams);
-            if (!(j == 0)) {
+            if (!(j == 1)) {
                 layoutParams.leftMargin = 60;
                 tv.setGravity(Gravity.CENTER);
             }

@@ -63,12 +63,12 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"/>
     <cn.yumutech.weight.MyEditText
-        android:layout_below="@+id/id_toolbar"
+        android:layout_below="@+id/rl_feilei"
         android:paddingRight="5dp"
         android:id="@+id/search"
         android:layout_gravity="center_vertical"
         android:imeOptions="actionSearch"
-        android:layout_marginTop="10dp"
+
         android:layout_marginBottom="10dp"
         android:inputType="text"
         android:paddingLeft="5dp"
@@ -95,7 +95,7 @@
         android:background="@color/fengexianone"/>
     <RelativeLayout
         android:id="@+id/rl_feilei"
-        android:layout_below="@+id/xian"
+        android:layout_below="@+id/id_toolbar"
         android:layout_width="match_parent"
         android:layout_height="45dp">
         <LinearLayout
@@ -136,16 +136,15 @@
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rl_feilei"/>
+        android:layout_below="@+id/xian"/>
     <com.handmark.pulltorefresh.library.PullToRefreshScrollView
         android:layout_width="match_parent"
         android:id="@+id/pull_to_refresh"
         android:scrollbars="none"
-
         android:overScrollMode="never"
         app:ptrShowIndicator="false"
         android:background="@color/white"
-        android:layout_below="@+id/rl_feilei"
+        android:layout_below="@+id/xian"
         android:layout_height="match_parent">
     <cn.yumutech.weight.MyListview
         android:id="@+id/listview"

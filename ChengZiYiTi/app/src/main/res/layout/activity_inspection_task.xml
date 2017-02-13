@@ -65,7 +65,7 @@
                     android:layout_height="match_parent">
             <TextView
                 android:layout_width="match_parent"
-                android:text="我发布的"
+                android:text="我的发布"
                 android:textSize="18sp"
                 android:gravity="center"
                 android:textColor="@color/black"

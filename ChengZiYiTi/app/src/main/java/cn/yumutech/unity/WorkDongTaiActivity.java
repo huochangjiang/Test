@@ -118,8 +118,8 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
         myprog=  findViewById(R.id.myprog);
         myprog.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.GONE);
-        initLocal();
         initClassData();
+        initLocal();
         search= (MyEditText) findViewById(R.id.search);
     }
     //搜索到的内容的结果
@@ -192,7 +192,7 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
     protected void initData() {
         if(App.getContext().getLogo("logo")!=null) {
             RequestCanShu canshus = new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.id, ""),
-                    new RequestCanShu.DataBean("",searchKey,"0",mPageSize + ""));
+                    new RequestCanShu.DataBean(fenlei,searchKey,"0",mPageSize + ""));
             initDatas1(new Gson().toJson(canshus));
         }else {
             App.getContext().noLogin(WorkDongTaiActivity.this);
@@ -512,6 +512,7 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
             if(moduleClassifyList!=null&&moduleClassifyList.data.size()>0){
 
                 mKey=moduleClassifyList;
+                fenlei=moduleClassifyList.data.get(0).value;
                 addView(moduleClassifyList.data);
 //                for(int i=0;i<moduleClassifyList.data.size();i++){
 //                    bts.get(i).setText(moduleClassifyList.data.get(i).value);
@@ -526,8 +527,10 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
                     LinearLayout.LayoutParams.FILL_PARENT,
                     LinearLayout.LayoutParams.FILL_PARENT);
             final TextView tv = new TextView(this);
+
             if(j==0){
-                tv.setText("全部");
+                tv.setText("推荐");
+                tv.setVisibility(View.GONE);
             }else {
                 tv.setText(a.get(j-1).value);
             }
@@ -535,7 +538,7 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
             tv.setTextSize(18);
             bts.add(tv);
             linears.get(0).addView(tv);
-            if (j == 0 ) {
+            if (j == 1 ) {
 //                tv.setBackgroundResource(R.drawable.logo);
                 tv.setTextColor(Color.parseColor("#DD3237"));
             } else {
@@ -543,7 +546,7 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
                 tv.setTextColor(Color.parseColor("#7F000000"));
             }
             tv.setLayoutParams(layoutParams);
-            if (!(j == 0)) {
+            if (!(j==1)) {
                 layoutParams.leftMargin = 60;
                 tv.setGravity(Gravity.CENTER);
             }

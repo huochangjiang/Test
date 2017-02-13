@@ -66,7 +66,9 @@ android:background="@color/white"
         android:scrollbars="none"
         android:layout_width="match_parent"
         android:id="@+id/webview"
-        android:layout_height="match_parent"></WebView>
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/xiangqing"
+        android:layout_marginRight="@dimen/xiangqing"></WebView>
         </LinearLayout>
     <!--</ScrollView>-->
 </RelativeLayout>

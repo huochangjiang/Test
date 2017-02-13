@@ -111,7 +111,7 @@
                         android:layout_below="@+id/image_two"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="我发布的"
+                        android:text="我的发布"
                         android:layout_marginTop="5dp"
                         android:textSize="14sp"
                         android:textColor="@color/huise"/>
@@ -299,6 +299,7 @@
                         android:id="@+id/rl_item_eitht"
                         android:gravity="center"
                         android:layout_weight="1"
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
                         <ImageView

@@ -7,7 +7,9 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -49,6 +51,8 @@ public class ProjectDetaisActivity extends BaseActivity implements View.OnClickL
     private TextView tv_progress;
     private TextView tv_leixing;
     private TextView tv_time1;
+    private RelativeLayout rl_progressBar;
+    private LinearLayout ll2;
 
     @Override
     protected int getLayoutId() {
@@ -62,7 +66,7 @@ public class ProjectDetaisActivity extends BaseActivity implements View.OnClickL
         myprog = findViewById(R.id.myprog);
         myprog.setVisibility(View.VISIBLE);
         scrollview.setVisibility(View.GONE);
-
+        ll2= (LinearLayout) findViewById(R.id.ll2);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setSupportZoom(true);
         webView.getSettings().setBuiltInZoomControls(true);
@@ -97,7 +101,7 @@ public class ProjectDetaisActivity extends BaseActivity implements View.OnClickL
         title1 = (CenterTextView) findViewById(R.id.tv1);
 //        webView.getSettings().setDefaultFontSize(18);
         controlTitle(findViewById(R.id.back));
-
+        rl_progressBar= (RelativeLayout) findViewById(R.id.rl_progressBar);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING);
@@ -276,18 +280,22 @@ public class ProjectDetaisActivity extends BaseActivity implements View.OnClickL
             case R.id.tv_jiben:
                 changeColor(0);
                 initLoadWebView(data2.data.basic);
+                ll2.setVisibility(View.VISIBLE);
                 break;
             case R.id.tv_work:
                 changeColor(1);
                 initLoadWebView(data2.data.requirement);
+                ll2.setVisibility(View.GONE);
                 break;
             case R.id.tv_tuijin:
                 changeColor(2);
+                ll2.setVisibility(View.GONE);
                 initLoadWebView(data2.data.promotion);
                 break;
             case R.id.tv_cunzai:
                 changeColor(3);
                 initLoadWebView(data2.data.problem);
+                ll2.setVisibility(View.GONE);
                 break;
         }
     }

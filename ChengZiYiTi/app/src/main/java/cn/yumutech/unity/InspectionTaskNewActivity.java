@@ -92,9 +92,9 @@ public class InspectionTaskNewActivity extends BaseActivity implements View.OnCl
                 startActivity(intent7);
                 break;
             case R.id.rl_item_eitht:
-                Intent intent8=new Intent();
-                intent8.setClass(InspectionTaskNewActivity.this,TaShanZhiShiActivity.class);
-                startActivity(intent8);
+//                Intent intent8=new Intent();
+//                intent8.setClass(InspectionTaskNewActivity.this,TaShanZhiShiActivity.class);
+//                startActivity(intent8);
                 break;
             default:
                 break;

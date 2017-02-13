@@ -89,6 +89,8 @@ public class MyTaskFragment extends BaseFragment implements PullToRefreshBase.On
                 Intent intent=new Intent();
                 intent.setClass(getActivity(),ShowTaskDetailActivity.class);
                 intent.putExtra("task_id",mData.get(position).task_id);
+                intent.putExtra("task_poeple","");
+                intent.putExtra("type","2");
                 startActivity(intent);
             }
         });

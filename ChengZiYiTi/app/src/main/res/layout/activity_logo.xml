@@ -69,10 +69,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/title"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
-
+        <RelativeLayout
+            android:id="@+id/rl_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/shoujihao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="手机号:"
+            android:textSize="18sp"
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
+            android:textColor="@color/huise"
+            android:layout_below="@+id/tv"/>
         <EditText
             android:id="@+id/phone"
             style="@style/UserEditText_FontSize"
@@ -80,21 +93,21 @@
             android:layout_height="@dimen/EditText_item_height"
             android:layout_below="@+id/tv"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
             android:ems="10"
+            android:layout_toRightOf="@+id/shoujihao"
             android:inputType="number"
-            android:hint="手机号"
+            android:hint="请输入手机号"
             android:maxLength="11"
             android:textSize="15sp">
-
             <requestFocus />
         </EditText>
-
+        </RelativeLayout>
         <ImageView
             android:id="@+id/user"
             android:layout_width="fill_parent"
             android:layout_height="0.5dp"
-            android:layout_below="@+id/phone"
+            android:layout_below="@+id/rl_phone"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:background="@color/jiangese" />
@@ -105,19 +118,32 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/EditText_item_height"
             android:layout_below="@+id/user">
-
+            <RelativeLayout
+                android:id="@+id/rl_yanzhengma"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/yanzhengma"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="验证码:"
+                    android:textSize="18sp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/huise"
+                    android:layout_below="@+id/tv"/>
             <EditText
                 android:id="@+id/password"
                 style="@style/UserEditText_FontSize"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/EditText_item_height"
                 android:layout_centerVertical="true"
-                android:hint="验证码"
+                android:hint="请输入验证码"
                 android:inputType="number"
+                android:layout_toRightOf="@+id/yanzhengma"
+                android:layout_marginLeft="10dp"
                 android:maxLength="15"
-
                 android:textSize="15sp" />
-
              <TextView
                 android:id="@+id/tv_huoqu"
                 android:layout_width="wrap_content"
@@ -136,7 +162,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_toLeftOf="@+id/tv_huoqu"
                 android:background="@color/colorPrimary"></View>
-
+</RelativeLayout>
         </RelativeLayout>
 
         <ImageView
