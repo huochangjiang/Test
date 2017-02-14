@@ -53,6 +53,7 @@ public class ProjectDetaisActivity extends BaseActivity implements View.OnClickL
     private TextView tv_time1;
     private RelativeLayout rl_progressBar;
     private LinearLayout ll2;
+    private RelativeLayout lin_one,lin_two,lin_three,lin_four;
 
     @Override
     protected int getLayoutId() {
@@ -94,6 +95,18 @@ public class ProjectDetaisActivity extends BaseActivity implements View.OnClickL
         tvs.add(tv_work);
         tvs.add(tv_tuijin);
         tvs.add(tv_cunzai);
+        lin_one= (RelativeLayout) findViewById(R.id.lin_one);
+        lin_two= (RelativeLayout) findViewById(R.id.lin_two);
+        lin_three= (RelativeLayout) findViewById(R.id.lin_three);
+        lin_four= (RelativeLayout) findViewById(R.id.lin_four);
+        lin_one.setOnClickListener(this);
+        lin_two.setOnClickListener(this);
+        lin_three.setOnClickListener(this);
+        lin_four.setOnClickListener(this);
+        lins.add(lin_one);
+        lins.add(lin_two);
+        lins.add(lin_three);
+        lins.add(lin_four);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         tv_progress = (TextView) findViewById(R.id.tv_progress);
         tv_leixing = (TextView) findViewById(R.id.laiyuan);
@@ -108,6 +121,7 @@ public class ProjectDetaisActivity extends BaseActivity implements View.OnClickL
         } else {
             webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
         }
+
         // disable scroll on touch
 //        webView.setScrollContainer(false);
 //        webView.setOnTouchListener(new View.OnTouchListener() {
@@ -127,10 +141,6 @@ public class ProjectDetaisActivity extends BaseActivity implements View.OnClickL
 
     }
 
-    @Override
-    protected void initListeners() {
-
-    }
 
     Subscription subscription;
 
@@ -299,16 +309,53 @@ public class ProjectDetaisActivity extends BaseActivity implements View.OnClickL
                 break;
         }
     }
+    @Override
+    protected void initListeners() {
+//        lin_one.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                changeColor(0);
+//                initLoadWebView(data2.data.basic);
+//                ll2.setVisibility(View.VISIBLE);
+//            }
+//        });
+//        lin_two.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                changeColor(1);
+//                initLoadWebView(data2.data.requirement);
+//                ll2.setVisibility(View.GONE);
+//            }
+//        });
+//        lin_three.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                changeColor(2);
+//                ll2.setVisibility(View.GONE);
+//                initLoadWebView(data2.data.promotion);
+//            }
+//        });
+//        lin_four.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                changeColor(3);
+//                initLoadWebView(data2.data.problem);
+//                ll2.setVisibility(View.GONE);
+//            }
+//        });
+    }
 
     List<TextView> tvs = new ArrayList<>();
+    List<RelativeLayout> lins=new ArrayList<>();
 
     private void changeColor(int position) {
-        for (int i = 0; i < tvs.size(); i++) {
+        for (int i = 0; i < lins.size(); i++) {
             if (position == i) {
-                tvs.get(i).setBackgroundColor(getResources().getColor(R.color.white));
+                lins.get(i).setBackground(getResources().getDrawable(R.drawable.zhongdianxuan));
+//                tvs.get(i).setBackgroundColor(getResources().getColor(R.color.white));
             } else {
-                tvs.get(i).setBackgroundColor(getResources().getColor(R.color.fengexianone));
-
+                lins.get(i).setBackground(getResources().getDrawable(R.drawable.zhongdianwei));
+//                tvs.get(i).setBackgroundColor(getResources().getColor(R.color.fengexianone));
             }
         }
     }

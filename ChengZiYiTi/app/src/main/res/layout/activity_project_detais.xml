@@ -104,40 +104,79 @@
     android:background="@color/fengexianone"
     android:layout_width="match_parent"
     android:orientation="horizontal"
-    android:layout_height="40dp">
+    android:layout_height="42dp">
+    <RelativeLayout
+        android:id="@+id/lin_one"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:layout_marginBottom="2dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/zhongdianxuan">
     <TextView
         android:id="@+id/tv_jiben"
-        android:layout_width="0dp"
-        android:gravity="center"
-        android:background="@color/white"
-        android:layout_weight="1"
+        android:layout_width="wrap_content"
         android:text="基本情况"
-        android:layout_height="match_parent" />
+        android:layout_centerInParent="true"
+        android:layout_height="wrap_content" />
+        </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/lin_two"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:layout_marginBottom="2dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/zhongdianwei">
     <TextView
         android:id="@+id/tv_work"
-        android:gravity="center"
-        android:background="@color/fengexianone"
-
-        android:layout_width="0dp"
-        android:layout_weight="1"
+        android:layout_width="wrap_content"
         android:text="工作要求"
-        android:layout_height="match_parent" />
+        android:layout_centerInParent="true"
+        android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/lin_three"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:layout_marginBottom="2dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/zhongdianwei">
     <TextView
         android:id="@+id/tv_tuijin"
-        android:gravity="center"
-        android:background="@color/fengexianone"
-        android:layout_width="0dp"
-        android:layout_weight="1"
+        android:layout_width="wrap_content"
         android:text="推进情况"
-        android:layout_height="match_parent" />
+       android:layout_centerInParent="true"
+        android:layout_height="wrap_content" />
+        </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/lin_four"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:layout_marginBottom="2dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/zhongdianwei">
     <TextView
         android:id="@+id/tv_cunzai"
-        android:gravity="center"
-        android:background="@color/fengexianone"
-        android:layout_width="0dp"
-        android:layout_weight="1"
+        android:layout_width="wrap_content"
         android:text="存在问题"
-        android:layout_height="match_parent" />
+        android:layout_centerInParent="true"
+        android:layout_height="wrap_content" />
+        </RelativeLayout>
 </LinearLayout>
 
         </LinearLayout>

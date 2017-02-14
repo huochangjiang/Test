@@ -37,6 +37,7 @@ public class LeadersDetaislActivity extends BaseActivity {
     private TextView money;
     private RelativeLayout relativeLayout;
     private View myprog;
+    private TextView tv_home;
 //    private ScrollView scrollview;
     @Override
     protected int getLayoutId() {
@@ -49,6 +50,7 @@ public class LeadersDetaislActivity extends BaseActivity {
 //        scrollview= (ScrollView) findViewById(R.id.scrollview);
         myprog=findViewById(R.id.myprog);
         myprog.setVisibility(View.VISIBLE);
+        tv_home= (TextView) findViewById(R.id.tv_home);
 //        scrollview.setVisibility(View.GONE);
 //        WebSettings settings = webView.getSettings();
 //        settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
@@ -118,6 +120,11 @@ public class LeadersDetaislActivity extends BaseActivity {
     protected void initData() {
         String id=getIntent().getStringExtra("id");
         type = getIntent().getStringExtra("type");
+        if(type.equals("2")){
+            tv_home.setText("重点项目");
+        }else {
+            tv_home.setText("详情");
+        }
             RequestCanShu canshus = new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"), new RequestCanShu.DataBean(id));
             initDatas1(new Gson().toJson(canshus));
 
