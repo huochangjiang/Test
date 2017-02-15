@@ -16,6 +16,8 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,6 +27,7 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.yumutech.Adapter.SBAdapter;
 import cn.yumutech.Adapter.WorkDongTaiAdapter;
 import cn.yumutech.bean.ModuleClassifyList;
 import cn.yumutech.bean.ModuleClassifyListBeen;
@@ -74,6 +77,9 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
     private MyEditText search;
     private boolean isSearch;
     private String searchKey="";
+    private List<ModuleClassifyList.data> mData=new ArrayList<>();
+    private GridView gridView;
+    private SBAdapter adapter;
     protected void unsubscribe( Subscription subscription) {
         if (subscription != null && !subscription.isUnsubscribed()) {
             subscription.unsubscribe();
@@ -105,6 +111,9 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
         hors.add(diqu);
         tishi=findViewById(R.id.tishi);
         tishi.setVisibility(View.GONE);
+        gridView= (GridView) findViewById(R.id.gridView);
+        adapter=new SBAdapter(WorkDongTaiActivity.this,mData);
+        gridView.setAdapter(adapter);
         pullToRefresh = (SwipeRefreshLayout) findViewById(R.id.pull_to_refresh);
         mAdapter = new WorkDongTaiAdapter(this,leaderActivitys);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
@@ -291,6 +300,25 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
 
                 }
                 return false;
+            }
+        });
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                isSearch=false;
+                search.setText("");
+                searchKey="";
+                tishi.setVisibility(View.GONE);
+//                if(position==0){
+//                    fenlei="";
+//                }else {
+                    fenlei=mData.get(position).value;
+//                }
+//                fenlei= cn.yumutech.weight.SaveData.getInstance().fenlei;
+//        }
+                mHandler.sendEmptyMessage(1);
+                adapter.dataChange(mData,position);
             }
         });
 
@@ -512,8 +540,11 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
             if(moduleClassifyList!=null&&moduleClassifyList.data.size()>0){
 
                 mKey=moduleClassifyList;
+                mData=moduleClassifyList.data;
                 fenlei=moduleClassifyList.data.get(0).value;
-                addView(moduleClassifyList.data);
+                adapter.dataChange(moduleClassifyList.data,0);
+//                addView(moduleClassifyList.data);
+
 //                for(int i=0;i<moduleClassifyList.data.size();i++){
 //                    bts.get(i).setText(moduleClassifyList.data.get(i).value);
 //                }
