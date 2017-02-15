@@ -132,10 +132,21 @@ public class LeadersDetaislActivity extends BaseActivity {
     protected void initData() {
         String id=getIntent().getStringExtra("id");
         type = getIntent().getStringExtra("type");
+        String classy = getIntent().getStringExtra("classy");
 //        if(type.equals("2")){
 //            tv_home.setText("重点项目");
 //        }else {
-            tv_home.setText("详情");
+        if(classy!=null&&!classy.equals("")) {
+            if(classy.equals("news")) {
+                tv_home.setText("时政新闻");
+            }else if(classy.equals("dongtai")){
+                tv_home.setText("动态消息");
+            }else if(classy.equals("zhengce")){
+                tv_home.setText("政策文件");
+            }
+        }else{
+            tv_home.setText("时政新闻");
+        }
 //        }
             RequestCanShu canshus = new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"), new RequestCanShu.DataBean(id));
             initDatas1(new Gson().toJson(canshus));

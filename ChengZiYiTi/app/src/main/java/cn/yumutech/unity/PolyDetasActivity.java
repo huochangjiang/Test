@@ -39,6 +39,8 @@ public class PolyDetasActivity extends BaseActivity {
         myprog=findViewById(R.id.myprog);
 //        scrollView= (ScrollView) findViewById(R.id.scrollview);
         myprog.setVisibility(View.VISIBLE);
+        TextView tvhome= (TextView) findViewById(R.id.tv_home);
+        tvhome.setText("政策文件");
 //        scrollView.setVisibility(View.GONE);
 //        webView.getSettings().setJavaScriptEnabled(true);
 //// 设置可以支持缩放

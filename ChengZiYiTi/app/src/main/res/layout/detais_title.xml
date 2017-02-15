@@ -15,7 +15,6 @@
             android:layout_marginRight="5dp"
             android:id="@+id/tv1"
             android:layout_width="wrap_content"
-            android:maxLines="2"
             android:textStyle="bold"
             android:textColor="@color/small_title"
             android:textSize="20sp"

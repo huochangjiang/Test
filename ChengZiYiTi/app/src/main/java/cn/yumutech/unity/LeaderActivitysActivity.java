@@ -277,6 +277,7 @@ public class LeaderActivitysActivity extends BaseActivity implements SwipeRefres
                 Intent intent=new Intent(LeaderActivitysActivity.this,LeadersDetaislActivity.class);
                 intent.putExtra("id",data.id);
                 intent.putExtra("type","1");
+                intent.putExtra("classy","news");
                 startActivity(intent);
             }
         });
