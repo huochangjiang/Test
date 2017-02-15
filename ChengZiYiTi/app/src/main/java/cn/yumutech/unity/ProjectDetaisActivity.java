@@ -1,5 +1,6 @@
 package cn.yumutech.unity;
 
+import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -348,6 +349,7 @@ public class ProjectDetaisActivity extends BaseActivity implements View.OnClickL
     List<TextView> tvs = new ArrayList<>();
     List<RelativeLayout> lins=new ArrayList<>();
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private void changeColor(int position) {
         for (int i = 0; i < lins.size(); i++) {
             if (position == i) {

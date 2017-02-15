@@ -15,6 +15,8 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -26,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.yumutech.Adapter.LeaderActivityAdapter;
+import cn.yumutech.Adapter.SBAdapter;
 import cn.yumutech.bean.LeaderActivitys;
 import cn.yumutech.bean.ModuleClassifyList;
 import cn.yumutech.bean.ModuleClassifyListBeen;
@@ -43,6 +46,9 @@ public class LeaderActivitysActivity extends BaseActivity implements SwipeRefres
     private SwipeRefreshLayout pullToRefresh;
     private LeaderActivityAdapter mAdapter;
     private List<LeaderActivitys.DataBean> leaderActivitys=new ArrayList<>();
+    private ModuleClassifyList.data oneData;
+    private List<ModuleClassifyList.data> myData=new ArrayList<>();
+    private List<ModuleClassifyList.data> mData=new ArrayList<>();
     Subscription subscription;
     Subscription subscription1;
     Subscription subscription2;
@@ -73,6 +79,8 @@ public class LeaderActivitysActivity extends BaseActivity implements SwipeRefres
     private MyEditText search;
     private boolean isSearch;
     private String searchKey="";
+    private GridView gridView;
+    private SBAdapter adapter;
     protected void unsubscribe( Subscription subscription) {
         if (subscription != null && !subscription.isUnsubscribed()) {
             subscription.unsubscribe();
@@ -103,6 +111,9 @@ public class LeaderActivitysActivity extends BaseActivity implements SwipeRefres
         myprog.setVisibility(View.VISIBLE);
         tishi.setVisibility(View.GONE);
         recyclerView.setVisibility(View.GONE);
+        gridView= (GridView) findViewById(R.id.gridView);
+        adapter=new SBAdapter(LeaderActivitysActivity.this,mData);
+        gridView.setAdapter(adapter);
         pullToRefresh = (SwipeRefreshLayout) findViewById(R.id.pull_to_refresh);
         mAdapter = new LeaderActivityAdapter(this,leaderActivitys);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
@@ -279,6 +290,24 @@ public class LeaderActivitysActivity extends BaseActivity implements SwipeRefres
                 intent.putExtra("type","1");
                 intent.putExtra("classy","news");
                 startActivity(intent);
+            }
+        });
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                isSearch=false;
+                search.setText("");
+                searchKey="";
+                tishi.setVisibility(View.GONE);
+                if(position==0){
+                    fenlei="";
+                }else {
+                    fenlei=myData.get(position).value;
+                }
+//                fenlei= cn.yumutech.weight.SaveData.getInstance().fenlei;
+//        }
+                mHandler.sendEmptyMessage(1);
+                adapter.dataChange(myData,position);
             }
         });
         recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -504,7 +533,12 @@ public class LeaderActivitysActivity extends BaseActivity implements SwipeRefres
         public void onNext(ModuleClassifyList moduleClassifyList) {
             if(moduleClassifyList!=null&&moduleClassifyList.data.size()>0){
                 mKey=moduleClassifyList;
-                addView(moduleClassifyList.data);
+                myData.clear();
+                oneData=new ModuleClassifyList.data("推荐","推荐");
+                myData.add(oneData);
+                myData.addAll(moduleClassifyList.data);
+                adapter.dataChange(myData,0);
+//                addView(moduleClassifyList.data);
 
 //                for(int i=0;i<moduleClassifyList.data.size();i++){
 //                    bts.get(i).setText(moduleClassifyList.data.get(i).value);
@@ -574,4 +608,21 @@ public class LeaderActivitysActivity extends BaseActivity implements SwipeRefres
             }
         }
     }
+    //分类那儿的点击
+//    public void onEventMainThread(ModuleClassifyList moduleClassifyList){
+//        isSearch=false;
+//        search.setText("");
+//        searchKey="";
+//        tishi.setVisibility(View.GONE);
+////        getIndex(tv);
+////        if(xiabiao==0){
+////            fenlei="";
+////        }else {
+////            fenlei=a.get(xiabiao-1).key;
+//            fenlei= cn.yumutech.weight.SaveData.getInstance().fenlei;
+////        }
+////        chanColor(xiabiao);
+//        mHandler.sendEmptyMessage(1);
+//    }
+
 }

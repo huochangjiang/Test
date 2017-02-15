@@ -104,4 +104,6 @@ public class SaveData {
     public UpdateUserPhoto updataPhone;
     //我的发布那儿传过去的有好多人
     public String peopleNum;
+    //保存首页模块进去分类那儿的数据
+    public String fenlei;
 }

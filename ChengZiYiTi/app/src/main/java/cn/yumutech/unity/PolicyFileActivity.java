@@ -15,6 +15,8 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.yumutech.Adapter.PolicyAdapter;
+import cn.yumutech.Adapter.SBAdapter;
 import cn.yumutech.bean.ModuleClassifyList;
 import cn.yumutech.bean.ModuleClassifyListBeen;
 import cn.yumutech.bean.RequestCanShu;
@@ -72,6 +75,9 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
     private MyEditText search;
     private boolean isSearch;
     private String searchKey="";
+    private List<ModuleClassifyList.data> mData=new ArrayList<>();
+    private GridView gridView;
+    private SBAdapter adapter;
     protected void unsubscribe( Subscription subscription) {
         if (subscription != null && !subscription.isUnsubscribed()) {
             subscription.unsubscribe();
@@ -109,6 +115,9 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
         tishi.setVisibility(View.GONE);
         myprog=findViewById(R.id.myprog);
         mAdapter = new PolicyAdapter(this,mdatas);
+        gridView= (GridView) findViewById(R.id.gridView);
+        adapter=new SBAdapter(PolicyFileActivity.this,mData);
+        gridView.setAdapter(adapter);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(mAdapter);
@@ -367,6 +376,24 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
 //                mHandler.sendEmptyMessage(1);
 //            }
 //        });
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                isSearch=false;
+                search.setText("");
+                searchKey="";
+                tishi.setVisibility(View.GONE);
+//                if(position==0){
+//                    fenlei="";
+//                }else {
+                fenlei=mData.get(position).value;
+//                }
+//                fenlei= cn.yumutech.weight.SaveData.getInstance().fenlei;
+//        }
+                mHandler.sendEmptyMessage(1);
+                adapter.dataChange(mData,position);
+            }
+        });
         mAdapter.setLisener(new PolicyAdapter.OnitemClick() {
             @Override
             public void onitemClice(ZhengCeFile.DataBean data) {
@@ -586,8 +613,10 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
         public void onNext(ModuleClassifyList moduleClassifyList) {
             if(moduleClassifyList!=null&&moduleClassifyList.data.size()>0){
                 mKey=moduleClassifyList;
+                mData=moduleClassifyList.data;
                 fenlei=moduleClassifyList.data.get(0).value;
-                addView(moduleClassifyList.data);
+                adapter.dataChange(moduleClassifyList.data,0);
+//                addView(moduleClassifyList.data);
 //                for(int i=0;i<moduleClassifyList.data.size();i++){
 //                    bts.get(i).setText(moduleClassifyList.data.get(i).value);
 //                }

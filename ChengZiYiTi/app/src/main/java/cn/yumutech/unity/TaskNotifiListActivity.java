@@ -16,6 +16,8 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -26,6 +28,7 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.yumutech.Adapter.SBAdapter;
 import cn.yumutech.Adapter.TaskNotifiListAdapter;
 import cn.yumutech.bean.ModuleClassifyList;
 import cn.yumutech.bean.ModuleClassifyListBeen;
@@ -74,6 +77,9 @@ public class TaskNotifiListActivity extends BaseActivity implements SwipeRefresh
     private MyEditText search;
     private boolean isSearch;
     private String searchKey="";
+    private List<ModuleClassifyList.data> mData=new ArrayList<>();
+    private GridView gridView;
+    private SBAdapter adapter;
     protected void unsubscribe( Subscription subscription) {
         if (subscription != null && !subscription.isUnsubscribed()) {
             subscription.unsubscribe();
@@ -107,6 +113,9 @@ public class TaskNotifiListActivity extends BaseActivity implements SwipeRefresh
         myprog.setVisibility(View.VISIBLE);
         tishi.setVisibility(View.GONE);
         recyclerView.setVisibility(View.GONE);
+        gridView= (GridView) findViewById(R.id.gridView);
+        adapter=new SBAdapter(TaskNotifiListActivity.this,mData);
+        gridView.setAdapter(adapter);
         pullToRefresh = (SwipeRefreshLayout) findViewById(R.id.pull_to_refresh);
         mAdapter = new TaskNotifiListAdapter(TaskNotifiListActivity.this,leaderActivitys);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
@@ -230,6 +239,24 @@ public class TaskNotifiListActivity extends BaseActivity implements SwipeRefresh
                 Intent intent=new Intent(TaskNotifiListActivity.this,TaskNotifiListDetailActivity.class);
                 intent.putExtra("id",data.id);
                 startActivity(intent);
+            }
+        });
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                isSearch=false;
+                search.setText("");
+                searchKey="";
+                tishi.setVisibility(View.GONE);
+//                if(position==0){
+//                    fenlei="";
+//                }else {
+                fenlei=mData.get(position).value;
+//                }
+//                fenlei= cn.yumutech.weight.SaveData.getInstance().fenlei;
+//        }
+                mHandler.sendEmptyMessage(1);
+                adapter.dataChange(mData,position);
             }
         });
         recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -420,7 +447,9 @@ public class TaskNotifiListActivity extends BaseActivity implements SwipeRefresh
             if(moduleClassifyList!=null&&moduleClassifyList.data.size()>0){
                 fenlei=moduleClassifyList.data.get(0).value;
                 mKey=moduleClassifyList;
-                addView(moduleClassifyList.data);
+                mData=moduleClassifyList.data;
+                adapter.dataChange(moduleClassifyList.data,0);
+//                addView(moduleClassifyList.data);
 
 //                for(int i=0;i<moduleClassifyList.data.size();i++){
 //                    bts.get(i).setText(moduleClassifyList.data.get(i).value);

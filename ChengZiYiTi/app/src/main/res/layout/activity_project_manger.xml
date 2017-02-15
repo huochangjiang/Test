@@ -106,6 +106,7 @@
             <!--android:textSize="18sp"-->
             <!--android:textColor="@color/rc_location_text"/>-->
     <cn.yumutech.weight.MyEditText
+        android:layout_marginTop="5dp"
         android:layout_below="@+id/rl_feilei"
         android:paddingRight="5dp"
         android:id="@+id/search"
@@ -132,7 +133,7 @@
         android:id="@+id/rl_feilei"
         android:layout_below="@+id/id_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="45dp">
+        android:layout_height="wrap_content">
         <View
             android:id="@+id/xian"
             android:layout_width="match_parent"
@@ -143,19 +144,29 @@
             android:id="@+id/ll_feilei"
             android:background="@color/white"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:focusable="true">
             <RelativeLayout
                 android:layout_gravity="center_vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+                <GridView
+                    android:id="@+id/gridView"
+                    android:numColumns="4"
+
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </GridView>
             <HorizontalScrollView
                 android:layout_marginRight="15dp"
                 android:layout_marginLeft="15dp"
                 android:layout_toLeftOf="@+id/next"
                 android:layout_gravity="center_vertical"
                 android:id="@+id/horscroll_one"
+                android:visibility="gone"
                 android:layout_centerVertical="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -165,6 +176,7 @@
                 android:id="@+id/next"
                 android:layout_alignParentRight="true"
                 android:layout_width="30dp"
+                android:visibility="gone"
                 android:scaleType="centerInside"
                 android:layout_height="match_parent"
                 android:src="@drawable/next" />
@@ -175,6 +187,7 @@
             android:layout_height="match_parent"
             android:src="@drawable/zuomengceng"
             android:scaleType="fitXY"
+            android:visibility="gone"
             android:layout_alignParentLeft="true"/>
         <ImageView
             android:layout_width="wrap_content"
