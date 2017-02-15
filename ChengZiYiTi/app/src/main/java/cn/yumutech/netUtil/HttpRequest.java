@@ -41,7 +41,7 @@ public class HttpRequest {
 
     public void upLoadTouXiang( String dizhi,final Handler mHandler
                               ) {
-        String url="http://182.254.167.232:20080/unity/webservice/ap/FinishTask";
+        String url="http://111.9.93.229:20080/unity/webservice/ap/FinishTask";
         RequestParams pasParams = new RequestParams();
         pasParams.put("req", dizhi);
         httpclient.post(url, pasParams, new AsyncHttpResponseHandler() {
@@ -71,7 +71,7 @@ public class HttpRequest {
 
     }
     public void UpdateUserPhoto( String dizhi,final Handler mHandler) {
-        String url="http://182.254.167.232:20080/unity/webservice/ap/UpdateUserPhoto";
+        String url="http://111.9.93.229:20080/unity/webservice/ap/UpdateUserPhoto";
         RequestParams pasParams = new RequestParams();
         pasParams.put("req", dizhi);
         httpclient.post(url, pasParams, new AsyncHttpResponseHandler() {

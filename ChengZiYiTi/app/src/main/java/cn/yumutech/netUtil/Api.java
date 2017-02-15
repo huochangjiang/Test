@@ -91,7 +91,7 @@ public class Api {
         synchronized (monitor) {
             if (mangoApi == null) {
                 mangoApi = new Retrofit.Builder()
-                        .baseUrl("http://182.254.167.232:20080/unity/webservice/ap/")
+                        .baseUrl("http://111.9.93.229:20080/unity/webservice/ap/")
                         .client(client)
                         .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                         .addConverterFactory(GsonConverterFactory.create())

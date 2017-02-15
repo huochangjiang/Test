@@ -203,7 +203,7 @@ public class ReleaseTaskActivity extends BaseActivity implements View.OnClickLis
                         Toast.makeText(ReleaseTaskActivity.this,"您还未填写内容，请完善",Toast.LENGTH_SHORT).show();
                     }else if(choose_time.getText().toString().isEmpty()){
                         Toast.makeText(ReleaseTaskActivity.this,"您还未选取截止日期，请完善",Toast.LENGTH_SHORT).show();
-                    }else if(zhuPoeples.isEmpty()||zhuPoeples.size()<2){
+                    }else if(zhuPoeples.isEmpty()||zhuPoeples.size()<1){
                         Toast.makeText(ReleaseTaskActivity.this,"您还未指派，请完善",Toast.LENGTH_SHORT).show();
                     }else {
                         maps1.clear();

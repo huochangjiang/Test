@@ -2,6 +2,9 @@ package cn.yumutech.unity;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -44,6 +47,15 @@ public class LeadersDetaislActivity extends BaseActivity {
         return R.layout.activity_leaders_detaisl;
     }
 
+
+    Handler mHandelr=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            Log.e("info",data.data.title+"--");
+            title1.setText(data.data.title);
+        }
+    };
     @Override
     protected void initViews(Bundle savedInstanceState) {
         webView = (WebView) findViewById(R.id.webview);
@@ -83,7 +95,7 @@ public class LeadersDetaislActivity extends BaseActivity {
         webView.getSettings().setDisplayZoomControls(false);
 //        webView.getSettings().setDefaultFontSize(18);
         controlTitle(findViewById(R.id.back));
-        title1 = (CenterTextView) findViewById(R.id.tv1);
+        title1 = (CenterTextView) findViewById(R.id.title).findViewById(R.id.tv1);
         laiyan = (TextView) findViewById(R.id.laiyuan);
         relativeLayout = (RelativeLayout) findViewById(R.id.rlll);
         guihua = (TextView) findViewById(R.id.guihua);
@@ -120,11 +132,11 @@ public class LeadersDetaislActivity extends BaseActivity {
     protected void initData() {
         String id=getIntent().getStringExtra("id");
         type = getIntent().getStringExtra("type");
-        if(type.equals("2")){
-            tv_home.setText("重点项目");
-        }else {
+//        if(type.equals("2")){
+//            tv_home.setText("重点项目");
+//        }else {
             tv_home.setText("详情");
-        }
+//        }
             RequestCanShu canshus = new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"), new RequestCanShu.DataBean(id));
             initDatas1(new Gson().toJson(canshus));
 
@@ -177,9 +189,9 @@ public class LeadersDetaislActivity extends BaseActivity {
                 webView.loadDataWithBaseURL(null, channels.data.content, "text/html", "utf-8", null);
                 webView.getSettings().setJavaScriptEnabled(true);
                 webView.setWebChromeClient(new WebChromeClient());
-                title1.setText(channels.data.title);
                 laiyan.setText(channels.data.original);
                 tv_time.setText(channels.data.publish_date);
+                mHandelr.sendEmptyMessage(0);
                 myprog.setVisibility(View.GONE);
 //                scrollview.setVisibility(View.VISIBLE);
             }
@@ -210,6 +222,7 @@ public class LeadersDetaislActivity extends BaseActivity {
             }
         }
     };
+
 //    Observer<PrijectDetaisl> observer3 = new Observer<PrijectDetaisl>() {
 //        @Override
 //        public void onCompleted() {
