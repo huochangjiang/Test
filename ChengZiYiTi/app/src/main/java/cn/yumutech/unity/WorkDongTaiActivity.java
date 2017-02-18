@@ -236,6 +236,7 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
                 Intent intent=new Intent(WorkDongTaiActivity.this,LeadersDetaislActivity.class);
                 intent.putExtra("id",data.id);
                 intent.putExtra("type","2");
+                intent.putExtra("classy","dongtai");
                 startActivity(intent);
             }
         });
