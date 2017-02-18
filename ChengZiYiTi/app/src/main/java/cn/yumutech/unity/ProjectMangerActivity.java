@@ -82,6 +82,7 @@ public class ProjectMangerActivity extends BaseActivity implements SwipeRefreshL
     private List<ModuleClassifyList.data> mData=new ArrayList<>();
     private GridView gridView;
     private SBAdapter adapter;
+    private ImageView searchImage;
     protected void unsubscribe( Subscription subscription) {
         if (subscription != null && !subscription.isUnsubscribed()) {
             subscription.unsubscribe();
@@ -132,6 +133,7 @@ public class ProjectMangerActivity extends BaseActivity implements SwipeRefreshL
         recyclerView.setVisibility(View.GONE);
         initClassData();
         initLocal();
+        searchImage= (ImageView) findViewById(R.id.searchImage);
         search= (MyEditText) findViewById(R.id.search);
         next= (ImageView) findViewById(R.id.next);
     }
@@ -248,6 +250,15 @@ public class ProjectMangerActivity extends BaseActivity implements SwipeRefreshL
     }
     @Override
     protected void initListeners() {
+        searchImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent().setClass(ProjectMangerActivity.this,SearchProjectMangerActivity.class);
+                intent.putExtra("fenlei",fenlei);
+                startActivity(intent);
+
+            }
+        });
         mAdapter.setLisener(new ProjectMangerAdpater.OnitemClick() {
             @Override
             public void onitemClice(ProjectManger.DataBean data) {

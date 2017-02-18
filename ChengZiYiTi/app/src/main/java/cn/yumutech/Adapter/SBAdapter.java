@@ -66,7 +66,7 @@ public class SBAdapter extends BaseAdapter{
        }
         if(mPosition==position){
             vh.rl.setBackground(context.getResources().getDrawable(R.drawable.sb_dian));
-            vh.textView.setTextColor(context.getResources().getColor(R.color.colorPrimary));
+            vh.textView.setTextColor(context.getResources().getColor(R.color.white));
         }else {
             vh.rl.setBackground(context.getResources().getDrawable(R.drawable.sb_no));
             vh.textView.setTextColor(context.getResources().getColor(R.color.item_title));

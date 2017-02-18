@@ -210,6 +210,11 @@
         <activity android:name=".CommuGroupActivity"/>
         <activity android:name=".CommunicationNewActivity"/>
         <activity android:name=".TaskNotifiListDetailActivity"/>
+        <activity android:name=".SearchLeaderActivity"/>
+        <activity android:name=".SearchWorkDongTaiActivity"/>
+        <activity android:name=".SearchProjectMangerActivity"/>
+        <activity android:name=".SearchPolicyFileActivity"/>
+        <activity android:name=".SearchTaskNotifiListActivity"/>
 
 
         <!-- 友盟推送集成 -->

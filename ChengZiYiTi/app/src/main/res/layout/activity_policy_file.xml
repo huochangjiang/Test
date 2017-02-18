@@ -31,7 +31,14 @@
                 android:textColor="@color/white"
                 android:id="@+id/tv_home"
                 android:layout_height="wrap_content" />
-
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:id="@+id/searchImage"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/search"/>
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
     <include
@@ -152,6 +159,7 @@
         android:layout_below="@+id/rl_feilei"
         android:paddingRight="5dp"
         android:id="@+id/search"
+        android:visibility="gone"
         android:layout_gravity="center_vertical"
         android:imeOptions="actionSearch"
         android:layout_marginBottom="10dp"
@@ -192,7 +200,7 @@
         <GridView
             android:id="@+id/gridView"
             android:numColumns="4"
-
+            android:background="@color/fengexianone"
             android:layout_gravity="center_vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">

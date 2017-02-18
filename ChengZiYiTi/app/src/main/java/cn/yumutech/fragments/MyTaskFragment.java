@@ -159,7 +159,7 @@ public class MyTaskFragment extends BaseFragment implements PullToRefreshBase.On
             initDatas1(new Gson().toJson(showMyTaskBeen));
         }
     }
-
+    
     //上拉
     @Override
     public void onPullUpToRefresh(PullToRefreshBase<ScrollView> refreshView) {

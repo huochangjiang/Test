@@ -6,7 +6,7 @@
 
     <RelativeLayout
         android:id="@+id/rl"
-        android:background="@drawable/sb_no"
+        android:background="@drawable/sb_dian"
         android:layout_width="wrap_content"
         android:layout_centerInParent="true"
         android:layout_height="wrap_content">

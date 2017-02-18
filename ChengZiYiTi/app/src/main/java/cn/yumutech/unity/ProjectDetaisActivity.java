@@ -354,10 +354,10 @@ public class ProjectDetaisActivity extends BaseActivity implements View.OnClickL
         for (int i = 0; i < lins.size(); i++) {
             if (position == i) {
                 lins.get(i).setBackground(getResources().getDrawable(R.drawable.zhongdianxuan));
-//                tvs.get(i).setBackgroundColor(getResources().getColor(R.color.white));
+                tvs.get(i).setTextColor(getResources().getColor(R.color.white));
             } else {
                 lins.get(i).setBackground(getResources().getDrawable(R.drawable.zhongdianwei));
-//                tvs.get(i).setBackgroundColor(getResources().getColor(R.color.fengexianone));
+                tvs.get(i).setTextColor(getResources().getColor(R.color.item_title));
             }
         }
     }

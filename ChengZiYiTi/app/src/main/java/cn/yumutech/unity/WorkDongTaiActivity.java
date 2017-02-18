@@ -19,6 +19,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -80,6 +81,7 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
     private List<ModuleClassifyList.data> mData=new ArrayList<>();
     private GridView gridView;
     private SBAdapter adapter;
+    private ImageView searchImage;
     protected void unsubscribe( Subscription subscription) {
         if (subscription != null && !subscription.isUnsubscribed()) {
             subscription.unsubscribe();
@@ -129,6 +131,7 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
         recyclerView.setVisibility(View.GONE);
         initClassData();
         initLocal();
+        searchImage= (ImageView) findViewById(R.id.searchImage);
         search= (MyEditText) findViewById(R.id.search);
     }
     //搜索到的内容的结果
@@ -218,6 +221,15 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
     }
     @Override
     protected void initListeners() {
+        searchImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent().setClass(WorkDongTaiActivity.this,SearchWorkDongTaiActivity.class);
+                intent.putExtra("fenlei",fenlei);
+                startActivity(intent);
+
+            }
+        });
         mAdapter.setLisener(new WorkDongTaiAdapter.OnitemClick() {
             @Override
             public void onitemClice(WorkListManger.DataBean data) {

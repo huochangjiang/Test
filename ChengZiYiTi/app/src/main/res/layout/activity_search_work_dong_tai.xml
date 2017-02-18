@@ -6,18 +6,17 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+
     tools:context="cn.yumutech.unity.LeaderActivitysActivity">
     <android.support.v7.widget.Toolbar
         android:id="@+id/id_toolbar"
         app:contentInsetStart="0dp"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
-        >
+        android:background="@color/colorPrimary">
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="wrap_content">
             <ImageView
                 android:scaleType="centerInside"
                 android:layout_width="50dp"
@@ -27,29 +26,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="重点项目"
+                android:text="动态消息"
                 android:textSize="18sp"
                 android:textColor="@color/white"
                 android:id="@+id/tv_home"
                 android:layout_height="wrap_content" />
-            <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:id="@+id/searchImage"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"
-                android:src="@drawable/search"/>
+
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
-    <include
-        android:layout_below="@+id/id_toolbar"
-        android:layout_centerVertical="true"
-        android:visibility="gone"
-        android:id="@+id/netconnect"
-        android:layout_height="match_parent"
-        layout="@layout/net_connect"
-        android:layout_width="match_parent"/>
     <RelativeLayout
         android:gravity="center"
         android:layout_width="match_parent"
@@ -62,62 +46,11 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content" />
     </RelativeLayout>
-    <!--<LinearLayout-->
-        <!--android:id="@+id/ll_feilei"-->
-        <!--android:layout_below="@+id/id_toolbar"-->
-        <!--android:background="@color/f0f0f0"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="60dp"-->
-        <!--android:orientation="horizontal"-->
-        <!--android:weightSum="3">-->
-        <!--<TextView-->
-            <!--android:gravity="center"-->
-            <!--android:id="@+id/bt1"-->
-            <!--android:layout_weight="1"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:background="@drawable/logo_no"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_marginRight="5dp"-->
-            <!--android:layout_marginLeft="10dp"-->
-            <!--android:layout_marginBottom="10dp"-->
-            <!--android:layout_marginTop="10dp"-->
-            <!--android:text="资阳"-->
-            <!--android:textSize="18sp"-->
-            <!--android:textColor="@color/rc_location_text"/>-->
-        <!--<TextView-->
-            <!--android:gravity="center"-->
-            <!--android:id="@+id/bt2"-->
-            <!--android:layout_weight="1"-->
-            <!--android:background="@drawable/logo_no"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_marginRight="5dp"-->
-            <!--android:layout_marginLeft="10dp"-->
-            <!--android:layout_marginBottom="10dp"-->
-            <!--android:layout_marginTop="10dp"-->
-            <!--android:text="县区"-->
-            <!--android:textSize="18sp"-->
-            <!--android:textColor="@color/rc_location_text"/>-->
-        <!--<TextView-->
-            <!--android:gravity="center"-->
-            <!--android:id="@+id/bt3"-->
-            <!--android:layout_weight="1"-->
-            <!--android:background="@drawable/logo_no"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_marginRight="5dp"-->
-            <!--android:layout_marginLeft="10dp"-->
-            <!--android:layout_marginBottom="10dp"-->
-            <!--android:layout_marginTop="10dp"-->
-            <!--android:text="开发区"-->
-            <!--android:textSize="18sp"-->
-            <!--android:textColor="@color/rc_location_text"/>-->
     <cn.yumutech.weight.MyEditText
         android:layout_marginTop="5dp"
         android:layout_below="@+id/rl_feilei"
         android:paddingRight="5dp"
         android:id="@+id/search"
-        android:visibility="gone"
         android:layout_gravity="center_vertical"
         android:imeOptions="actionSearch"
         android:layout_marginBottom="10dp"
@@ -130,13 +63,71 @@
         android:layout_height="30dp"
         android:textColor="@color/item_title"
         android:textSize="15sp"
-        android:textColorHint="@color/zitiyanse"
+        android:textColorHint="@color/item_title"
         android:background="@drawable/edittext_frame"
         android:layout_marginLeft="10dp"
         android:drawablePadding="5dp"
         android:focusableInTouchMode="true"
         android:hint="搜索">
     </cn.yumutech.weight.MyEditText>
+    <include
+        android:layout_below="@+id/id_toolbar"
+        android:layout_centerVertical="true"
+        android:visibility="gone"
+        android:id="@+id/netconnect"
+        android:layout_height="match_parent"
+        layout="@layout/net_connect"
+        android:layout_width="match_parent"/>
+    <!--<LinearLayout-->
+    <!--android:id="@+id/ll_feilei"-->
+    <!--android:layout_below="@+id/id_toolbar"-->
+    <!--android:background="@color/f0f0f0"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="60dp"-->
+    <!--android:orientation="horizontal"-->
+    <!--android:weightSum="3">-->
+    <!--<TextView-->
+    <!--android:gravity="center"-->
+    <!--android:id="@+id/bt1"-->
+    <!--android:layout_weight="1"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:background="@drawable/logo_no"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_marginRight="5dp"-->
+    <!--android:layout_marginLeft="10dp"-->
+    <!--android:layout_marginBottom="10dp"-->
+    <!--android:layout_marginTop="10dp"-->
+    <!--android:text="县区"-->
+    <!--android:textSize="18sp"-->
+    <!--android:textColor="@color/rc_location_text"/>-->
+    <!--<TextView-->
+    <!--android:gravity="center"-->
+    <!--android:id="@+id/bt2"-->
+    <!--android:layout_weight="1"-->
+    <!--android:background="@drawable/logo_no"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_marginRight="5dp"-->
+    <!--android:layout_marginLeft="10dp"-->
+    <!--android:layout_marginBottom="10dp"-->
+    <!--android:layout_marginTop="10dp"-->
+    <!--android:text="开发区"-->
+    <!--android:textSize="18sp"-->
+    <!--android:textColor="@color/rc_location_text"/>-->
+    <!--<TextView-->
+    <!--android:gravity="center"-->
+    <!--android:id="@+id/bt3"-->
+    <!--android:layout_weight="1"-->
+    <!--android:background="@drawable/logo_no"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_marginRight="5dp"-->
+    <!--android:layout_marginLeft="10dp"-->
+    <!--android:layout_marginBottom="10dp"-->
+    <!--android:layout_marginTop="10dp"-->
+    <!--android:text="市级部门"-->
+    <!--android:textSize="18sp"-->
+    <!--android:textColor="@color/rc_location_text"/>-->
     <RelativeLayout
         android:id="@+id/rl_feilei"
         android:layout_below="@+id/id_toolbar"
@@ -155,40 +146,16 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:focusable="true">
-            <RelativeLayout
-                android:layout_gravity="center_vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <GridView
-                    android:id="@+id/gridView"
-                    android:numColumns="4"
-                    android:background="@color/fengexianone"
-                    android:layout_gravity="center_vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                </GridView>
             <HorizontalScrollView
                 android:layout_marginRight="15dp"
                 android:layout_marginLeft="15dp"
-                android:layout_toLeftOf="@+id/next"
+                android:visibility="gone"
                 android:layout_gravity="center_vertical"
                 android:id="@+id/horscroll_one"
-                android:visibility="gone"
-                android:layout_centerVertical="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scrollbars="none" >
             </HorizontalScrollView>
-            <ImageView
-                android:id="@+id/next"
-                android:layout_alignParentRight="true"
-                android:layout_width="30dp"
-                android:visibility="gone"
-                android:scaleType="centerInside"
-                android:layout_height="match_parent"
-                android:src="@drawable/next" />
-            </RelativeLayout>
         </LinearLayout>
         <ImageView
             android:layout_width="wrap_content"
@@ -215,6 +182,7 @@
     <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:id="@+id/pull_to_refresh"
+        android:background="@color/white"
         android:layout_below="@+id/search"
         android:layout_height="wrap_content">
         <android.support.v7.widget.RecyclerView
@@ -222,5 +190,4 @@
             android:layout_height="match_parent"
             android:id="@+id/recyleview" />
     </android.support.v4.widget.SwipeRefreshLayout>
-
 </RelativeLayout>

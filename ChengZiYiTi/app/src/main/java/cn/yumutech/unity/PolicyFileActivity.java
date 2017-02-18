@@ -18,6 +18,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -78,6 +79,7 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
     private List<ModuleClassifyList.data> mData=new ArrayList<>();
     private GridView gridView;
     private SBAdapter adapter;
+    private ImageView searchImage;
     protected void unsubscribe( Subscription subscription) {
         if (subscription != null && !subscription.isUnsubscribed()) {
             subscription.unsubscribe();
@@ -130,7 +132,7 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
         recyclerView.setVisibility(View.GONE);
         initClassData();
         initLocal();
-
+        searchImage= (ImageView) findViewById(R.id.searchImage);
         search= (MyEditText) findViewById(R.id.search);
     }
     //搜索到的内容的结果
@@ -376,6 +378,15 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
 //                mHandler.sendEmptyMessage(1);
 //            }
 //        });
+        searchImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent().setClass(PolicyFileActivity.this,SearchPolicyFileActivity.class);
+                intent.putExtra("fenlei",fenlei);
+                startActivity(intent);
+
+            }
+        });
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

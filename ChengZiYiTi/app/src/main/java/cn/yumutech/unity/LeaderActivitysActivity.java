@@ -18,6 +18,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -81,6 +82,7 @@ public class LeaderActivitysActivity extends BaseActivity implements SwipeRefres
     private String searchKey="";
     private GridView gridView;
     private SBAdapter adapter;
+    private ImageView searchImage;
     protected void unsubscribe( Subscription subscription) {
         if (subscription != null && !subscription.isUnsubscribed()) {
             subscription.unsubscribe();
@@ -126,7 +128,7 @@ public class LeaderActivitysActivity extends BaseActivity implements SwipeRefres
         net_connect = findViewById(R.id.netconnect);
         initLocal();
         initClassData();
-
+        searchImage= (ImageView) findViewById(R.id.searchImage);
         search= (MyEditText) findViewById(R.id.search);
     }
 
@@ -395,6 +397,15 @@ public class LeaderActivitysActivity extends BaseActivity implements SwipeRefres
                 if(search.getText().toString().trim().length()==0){
                     mHandler.sendEmptyMessage(1);
                 }
+            }
+        });
+        searchImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent().setClass(LeaderActivitysActivity.this,SearchLeaderActivity.class);
+                intent.putExtra("fenlei",fenlei);
+                startActivity(intent);
+
             }
         });
     }

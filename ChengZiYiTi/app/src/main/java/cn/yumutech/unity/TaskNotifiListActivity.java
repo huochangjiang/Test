@@ -80,6 +80,7 @@ public class TaskNotifiListActivity extends BaseActivity implements SwipeRefresh
     private List<ModuleClassifyList.data> mData=new ArrayList<>();
     private GridView gridView;
     private SBAdapter adapter;
+    private ImageView searchImage;
     protected void unsubscribe( Subscription subscription) {
         if (subscription != null && !subscription.isUnsubscribed()) {
             subscription.unsubscribe();
@@ -128,6 +129,7 @@ public class TaskNotifiListActivity extends BaseActivity implements SwipeRefresh
         net_connect = findViewById(R.id.netconnect);
 
         initLocal();
+        searchImage= (ImageView) findViewById(R.id.searchImage);
         search= (MyEditText) findViewById(R.id.search);
     }
     //加载缓存
@@ -231,6 +233,15 @@ public class TaskNotifiListActivity extends BaseActivity implements SwipeRefresh
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+        searchImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent().setClass(TaskNotifiListActivity.this,SearchTaskNotifiListActivity.class);
+                intent.putExtra("fenlei",fenlei);
+                startActivity(intent);
+
             }
         });
         mAdapter.setLisener(new TaskNotifiListAdapter.OnitemClick() {
