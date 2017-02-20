@@ -301,11 +301,11 @@ public class LeaderActivitysActivity extends BaseActivity implements SwipeRefres
                 search.setText("");
                 searchKey="";
                 tishi.setVisibility(View.GONE);
-                if(position==0){
-                    fenlei="";
-                }else {
+//                if(position==0){
+//                    fenlei="";
+//                }else {
                     fenlei=myData.get(position).value;
-                }
+//                }
 //                fenlei= cn.yumutech.weight.SaveData.getInstance().fenlei;
 //        }
                 mHandler.sendEmptyMessage(1);
@@ -545,10 +545,10 @@ public class LeaderActivitysActivity extends BaseActivity implements SwipeRefres
             if(moduleClassifyList!=null&&moduleClassifyList.data.size()>0){
                 mKey=moduleClassifyList;
                 myData.clear();
-                oneData=new ModuleClassifyList.data("推荐","推荐");
-                myData.add(oneData);
+//                oneData=new ModuleClassifyList.data("推荐","推荐");
+//                myData.add(oneData);
                 myData.addAll(moduleClassifyList.data);
-                adapter.dataChange(myData,0);
+                adapter.dataChange(moduleClassifyList.data,0);
 //                addView(moduleClassifyList.data);
 
 //                for(int i=0;i<moduleClassifyList.data.size();i++){
@@ -568,6 +568,7 @@ public class LeaderActivitysActivity extends BaseActivity implements SwipeRefres
             final TextView tv = new TextView(this);
             if(j==0){
                 tv.setText("推荐");
+                tv.setVisibility(View.GONE);
             }else {
                 tv.setText(a.get(j-1).value);
             }
@@ -575,7 +576,7 @@ public class LeaderActivitysActivity extends BaseActivity implements SwipeRefres
             tv.setTextSize(18);
             bts.add(tv);
             linears.get(0).addView(tv);
-            if (j == 0 ) {
+            if (j == 1 ) {
 //                tv.setBackgroundResource(R.drawable.logo);
                 tv.setTextColor(Color.parseColor("#DD3237"));
             } else {
@@ -583,7 +584,7 @@ public class LeaderActivitysActivity extends BaseActivity implements SwipeRefres
                 tv.setTextColor(Color.parseColor("#7F000000"));
             }
             tv.setLayoutParams(layoutParams);
-            if (!(j == 0)) {
+            if (!(j == 1)) {
                 layoutParams.leftMargin = 60;
                 tv.setGravity(Gravity.CENTER);
             }
