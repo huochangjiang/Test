@@ -125,7 +125,9 @@ public class PolicyAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if(holder instanceof AppPolicyViewHolder){
             if(mDatas!=null&&mDatas!=null&&mDatas.size()>0){
-                ((AppPolicyViewHolder)holder).laiyuan.setText(mDatas.get(position).original);
+//                ((AppPolicyViewHolder)holder).laiyuan.setText(mDatas.get(position).original);
+                ((AppPolicyViewHolder) holder).laiyuan.setVisibility(View.GONE);
+                ((AppPolicyViewHolder) holder).laiyuan1.setText("> 点击浏览");
                 ((AppPolicyViewHolder)holder).textView.setText(mDatas.get(position).title);
                 ((AppPolicyViewHolder)holder).summary.setText(mDatas.get(position).summary);
                 ((AppPolicyViewHolder)holder).time.setText(mDatas.get(position).publish_date);

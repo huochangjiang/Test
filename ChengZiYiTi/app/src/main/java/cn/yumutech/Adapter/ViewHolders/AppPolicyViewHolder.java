@@ -14,7 +14,7 @@ import cn.yumutech.unity.R;
 public class AppPolicyViewHolder extends RecyclerView.ViewHolder{
     public TextView textView;
     public  TextView summary;
-    public  TextView laiyuan;
+    public  TextView laiyuan,laiyuan1;
     public  TextView time;
     public ImageView iv;
     public  LinearLayout ll;
@@ -24,6 +24,7 @@ public class AppPolicyViewHolder extends RecyclerView.ViewHolder{
         textView = (TextView) itemView.findViewById(R.id.tv1);
         summary = (TextView) itemView.findViewById(R.id.sumary);
         laiyuan = (TextView) itemView.findViewById(R.id.laiyuan);
+        laiyuan1= (TextView) itemView.findViewById(R.id.laiyuan1);
         time = (TextView) itemView.findViewById(R.id.tv_time);
         iv = (ImageView) itemView.findViewById(R.id.iv);
         ll = (LinearLayout) itemView.findViewById(R.id.ll);

@@ -61,6 +61,8 @@ public class LeaderActivityAdapter extends RecyclerView.Adapter {
         if(holder instanceof ItemViewHolder){
             if(mDatas!=null&&mDatas!=null&&mDatas.size()>0) {
                 ((ItemViewHolder) holder).laiyuan.setText(mDatas.get(position).original);
+//                ((ItemViewHolder) holder).laiyuan.setVisibility(View.GONE);
+//                ((ItemViewHolder) holder).laiyuan1.setText("> 点击浏览");
                 ((ItemViewHolder) holder).textView.setText(mDatas.get(position).title);
                 ((ItemViewHolder) holder).summary.setText(mDatas.get(position).summary);
                 ((ItemViewHolder) holder).time.setText(mDatas.get(position).publish_date);
@@ -109,7 +111,7 @@ public class LeaderActivityAdapter extends RecyclerView.Adapter {
 
         public  TextView textView;
         public  TextView summary;
-        public  TextView laiyuan;
+        public  TextView laiyuan,laiyuan1;
         public  TextView time;
         public ImageView iv;
 
@@ -118,6 +120,7 @@ public class LeaderActivityAdapter extends RecyclerView.Adapter {
             textView = (TextView) itemView.findViewById(R.id.tv1);
             summary = (TextView) itemView.findViewById(R.id.sumary);
             laiyuan = (TextView) itemView.findViewById(R.id.laiyuan);
+
             time = (TextView) itemView.findViewById(R.id.tv_time);
             iv = (ImageView) itemView.findViewById(R.id.iv);
         }
