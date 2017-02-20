@@ -1,6 +1,7 @@
 package cn.yumutech.unity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -89,6 +90,16 @@ public class SearchLeaderActivity extends BaseActivity implements SwipeRefreshLa
 
     @Override
     protected void initListeners(){
+        mAdapter.setLisener(new LeaderActivityAdapter.OnitemClick() {
+            @Override
+            public void onitemClice(LeaderActivitys.DataBean data) {
+                Intent intent=new Intent(SearchLeaderActivity.this,LeadersDetaislActivity.class);
+                intent.putExtra("id",data.id);
+                intent.putExtra("type","1");
+                intent.putExtra("classy","news");
+                startActivity(intent);
+            }
+        });
         search.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {

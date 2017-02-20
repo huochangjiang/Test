@@ -1,6 +1,7 @@
 package cn.yumutech.unity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -87,6 +88,16 @@ public class SearchWorkDongTaiActivity extends BaseActivity implements SwipeRefr
 
     @Override
     protected void initListeners() {
+        mAdapter.setLisener(new WorkDongTaiAdapter.OnitemClick() {
+            @Override
+            public void onitemClice(WorkListManger.DataBean data) {
+                Intent intent=new Intent(SearchWorkDongTaiActivity.this,LeadersDetaislActivity.class);
+                intent.putExtra("id",data.id);
+                intent.putExtra("type","2");
+                intent.putExtra("classy","dongtai");
+                startActivity(intent);
+            }
+        });
         search.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
