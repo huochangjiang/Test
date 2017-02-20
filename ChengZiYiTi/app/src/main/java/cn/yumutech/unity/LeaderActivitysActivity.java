@@ -548,6 +548,9 @@ public class LeaderActivitysActivity extends BaseActivity implements SwipeRefres
 //                oneData=new ModuleClassifyList.data("推荐","推荐");
 //                myData.add(oneData);
                 myData.addAll(moduleClassifyList.data);
+                if(moduleClassifyList.data.size()<4) {
+                    gridView.setNumColumns(3);
+                }
                 adapter.dataChange(moduleClassifyList.data,0);
 //                addView(moduleClassifyList.data);
 
