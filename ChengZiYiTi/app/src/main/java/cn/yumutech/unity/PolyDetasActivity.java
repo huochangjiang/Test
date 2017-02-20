@@ -61,7 +61,7 @@ public class PolyDetasActivity extends BaseActivity {
         webView.getSettings().setLoadWithOverviewMode(true);
 
         //影藏缩放按钮
-        webView.getSettings().setDisplayZoomControls(false);
+//        webView.getSettings().setDisplayZoomControls(false);
         controlTitle(findViewById(R.id.back));
         title1 = (CenterTextView) findViewById(R.id.tv1);
         laiyan = (TextView) findViewById(R.id.laiyuan);
