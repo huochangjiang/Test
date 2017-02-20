@@ -77,22 +77,24 @@ public class LeadersDetaislActivity extends BaseActivity {
 //        settings.setDisplayZoomControls(false);
 
 //        settings.setLoadWithOverviewMode(true);
-
-
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setSupportZoom(true);
         webView.getSettings().setBuiltInZoomControls(true);
         webView.getSettings().setUseWideViewPort(true);
+
         webView.setWebViewClient(new WebViewClient(){
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
                 return false;
             }
         });
+
         webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         webView.getSettings().setLoadWithOverviewMode(true);
         //隐藏缩放按钮
-//        webView.getSettings().setDisplayZoomControls(false);
+        webView.getSettings().setDisplayZoomControls(true);
+        webView.getSettings().setBuiltInZoomControls(true);
+        // 缩放按钮
 //        webView.getSettings().setDefaultFontSize(18);
         controlTitle(findViewById(R.id.back));
         title1 = (CenterTextView) findViewById(R.id.title).findViewById(R.id.tv1);

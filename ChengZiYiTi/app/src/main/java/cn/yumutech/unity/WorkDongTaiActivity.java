@@ -555,6 +555,9 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
                 mKey=moduleClassifyList;
                 mData=moduleClassifyList.data;
                 fenlei=moduleClassifyList.data.get(0).value;
+                if(moduleClassifyList.data.size()<4){
+                    gridView.setNumColumns(3);
+                }
                 adapter.dataChange(moduleClassifyList.data,0);
 //                addView(moduleClassifyList.data);
 

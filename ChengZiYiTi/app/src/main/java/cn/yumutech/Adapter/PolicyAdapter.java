@@ -128,6 +128,7 @@ public class PolicyAdapter extends RecyclerView.Adapter {
 //                ((AppPolicyViewHolder)holder).laiyuan.setText(mDatas.get(position).original);
                 ((AppPolicyViewHolder) holder).laiyuan.setVisibility(View.GONE);
                 ((AppPolicyViewHolder) holder).laiyuan1.setText("> 点击浏览");
+                ((AppPolicyViewHolder) holder).view1.setVisibility(View.GONE);
                 ((AppPolicyViewHolder)holder).textView.setText(mDatas.get(position).title);
                 ((AppPolicyViewHolder)holder).summary.setText(mDatas.get(position).summary);
                 ((AppPolicyViewHolder)holder).time.setText(mDatas.get(position).publish_date);

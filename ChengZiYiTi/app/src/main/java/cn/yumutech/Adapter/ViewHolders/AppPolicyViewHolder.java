@@ -18,6 +18,7 @@ public class AppPolicyViewHolder extends RecyclerView.ViewHolder{
     public  TextView time;
     public ImageView iv;
     public  LinearLayout ll;
+    public View view1;
 
     public AppPolicyViewHolder(View itemView) {
         super(itemView);
@@ -26,6 +27,7 @@ public class AppPolicyViewHolder extends RecyclerView.ViewHolder{
         laiyuan = (TextView) itemView.findViewById(R.id.laiyuan);
         laiyuan1= (TextView) itemView.findViewById(R.id.laiyuan1);
         time = (TextView) itemView.findViewById(R.id.tv_time);
+        view1=itemView.findViewById(R.id.view1);
         iv = (ImageView) itemView.findViewById(R.id.iv);
         ll = (LinearLayout) itemView.findViewById(R.id.ll);
     }
