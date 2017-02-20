@@ -94,6 +94,7 @@
                     android:layout_height="wrap_content" />
             </RelativeLayout>
             <View
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:background="@color/fengexianone"
