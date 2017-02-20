@@ -73,7 +73,7 @@ public class TaShanDetailActivity extends BaseActivity{
         webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         webView.getSettings().setLoadWithOverviewMode(true);
         //影藏缩放按钮
-        webView.getSettings().setDisplayZoomControls(false);
+//        webView.getSettings().setDisplayZoomControls(false);
 //        webView.getSettings().setDefaultFontSize(18);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING);

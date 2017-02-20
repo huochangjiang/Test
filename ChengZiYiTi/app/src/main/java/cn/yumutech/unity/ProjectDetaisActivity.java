@@ -82,7 +82,7 @@ public class ProjectDetaisActivity extends BaseActivity implements View.OnClickL
         webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         webView.getSettings().setLoadWithOverviewMode(true);
         //隐藏缩放按钮
-        webView.getSettings().setDisplayZoomControls(false);
+//        webView.getSettings().setDisplayZoomControls(false);
 
         tv_jiben = (TextView) findViewById(R.id.tv_jiben);
         tv_work = (TextView) findViewById(R.id.tv_work);
