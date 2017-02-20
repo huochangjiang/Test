@@ -53,12 +53,13 @@
             android:layout_width="match_parent"
             android:orientation="vertical"
             android:layout_height="match_parent">
-            <cn.yumutech.weight.CenterTextView
+            <TextView
                 android:layout_marginTop="10dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
+
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:id="@+id/tv1"
+                android:lineSpacingExtra="5dp"
                 android:layout_width="wrap_content"
                 android:maxLines="2"
                 android:text="男职工关爱行动"
@@ -101,19 +102,21 @@
                 ></View>
 
 <LinearLayout
-    android:layout_marginTop="5dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
     android:background="@color/fengexianone"
     android:layout_width="match_parent"
     android:orientation="horizontal"
-    android:layout_height="42dp">
+    android:layout_height="wrap_content">
     <RelativeLayout
         android:id="@+id/lin_one"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="1"
-        android:layout_marginBottom="2dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:background="@drawable/zhongdianxuan">
@@ -130,8 +133,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="1"
-        android:layout_marginBottom="2dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:background="@drawable/zhongdianwei">
@@ -148,8 +151,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="1"
-        android:layout_marginBottom="2dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:background="@drawable/zhongdianwei">
@@ -166,8 +169,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="1"
-        android:layout_marginBottom="2dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:background="@drawable/zhongdianwei">
@@ -185,6 +188,7 @@
     <WebView
         android:layout_below="@+id/scrollview"
         android:scrollbars="none"
+        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:id="@+id/webview"
         android:layout_height="wrap_content"></WebView>

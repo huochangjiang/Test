@@ -24,7 +24,6 @@ import cn.yumutech.bean.ProjectialsXiangqing;
 import cn.yumutech.bean.RequestCanShu;
 import cn.yumutech.bean.WorkDetails;
 import cn.yumutech.netUtil.Api;
-import cn.yumutech.weight.CenterTextView;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -37,7 +36,7 @@ public class ProjectDetaisActivity extends BaseActivity implements View.OnClickL
     ProjectialsXiangqing data2;
     private WebView webView;
     private String type;
-    private CenterTextView title1;
+    private TextView title1;
     private TextView laiyan;
     private TextView tv_time;
     private TextView guihua;
@@ -55,6 +54,7 @@ public class ProjectDetaisActivity extends BaseActivity implements View.OnClickL
     private RelativeLayout rl_progressBar;
     private LinearLayout ll2;
     private RelativeLayout lin_one,lin_two,lin_three,lin_four;
+    private TextView tv_home;
 
     @Override
     protected int getLayoutId() {
@@ -79,6 +79,7 @@ public class ProjectDetaisActivity extends BaseActivity implements View.OnClickL
                 return false;
             }
         });
+        tv_home= (TextView) findViewById(R.id.tv_home);
         webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         webView.getSettings().setLoadWithOverviewMode(true);
         //隐藏缩放按钮
@@ -112,7 +113,7 @@ public class ProjectDetaisActivity extends BaseActivity implements View.OnClickL
         tv_progress = (TextView) findViewById(R.id.tv_progress);
         tv_leixing = (TextView) findViewById(R.id.laiyuan);
         tv_time1 = (TextView) findViewById(R.id.tv_time);
-        title1 = (CenterTextView) findViewById(R.id.tv1);
+        title1 = (TextView) findViewById(R.id.tv1);
 //        webView.getSettings().setDefaultFontSize(18);
         controlTitle(findViewById(R.id.back));
         rl_progressBar= (RelativeLayout) findViewById(R.id.rl_progressBar);
@@ -133,10 +134,13 @@ public class ProjectDetaisActivity extends BaseActivity implements View.OnClickL
 //        });
     }
 
+    private String fenlei;
     @Override
     protected void initData() {
         String id = getIntent().getStringExtra("id");
         type = getIntent().getStringExtra("type");
+        fenlei=getIntent().getStringExtra("fenlei");
+        tv_home.setText("重点项目/"+fenlei);
         RequestCanShu canshus = new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"), new RequestCanShu.DataBean(id));
         initDatas1(new Gson().toJson(canshus));
 
