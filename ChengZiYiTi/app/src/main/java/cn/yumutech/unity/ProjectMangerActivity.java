@@ -264,6 +264,7 @@ public class ProjectMangerActivity extends BaseActivity implements SwipeRefreshL
             public void onitemClice(ProjectManger.DataBean data) {
                 Intent intent=new Intent(ProjectMangerActivity.this,ProjectDetaisActivity.class);
                 intent.putExtra("id",data.id);
+                intent.putExtra("fenlei",fenlei);
                 intent.putExtra("type","3");
                 startActivity(intent);
 

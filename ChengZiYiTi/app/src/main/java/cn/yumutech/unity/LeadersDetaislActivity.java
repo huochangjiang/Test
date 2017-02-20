@@ -206,7 +206,6 @@ public class LeadersDetaislActivity extends BaseActivity {
                 myprog.setVisibility(View.GONE);
 //                scrollview.setVisibility(View.VISIBLE);
             }
-
         }
     };
     Observer<WorkDetails> observer2 = new Observer<WorkDetails>() {
