@@ -32,8 +32,8 @@
                 android:id="@+id/tv_home"
                 android:layout_height="wrap_content" />
             <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:id="@+id/searchImage"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"

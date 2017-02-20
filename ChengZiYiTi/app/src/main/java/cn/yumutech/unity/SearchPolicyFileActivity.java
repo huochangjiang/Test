@@ -1,6 +1,7 @@
 package cn.yumutech.unity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,9 +18,7 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.yumutech.Adapter.LeaderActivityAdapter;
 import cn.yumutech.Adapter.PolicyAdapter;
-import cn.yumutech.bean.LeaderActivitys;
 import cn.yumutech.bean.RequestCanShu;
 import cn.yumutech.bean.ZhengCeFile;
 import cn.yumutech.netUtil.Api;
@@ -90,6 +89,14 @@ public class SearchPolicyFileActivity extends BaseActivity implements SwipeRefre
 
     @Override
     protected void initListeners() {
+        mAdapter.setLisener(new PolicyAdapter.OnitemClick() {
+            @Override
+            public void onitemClice(ZhengCeFile.DataBean data) {
+                Intent intent=new Intent(SearchPolicyFileActivity.this,PolyDetasActivity.class);
+                intent.putExtra("id",data.id);
+                startActivity(intent);
+            }
+        });
         search.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {

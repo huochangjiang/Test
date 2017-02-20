@@ -1,6 +1,7 @@
 package cn.yumutech.unity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -93,6 +94,7 @@ public class SearchProjectMangerActivity extends BaseActivity implements SwipeRe
     }
     //搜索到的内容的结果
     private void initSearch(String key) {
+
         if(App.getContext().getLogo("logo")!=null) {
             RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
                     new RequestCanShu.DataBean(fenlei,key,mPageSearch+"",mPageSize+""));
@@ -171,6 +173,16 @@ public class SearchProjectMangerActivity extends BaseActivity implements SwipeRe
     }
     @Override
     protected void initListeners() {
+        mAdapter.setLisener(new ProjectMangerAdpater.OnitemClick() {
+            @Override
+            public void onitemClice(ProjectManger.DataBean data) {
+                Intent intent=new Intent(SearchProjectMangerActivity.this,ProjectDetaisActivity.class);
+                intent.putExtra("id",data.id);
+                intent.putExtra("type","3");
+                startActivity(intent);
+
+            }
+        });
         search.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
