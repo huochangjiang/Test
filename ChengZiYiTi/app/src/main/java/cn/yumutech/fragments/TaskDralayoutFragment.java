@@ -108,7 +108,6 @@ public class TaskDralayoutFragment extends BaseFragment implements View.OnClickL
         iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                     drawerLayout.openDrawer(Gravity.LEFT);
                   //  iv.setImageResource(R.drawable.celanzhankai);
             }
@@ -209,7 +208,6 @@ public class TaskDralayoutFragment extends BaseFragment implements View.OnClickL
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
-
     }
     Observer<UserAboutPerson> observer = new Observer<UserAboutPerson>() {
         @Override
@@ -219,7 +217,6 @@ public class TaskDralayoutFragment extends BaseFragment implements View.OnClickL
         @Override
         public void onError(Throwable e) {
             e.printStackTrace();
-
         }
         @Override
         public void onNext(UserAboutPerson channels) {
