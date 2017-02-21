@@ -235,7 +235,6 @@ Subscription subscription;
         @Override
         public void onError(Throwable e) {
             e.printStackTrace();
-
         }
         @Override
         public void onNext(LeaderActivitys channels) {
@@ -245,7 +244,6 @@ Subscription subscription;
                     loadHome(channels);
                 }
             }
-
         }
     };
 

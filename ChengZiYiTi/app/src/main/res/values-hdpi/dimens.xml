@@ -39,6 +39,7 @@
     
       <dimen name="tv_size">15sp</dimen>
     <dimen name="home_item">50dp</dimen>
+    <dimen name="SB">13sp</dimen>
 
 
 

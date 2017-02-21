@@ -457,6 +457,9 @@ public class TaskNotifiListActivity extends BaseActivity implements SwipeRefresh
         public void onNext(ModuleClassifyList moduleClassifyList) {
             if(moduleClassifyList!=null&&moduleClassifyList.data.size()>0){
                 fenlei=moduleClassifyList.data.get(0).value;
+                if(moduleClassifyList.data.size()<4){
+                    gridView.setNumColumns(3);
+                }
                 mKey=moduleClassifyList;
                 mData=moduleClassifyList.data;
                 adapter.dataChange(moduleClassifyList.data,0);

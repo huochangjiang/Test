@@ -30,5 +30,6 @@
                   <dimen name="tv_size">14sp</dimen>
                  <dimen name="yaokongheight">250dp</dimen>
     <dimen name="home_item">46dp</dimen>
+    <dimen name="SB">14sp</dimen>
 
 </resources>

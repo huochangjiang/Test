@@ -42,6 +42,7 @@
                 <dimen name="tupian_width">110dp</dimen>
                 <dimen name="tv_size">17sp</dimen>
                 <dimen name="home_item">60dp</dimen>
+    <dimen name="SB">16sp</dimen>
               
               
 </resources>
