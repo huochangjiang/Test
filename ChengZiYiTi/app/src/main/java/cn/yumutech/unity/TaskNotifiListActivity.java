@@ -127,7 +127,6 @@ public class TaskNotifiListActivity extends BaseActivity implements SwipeRefresh
         pullToRefresh.setOnRefreshListener(this);
         controlTitle(findViewById(R.id.back));
         net_connect = findViewById(R.id.netconnect);
-
         initLocal();
         searchImage= (ImageView) findViewById(R.id.searchImage);
         search= (MyEditText) findViewById(R.id.search);

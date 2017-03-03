@@ -51,6 +51,7 @@ public class ReleaseTaskActivity extends BaseActivity implements View.OnClickLis
     private LinearLayout rl_zhipairen;
     public Map<Integer, UserAboutPerson.DataBean> zhipaiPeople;
     private TextView zhubanren;
+    private String projectwork_id;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_release_task;
@@ -83,7 +84,9 @@ public class ReleaseTaskActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     protected void initData() {
-
+        if(getIntent()!=null){
+            projectwork_id=getIntent().getStringExtra("projectwork_id");
+        }
     }
 
     @Override
@@ -213,7 +216,7 @@ public class ReleaseTaskActivity extends BaseActivity implements View.OnClickLis
                         showDilog("发布中...");
                         PublishTaskBeen been=new PublishTaskBeen(new PublishTaskBeen.UserBean(App.getContext().getLogo("logo").data.id,"")
                                 ,new PublishTaskBeen.DataBean(edit_title.getText().toString().trim(),edit_neirong.getText().toString().trim(),
-                                choose_time.getText().toString(),getMemberIds1(maps1)));
+                                choose_time.getText().toString(),getMemberIds1(maps1),projectwork_id));
                         initSend(new Gson().toJson(been));
                     }
                     break;
@@ -258,12 +261,10 @@ public class ReleaseTaskActivity extends BaseActivity implements View.OnClickLis
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
-
     //选择截止时间时要用，我也不晓得具体啥子用
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (resultCode == Activity.RESULT_OK && requestCode == 1) {
             // 选择截止时间时间的页面被关闭
             String date = data.getStringExtra("date");
@@ -274,6 +275,5 @@ public class ReleaseTaskActivity extends BaseActivity implements View.OnClickLis
                 System.out.println("选择未变");
             }
         }
-
     }
 }

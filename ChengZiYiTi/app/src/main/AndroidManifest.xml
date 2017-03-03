@@ -123,6 +123,8 @@
         <activity android:name=".TaskEndDateActivity" />
         <activity android:name=".ShowTaskDetailActivity" />
         <activity android:name=".LookResultActivity" />
+        <activity android:name=".SuggestActivity"/>
+        <activity android:name=".InspectionTaskNewOtherActivity"/>
         <activity
             android:name=".TaskToWhoNewActivity"
             android:windowSoftInputMode="stateHidden|adjustPan" />

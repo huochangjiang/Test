@@ -140,7 +140,6 @@ public class TaskDralayoutFragment extends BaseFragment implements View.OnClickL
             }
         });
         search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH||actionId==KeyEvent.KEYCODE_ENTER||actionId == EditorInfo.IME_ACTION_DONE) {
@@ -168,6 +167,8 @@ public class TaskDralayoutFragment extends BaseFragment implements View.OnClickL
                 if(search.getText().toString().trim().length()==0){
                     mAdapter.dataChange(mDatas);
                     listView.setFocusable(false);
+                }else {
+                    getmDataSub(search.getText().toString().trim());
                 }
             }
         });

@@ -75,6 +75,7 @@ public class UserInfoDetail {
         public String mobile;
         public String dept_id;
         public String dept_name;
+        public String publish_task_flag;
 
         public String getId() {
             return id;

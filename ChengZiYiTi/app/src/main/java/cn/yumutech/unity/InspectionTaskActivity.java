@@ -120,6 +120,7 @@ public class InspectionTaskActivity extends BaseActivity implements View.OnClick
             case R.id.add:
                 Intent intent=new Intent();
                 intent.setClass(InspectionTaskActivity.this,ReleaseTaskActivity.class);
+                intent.putExtra("projectwork_id","");
                 startActivity(intent);
                 break;
         }

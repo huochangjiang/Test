@@ -107,7 +107,6 @@ public class DralayoutFragment extends BaseFragment {
     }
     @Override
     protected void initListeners() {
-
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -132,14 +131,10 @@ public class DralayoutFragment extends BaseFragment {
         search.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
             }
-
             @Override
             public void afterTextChanged(Editable s) {
                 if(search.getText().toString().trim().length()==0){
@@ -147,6 +142,8 @@ public class DralayoutFragment extends BaseFragment {
                     listView.setVisibility(View.VISIBLE);
                     mAdapter.dataChange(mDatas);
                     listView.setFocusable(false);
+                }else {
+                    getmDataSub(search.getText().toString().trim());
                 }
             }
         });

@@ -7,6 +7,7 @@ import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -66,20 +67,44 @@ public class TaShanDetailActivity extends BaseActivity{
 //        scrollView.setVisibility(View.GONE);
         button.setVisibility(View.GONE);
         net_connect = findViewById(R.id.netconnect);
+
+
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setSupportZoom(true);
         webView.getSettings().setBuiltInZoomControls(true);
         webView.getSettings().setUseWideViewPort(true);
+
+        webView.setWebViewClient(new WebViewClient(){
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return false;
+            }
+        });
+
         webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         webView.getSettings().setLoadWithOverviewMode(true);
-        //影藏缩放按钮
+        //隐藏缩放按钮
         webView.getSettings().setDisplayZoomControls(true);
-//        webView.getSettings().setDefaultFontSize(18);
+        webView.getSettings().setBuiltInZoomControls(true);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING);
         } else {
             webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
         }
+//        webView.getSettings().setJavaScriptEnabled(true);
+//        webView.getSettings().setSupportZoom(true);
+//        webView.getSettings().setBuiltInZoomControls(true);
+//        webView.getSettings().setUseWideViewPort(true);
+//        webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+//        webView.getSettings().setLoadWithOverviewMode(true);
+//        //影藏缩放按钮
+////        webView.getSettings().setDisplayZoomControls(true);
+////        webView.getSettings().setDefaultFontSize(18);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING);
+//        } else {
+//            webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
+//        }
         // disable scroll on touch
 //        webView.setScrollContainer(false);
 //        webView.setOnTouchListener(new View.OnTouchListener() {

@@ -74,6 +74,7 @@ public class HuDongJIaoLiu {
         public String publish_date;
         public String logo_path;
         public String original;
+        public String exchange_istop;
 
         public String getComment_count() {
             return comment_count;
