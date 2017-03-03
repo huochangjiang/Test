@@ -87,6 +87,7 @@ public class App extends MultiDexApplication{
 //            RongPushClient.registerMiPush(this, "2882303761517528959", "5821752892959");
             RongIM.init(this);
             setMyExtensionModule();
+            
 
             if (getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext()))) {
                 DemoContext.init(this);

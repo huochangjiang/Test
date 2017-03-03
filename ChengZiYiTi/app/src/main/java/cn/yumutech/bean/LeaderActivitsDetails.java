@@ -116,6 +116,7 @@ public class LeaderActivitsDetails {
         public String logo_path;
         public String original;
 
+
         public String getId() {
             return id;
         }
