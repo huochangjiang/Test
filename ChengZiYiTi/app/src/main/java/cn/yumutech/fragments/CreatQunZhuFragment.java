@@ -159,6 +159,11 @@ public class CreatQunZhuFragment extends BaseFragment {
             public void afterTextChanged(Editable s) {
                 if(editText.getText().toString().trim().length()==0){
                     mAdapter.dataChange(currentList,isXianshi);
+                }else {
+                    searchData.clear();
+                    String str=editText.getText().toString().trim();
+                    getmDataSub(str);
+                    listView.setFocusable(false);
                 }
             }
         });
