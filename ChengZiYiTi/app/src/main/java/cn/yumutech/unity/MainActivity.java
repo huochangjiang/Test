@@ -41,7 +41,9 @@ import cn.yumutech.netUtil.MD5Util;
 import cn.yumutech.netUtil.ToosUtil;
 import cn.yumutech.netUtil.UpdateManager;
 import io.rong.imkit.RongIM;
+import io.rong.imkit.manager.IUnReadMessageObserver;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Group;
 import io.rong.imlib.model.UserInfo;
 
@@ -64,6 +66,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,R
     };
     private TextView mTitle;
     private String token;
+
 
     @Override
     protected int getLayoutId() {
@@ -113,7 +116,29 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,R
     }
     @Override
     protected void initData() {
+         IUnReadMessageObserver readMessage;  readMessage = new IUnReadMessageObserver() {
+            @Override
+            public void onCountChanged(int i) {
+
+            }
+        };
+        addUnReadMessageCountChangedObserver(readMessage);
+
+
     }
+
+    /**
+     * 设置未读消息数变化监听器。
+     * 否则会造成内存泄漏。
+     *
+     * @param observer          接收未读消息消息的监听器。
+     * @param conversationTypes 接收未读消息的会话类型。
+     */
+    public void addUnReadMessageCountChangedObserver(final IUnReadMessageObserver observer, Conversation.ConversationType... conversationTypes){
+
+
+}
+
 
     @Override
     protected void onResume() {
@@ -185,8 +210,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,R
         super.onDestroy();
 //        EventBus.getDefault().unregister(this);
             FileUtils.deleteFolderFile(savePath, false);
+//        removeUnReadMessageCountChangedObserver(readMessage);
     }
-
+//    public void removeUnReadMessageCountChangedObserver(final IUnReadMessageObserver observer){
+//
+//    }
     //改变标签栏的颜色
     private void initTabs(){
        Log.e("info",DeviceUtils.getAPPVersionCodeFromAPP(this)+"---") ;

@@ -36,6 +36,8 @@ import cn.yumutech.weight.MyGridView;
 import cn.yumutech.weight.StringUtils1;
 import cn.yumutech.weight.ViewFlow;
 import cn.yumutech.weight.getContact;
+import io.rong.imkit.manager.IUnReadMessageObserver;
+import io.rong.imlib.model.Conversation;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -52,6 +54,7 @@ public class HomeFragment extends BaseFragment {
     private View net_connect;
     List<BaiBao> baibaos=new ArrayList<BaiBao>();
     LeaderActivitys leaderActivitys;
+    private BaiBaoAdatper baiBaoAdatper;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -82,7 +85,7 @@ public class HomeFragment extends BaseFragment {
         baibaos.add(new BaiBao("政策文件", R.drawable.zhengciwenjian));
         baibaos.add(new BaiBao("督查督办", R.drawable.duchaduban));
         baibaos.add(new BaiBao("友情链接", R.drawable.lianjie));
-        BaiBaoAdatper baiBaoAdatper=new BaiBaoAdatper(getActivity(), (ArrayList<BaiBao>) baibaos);
+        baiBaoAdatper = new BaiBaoAdatper(getActivity(), (ArrayList<BaiBao>) baibaos);
         myGridView.setAdapter(baiBaoAdatper);
         myGridView.setFocusable(false);
         mViewFlow.setLiserner(new ViewFlow.postion() {
@@ -108,7 +111,27 @@ public class HomeFragment extends BaseFragment {
 //        initLocal();
        //正常登录
         getContact.getInstance().getData();
+        
+        IUnReadMessageObserver readMessage;  readMessage = new IUnReadMessageObserver() {
+            @Override
+            public void onCountChanged(int i) {
+                baiBaoAdatper.dataChange( (ArrayList<BaiBao>) baibaos,i);
+            }
+        };
+        addUnReadMessageCountChangedObserver(readMessage);
     }
+    /**
+     * 设置未读消息数变化监听器。
+     * 否则会造成内存泄漏。
+     *
+     * @param observer          接收未读消息消息的监听器。
+     * @param conversationTypes 接收未读消息的会话类型。
+     */
+    public void addUnReadMessageCountChangedObserver(final IUnReadMessageObserver observer, Conversation.ConversationType... conversationTypes){
+
+
+    }
+
     //加载缓存
     private void initLocal() {
         String readHomeJson = app.readHomeJson("LeaderActivitys");// 首页内容

@@ -4,6 +4,7 @@ public class BaiBao {
 
 	public String name;
 	public int id;
+	public int count;
 	public String getName() {
 		return name;
 	}

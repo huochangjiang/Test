@@ -283,18 +283,12 @@ public class ProjectDetaisActivity extends BaseActivity implements View.OnClickL
 
     private void initLoadWebView(String url) {
         webView.setVerticalScrollbarOverlay(true); //指定的垂直滚动条有叠加样式
-
         WebSettings settings = webView.getSettings();
-
         settings.setUseWideViewPort(true);//设定支持viewport
-
         settings.setLoadWithOverviewMode(true);
-
         settings.setBuiltInZoomControls(true);
-
         settings.setSupportZoom(true);//设定支持缩放
         webView.loadDataWithBaseURL(null, url, "text/html", "utf-8", null);
-
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebChromeClient(new WebChromeClient());
     }
@@ -309,17 +303,17 @@ public class ProjectDetaisActivity extends BaseActivity implements View.OnClickL
                 break;
             case R.id.tv_work:
                 changeColor(1);
-                initLoadWebView(data2.data.requirement);
+                initLoadWebView(data2.data.promotion);
                 ll2.setVisibility(View.GONE);
                 break;
             case R.id.tv_tuijin:
                 changeColor(2);
                 ll2.setVisibility(View.GONE);
-                initLoadWebView(data2.data.promotion);
+                initLoadWebView(data2.data.problem);
                 break;
             case R.id.tv_cunzai:
                 changeColor(3);
-                initLoadWebView(data2.data.problem);
+                initLoadWebView(data2.data.requirement);
                 ll2.setVisibility(View.GONE);
                 break;
             case R.id.tv_zhipai:

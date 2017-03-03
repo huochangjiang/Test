@@ -18,6 +18,7 @@ public class BaiBaoAdatper extends BaseAdapter{
 
 	private List<BaiBao> mBaibaos;
 	private Context context;
+	private int mCount=-1;
 	public BaiBaoAdatper(Context conte, ArrayList<BaiBao> baibaos){
 		this.mBaibaos=baibaos;
 		this.context=conte;
@@ -26,6 +27,11 @@ public class BaiBaoAdatper extends BaseAdapter{
 	public int getCount() {
 		// TODO Auto-generated method stub
 		return mBaibaos.size();
+	}
+	public void dataChange(ArrayList<BaiBao> baibaos,int count){
+		this.mCount=count;
+		this.mBaibaos=baibaos;
+		notifyDataSetChanged();
 	}
 
 	@Override
@@ -54,12 +60,18 @@ public class BaiBaoAdatper extends BaseAdapter{
 		}else{
 			vh=(ViewHolder) view.getTag();
 		}
+		if(position==4) {
+			if(mCount!=-1) {
+				vh.tv.setText(mCount+"");
+			}
+		}
 		vh.iv.setImageResource(mBaibaos.get(position).getId());
-		vh.tv.setText(mBaibaos.get(position).getName());
 		return view;
 	}
 class ViewHolder{
+
 	public ImageView iv;
 	public TextView tv;
-}
+
+  }
 }
