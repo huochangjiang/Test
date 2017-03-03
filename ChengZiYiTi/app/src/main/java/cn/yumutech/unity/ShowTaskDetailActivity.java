@@ -217,7 +217,7 @@ public class ShowTaskDetailActivity extends BaseActivity{
                 Intent intent=new Intent();
                 intent.setClass(ShowTaskDetailActivity.this,ProjectDetaisActivity.class);
                 intent.putExtra("id",project_id);
-                intent.putExtra("fenlei",fenlei);
+                intent.putExtra("fenlei","");
                 intent.putExtra("type","3");
                 startActivity(intent);
             }
@@ -330,7 +330,7 @@ public class ShowTaskDetailActivity extends BaseActivity{
                 tv_beijing.setVisibility(View.GONE);
             }else {
                 project_id=showTaskDetail.data.task_projectwork_id;
-                fenlei=showTaskDetail.data.task_projectwork_title;
+//                fenlei=showTaskDetail.data.task_projectwork_title;
                 tv_beijing.setVisibility(View.VISIBLE);
             }
             if(showTaskDetail.status.code.equals("0")&&showTaskDetail!=null){
