@@ -72,14 +72,16 @@ public class PublishTaskBeen {
         private String task_title;
         private String task_content;
         private String task_end_date;
+        private String task_projectwork_id;
 //        private String director;
 //        private String supporter;
         private String assigns;
-        public DataBean(String task_title,String task_content,String task_end_date,String assigns){
+        public DataBean(String task_title,String task_content,String task_end_date,String assigns,String task_projectwork_id){
             this.task_title=task_title;
             this.task_content=task_content;
             this.task_end_date=task_end_date;
             this.assigns=assigns;
+            this.task_projectwork_id=task_projectwork_id;
 //            this.director=director;
 //            this.supporter=supporter;
         }

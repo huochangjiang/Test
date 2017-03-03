@@ -99,6 +99,8 @@ public class ShowTaskDetail {
         public String task_accept_user_name;
         public String task_accept_user_id;
         public List<AssignBean> assign;
+        public String task_projectwork_id;
+        public String task_projectwork_title;
 
         public String getTask_publish_user_name() {
             return task_publish_user_name;

@@ -25,6 +25,7 @@ import cn.yumutech.unity.BaseFragment;
 import cn.yumutech.unity.CommunicationActivity;
 import cn.yumutech.unity.FriendsUrlActivity;
 import cn.yumutech.unity.InspectionTaskNewActivity;
+import cn.yumutech.unity.InspectionTaskNewOtherActivity;
 import cn.yumutech.unity.LeaderActivitysActivity;
 import cn.yumutech.unity.PolicyFileActivity;
 import cn.yumutech.unity.ProjectMangerActivity;
@@ -172,8 +173,13 @@ public class HomeFragment extends BaseFragment {
                     Intent intent=new Intent(getActivity(), ProjectMangerActivity.class);
                     startActivity(intent);
                 }else if(i==4){
-                    Intent intent=new Intent(getActivity(), InspectionTaskNewActivity.class);
-                    startActivity(intent);
+                    if(App.getContext().getLogo("logo").data.publish_task_flag.equals("1")){
+                        Intent intent=new Intent(getActivity(), InspectionTaskNewActivity.class);
+                        startActivity(intent);
+                    }else {
+                        Intent intent=new Intent(getActivity(), InspectionTaskNewOtherActivity.class);
+                        startActivity(intent);
+                    }
                 }else if(i==7){
                     Intent intent=new Intent(getActivity(), CommunicationActivity.class);
                     startActivity(intent);
@@ -209,7 +215,6 @@ Subscription subscription;
         }else {
             App.getContext().noLogin(getActivity());
         }
-
     }
     private void initDatas1( String canshu){
         subscription = Api.getMangoApi1().getHomeLunBo(canshu)

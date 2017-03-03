@@ -51,6 +51,9 @@ public class TaShanZhiShiActivity extends BaseActivity implements PullToRefreshB
     Subscription subscription1;
     private TaShanZhiShiAdapter adapter;
     private List<HuDongJIaoLiu.DataBean> mData;
+    private List<HuDongJIaoLiu.DataBean> mData1=new ArrayList<>();
+    private List<HuDongJIaoLiu.DataBean> mData2=new ArrayList<>();
+    private List<HuDongJIaoLiu.DataBean> mData3=new ArrayList<>();
     private App app;
     private View net_connect;
     private PullToRefreshScrollView pullToRefresh;
@@ -70,6 +73,7 @@ public class TaShanZhiShiActivity extends BaseActivity implements PullToRefreshB
     private HorizontalScrollView diqu;
     private List<HuDongJIaoLiu.DataBean> leaderActivitys=new ArrayList<>();
     private boolean isRefresh=false;
+    private ImageView add;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_tashanzhishi;
@@ -89,7 +93,7 @@ public class TaShanZhiShiActivity extends BaseActivity implements PullToRefreshB
         search= (MyEditText) findViewById(R.id.search);
         tishi=findViewById(R.id.tishi);
         tishi.setVisibility(View.GONE);
-
+        add= (ImageView) findViewById(R.id.add);
         diqu=(HorizontalScrollView) findViewById(R.id.horscroll_one);
 //        bt1= (TextView) findViewById(R.id.bt1);
 //        bt2= (TextView) findViewById(R.id.bt2);
@@ -301,6 +305,14 @@ public class TaShanZhiShiActivity extends BaseActivity implements PullToRefreshB
 
     @Override
     protected void initListeners() {
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent();
+                intent.setClass(TaShanZhiShiActivity.this,SuggestActivity.class);
+                startActivity(intent);
+            }
+        });
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -432,7 +444,21 @@ public class TaShanZhiShiActivity extends BaseActivity implements PullToRefreshB
      * 加载列表数据
      */
     private void loadHome(List<HuDongJIaoLiu.DataBean> data){
-        adapter.dataChange(data);
+        mData1.clear();
+        mData2.clear();
+        mData3.clear();
+        if(data!=null){
+            for(int i=0;i<data.size();i++){
+                if(data.get(i).exchange_istop.equals("1")){
+                    mData1.add(data.get(i));
+                }else {
+                    mData2.add(data.get(i));
+                }
+            }
+            mData3.addAll(mData1);
+            mData3.addAll(mData2);
+        }
+        adapter.dataChange(mData3);
         myprog.setVisibility(View.GONE);
         tishi.setVisibility(View.GONE);
         net_connect.setVisibility(View.GONE);

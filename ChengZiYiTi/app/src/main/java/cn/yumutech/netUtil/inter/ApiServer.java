@@ -25,6 +25,7 @@ import cn.yumutech.bean.ModuleClassifyList;
 import cn.yumutech.bean.MovieRecommend;
 import cn.yumutech.bean.ProjectManger;
 import cn.yumutech.bean.ProjectialsXiangqing;
+import cn.yumutech.bean.PublishExchange;
 import cn.yumutech.bean.PublishTask;
 import cn.yumutech.bean.RefreshBean;
 import cn.yumutech.bean.ShowMyPublishedTask;
@@ -219,7 +220,9 @@ Observable<WorkDetails> getWorkDetais(@Query("req") String policy);
     //通知通报详情接口
     @POST("TaskNotificationItem")
     Observable<TaskNotificationItem> getTaskNotificationItem(@Query("req") String item);
-
+    //发布建言献策接口
+    @POST("PublishExchange")
+    Observable<PublishExchange> getPublishExchange(@Query("req") String item);
 
 
     //显示任务详情

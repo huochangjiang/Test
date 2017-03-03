@@ -1,6 +1,7 @@
 package cn.yumutech.unity;
 
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -55,6 +56,7 @@ public class ProjectDetaisActivity extends BaseActivity implements View.OnClickL
     private LinearLayout ll2;
     private RelativeLayout lin_one,lin_two,lin_three,lin_four;
     private TextView tv_home;
+    private TextView tv_zhipai;
 
     @Override
     protected int getLayoutId() {
@@ -89,6 +91,13 @@ public class ProjectDetaisActivity extends BaseActivity implements View.OnClickL
         tv_work = (TextView) findViewById(R.id.tv_work);
         tv_tuijin = (TextView) findViewById(R.id.tv_tuijin);
         tv_cunzai = (TextView) findViewById(R.id.tv_cunzai);
+        tv_zhipai= (TextView) findViewById(R.id.tv_zhipai);
+        if(App.getContext().getLogo("logo").data.publish_task_flag.equals("1")){
+            tv_zhipai.setVisibility(View.VISIBLE);
+        }else {
+            tv_zhipai.setVisibility(View.GONE);
+        }
+        tv_zhipai.setOnClickListener(this);
         tv_jiben.setOnClickListener(this);
         tv_work.setOnClickListener(this);
         tv_tuijin.setOnClickListener(this);
@@ -135,9 +144,10 @@ public class ProjectDetaisActivity extends BaseActivity implements View.OnClickL
     }
 
     private String fenlei;
+    private String id;
     @Override
     protected void initData() {
-        String id = getIntent().getStringExtra("id");
+         id = getIntent().getStringExtra("id");
         type = getIntent().getStringExtra("type");
         fenlei=getIntent().getStringExtra("fenlei");
         tv_home.setText("重点项目/"+fenlei);
@@ -305,6 +315,12 @@ public class ProjectDetaisActivity extends BaseActivity implements View.OnClickL
                 changeColor(3);
                 initLoadWebView(data2.data.requirement);
                 ll2.setVisibility(View.GONE);
+                break;
+            case R.id.tv_zhipai:
+                Intent intent=new Intent();
+                intent.setClass(ProjectDetaisActivity.this,ReleaseTaskActivity.class);
+                intent.putExtra("projectwork_id",id);
+                startActivity(intent);
                 break;
         }
     }

@@ -80,6 +80,7 @@ public class UserAboutPerson {
         public String gender;
         public String dept_name;
         public String mobile;
+        public String publish_task_flag;
 
         public boolean isCance() {
             return isCance;

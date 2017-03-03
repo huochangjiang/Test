@@ -68,7 +68,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="他山之石"
+                android:text="建言献策"
                 android:textSize="15sp"
                 android:layout_below="@+id/tashan"
                 android:layout_marginTop="5dp"

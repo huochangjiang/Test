@@ -85,6 +85,8 @@ public class ShowTaskDetailActivity extends BaseActivity{
     private String tv_poeple;
     private String type="0";
     private TextView faburen;
+    private TextView tv_beijing;
+    private String project_id,fenlei;
 
     @Override
     protected int getLayoutId() {
@@ -94,7 +96,6 @@ public class ShowTaskDetailActivity extends BaseActivity{
     @Override
     protected void initViews(Bundle savedInstanceState) {
         initExtra();
-
         wanchenzhe= (TextView) findViewById(R.id.wanchenzhe);
         title= (TextView) findViewById(R.id.title);
         status= (TextView) findViewById(R.id.status);
@@ -114,6 +115,11 @@ public class ShowTaskDetailActivity extends BaseActivity{
         tv_faburen= (TextView) findViewById(R.id.tv_faburen);
         tv_fabushijian= (TextView) findViewById(R.id.tv_fabushijian);
         assign= (Button) findViewById(R.id.assign);
+        if(App.getContext().getLogo("logo").data.publish_task_flag.equals("1")){
+            assign.setVisibility(View.VISIBLE);
+        }else {
+            assign.setVisibility(View.GONE);
+        }
         all= (RelativeLayout) findViewById(R.id.all);
         myprog.setVisibility(View.VISIBLE);
         all.setVisibility(View.GONE);
@@ -133,6 +139,7 @@ public class ShowTaskDetailActivity extends BaseActivity{
         mFilelistView.setAdapter(showAdapter);
         rl_zong= (RelativeLayout) findViewById(R.id.rl_zong);
         faburen= (TextView) findViewById(R.id.faburen);
+        tv_beijing= (TextView) findViewById(R.id.tv_beijing);
         if(type.equals("1")){
             faburen.setText("指派给:");
             listview.setVisibility(View.VISIBLE);
@@ -202,6 +209,17 @@ public class ShowTaskDetailActivity extends BaseActivity{
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+        tv_beijing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent();
+                intent.setClass(ShowTaskDetailActivity.this,ProjectDetaisActivity.class);
+                intent.putExtra("id",project_id);
+                intent.putExtra("fenlei","");
+                intent.putExtra("type","3");
+                startActivity(intent);
             }
         });
         bt_accept.setOnClickListener(new View.OnClickListener() {
@@ -308,9 +326,15 @@ public class ShowTaskDetailActivity extends BaseActivity{
         public void onNext(ShowTaskDetail showTaskDetail) {
             String data=new Gson().toJson(showTaskDetail);
             Log.e("getShowTaskDetail",data);
+            if(showTaskDetail.data.task_projectwork_id.equals("")||showTaskDetail.data.task_projectwork_id.equals("0")){
+                tv_beijing.setVisibility(View.GONE);
+            }else {
+                project_id=showTaskDetail.data.task_projectwork_id;
+//                fenlei=showTaskDetail.data.task_projectwork_title;
+                tv_beijing.setVisibility(View.VISIBLE);
+            }
             if(showTaskDetail.status.code.equals("0")&&showTaskDetail!=null){
                 mData=showTaskDetail;
-
                 if(showTaskDetail.data.task_status_name.equals("待接受")){
                     zhuangtaishijian.setText("截止时间:");
                     String time1=SaveData.getInstance().getStringDateShort(showTaskDetail.data.task_end_date);
