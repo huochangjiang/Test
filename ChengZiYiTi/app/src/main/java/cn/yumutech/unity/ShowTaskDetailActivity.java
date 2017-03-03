@@ -242,7 +242,6 @@ public class ShowTaskDetailActivity extends BaseActivity{
         wanchen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent=new Intent();
                 intent.setClass(ShowTaskDetailActivity.this,LookResultActivity.class);
                 startActivity(intent);
