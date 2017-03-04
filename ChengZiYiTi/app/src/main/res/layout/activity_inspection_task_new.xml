@@ -222,28 +222,7 @@
                     android:orientation="horizontal"
                     android:layout_weight="1"
                     android:weightSum="3">
-                    <RelativeLayout
-                        android:id="@+id/rl_item_five"
-                        android:gravity="center"
-                        android:layout_weight="1"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-                        <ImageView
-                            android:id="@+id/image_under_one"
-                            android:layout_centerHorizontal="true"
-                            android:layout_width="@dimen/home_item"
-                            android:layout_height="@dimen/home_item"
-                            android:src="@drawable/hudongjiaoliu"/>
-                        <TextView
-                            android:layout_centerHorizontal="true"
-                            android:layout_below="@+id/image_under_one"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="会话"
-                            android:layout_marginTop="5dp"
-                            android:textSize="14sp"
-                            android:textColor="@color/huise"/>
-                    </RelativeLayout>
+
                     <RelativeLayout
                         android:id="@+id/rl_item_six"
                         android:gravity="center"
@@ -262,6 +241,28 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="联系人"
+                            android:layout_marginTop="5dp"
+                            android:textSize="14sp"
+                            android:textColor="@color/huise"/>
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:id="@+id/rl_item_five"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <ImageView
+                            android:id="@+id/image_under_one"
+                            android:layout_centerHorizontal="true"
+                            android:layout_width="@dimen/home_item"
+                            android:layout_height="@dimen/home_item"
+                            android:src="@drawable/hudongjiaoliu"/>
+                        <TextView
+                            android:layout_centerHorizontal="true"
+                            android:layout_below="@+id/image_under_one"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="会话"
                             android:layout_marginTop="5dp"
                             android:textSize="14sp"
                             android:textColor="@color/huise"/>
