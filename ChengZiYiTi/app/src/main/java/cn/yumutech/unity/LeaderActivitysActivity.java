@@ -65,7 +65,7 @@ public class LeaderActivitysActivity extends BaseActivity implements SwipeRefres
     private boolean isRefresh=false;
     private boolean isHave;
     private View myprog;
-    private String fenlei="";
+    private String fenlei;
     private LinearLayout ll_feilei;
     private HorizontalScrollView diqu;
 //    private TextView bt1,bt2,bt3;
@@ -199,12 +199,10 @@ public class LeaderActivitysActivity extends BaseActivity implements SwipeRefres
             }
         }
         if (app.isNetworkConnected(LeaderActivitysActivity.this)) {
-            initData();
+//            initData();
         }
     }
-    @Override
-    protected void initData() {
-
+    private void myInitData(){
         if(App.getContext().getLogo("logo")!=null) {
             RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
                     new RequestCanShu.DataBean(fenlei,searchKey,mPage+"",mPageSize+""));
@@ -212,6 +210,10 @@ public class LeaderActivitysActivity extends BaseActivity implements SwipeRefres
         }else {
             Toast.makeText(this,"您还未登陆",Toast.LENGTH_SHORT).show();
         }
+    }
+    @Override
+    protected void initData() {
+
     }
     private void initDatas1( String canshu){
         subscription = Api.getMangoApi1().getLeaderActiviys(canshu)
@@ -356,7 +358,7 @@ public class LeaderActivitysActivity extends BaseActivity implements SwipeRefres
                     myprog.setVisibility(View.VISIBLE);
                     tishi.setVisibility(View.GONE);
                     recyclerView.setVisibility(View.GONE);
-                    initData();
+                    myInitData();
                 }
             }
         });
@@ -551,7 +553,9 @@ public class LeaderActivitysActivity extends BaseActivity implements SwipeRefres
                 if(moduleClassifyList.data.size()<4) {
                     gridView.setNumColumns(3);
                 }
+                fenlei=myData.get(0).value;
                 adapter.dataChange(moduleClassifyList.data,0);
+                myInitData();
 //                addView(moduleClassifyList.data);
 
 //                for(int i=0;i<moduleClassifyList.data.size();i++){

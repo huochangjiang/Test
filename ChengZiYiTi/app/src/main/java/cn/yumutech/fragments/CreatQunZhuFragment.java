@@ -150,7 +150,6 @@ public class CreatQunZhuFragment extends BaseFragment {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
             }
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
@@ -168,9 +167,7 @@ public class CreatQunZhuFragment extends BaseFragment {
             }
         });
         button.setOnClickListener(new View.OnClickListener() {
-
             private StringBuffer sb;
-
             @Override
             public void onClick(View view) {
                 sb = new StringBuffer();
@@ -184,7 +181,6 @@ public class CreatQunZhuFragment extends BaseFragment {
                     }
                 }
                         if(qunMenmberSelectorActivity.type.equals("create")) {
-
                             SignOutDilog1 mDlogOutDilog1=new SignOutDilog1(getActivity(),"讨论组名字");
                             mDlogOutDilog1.show();
                             mDlogOutDilog1.setOnLisener(new SignOutDilog1.onListern1() {
@@ -223,7 +219,6 @@ public class CreatQunZhuFragment extends BaseFragment {
         }
     }
     List<String> iids = new ArrayList<>();
-
     private String getMemberIds(Map<Integer, UserAboutPerson.DataBean> beans) {
         StringBuffer sb = new StringBuffer();
         iids.clear();
@@ -247,7 +242,6 @@ public class CreatQunZhuFragment extends BaseFragment {
     protected void initListeners() {
 
     }
-
     @Override
     protected void initDatas() {
 

@@ -65,7 +65,7 @@ public class TaskNotifiListActivity extends BaseActivity implements SwipeRefresh
     private boolean isRefresh=false;
     private boolean isHave;
     private View myprog;
-    private String fenlei="督查通知";
+    private String fenlei;
     private LinearLayout ll_feilei;
     private HorizontalScrollView diqu;
     private List<TextView> bts = new ArrayList<>();
@@ -108,7 +108,7 @@ public class TaskNotifiListActivity extends BaseActivity implements SwipeRefresh
         linearLayout1.setOrientation(LinearLayout.HORIZONTAL);
         linears.add(linearLayout1);
         hors.add(diqu);
-        initClassData();
+
         tishi=findViewById(R.id.tishi);
         myprog=  findViewById(R.id.myprog);
         myprog.setVisibility(View.VISIBLE);
@@ -127,6 +127,7 @@ public class TaskNotifiListActivity extends BaseActivity implements SwipeRefresh
         pullToRefresh.setOnRefreshListener(this);
         controlTitle(findViewById(R.id.back));
         net_connect = findViewById(R.id.netconnect);
+        initClassData();
         initLocal();
         searchImage= (ImageView) findViewById(R.id.searchImage);
         search= (MyEditText) findViewById(R.id.search);
@@ -148,7 +149,7 @@ public class TaskNotifiListActivity extends BaseActivity implements SwipeRefresh
             }
         }
         if (app.isNetworkConnected(TaskNotifiListActivity.this)) {
-            initData();
+//            initData();
         }
     }
     /**
@@ -181,11 +182,14 @@ public class TaskNotifiListActivity extends BaseActivity implements SwipeRefresh
         pullToRefresh.setRefreshing(false);
         isMoreLoading = false;
     }
-    @Override
-    protected void initData() {
+    private void myInitData(){
         TaskNotifiListBeen taskNotifiItemBeen = new TaskNotifiListBeen(new TaskNotifiListBeen.UserBean(App.getContext().getLogo("logo").data.id, "1234567890"),
                 new TaskNotifiListBeen.DataBean(fenlei,searchKey,mPage+"",mPageSize+""));
         getData1(new Gson().toJson(taskNotifiItemBeen));
+    }
+    @Override
+    protected void initData() {
+
     }
 
     //获取列表
@@ -313,8 +317,10 @@ public class TaskNotifiListActivity extends BaseActivity implements SwipeRefresh
                     myprog.setVisibility(View.VISIBLE);
                     tishi.setVisibility(View.GONE);
                     recyclerView.setVisibility(View.GONE);
-                    initData();
+//                    initData();
+                    myInitData();
                 }
+
             }
         });
         search.setOnKeyListener(new View.OnKeyListener() {
@@ -462,6 +468,7 @@ public class TaskNotifiListActivity extends BaseActivity implements SwipeRefresh
                 mKey=moduleClassifyList;
                 mData=moduleClassifyList.data;
                 adapter.dataChange(moduleClassifyList.data,0);
+                myInitData();
 //                addView(moduleClassifyList.data);
 
 //                for(int i=0;i<moduleClassifyList.data.size();i++){

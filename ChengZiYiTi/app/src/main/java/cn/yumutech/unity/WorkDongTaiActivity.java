@@ -62,7 +62,7 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
     //是否还有数据
     private boolean isHave;
     private View myprog;
-    private String fenlei="";
+    private String fenlei;
     private LinearLayout ll_feilei;
 //    private TextView bt1,bt2,bt3;
     private List<TextView> bts = new ArrayList<>();
@@ -196,12 +196,15 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
             }
         }
         if (app.isNetworkConnected(WorkDongTaiActivity.this)) {
-            initData();
+
         }
     }
 
     @Override
     protected void initData() {
+
+    }
+    private void myInitData(){
         if(App.getContext().getLogo("logo")!=null) {
             RequestCanShu canshus = new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.id, ""),
                     new RequestCanShu.DataBean(fenlei,searchKey,"0",mPageSize + ""));
@@ -287,7 +290,7 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
                     tishi.setVisibility(View.GONE);
                     myprog.setVisibility(View.VISIBLE);
                     ll_feilei.setVisibility(View.VISIBLE);
-                    initData();
+                    myInitData();
                 }
             }
         });
@@ -559,6 +562,7 @@ public class WorkDongTaiActivity extends BaseActivity implements  SwipeRefreshLa
                     gridView.setNumColumns(3);
                 }
                 adapter.dataChange(moduleClassifyList.data,0);
+                myInitData();
 //                addView(moduleClassifyList.data);
 
 //                for(int i=0;i<moduleClassifyList.data.size();i++){

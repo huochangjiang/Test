@@ -77,7 +77,7 @@ public class ProjectMangerActivity extends BaseActivity implements SwipeRefreshL
     private HorizontalScrollView diqu;
     private MyEditText search;
     private boolean isSearch;
-    private String searchKey="";
+    private String searchKey;
     private ImageView next;
     private List<ModuleClassifyList.data> mData=new ArrayList<>();
     private GridView gridView;
@@ -131,8 +131,9 @@ public class ProjectMangerActivity extends BaseActivity implements SwipeRefreshL
         myprog=findViewById(R.id.myprog);
         myprog.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.GONE);
-        initClassData();
         initLocal();
+        initClassData();
+
         searchImage= (ImageView) findViewById(R.id.searchImage);
         search= (MyEditText) findViewById(R.id.search);
         next= (ImageView) findViewById(R.id.next);
@@ -199,7 +200,7 @@ public class ProjectMangerActivity extends BaseActivity implements SwipeRefreshL
             }
         }
         if (app.isNetworkConnected(ProjectMangerActivity.this)) {
-            initData();
+//            initData();
         }
     }
     /**
@@ -230,8 +231,7 @@ public class ProjectMangerActivity extends BaseActivity implements SwipeRefreshL
         ll_feilei.setVisibility(View.VISIBLE);
         mAdapter.dataChange(leaderActivitys,isHave);
     }
-    @Override
-    protected void initData() {
+    private void myInitData(){
         if(App.getContext().getLogo("logo")!=null){
             RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
                     new RequestCanShu.DataBean(fenlei,searchKey,mPage+"",mPageSize+""));
@@ -239,7 +239,9 @@ public class ProjectMangerActivity extends BaseActivity implements SwipeRefreshL
         }else {
             App.getContext().noLogin(ProjectMangerActivity.this);
         }
-
+    }
+    @Override
+    protected void initData() {
     }
     private void initDatas1( String canshu){
         subscription = Api.getMangoApi1().getProject(canshu)
@@ -339,7 +341,7 @@ public class ProjectMangerActivity extends BaseActivity implements SwipeRefreshL
                     tishi.setVisibility(View.GONE);
                     ll_feilei.setVisibility(View.VISIBLE);
                     myprog.setVisibility(View.VISIBLE);
-                    initData();
+                    myInitData();
                 }
             }
         });
@@ -569,6 +571,7 @@ public class ProjectMangerActivity extends BaseActivity implements SwipeRefreshL
                 mData=moduleClassifyList.data;
                 fenlei=moduleClassifyList.data.get(0).value;
                 adapter.dataChange(moduleClassifyList.data,0);
+                myInitData();
 //                addView(moduleClassifyList.data);
 //                for(int i=0;i<moduleClassifyList.data.size();i++){
 //                    bts.get(i).setText(moduleClassifyList.data.get(i).value);

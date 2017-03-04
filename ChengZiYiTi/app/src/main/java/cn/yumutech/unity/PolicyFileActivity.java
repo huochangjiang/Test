@@ -75,7 +75,7 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
     private HorizontalScrollView diqu;
     private MyEditText search;
     private boolean isSearch;
-    private String searchKey="";
+    private String searchKey;
     private List<ModuleClassifyList.data> mData=new ArrayList<>();
     private GridView gridView;
     private SBAdapter adapter;
@@ -130,8 +130,8 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
         net_connect = findViewById(R.id.netconnect);
         myprog.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.GONE);
-        initClassData();
         initLocal();
+        initClassData();
         searchImage= (ImageView) findViewById(R.id.searchImage);
         search= (MyEditText) findViewById(R.id.search);
     }
@@ -196,7 +196,7 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
             }
         }
         if (app.isNetworkConnected(PolicyFileActivity.this)) {
-            initData();
+//            initData();
         }
     }
     /**
@@ -227,16 +227,17 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
         ll_feilei.setVisibility(View.VISIBLE);
 
     }
-    @Override
-    protected void initData() {
+    private void myInitData(){
         if(App.getContext().getLogo("logo")!=null){
             RequestCanShu canshus=new RequestCanShu(new RequestCanShu.UserBean(App.getContext().getLogo("logo").data.id,App.getContext().getLogo("logo").data.nickname),
                     new RequestCanShu.DataBean(fenlei,searchKey,mPage+"",mPageSize+""));
             initDatas1(new Gson().toJson(canshus));
         }else {
-           App.getContext().noLogin(PolicyFileActivity.this);
+            App.getContext().noLogin(PolicyFileActivity.this);
         }
-
+    }
+    @Override
+    protected void initData() {
     }
     @Override
     protected void initListeners() {
@@ -421,7 +422,7 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
                     myprog.setVisibility(View.VISIBLE);
                     tishi.setVisibility(View.GONE);
                     ll_feilei.setVisibility(View.VISIBLE);
-                    initData();
+                    myInitData();
                 }
             }
         });
@@ -630,6 +631,7 @@ public class PolicyFileActivity extends BaseActivity  implements SwipeRefreshLay
                     gridView.setNumColumns(3);
                 }
                 adapter.dataChange(moduleClassifyList.data,0);
+                myInitData();
 //                addView(moduleClassifyList.data);
 //                for(int i=0;i<moduleClassifyList.data.size();i++){
 //                    bts.get(i).setText(moduleClassifyList.data.get(i).value);
