@@ -1,7 +1,6 @@
 package cn.yumutech.bean;
 
 /**
- * Created by Allen on 2016/11/26.
  */
 public class ModuleClassifyListBeen {
     public UserBeen user;

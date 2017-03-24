@@ -22,7 +22,6 @@ import io.rong.imkit.fragment.ConversationListFragment;
 import io.rong.imlib.model.Conversation;
 
 /**
- * Created by Allen on 2016/11/13.
  */
 public class CommunicationActivity extends BaseActivity implements View.OnClickListener{
     private NoViewPager viewpager;

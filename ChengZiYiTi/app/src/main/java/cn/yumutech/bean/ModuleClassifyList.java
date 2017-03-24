@@ -3,7 +3,6 @@ package cn.yumutech.bean;
 import java.util.List;
 
 /**
- * Created by Allen on 2016/11/26.
  */
 public class ModuleClassifyList {
     public status status;

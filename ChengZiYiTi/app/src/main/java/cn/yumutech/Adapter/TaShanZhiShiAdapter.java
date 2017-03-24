@@ -15,7 +15,6 @@ import cn.yumutech.bean.HuDongJIaoLiu;
 import cn.yumutech.unity.R;
 
 /**
- * Created by Allen on 2016/11/13.
  */
 public class TaShanZhiShiAdapter extends BaseAdapter{
     private Context context;

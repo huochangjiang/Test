@@ -1,7 +1,6 @@
 package cn.yumutech.weight;
 
 /**
- * Created by Allen on 2016/11/26.
  */
 public class GroupClassInt {
     public String name;

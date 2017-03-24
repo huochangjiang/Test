@@ -9,7 +9,6 @@ import cn.yumutech.unity.BaseFragment;
 import cn.yumutech.unity.R;
 
 /**
- * Created by Allen on 2016/11/13.
  */
 public class CommuMessageFragment extends BaseFragment{
     private static CommuMessageFragment fragment;

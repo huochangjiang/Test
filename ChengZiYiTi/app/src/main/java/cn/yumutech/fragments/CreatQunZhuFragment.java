@@ -1,5 +1,6 @@
 package cn.yumutech.fragments;
 
+import android.os.Handler;
 import android.support.v4.widget.DrawerLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,6 +19,8 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -31,6 +34,7 @@ import cn.yumutech.bean.RequestCanShu;
 import cn.yumutech.bean.RequestParams;
 import cn.yumutech.bean.UserAboutPerson;
 import cn.yumutech.netUtil.Api;
+import cn.yumutech.netUtil.PinyinTool;
 import cn.yumutech.unity.App;
 import cn.yumutech.unity.BaseFragment;
 import cn.yumutech.unity.QunMenmberSelectorActivity;
@@ -157,6 +161,7 @@ public class CreatQunZhuFragment extends BaseFragment {
             @Override
             public void afterTextChanged(Editable s) {
                 if(editText.getText().toString().trim().length()==0){
+                    searchData.clear();
                     mAdapter.dataChange(currentList,isXianshi);
                 }else {
                     searchData.clear();
@@ -208,16 +213,45 @@ public class CreatQunZhuFragment extends BaseFragment {
      * @param data
      */
     private boolean isXianshi=true;
-    private void getmDataSub(String data){
-        if(currentList!=null) {
+    List<String> findPersons=new ArrayList<>();
+    private void getmDataSub(final String data){
+        if(currentList!=null&&data!=null) {
+            searchData.clear();
             for (int i = 0; i < currentList.size(); i++) {
                 if (currentList.get(i).nickname.contains(data) || currentList.get(i).mobile.contains(data)) {
                     searchData.add(currentList.get(i));
                 }
             }
+            if(searchData.size()==0){
+                findPersons.clear();
+                new Thread(){
+
+                    @Override
+                    public void run() {
+                        findPersons=PinyinTool.search(data.toString());
+                        for (int i = 0; i < currentList.size(); i++) {
+                            for (int j=0;j<findPersons.size();j++){
+                                if (currentList.get(i).nickname.contains(findPersons.get(j)) ) {
+                                    searchData.add(currentList.get(i));
+                                }
+                            }
+                        }
+                        mHandler.sendEmptyMessage(0);
+                    }
+                }.start();
+            }else{
+                mAdapter.dataChange(searchData,isXianshi);
+            }
+            }
+    }
+    //更新界面
+    Handler mHandler=new Handler(){
+        @Override
+        public void handleMessage(android.os.Message msg) {
+            super.handleMessage(msg);
             mAdapter.dataChange(searchData,isXianshi);
         }
-    }
+    };
     List<String> iids = new ArrayList<>();
     private String getMemberIds(Map<Integer, UserAboutPerson.DataBean> beans) {
         StringBuffer sb = new StringBuffer();
@@ -369,6 +403,8 @@ public class CreatQunZhuFragment extends BaseFragment {
                 .subscribe(observer5);
 
     }
+    List<String> mPersons=new ArrayList<>();
+
     Observer<UserAboutPerson> observer5 = new Observer<UserAboutPerson>() {
         @Override
         public void onCompleted() {
@@ -394,6 +430,7 @@ public class CreatQunZhuFragment extends BaseFragment {
                 }
                 if(isFisrst) {
                     mAdapter.dataChange(channels.data, true);
+                    currentList=channels.data;
                     isFisrst=false;
                 }else{
                     for (int i=0;i<saveUser.size();i++){
@@ -407,6 +444,15 @@ public class CreatQunZhuFragment extends BaseFragment {
 
                 }
                 currentList=channels.data;
+                for (int i=0;i<channels.data.size();i++){
+                    mPersons.add(channels.data.get(i).nickname);
+                }
+                try {
+                    PinyinTool.setData(mPersons);
+                } catch (BadHanyuPinyinOutputFormatCombination e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
             }
         }
     };

@@ -12,7 +12,6 @@ import cn.yumutech.bean.ShowTaskDetail;
 import cn.yumutech.unity.R;
 
 /**
- * Created by Allen on 2016/11/24.
  */
 public class LookResultAdapter extends BaseAdapter{
     private Context context;

@@ -38,7 +38,6 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by Allen on 2016/11/14.
  */
 public class ReplyToCommentActivity extends BaseActivity implements PullToRefreshBase.OnRefreshListener2<ScrollView>{
     private ImageView back;

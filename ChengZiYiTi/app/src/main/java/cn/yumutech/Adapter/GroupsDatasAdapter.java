@@ -12,7 +12,6 @@ import cn.yumutech.bean.GroupClass;
 import cn.yumutech.unity.R;
 
 /**
- * Created by Allen on 2016/11/20.
  */
    public class GroupsDatasAdapter extends BaseAdapter{
     public Context context;

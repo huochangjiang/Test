@@ -47,7 +47,7 @@ import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Group;
 import io.rong.imlib.model.UserInfo;
 
-public class MainActivity extends BaseActivity implements View.OnClickListener,RongIMClient.ConnectionStatusListener, RongIM.UserInfoProvider,RongIM.GroupInfoProvider{
+public class MainActivity extends BaseActivity implements View.OnClickListener,RongIMClient.ConnectionStatusListener, RongIM.UserInfoProvider,RongIM.GroupInfoProvider,RongIM.OnReceiveUnreadCountChangedListener{
 
 
     List<ImageView> ivs=new ArrayList<>();
@@ -102,6 +102,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,R
         id_toolbar= (Toolbar) findViewById(R.id.id_toolbar);
        RongIM.setUserInfoProvider(this,true);
        RongIM.setGroupInfoProvider(this,true);
+        RongIM.getInstance().setOnReceiveUnreadCountChangedListener(this);
         UserGetToken.getInstance(this).path=savePath;
         login.setOnClickListener(this);
         ll_animation.setOnClickListener(this);
@@ -480,5 +481,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,R
     }
 
 
-
+    @Override
+    public void onMessageIncreased(int i) {
+    Log.e("inf","ccccc"+i);
+    }
 }

@@ -1,6 +1,8 @@
 package cn.yumutech.fragments;
 
 import android.net.Uri;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.widget.DrawerLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -19,6 +21,8 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +31,7 @@ import cn.yumutech.bean.RequestParams;
 import cn.yumutech.bean.UserAboutPerson;
 import cn.yumutech.bean.UserToken;
 import cn.yumutech.netUtil.Api;
+import cn.yumutech.netUtil.PinyinTool;
 import cn.yumutech.unity.App;
 import cn.yumutech.unity.BaseFragment;
 import cn.yumutech.unity.R;
@@ -56,6 +61,14 @@ public class DralayoutFragment extends BaseFragment {
     //区分自己部门的人和所有部门的人
 
 
+    //更新界面
+    Handler mHandler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            mAdapter.dataChange(searchData);
+        }
+    };
     protected void unsubscribe( Subscription subscription) {
         if (subscription != null && !subscription.isUnsubscribed()) {
             subscription.unsubscribe();
@@ -138,6 +151,7 @@ public class DralayoutFragment extends BaseFragment {
             @Override
             public void afterTextChanged(Editable s) {
                 if(search.getText().toString().trim().length()==0){
+                    searchData.clear();
                     myprog.setVisibility(View.GONE);
                     listView.setVisibility(View.VISIBLE);
                     mAdapter.dataChange(mDatas);
@@ -167,6 +181,7 @@ public class DralayoutFragment extends BaseFragment {
                 .subscribe(observer);
 
     }
+    List<String> mPersons=new ArrayList<>();
     Observer<UserAboutPerson> observer = new Observer<UserAboutPerson>() {
         @Override
         public void onCompleted() {
@@ -180,9 +195,19 @@ public class DralayoutFragment extends BaseFragment {
         public void onNext(UserAboutPerson channels) {
             if(channels.status.code.equals("0")){
                 myprog.setVisibility(View.GONE);
+                mPersons.clear();
                 listView.setVisibility(View.VISIBLE);
                 mAdapter.dataChange(channels.data);
                 mDatas=channels.data;
+                for (int i=0;i<mDatas.size();i++){
+                    mPersons.add(mDatas.get(i).nickname);
+                }
+                try {
+                    PinyinTool.setData(mPersons);
+                } catch (BadHanyuPinyinOutputFormatCombination e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
                 for (int i=0;i<channels.data.size();i++){
                     UserInfo info=new UserInfo(channels.data.get(i).id,channels.data.get(i).nickname, Uri.parse(channels.data.get(i).logo_path));
                     RongIM.getInstance().refreshUserInfoCache(info);
@@ -232,14 +257,43 @@ public class DralayoutFragment extends BaseFragment {
      * 联系人查查找
      * @param data
      */
-    private void getmDataSub(String data){
+    //查找出来的所有人名
+    List<String> findPersons=new ArrayList<>();
+    private void getmDataSub(final  String data){
         if(mDatas!=null) {
+            searchData.clear();
             for (int i = 0; i < mDatas.size(); i++) {
                 if (mDatas.get(i).nickname.contains(data) || mDatas.get(i).mobile.contains(data)) {
                     searchData.add(mDatas.get(i));
                 }
             }
-            mAdapter.dataChange(searchData);
+            if(searchData.size()==0){
+                findPersons.clear();
+                new Thread(){
+
+                    @Override
+                    public void run() {
+                        findPersons=PinyinTool.search(data.toString());
+                        for (int i = 0; i < mDatas.size(); i++) {
+                            for (int j=0;j<findPersons.size();j++){
+                            if (mDatas.get(i).nickname.contains(findPersons.get(j)) ) {
+                                searchData.add(mDatas.get(i));
+                             }
+                            }
+                        }
+                        mHandler.sendEmptyMessage(0);
+                    }
+                }.start();
+            }else{
+                mAdapter.dataChange(searchData);
+            }
+
         }
+    }
+    /**
+     * 通过拼音查找
+     */
+    private void getPingYinData(){
+
     }
 }

@@ -16,7 +16,6 @@ import cn.yumutech.weight.SaveData;
 import cn.yumutech.weight.ViewPagerDilog;
 
 /**
- * Created by Allen on 2016/11/24.
  */
 public class LookResultActivity extends BaseActivity{
     private ImageView back;

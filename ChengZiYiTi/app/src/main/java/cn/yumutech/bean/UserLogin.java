@@ -1,7 +1,6 @@
 package cn.yumutech.bean;
 
 /**
- * Created by Allen on 2016/11/12.
  */
 public class UserLogin {
     public status status;

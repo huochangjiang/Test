@@ -34,7 +34,6 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by Allen on 2016/11/21.
  */
 public class MyFaBuDeFragment extends BaseFragment implements PullToRefreshBase.OnRefreshListener2<ScrollView>{
     private View view;

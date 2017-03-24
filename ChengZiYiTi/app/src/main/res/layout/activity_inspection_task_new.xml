@@ -251,15 +251,32 @@
                         android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
+                        <LinearLayout
+                            android:layout_centerHorizontal="true"
+                            android:id="@+id/ll11"
+                            android:layout_width="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_height="wrap_content">
                         <ImageView
                             android:id="@+id/image_under_one"
-                            android:layout_centerHorizontal="true"
                             android:layout_width="@dimen/home_item"
                             android:layout_height="@dimen/home_item"
                             android:src="@drawable/hudongjiaoliu"/>
+                            <TextView
+                                android:layout_gravity="center_horizontal"
+                                android:id="@+id/tv_one"
+                                android:layout_width="20dp"
+                                android:gravity="center"
+                                android:visibility="gone"
+                                android:layout_height="20dp"
+                                android:textColor="@color/white"
+                                android:textSize="13sp"
+                                android:background="@drawable/baidian"
+                                />
+                        </LinearLayout>
                         <TextView
                             android:layout_centerHorizontal="true"
-                            android:layout_below="@+id/image_under_one"
+                            android:layout_below="@+id/ll11"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="会话"

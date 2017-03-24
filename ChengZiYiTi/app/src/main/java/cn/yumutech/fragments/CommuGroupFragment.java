@@ -30,7 +30,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by Allen on 2016/11/13.
+ * Created by  on 2016/11/13.
  */
 public class CommuGroupFragment extends BaseFragment implements View.OnClickListener{
     private static CommuGroupFragment fragment;

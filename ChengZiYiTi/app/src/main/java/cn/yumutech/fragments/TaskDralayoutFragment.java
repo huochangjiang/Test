@@ -1,5 +1,7 @@
 package cn.yumutech.fragments;
 
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.widget.DrawerLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,6 +20,8 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -33,6 +37,7 @@ import cn.yumutech.bean.RequestParams;
 import cn.yumutech.bean.UserAboutPerson;
 import cn.yumutech.bean.UserToken;
 import cn.yumutech.netUtil.Api;
+import cn.yumutech.netUtil.PinyinTool;
 import cn.yumutech.unity.App;
 import cn.yumutech.unity.BaseFragment;
 import cn.yumutech.unity.R;
@@ -44,7 +49,6 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by Allen on 2016/11/25.
  */
 public class TaskDralayoutFragment extends BaseFragment implements View.OnClickListener{
     private View rootView;
@@ -165,6 +169,7 @@ public class TaskDralayoutFragment extends BaseFragment implements View.OnClickL
             @Override
             public void afterTextChanged(Editable s) {
                 if(search.getText().toString().trim().length()==0){
+                    searchData.clear();
                     mAdapter.dataChange(mDatas);
                     listView.setFocusable(false);
                 }else {
@@ -210,6 +215,8 @@ public class TaskDralayoutFragment extends BaseFragment implements View.OnClickL
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
     }
+    List<String> mPersons=new ArrayList<>();
+
     Observer<UserAboutPerson> observer = new Observer<UserAboutPerson>() {
         @Override
         public void onCompleted() {
@@ -225,6 +232,16 @@ public class TaskDralayoutFragment extends BaseFragment implements View.OnClickL
                 mDatas=channels.data;
                 mAdapter.dataChange(mDatas);
                 myprog.setVisibility(View.GONE);
+
+                for (int i=0;i<mDatas.size();i++){
+                    mPersons.add(mDatas.get(i).nickname);
+                }
+                try {
+                    PinyinTool.setData(mPersons);
+                } catch (BadHanyuPinyinOutputFormatCombination e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
 //                App.getContext().mApbutPerson=channels.data;
 //                for (int i=0;i<channels.data.size();i++){
 //                    UserInfo info=new UserInfo(channels.data.get(i).id,channels.data.get(i).nickname, Uri.parse(channels.data.get(i).logo_path));
@@ -273,14 +290,43 @@ public class TaskDralayoutFragment extends BaseFragment implements View.OnClickL
      * 联系人查查找
      * @param data
      */
-    private void getmDataSub(String data){
+    List<String> findPersons=new ArrayList<>();
+    //更新界面
+    Handler mHandler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            mAdapter.dataChange(searchData);
+        }
+    };
+    private void getmDataSub(final String data){
         if(mDatas!=null) {
+            searchData.clear();
             for (int i = 0; i < mDatas.size(); i++) {
                 if (mDatas.get(i).nickname.contains(data) || mDatas.get(i).mobile.contains(data)) {
                     searchData.add(mDatas.get(i));
                 }
             }
-            mAdapter.dataChange(searchData);
+            if(searchData.size()==0){
+                findPersons.clear();
+                new Thread(){
+
+                    @Override
+                    public void run() {
+                        findPersons=PinyinTool.search(data.toString());
+                        for (int i = 0; i < mDatas.size(); i++) {
+                            for (int j=0;j<findPersons.size();j++){
+                                if (mDatas.get(i).nickname.contains(findPersons.get(j)) ) {
+                                    searchData.add(mDatas.get(i));
+                                }
+                            }
+                        }
+                        mHandler.sendEmptyMessage(0);
+                    }
+                }.start();
+            }else{
+                mAdapter.dataChange(searchData);
+            }
         }
     }
     //遍历map集合，。取出其中的人名和id放入poeples中，shijiPoeples中存放被选中的人的个数,deletepoeples存放要删除的那一个数据
@@ -299,7 +345,7 @@ public class TaskDralayoutFragment extends BaseFragment implements View.OnClickL
         }
         return poeples;
     }
-    //取消打钩的遍历，从集合中找到他并删除他个狗日的，妈卖批
+    //取消打钩的遍历，从集合中找到他并删除
     private List<Poeple> deletePeople(Map<Integer, UserAboutPerson.DataBean> beans){
         deletepoeples.clear();
         Iterator iter = beans.entrySet().iterator();

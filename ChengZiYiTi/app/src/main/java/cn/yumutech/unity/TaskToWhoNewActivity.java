@@ -16,7 +16,6 @@ import cn.yumutech.weight.SaveData;
 import de.greenrobot.event.EventBus;
 
 /**
- * Created by Allen on 2016/11/25.
  */
 public class TaskToWhoNewActivity extends BaseActivity implements View.OnClickListener{
     public ImageView back;

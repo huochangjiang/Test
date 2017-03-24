@@ -38,17 +38,23 @@ import cn.yumutech.bean.UserAboutPerson;
 import cn.yumutech.bean.UserLogin;
 import cn.yumutech.netUtil.MyExtensionModule;
 import cn.yumutech.weight.ACache;
+import cn.yumutech.weight.MyReceiveMessageListener;
 import cn.yumutech.weight.StringUtils1;
+import de.greenrobot.event.EventBus;
 import io.rong.imkit.DefaultExtensionModule;
 import io.rong.imkit.IExtensionModule;
 import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
+import io.rong.imkit.manager.IUnReadMessageObserver;
+import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Conversation;
+import io.rong.push.RongPushClient;
 
 
 /**
  * Created by 霍长江 on 2016/11/6.
  */
-public class App extends MultiDexApplication{
+public class App extends MultiDexApplication {
     public ACache aCache;
     private static App INSTANCE;
     public static final String ExternalImageDir = "czyt";
@@ -60,13 +66,16 @@ public class App extends MultiDexApplication{
 
     public static String CachePath = "image_loaders_local";
     public String downLoadPath;
+    public String numberWi="0";
+
     public static App getContext() {
         return INSTANCE;
     }
+
     @Override
     public void onCreate() {
         super.onCreate();
-        INSTANCE=this;
+        INSTANCE = this;
         aCache = ACache.get(this, "zhushou");
 /**
  *
@@ -83,11 +92,11 @@ public class App extends MultiDexApplication{
             /**
              * IMKit SDK调用第一步 初始化
              */
-           // RongPushClient.registerHWPush(this);
-//            RongPushClient.registerMiPush(this, "2882303761517528959", "5821752892959");
+            RongPushClient.registerHWPush(this);
+            RongPushClient.registerMiPush(this, "2882303761517528959", "5821752892959");
             RongIM.init(this);
             setMyExtensionModule();
-            
+
 
             if (getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext()))) {
                 DemoContext.init(this);
@@ -100,8 +109,8 @@ public class App extends MultiDexApplication{
             @Override
             public void onSuccess(String deviceToken) {
                 //注册成功会返回device token
-                Log.e("deviceToken",deviceToken);
-                mDeviceToken=deviceToken;
+                Log.e("deviceToken", deviceToken);
+                mDeviceToken = deviceToken;
             }
 
             @Override
@@ -120,11 +129,11 @@ public class App extends MultiDexApplication{
         UmengNotificationClickHandler notificationClickHandler = new UmengNotificationClickHandler() {
             @Override
             public void dealWithCustomAction(Context context, UMessage msg) {
-                Log.e("info","laile ");
-                if(msg.custom!=null){
-                    Intent intent=new Intent(getApplicationContext(),LeaderActivitysActivity.class);
+                Log.e("info", "laile ");
+                if (msg.custom != null) {
+                    Intent intent = new Intent(getApplicationContext(), LeaderActivitysActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                  startActivity(intent);
+                    startActivity(intent);
 
                 }
             }
@@ -133,11 +142,24 @@ public class App extends MultiDexApplication{
         //参考http://bbs.umeng.com/thread-11112-1-1.html
         //CustomNotificationHandler notificationClickHandler = new CustomNotificationHandler();
         mPushAgent.setNotificationClickHandler(notificationClickHandler);
-
+        setOnReceiveMessageListener(new MyReceiveMessageListener());
+        addUnReadMessageCountChangedObserver(new IUnReadMessageObserver() {
+                                                 @Override
+                                                 public void onCountChanged(int i) {
+                                                     numberWi=String.valueOf(i);
+                                                     EventBus.getDefault().post(String.valueOf(i));
+                                                 }
+                                             }, Conversation.ConversationType.PRIVATE, Conversation.ConversationType.GROUP
+        );
 
     }
-    private void initConnect(){
 
+    public void addUnReadMessageCountChangedObserver(final IUnReadMessageObserver observer, Conversation.ConversationType... conversationTypes) {
+        RongIM.getInstance().addUnReadMessageCountChangedObserver(observer,Conversation.ConversationType.PRIVATE, Conversation.ConversationType.GROUP);
+    }
+    public static void setOnReceiveMessageListener(RongIMClient.OnReceiveMessageListener listener)
+    {
+       RongIMClient.setOnReceiveMessageListener(listener);
     }
     public void setMyExtensionModule() {
         List<IExtensionModule> moduleList = RongExtensionManager.getInstance().getExtensionModules();
@@ -182,32 +204,33 @@ public class App extends MultiDexApplication{
                 .diskCache(new UnlimitedDiscCache(dir)).build();
         ImageLoader.getInstance().init(loaderConfiguration);
     }
+
     /**
      * 保存登陆信息
      */
     // 保存登录信息
-    public void saveLogo(String key,String value){
+    public void saveLogo(String key, String value) {
         aCache.put(key, value);
     }
+
     //返回用户信息
-    public UserLogin getLogo(String key){
-        String readJson =aCache.getAsString(key);
-        if(StringUtils1.isEmpty(readJson))
-        {
+    public UserLogin getLogo(String key) {
+        String readJson = aCache.getAsString(key);
+        if (StringUtils1.isEmpty(readJson)) {
             return null;
-        }else {
+        } else {
             Gson gson = new Gson();
             UserLogin user = gson.fromJson(readJson, UserLogin.class);
             return user;
         }
     }
+
     //保存跟新头像后的data
-    public UpdateUserPhoto getUpdateUserPhoto(String key){
-        String readJson =aCache.getAsString(key);
-        if(StringUtils1.isEmpty(readJson))
-        {
+    public UpdateUserPhoto getUpdateUserPhoto(String key) {
+        String readJson = aCache.getAsString(key);
+        if (StringUtils1.isEmpty(readJson)) {
             return null;
-        }else {
+        } else {
             Gson gson = new Gson();
             UpdateUserPhoto user = gson.fromJson(readJson, UpdateUserPhoto.class);
             return user;
@@ -216,29 +239,31 @@ public class App extends MultiDexApplication{
 
     //返回用户部门信息
     //返回用户信息
-    public DepartListNew getContactGroup(String key){
-        String readJson =aCache.getAsString(key);
-        if(StringUtils1.isEmpty(readJson))
-        {
+    public DepartListNew getContactGroup(String key) {
+        String readJson = aCache.getAsString(key);
+        if (StringUtils1.isEmpty(readJson)) {
             return null;
-        }else {
+        } else {
             Gson gson = new Gson();
             DepartListNew user = gson.fromJson(readJson, DepartListNew.class);
             return user;
         }
     }
+
     /**
      * 清除登陆信息
      */
     public void cleanContactGroup() {
         aCache.remove("Contact");
     }
+
     // 缓存首页数据
-    public void savaHomeJson(String key,String value){
+    public void savaHomeJson(String key, String value) {
         aCache.put(key, value);
     }
-    public String readHomeJson(String key){
-        String readJson =aCache.getAsString(key);
+
+    public String readHomeJson(String key) {
+        String readJson = aCache.getAsString(key);
         return readJson;
     }
     /**
@@ -277,6 +302,7 @@ public class App extends MultiDexApplication{
         }
         return null;
     }
+
     /**
      * 检测网络是否可用
      *
@@ -295,16 +321,18 @@ public class App extends MultiDexApplication{
      *
      * @param activity 要销毁的activity
      */
-      Map<String,Activity> destoryMap = new HashMap<>();
-    public  void addDestoryActivity(Activity activity, String activityName) {
-        destoryMap.put(activityName,activity);
+    Map<String, Activity> destoryMap = new HashMap<>();
+
+    public void addDestoryActivity(Activity activity, String activityName) {
+        destoryMap.put(activityName, activity);
     }
+
     /**
-     *销毁指定Activity
+     * 销毁指定Activity
      */
-    public  void destoryActivity(String activityName) {
-        Set<String> keySet=destoryMap.keySet();
-        for (String key:keySet){
+    public void destoryActivity(String activityName) {
+        Set<String> keySet = destoryMap.keySet();
+        for (String key : keySet) {
             destoryMap.get(key).finish();
         }
     }
@@ -312,11 +340,12 @@ public class App extends MultiDexApplication{
     /**
      * 没登陆的时候做的事
      */
-    public void noLogin(Context context){
-        Toast.makeText(context,"您还未登陆",Toast.LENGTH_SHORT).show();
+    public void noLogin(Context context) {
+        Toast.makeText(context, "您还未登陆", Toast.LENGTH_SHORT).show();
     }
-    public List<UserAboutPerson.DataBean> mApbutPerson=new ArrayList<>();
-    public List<ChaXunQunMenmber.DataBean.UsersBean> qunMember=new ArrayList<>();
+
+    public List<UserAboutPerson.DataBean> mApbutPerson = new ArrayList<>();
+    public List<ChaXunQunMenmber.DataBean.UsersBean> qunMember = new ArrayList<>();
 
 }
 

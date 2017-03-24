@@ -33,7 +33,6 @@ import cn.yumutech.weight.SaveData;
 import de.greenrobot.event.EventBus;
 
 /**
- * Created by Allen on 2016/11/13.
  */
 public class CommuContactFragment extends BaseFragment{
 

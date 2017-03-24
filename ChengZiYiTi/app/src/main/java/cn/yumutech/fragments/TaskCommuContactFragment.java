@@ -34,7 +34,6 @@ import cn.yumutech.weight.SaveData;
 import de.greenrobot.event.EventBus;
 
 /**
- * Created by Allen on 2016/11/25.
  */
 public class TaskCommuContactFragment extends BaseFragment {
     private static TaskCommuContactFragment fragment;

@@ -1,7 +1,6 @@
 package cn.yumutech.bean;
 
 /**
- * Created by Allen on 2016/11/25.
  */
 public class AssignTaskBeen {
     public UserBeen user;

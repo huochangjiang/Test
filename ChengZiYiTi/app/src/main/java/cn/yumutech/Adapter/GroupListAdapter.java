@@ -17,7 +17,6 @@ import cn.yumutech.bean.UserXiangGuanQun;
 import cn.yumutech.unity.R;
 
 /**
- * Created by Allen on 2016/11/13.
  */
 public class GroupListAdapter extends BaseAdapter{
     private Context context;

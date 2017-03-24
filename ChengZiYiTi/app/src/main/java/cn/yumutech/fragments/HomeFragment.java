@@ -36,8 +36,7 @@ import cn.yumutech.weight.MyGridView;
 import cn.yumutech.weight.StringUtils1;
 import cn.yumutech.weight.ViewFlow;
 import cn.yumutech.weight.getContact;
-import io.rong.imkit.manager.IUnReadMessageObserver;
-import io.rong.imlib.model.Conversation;
+import de.greenrobot.event.EventBus;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -71,10 +70,11 @@ public class HomeFragment extends BaseFragment {
         rootView = inflater.inflate(R.layout.fragment_home, container, false);
         return rootView;
     }
-
+//主页面
     @Override
     protected void initViews(View contentView) {
         app=App.getContext();
+        EventBus.getDefault().register(this);
         mViewFlow = (ViewFlow) contentView.findViewById(R.id.viewpager);
         ll_dian = (LinearLayout) contentView.findViewById(R.id.ll_dian);
         scrollView = (ScrollView) contentView.findViewById(R.id.scrollview);
@@ -112,25 +112,17 @@ public class HomeFragment extends BaseFragment {
        //正常登录
         getContact.getInstance().getData();
         
-        IUnReadMessageObserver readMessage;  readMessage = new IUnReadMessageObserver() {
-            @Override
-            public void onCountChanged(int i) {
-                baiBaoAdatper.dataChange( (ArrayList<BaiBao>) baibaos,i);
-            }
-        };
-        addUnReadMessageCountChangedObserver(readMessage);
+//        IUnReadMessageObserver readMessage;  readMessage = new IUnReadMessageObserver() {
+//            @Override
+//            public void onCountChanged(int i) {
+//
+//                Toast.makeText(getActivity(), "i"+i, Toast.LENGTH_SHORT).show();
+//                baiBaoAdatper.dataChange( (ArrayList<BaiBao>) baibaos,i);
+//            }
+//        };
+//        addUnReadMessageCountChangedObserver(readMessage);
     }
-    /**
-     * 设置未读消息数变化监听器。
-     * 否则会造成内存泄漏。
-     *
-     * @param observer          接收未读消息消息的监听器。
-     * @param conversationTypes 接收未读消息的会话类型。
-     */
-    public void addUnReadMessageCountChangedObserver(final IUnReadMessageObserver observer, Conversation.ConversationType... conversationTypes){
 
-
-    }
 
     //加载缓存
     private void initLocal() {
@@ -279,6 +271,11 @@ Subscription subscription;
     public void onDestroyView() {
         super.onDestroyView();
         baibaos.clear();
+        EventBus.getDefault().unregister(this);
+
+    }
+    public void onEventMainThread(String i) {
+            baiBaoAdatper.dataChange((ArrayList<BaiBao>) baibaos, Integer.valueOf(i));
     }
 
     @Override

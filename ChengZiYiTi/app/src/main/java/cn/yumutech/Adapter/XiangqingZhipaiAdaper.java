@@ -11,7 +11,6 @@ import cn.yumutech.unity.R;
 import cn.yumutech.weight.SaveData;
 
 /**
- * Created by Allen on 2016/11/27.
  */
 public class XiangqingZhipaiAdaper extends BaseAdapter{
     private ShowTaskDetail data;

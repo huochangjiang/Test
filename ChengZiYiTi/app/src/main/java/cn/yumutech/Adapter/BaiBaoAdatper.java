@@ -61,8 +61,11 @@ public class BaiBaoAdatper extends BaseAdapter{
 			vh=(ViewHolder) view.getTag();
 		}
 		if(position==4) {
-			if(mCount!=-1) {
+			if(mCount!=-1&&mCount!=0) {
 				vh.tv.setText(mCount+"");
+				vh.tv.setVisibility(View.VISIBLE);
+			}else{
+				vh.tv.setVisibility(View.GONE);
 			}
 		}
 		vh.iv.setImageResource(mBaibaos.get(position).getId());
